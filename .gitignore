@@ -1,0 +1,6 @@
+# Scratch copies made while you test ideas.
+/tmp/
+*.test
+*.out
+.staging/
+.blind/
