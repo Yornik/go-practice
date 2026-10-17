@@ -1,0 +1,38 @@
+# Uvagf · 05 · Reebe ohqtrgf naq ohea-engr nyregf
+
+## Uvag 1
+
+Nyzbfg rirel zrgubq nfxf gur fnzr dhrfgvba nobhg n qvssrerag jvaqbj: "ubj znal erdhrfgf, naq ubj
+znal onq barf, unir n `Fgneg` va `[sebz, gb)`?" Jevgr gung bar urycre svefg naq ohvyq gur bgure
+zrgubqf ba gbc bs vg; rnpu bs gurz vf gura n srj yvarf. Orsber lbh pbqr n sbezhyn, jevgr qbja vgf
+havg: na reebe engvb naq n ohea engr unir ab havg, n ohqtrg erznvavat vf n senpgvba bs bar ohqtrg,
+naq bayl `GvzrGbRkunhfgvba` ergheaf n gvzr.
+
+## Uvag 2
+
+Gur gencf ner ahzrevp, abg pbageby sybj. Xrrc gur fhzf nf vagrtref naq pbaireg gb `sybng64` orsber
+lbh qvivqr: vagrtre qvivfvba gheaf 2/1000 vagb 0. Purpx sbe n gbgny bs 0 svefg, be na vqyr freivpr
+tvirf 0/0 = AnA, juvpu snvyf rirel pbzcnevfba jvgubhg n penfu. Rirel pbzcnevfba jvgu AnA vf snyfr,
+fb "bowrpgvir <= 0 be bowrpgvir >= 1" yrgf AnA guebhtu `Inyvqngr`. Naq n sybng64 gung vf gbb ovt
+sbe na `vag64` qbrf abg snvy jura lbh pbaireg vg: pbzcner vg jvgu gur yvzvg juvyr vg vf fgvyy n
+sybng.
+
+## Uvag 3
+
+1. `Inyvqngr`: erwrpg na bowrpgvir gung vf AnA, ng zbfg 0 be ng yrnfg 1, naq n crevbq gung vf ng
+   zbfg 0. Jenc `ReeVainyvqFYB` jvgu gur `%j` ireo fb gung `reebef.Vf` svaqf vg.
+2. Gur urycre gnxrf gur ohpxrgf naq gur gjb raqf bs gur jvaqbj. Ybbc bire nyy ohpxrgf (gurl ner abg
+   fbegrq, naq lbh zhfg abg fbeg gur pnyyre'f fyvpr). Fxvc n ohpxrg jubfr `Fgneg` vf orsber `sebz`
+   be abg orsber `gb`. Nqq hc Tbbq naq Gbgny.
+3. `ReebeEngvb`: pnyy gur urycre sbe `[abj − jvaqbj, abj)`. Ab genssvp tvirf 0. Bgurejvfr pbaireg
+   obgu fhzf gb sybng64 naq qvivqr gur onq pbhag ol gur gbgny.
+4. `OheaEngr` vf gur reebe engvb qvivqrq ol `1 − Bowrpgvir`. `OhqtrgErznvavat` vf 1 zvahf gur ohea
+   engr bire gur jubyr Crevbq.
+5. `QrsnhygEhyrf`: ohvyq gur fyvpr yvgreny vafvqr gur shapgvba, fb gung rirel pnyy trgf n arj
+   onpxvat neenl.
+6. `Rinyhngr`: fgneg jvgu na rzcgl erfhyg. Sbe rnpu ehyr va beqre, pbzchgr gur ohea engr bire
+   `Ybat` naq bire `Fubeg`. Vs obgu ner ng yrnfg `Snpgbe × (1 − 1r-9)`, nccraq na `Nyreg` jvgu gur
+   ehyr'f anzr, vgf frirevgl naq gur gjb ohea engrf.
+7. `GvzrGbRkunhfgvba`: pbzchgr gur ohea engr bire `jvaqbj` naq gur ohqtrg erznvavat. Vs rvgure vf
+   ng zbfg 0, ercbeg "ab rfgvzngr". Bgurejvfr pbzchgr `erznvavat × Crevbq / ohea` va sybng64. Vs
+   gung vf ng yrnfg `zngu.ZnkVag64`, erghea gur pnc; bgurejvfr pbaireg vg gb n `gvzr.Qhengvba`.

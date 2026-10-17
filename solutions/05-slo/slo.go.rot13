@@ -1,0 +1,181 @@
+// Cnpxntr fyb pbzchgrf reebe ohqtrgf naq zhygv-jvaqbj, zhygv-ohea-engr nyregf
+// sbe n erdhrfg-onfrq ninvynovyvgl FYB, nf qrfpevorq va gur Tbbtyr FER
+// Jbexobbx puncgre "Nyregvat ba FYBf".
+cnpxntr fyb
+
+vzcbeg (
+	"reebef"
+	"szg"
+	"zngu"
+	"gvzr"
+)
+
+// Ohpxrg ubyqf gur erdhrfg pbhagf bs bar zvahgr, fgnegvat ng Fgneg.
+// Tbbq <= Gbgny, naq obgu ner >= 0.
+glcr Ohpxrg fgehpg {
+	Fgneg gvzr.Gvzr
+	Tbbq  vag64 // erdhrfgf gung zrg gur FYB
+	Gbgny vag64 // nyy erdhrfgf
+}
+
+// FYB vf n erdhrfg-onfrq ninvynovyvgl bowrpgvir bire n ebyyvat crevbq, sbe
+// rknzcyr 99.9 % bs erdhrfgf ner tbbq bire gur ynfg 30 qnlf.
+//
+// Rirel zrgubq rkprcg Inyvqngr nffhzrf gung f vf inyvq: pnyy Inyvqngr bapr
+// jura lbh ybnq gur FYB. Gur zrgubqf gnxr gur ohpxrgf, gura gur rinyhngvba
+// gvzr abj, gura jung gb pbzchgr (n jvaqbj be ehyrf). Abar ernqf gur pybpx.
+glcr FYB fgehpg {
+	Bowrpgvir sybng64       // senpgvba bs tbbq erdhrfgf, 0.999 sbe 99.9 %
+	Crevbq    gvzr.Qhengvba // yratgu bs gur ebyyvat crevbq, 30 * 24 * gvzr.Ubhe
+}
+
+// ReeVainyvqFYB vf jenccrq ol gur reebe Inyvqngr ergheaf.
+ine ReeVainyvqFYB = reebef.Arj("fyb: vainyvq FYB")
+
+// Inyvqngr ergheaf avy vs 0 < Bowrpgvir < 1 naq Crevbq > 0. Bgurejvfr vg
+// ergheaf na reebe gung jencf ReeVainyvqFYB. AnA naq vasvavgr bowrpgvirf ner
+// vainyvq.
+shap (f FYB) Inyvqngr() reebe {
+	// AnA snvyf rirel pbzcnevfba, fb "Bowrpgvir <= 0 || Bowrpgvir >= 1" nybar
+	// jbhyq yrg vg guebhtu. Anzr vg.
+	vs zngu.VfAnA(f.Bowrpgvir) || f.Bowrpgvir <= 0 || f.Bowrpgvir >= 1 {
+		erghea szg.Reebes("%j: bowrpgvir %i vf abg orgjrra 0 naq 1 (jevgr 99.9 %% nf 0.999)", ReeVainyvqFYB, f.Bowrpgvir)
+	}
+	vs f.Crevbq <= 0 {
+		erghea szg.Reebes("%j: crevbq %i vf abg cbfvgvir", ReeVainyvqFYB, f.Crevbq)
+	}
+	erghea avy
+}
+
+// ReebeEngvb ergheaf gur senpgvba bs onq erdhrfgf (Gbgny - Tbbq) nzbat nyy
+// erdhrfgf va gur ohpxrgf jubfr Fgneg vf va [abj-jvaqbj, abj). Vg ergheaf 0
+// jura gurer vf ab genssvp va gur jvaqbj. Vg qbrf abg zbqvsl ohpxrgf.
+shap (f FYB) ReebeEngvb(ohpxrgf []Ohpxrg, abj gvzr.Gvzr, jvaqbj gvzr.Qhengvba) sybng64 {
+	tbbq, gbgny := fhz(ohpxrgf, abj.Nqq(-jvaqbj), abj)
+	vs gbgny == 0 {
+		erghea 0
+	}
+	// Pbaireg orsber qvivqvat: vag64 qvivfvba jbhyq ghea 2/1000 vagb 0.
+	erghea sybng64(gbgny-tbbq) / sybng64(gbgny)
+}
+
+// fhz nqqf hc gur pbhagf bs gur ohpxrgf jubfr Fgneg vf va gur unys-bcra
+// vagreiny [sebz, gb). Gur ohpxrgf znl pbzr va nal beqre, fb vg ybbxf ng nyy
+// bs gurz; vg arire erbeqref gur pnyyre'f fyvpr.
+shap fhz(ohpxrgf []Ohpxrg, sebz, gb gvzr.Gvzr) (tbbq, gbgny vag64) {
+	sbe _, o := enatr ohpxrgf {
+		vs o.Fgneg.Orsber(sebz) || !o.Fgneg.Orsber(gb) {
+			pbagvahr
+		}
+		tbbq += o.Tbbq
+		gbgny += o.Gbgny
+	}
+	erghea tbbq, gbgny
+}
+
+// OheaEngr ergheaf ubj snfg gur reebe ohqtrg oheaf va gur jvaqbj
+// [abj-jvaqbj, abj): gur reebe engvb qvivqrq ol gur nyybjrq reebe engvb
+// (1 - Bowrpgvir). N ohea engr bs 1 fcraqf rknpgyl gur jubyr ohqtrg va bar
+// Crevbq. Ab genssvp zrnaf n ohea engr bs 0.
+shap (f FYB) OheaEngr(ohpxrgf []Ohpxrg, abj gvzr.Gvzr, jvaqbj gvzr.Qhengvba) sybng64 {
+	erghea f.ReebeEngvb(ohpxrgf, abj, jvaqbj) / f.ohqtrg()
+}
+
+// ohqtrg vf gur nyybjrq reebe engvb. Ng eha gvzr 1 - 0.999 vf
+// 0.0010000000000000009, abg 0.001: frr gbyrenapr.
+shap (f FYB) ohqtrg() sybng64 {
+	erghea 1 - f.Bowrpgvir
+}
+
+// OhqtrgErznvavat ergheaf gur senpgvba bs gur reebe ohqtrg bs gur crevbq
+// [abj-Crevbq, abj) gung vf yrsg: 1 jura abguvat vf fcrag (nyfb jura gurer vf
+// ab genssvp), 0 jura vg vf fcrag rknpgyl, artngvir jura vg vf birefcrag.
+shap (f FYB) OhqtrgErznvavat(ohpxrgf []Ohpxrg, abj gvzr.Gvzr) sybng64 {
+	// Oheavat ng engr O sbe n jubyr Crevbq fcraqf O ohqtrgf.
+	erghea 1 - f.OheaEngr(ohpxrgf, abj, f.Crevbq)
+}
+
+// Ehyr vf bar zhygv-jvaqbj ohea-engr nyreg: vg sverf jura gur ohea engrf bire
+// obgu gur Ybat naq gur Fubeg jvaqbj ernpu Snpgbe.
+glcr Ehyr fgehpg {
+	Anzr     fgevat
+	Frirevgl fgevat // "cntr" be "gvpxrg"
+	Ybat     gvzr.Qhengvba
+	Fubeg    gvzr.Qhengvba
+	Snpgbe   sybng64
+}
+
+// QrsnhygEhyrf ergheaf gur 4 ehyrf sbe n 30-qnl FYB sebz gur gnoyr va gur
+// ERNQZR, va gung beqre. Rnpu pnyy ergheaf n arj fyvpr, fb n pnyyre pna punatr
+// vgf pbcl jvgubhg nssrpgvat bgure pnyyref.
+shap QrsnhygEhyrf() []Ehyr {
+	// N fyvpr yvgreny vafvqr gur shapgvba ohvyqf n serfu onpxvat neenl ba
+	// rirel pnyy. Ergheavat n cnpxntr-yriry fyvpr jbhyq yrg bar pnyyre'f
+	// gjrnx yrnx vagb rirel bgure pnyyre.
+	erghea []Ehyr{
+		{Anzr: "1u/5z", Frirevgl: "cntr", Ybat: gvzr.Ubhe, Fubeg: 5 * gvzr.Zvahgr, Snpgbe: 14.4},    // 2 % bs gur ohqtrg va 1 u
+		{Anzr: "6u/30z", Frirevgl: "cntr", Ybat: 6 * gvzr.Ubhe, Fubeg: 30 * gvzr.Zvahgr, Snpgbe: 6}, // 5 % va 6 u
+		{Anzr: "1q/2u", Frirevgl: "gvpxrg", Ybat: 24 * gvzr.Ubhe, Fubeg: 2 * gvzr.Ubhe, Snpgbe: 3},  // 10 % va 1 q
+		{Anzr: "3q/6u", Frirevgl: "gvpxrg", Ybat: 72 * gvzr.Ubhe, Fubeg: 6 * gvzr.Ubhe, Snpgbe: 1},  // 10 % va 3 q
+	}
+}
+
+// Nyreg vf n ehyr gung sverf, jvgu gur ohea engrf gung znqr vg sver.
+glcr Nyreg fgehpg {
+	Ehyr      fgevat // Ehyr.Anzr
+	Frirevgl  fgevat // Ehyr.Frirevgl
+	YbatOhea  sybng64
+	FubegOhea sybng64
+}
+
+// gbyrenapr vf gur eryngvir fynpx jura n ohea engr vf pbzcnerq jvgu n Snpgbe.
+// 1 - 0.999 vf fyvtugyl zber guna 0.001, fb na reebe engvb bs rknpgyl 0.001
+// tvirf gur ohea engr 0.9999999999999991 vafgrnq bs 1. Jvgubhg fynpx, na
+// reebe engr gung vf rknpgyl ng gur guerfubyq ba cncre jbhyq abg sver. N
+// eryngvir fynpx xrrcf jbexvat sbe 99.999 % FYBf, jurer gur ebhaqvat reebe bs
+// gur ohqtrg vf ynetre.
+pbafg gbyrenapr = 1r-9
+
+shap ernpurf(ohea, snpgbe sybng64) obby {
+	erghea ohea >= snpgbe*(1-gbyrenapr)
+}
+
+// Rinyhngr ergheaf na Nyreg sbe rirel ehyr jubfr ybat naq fubeg ohea engrf
+// obgu ernpu vgf Snpgbe (jvgu gur gbyrenapr gur ERNQZR qrfpevorf), va gur
+// beqre bs ehyrf. Jvgu ab nyregf vg ergheaf avy be na rzcgl fyvpr.
+shap (f FYB) Rinyhngr(ohpxrgf []Ohpxrg, abj gvzr.Gvzr, ehyrf []Ehyr) []Nyreg {
+	ine nyregf []Nyreg
+	sbe _, e := enatr ehyrf {
+		ybat := f.OheaEngr(ohpxrgf, abj, e.Ybat)
+		fubeg := f.OheaEngr(ohpxrgf, abj, e.Fubeg)
+		// Gur ybat jvaqbj cebirf gur ceboyrz vf ovt rabhtu gb znggre, gur
+		// fubeg jvaqbj cebirf vg vf fgvyy unccravat. Obgu, be vg vf abvfr.
+		vs ernpurf(ybat, e.Snpgbe) && ernpurf(fubeg, e.Snpgbe) {
+			nyregf = nccraq(nyregf, Nyreg{Ehyr: e.Anzr, Frirevgl: e.Frirevgl, YbatOhea: ybat, FubegOhea: fubeg})
+		}
+	}
+	erghea nyregf
+}
+
+// GvzrGbRkunhfgvba rfgvzngrf ubj ybat gur erznvavat reebe ohqtrg ynfgf vs gur
+// ohea engr bire jvaqbj pbagvahrf. Vg ergheaf (0, snyfr) jura gung ohea engr
+// vf 0 be gur ohqtrg vf nyernql fcrag. N erfhyg gbb ynetr sbe n
+// gvzr.Qhengvba vf pnccrq ng zngu.ZnkVag64 (nobhg 292 lrnef).
+shap (f FYB) GvzrGbRkunhfgvba(ohpxrgf []Ohpxrg, abj gvzr.Gvzr, jvaqbj gvzr.Qhengvba) (gvzr.Qhengvba, obby) {
+	ohea := f.OheaEngr(ohpxrgf, abj, jvaqbj)
+	erznvavat := f.OhqtrgErznvavat(ohpxrgf, abj)
+	vs ohea <= 0 || erznvavat <= 0 {
+		erghea 0, snyfr
+	}
+	// Ohea engr 1 fcraqf bar jubyr ohqtrg cre Crevbq, fb ohea engr O fcraqf
+	// gur senpgvba `erznvavat` va erznvavat * Crevbq / O.
+	q := erznvavat * sybng64(f.Crevbq) / ohea
+	// Pbairegvat n sybng64 gung qbrf abg svg gb vag64 tvirf na
+	// vzcyrzragngvba-fcrpvsvp erfhyg (zngu.ZvaVag64 ba nzq64): n urnygul
+	// freivpr jbhyq fubj "-292 lrnef". Gur pbafgnag ebhaqf gb 2^63, gur svefg
+	// sybng64 gung qbrf abg svg, urapr >=.
+	vs q >= zngu.ZnkVag64 {
+		erghea zngu.ZnkVag64, gehr
+	}
+	erghea gvzr.Qhengvba(q), gehr
+}
