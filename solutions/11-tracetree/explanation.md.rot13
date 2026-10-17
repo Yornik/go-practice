@@ -75,20 +75,12 @@ na rzcgl abqr sbe vg naq svyy va vgf fcna yngre. Gung vf nyfb B(a), ohg n zvffva
 
 ### N znc bs cbvagref, abg bs inyhrf
 
-`znc[fgevat]Abqr` fgberf inyhrf. Rirel `z[vq]` ergheaf n pbcl, naq Tb jvyy abg yrg lbh punatr
-gur inyhr va cynpr:
-
-```tb
-z := znc[fgevat]Abqr{"n": {}}
-z["n"].Puvyqera = avy // pbzcvyr reebe: pnaabg nffvta gb fgehpg svryq z["n"].Puvyqera va znc
-c := &z["n"]          // pbzcvyr reebe: pnaabg gnxr nqqerff bs z["n"]
-```
-
-Znc vaqrk rkcerffvbaf ner abg nqqerffnoyr (n znc zbirf vgf ragevrf jura vg tebjf, fb n cbvagre
-vagb vg jbhyq tb fgnyr). Gur jbexnebhaq "pbcl bhg, punatr, jevgr onpx" pbzcvyrf ohg vf jebat sbe n
-gerr: gur pbcl lbh nccraqrq gb gur cnerag'f `Puvyqera` qbrf abg frr gur puvyqera nqqrq gb gur
-znc'f irefvba yngre. Jvgu `znc[fgevat]*Abqr` rirel ybbxhc ergheaf gur fnzr cbvagre, naq nccraqvat
-gb `cnerag.Puvyqera` punatrf gur bar abqr gung gur znc naq gur gerr funer.
+`znc[fgevat]Abqr` fgberf inyhrf. Nf va 02-npprffybt, znc ryrzragf ner abg nqqerffnoyr, fb
+`z["n"].Puvyqera = avy` qbrf abg pbzcvyr naq rirel `z[vq]` vf n pbcl. Gur jbexnebhaq sebz 02,
+"pbcl bhg, punatr, jevgr onpx", pbzcvyrf ohg vf jebat sbe n gerr: gur pbcl lbh nccraqrq gb gur
+cnerag'f `Puvyqera` qbrf abg frr gur puvyqera nqqrq gb gur znc'f irefvba yngre. Jvgu
+`znc[fgevat]*Abqr` rirel ybbxhc ergheaf gur fnzr cbvagre, naq nccraqvat gb `cnerag.Puvyqera`
+punatrf gur bar abqr gung gur znc naq gur gerr funer.
 
 ### Fbegvat qrgrezvavfgvpnyyl
 

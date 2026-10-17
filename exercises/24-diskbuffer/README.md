@@ -216,11 +216,11 @@ A panicking stub stops the whole test binary, so work one step at a time (the fi
 overlap). Do step 1 first: the other tests build the expected file contents with your
 `AppendRecord`. The comment says what each step needs.
 
-    go test -run 'TestRecord|FuzzRecord' -v ./exercises/24-diskbuffer/               # 1: AppendRecord, DecodeRecord
-    go test -run 'TestOpenNew|TestAppend|TestReadFrom' -v ./exercises/24-diskbuffer/ # 2: Open (new Dir), Append, ReadFrom, Acked
-    go test -run 'TestAck|TestClose|TestReopen' -v ./exercises/24-diskbuffer/        # 3: + Ack, Close, Open after Close
-    go test -run TestRecovery -v ./exercises/24-diskbuffer/                          # 4: + crash recovery, CorruptError
-    go test -race -run TestConcurrent -v ./exercises/24-diskbuffer/                  # 5: concurrent use
+    go test -run 'TestRecord|FuzzRecord' -v ./exercises/24-diskbuffer/               # step 1: AppendRecord, DecodeRecord
+    go test -run 'TestOpenNew|TestAppend|TestReadFrom' -v ./exercises/24-diskbuffer/ # step 2: Open (new Dir), Append, ReadFrom, Acked
+    go test -run 'TestAck|TestClose|TestReopen' -v ./exercises/24-diskbuffer/        # step 3: + Ack, Close, Open after Close
+    go test -run TestRecovery -v ./exercises/24-diskbuffer/                          # step 4: + crash recovery, CorruptError
+    go test -race -run TestConcurrent -v ./exercises/24-diskbuffer/                  # step 5: concurrent use
     go test -fuzz=FuzzRecord ./exercises/24-diskbuffer/   # optional: random input for DecodeRecord, Ctrl-C to stop
 
 ## Docs you can use

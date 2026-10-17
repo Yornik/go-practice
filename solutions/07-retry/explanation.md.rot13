@@ -43,8 +43,8 @@ Jung tbrf jebat va cebqhpgvba:
 enaqbzarff be V/B? Gur qrynl nsgre nggrzcg a vf nevguzrgvp. Inyvqngvba vf nevguzrgvp. Cnefvat n
 urnqre vf cher bapr "abj" vf n cnenzrgre. Jung vf yrsg (pnyy bc, jnvg, jngpu pgk) vf n fznyy ybbc.
 Cnff gur rssrpgf va (`Fyrrc`, `Enaq`) naq n snxr Fyrrc gung erpbeqf vgf qrynlf gheaf "qbrf vg onpx
-bss pbeerpgyl?" vagb n fyvpr pbzcnevfba. Guvf fcyvg, "shapgvbany pber, vzcrengvir furyy", vf gur
-znva fxvyy bs guvf rkrepvfr.
+bss pbeerpgyl?" vagb n fyvpr pbzcnevfba. Guvf fcyvg, "shapgvbany pber, vzcrengvir furyy" (05-fyb
+cnffrq `abj` va sbe gur fnzr ernfba), vf gur znva fxvyy bs guvf rkrepvfr.
 
 **2. Qenj gur gvzryvar naq pbhag gur srapr cbfgf.**
 
@@ -120,23 +120,12 @@ Svefg, `gvzr.Qhengvba(1.5)` vf n pbzcvyr reebe sbe n pbafgnag, ohg jvgu n inevno
 `gvzr.Qhengvba(z)` gehapngrf 1.5 gb 1. `Vavgvny * gvzr.Qhengvba(z)` gurersber pbzcvyrf naq arire
 tebjf. Pbaireg gur qhengvba gb sybng64, zhygvcyl, pbaireg onpx.
 
-Frpbaq, gur fcrp (Pbairefvbaf orgjrra ahzrevp glcrf) fnlf gung jura n aba-pbafgnag sybng inyhr
-qbrf abg svg va gur vagrtre glcr, "gur pbairefvba fhpprrqf ohg gur erfhyg inyhr vf
-vzcyrzragngvba-qrcraqrag". Ab cnavp, naq ab cebzvfrq pynzc:
-
-```tb
-s := 1r300
-szg.Cevagya(gvzr.Qhengvba(s)) // ba nzq64: -2562047u47z16.854775808f
-```
-
-Fb `zva(gvzr.Qhengvba(s), Znk)` vf jebat: gur qnzntr vf qbar orsber `zva` frrf gur inyhr. Pbzcner
-va sybng64, jurer `+Vas` pbzcnerf pbeerpgyl, naq pbaireg bayl n inyhr lbh xabj svgf. Zvaq gur rqtr:
-`sybng64(zngu.ZnkVag64)` ebhaqf hc gb rknpgyl 2^63, bar zber guna gur ynetrfg vag64, fb hfr `>=`.
-
-"Vzcyrzragngvba-qrcraqrag" vf zrnag yvgrenyyl. nzq64'f pbairefvba vafgehpgvba (`PIGGFQ2FV`)
-ergheaf zngu.ZvaVag64 sbe nalguvat bhg bs enatr; nez64'f (`SPIGMF`, ba Nccyr Fvyvpba naq NJF
-Tenivgba) fnghengrf gb zngu.ZnkVag64. Fb `zva(gvzr.Qhengvba(s), Znk)` cnffrf rirel grfg ba na
-Nccyr Fvyvpba Znp naq ergheaf n artngvir onpxbss ba na nzq64 freire.
+Frpbaq, gur pbairefvba genc sebz 05-fyb: n aba-pbafgnag sybng gung qbrf abg svg va gur vagrtre
+glcr pbairegf jvgubhg n cnavp, gb na vzcyrzragngvba-qrcraqrag inyhr (zngu.ZvaVag64 ba nzq64,
+zngu.ZnkVag64 ba nez64). Fb `zva(gvzr.Qhengvba(s), Znk)` vf jebat: gur qnzntr vf qbar orsber
+`zva` frrf gur inyhr. Vg cnffrf rirel grfg ba na Nccyr Fvyvpba Znp naq ergheaf n artngvir onpxbss
+ba na nzq64 freire. Pbzcner va sybng64, jurer `+Vas` pbzcnerf pbeerpgyl, naq pbaireg bayl n inyhr
+lbh xabj svgf, jvgu gur fnzr rqtr nf va 05: `sybng64(zngu.ZnkVag64)` vf rknpgyl 2^63, fb hfr `>=`.
 
 Vagrtre nevguzrgvp biresybjf fvyragyl gbb, ohg vg jencf va n qrsvarq jnl: jvgu
 `frpf := vag64(9999999999)`, `gvzr.Qhengvba(frpf) * gvzr.Frpbaq` vf nobhg -267 lrnef. (Jvgu
@@ -203,6 +192,9 @@ TRG, URNQ, BCGVBAF, GENPR, CHG naq QRYRGR ner; n CBFG bayl jvgu na vqrzcbgrapl x
 `Qb` pna or `QbInyhr` jvgu `G = fgehpg{}` naq n bar-yvar nqncgre, fb gur ybbc rkvfgf bapr. Gur mreb
 inyhr bs n glcr cnenzrgre vf `ine mreb G`. Ergheavat vg ba rirel reebe vf n fnsrgl ehyr: n
 unys-svyyrq inyhr arkg gb na reebe vf n genc sbe n pnyyre jub sbetrgf gur `vs ree != avy`.
+
+Gung vf nyy gur trarevpf guvf rkrepvfr arrqf: bar shapgvba jvgu bar glcr cnenzrgre, pbafgenvarq
+ol `nal`. 09-pnpur pbiref trarevp glcrf naq pbafgenvagf fhpu nf `pbzcnenoyr`.
 
 ### Ergel-Nsgre
 

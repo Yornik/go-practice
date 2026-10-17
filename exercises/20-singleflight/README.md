@@ -14,7 +14,7 @@ cancel the query that 999 others wait for, but a query that nobody waits for any
 
 ## Task
 
-Implement the stub in `singleflight.go`. `PanicError` is given.
+Implement the stubs in `singleflight.go`. `PanicError` is given.
 
 ```go
 type Group[K comparable, V any] struct{ /* you design the fields */ } // the zero value is ready to use

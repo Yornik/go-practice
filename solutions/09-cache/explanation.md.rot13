@@ -117,9 +117,9 @@ Obgu ner hfhnyyl ohvyg nebhaq n **fragvary**: bar qhzzl abqr gung pybfrf gur yvf
 vgfrys. Rirel erny abqr nyjnlf unf gjb aba-avy arvtuobhef, fb vafreg naq hayvax arrq ab fcrpvny
 pnfr sbe gur svefg, ynfg be bayl abqr. `pbagnvare/yvfg` jbexf rknpgyl yvxr guvf.
 
-Gur znc ubyqf cbvagref (`znc[X]*ragel`). Znc ryrzragf ner abg nqqerffnoyr: arvgure `&z[x]` abe
-`z[x].inyhr = i` pbzcvyrf, orpnhfr gur znc zbirf vgf ryrzragf jura vg tebjf. Gur yvfg arrqf
-fgnoyr nqqerffrf, fb gur ragevrf yvir ba gur urnc naq gur znc cbvagf ng gurz.
+Gur znc ubyqf cbvagref (`znc[X]*ragel`). Znc ryrzragf ner abg nqqerffnoyr (02-npprffybt): arvgure
+`&z[x]` abe `z[x].inyhr = i` pbzcvyrf. Gur yvfg arrqf fgnoyr nqqerffrf, fb gur ragevrf yvir ba
+gur urnc naq gur znc cbvagf ng gurz.
 
 ### Arire pnyy sbervta pbqr juvyr ubyqvat n ybpx
 
@@ -169,10 +169,10 @@ anabfrpbaq. Gur GGY vagreiny vf unys-bcra, yvxr gur jvaqbjf va 05-fyb: yvir juvy
 hfrf `Abj().Nsgre(rkcverGvzr)`, fb vgf ragevrf ner fgvyy yvir ng gur rknpg rkcvel vafgnag. Rvgure
 pubvpr vf svar. Abg pubbfvat vf gur oht.
 
-`gvzr.Abj()` pneevrf n zbabgbavp pybpx ernqvat. `Nqq` xrrcf vg, naq `Orsber`, `Nsgre` naq `Fho`
-hfr vg jura obgu gvzrf unir bar, fb na rkcvel pbzchgrq nf `gvzr.Abj().Nqq(ggy)` vf vzzhar gb AGC
-whzcf. Pbzcner gvzrf jvgu `Orsber`, `Nsgre` be `Rdhny`, arire jvgu `==`, juvpu nyfb pbzcnerf gur
-ybpngvba naq gur zbabgbavp ernqvat.
+Gur zbabgbavp pybpx ernqvat sebz 08-engryvzvg urycf urer gbb: `Nqq` xrrcf vg, fb na rkcvel
+pbzchgrq nf `gvzr.Abj().Nqq(ggy)` naq pbzcnerq jvgu `Orsber` vf vzzhar gb AGC whzcf. Pbzcner gvzrf
+jvgu `Orsber`, `Nsgre` be `Rdhny`, arire jvgu `==`, juvpu nyfb pbzcnerf gur ybpngvba naq gur
+zbabgbavp ernqvat.
 
 ### Pbhagref, abg engvbf
 

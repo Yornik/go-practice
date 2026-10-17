@@ -98,11 +98,12 @@ shapgvba gung znxrf rirel genafvgvba gbtrgure jvgu vgf "ba ragre" npgvbaf.
 
 ### Ubj ybat gb ubyq n zhgrk
 
-Ubyq n ybpx nebhaq obbxxrrcvat, arire nebhaq V/B be pbqr lbh qb abg pbageby (sa, pnyyonpxf):
+09-pnpur tnir gur ehyr: ubyq n ybpx nebhaq obbxxrrcvat, arire nebhaq V/B be pbqr lbh qb abg
+pbageby. Urer gung pbqr vf sa naq BaFgngrPunatr, naq gur ernfbaf ner gur fnzr:
 
 - **Guebhtuchg.** N ybpx uryq npebff sa gheaf gur oernxre vagb n fvatyr-ynar oevqtr.
-- **Qrnqybpx.** `flap.Zhgrk` vf abg erragenag. Pbqr gung ehaf haqre gur ybpx naq pnyyf n zrgubq
-  gung ybpxf gur fnzr zhgrk jnvgf sbe vgfrys sberire.
+- **Qrnqybpx.** `flap.Zhgrk` vf abg erragenag: n pnyyonpx gung pnyyf Fgngr haqre gur ybpx jnvgf
+  sbe vgfrys sberire.
 - **Yngrapl.** N ernq fhpu nf Fgngr jnvgf sbe gur fybjrfg pnyy va syvtug.
 
 Fcyvggvat jbex vagb gjb pevgvpny frpgvbaf unf gjb pbafrdhraprf. N purpx naq gur npgvba gung
@@ -150,7 +151,7 @@ arire tvirf vgf fybg onpx, naq gur oernxre nafjref `ReeGbbZnalPnyyf` sberire. Gu
 xrrc ehaavat nsgre gung cnavp, orpnhfr gur `arg/uggc` freire erpbiref cnavpf va unaqyref naq ybtf
 gurz, fb lbh trg n fghpx oernxre va n urnygul-ybbxvat cbq.
 
-Gur hfhny nafjre vf `qrsre` jvgu `erpbire`, gura cnavp ntnva:
+Gur hfhny nafjre vf gur qrsreerq `erpbire` sebz 12-jbexrecbby, gura cnavp ntnva:
 
 ```tb
 qrsre shap() {

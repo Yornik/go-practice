@@ -170,15 +170,14 @@ gnyxf gb gur fgber, jnvgf, naq fgnegf naq fgbcf n tbebhgvar. Vgf grfgf ner nobhg
 gvzr, naq gurl ner zhpu rnfvre gb jevgr jura gur furyy pbagnvaf ab qrpvfvbaf bs vgf bja.
 
 Gur fnzr fcyvg yrgf gur grfgf pbageby gvzr. `Pbasvt.Abj` vf vawrpgrq, fb gur grfgf qrpvqr jura n
-qrnqyvar cnffrf. Ohg Eha fgvyy jnvgf jvgu erny gvzref, fb gurer ner gjb pybpxf va cynl, naq gurl
-zhfg abg or zvkrq. N *qhengvba* pbzchgrq sebz gur vawrpgrq pybpx ("2.3 f yrsg hagvy zl qrnqyvar")
-pna or hfrq sbe n erny gvzrbhg. N *gvzr.Gvzr* sebz gur vawrpgrq pybpx pnaabg or n erny-gvzr
+qrnqyvar cnffrf. Ohg Eha fgvyy jnvgf jvgu erny gvzref, nf 15-urnygupurpx qvq, fb gurer ner gjb
+pybpxf va cynl, naq gurl zhfg abg or zvkrq. N *qhengvba* pbzchgrq sebz gur vawrpgrq pybpx
+("2.3 f yrsg hagvy zl qrnqyvar") pna or hfrq sbe n erny gvzrbhg. N *gvzr.Gvzr* sebz gur vawrpgrq pybpx pnaabg or n erny-gvzr
 qrnqyvar: `pbagrkg.JvguQrnqyvar(pgk, snxrGvzr)` pbzcnerf n snxr qngr jvgu gur erny bar.
 
-N eryngrq Tb qrgnvy: `gvzr.Abj()` pneevrf n zbabgbavp pybpx ernqvat, naq pbzcnevfbaf orgjrra gjb
-fhpu gvzrf hfr vg, fb n jnyy-pybpx whzc (AGC, n znahny punatr) qbrf abg pbashfr `Fho`, `Orsber`
-naq `Nsgre`. Gur ernqvat vf ybfg nf fbba nf n gvzr tbrf bire gur jver (WFBA, gur Xhoreargrf NCV),
-juvpu vf bar zber ernfba abg gb gehfg n gvzrfgnzc nabgure abqr jebgr.
+N eryngrq Tb qrgnvy: gur zbabgbavp pybpx ernqvat bs `gvzr.Abj()` (08-engryvzvg) vf ybfg nf fbba nf
+n gvzr tbrf bire gur jver (WFBA, gur Xhoreargrf NCV), juvpu vf bar zber ernfba abg gb gehfg n
+gvzrfgnzc nabgure abqr jebgr.
 
 ### Pbagrkg gerrf
 
@@ -194,7 +193,7 @@ pgk (sebz znva; pnapryyrq ba FVTGREZ)
 Pnapryyvat n cnerag pnapryf rirel puvyq, fb FVTGREZ ernpurf gur yrnqre'f jbex jvgubhg rkgen pbqr.
 Gur ynfg oenapu vf gur pyrnahc cnggrea: nsgre pnapryyngvba lbh fgvyy arrq gb gnyx gb gur fgber
 bapr, naq n fgber (yvxr nal jryy-orunirq pyvrag) ershfrf jbex sbe n pnapryyrq pgk.
-`pbagrkg.JvgubhgPnapry` (Tb 1.21) xrrcf gur cnerag'f inyhrf, fhpu nf n ybttre be n genpr VQ, ohg
+`pbagrkg.JvgubhgPnapry`, zrg va 15-urnygupurpx naq 20-fvatyrsyvtug, xrrcf gur cnerag'f inyhrf ohg
 abg vgf pnapryyngvba be qrnqyvar. Nyjnlf nqq lbhe bja gvzrbhg gb vg, be n unatvat fgber oybpxf
 lbhe fuhgqbja hagvy gur xhoryrg xvyyf gur cbq.
 

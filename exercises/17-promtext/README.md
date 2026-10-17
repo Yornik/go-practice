@@ -191,9 +191,10 @@ Rates(prev, curr, 15*time.Second) → {`jobs_total{queue="a"}`: 2, `jobs_total{q
     go test -fuzz=FuzzWriteRoundTrip ./exercises/17-promtext/   # optional: Go invents inputs, Ctrl-C to stop
 
 A stub that panics stops the whole test binary, so run one step at a time; the 4 filters do not
-overlap. Step 2 splits further into `TestParseSampleLines`, `TestParseFamilies` and
-`TestParseErrors`. The Parse tests catch a panic and give up after 5 s, so a lexer that loops
-forever fails with a message. Most Write and Rates tests build their input with `Parse`.
+overlap. Step 2 splits further into `TestParseSampleLines`, `TestParseFamilies`,
+`TestParseErrors`, `TestParseReadError` and `TestParseRealScrape`. The Parse tests catch a panic
+and give up after 5 s, so a lexer that loops forever fails with a message. Most Write and Rates
+tests build their input with `Parse`.
 `testdata/` holds two scrapes of a checkout service, taken 15 s apart.
 
 ## Docs you can use
@@ -213,7 +214,7 @@ forever fails with a message. Most Write and Rates tests build their input with 
 - Lint like `promtool check metrics` (counters without `_total`, families without HELP), plus
   histograms whose `le` values do not increase or that have no `+Inf` bucket.
 - Average latency from a histogram, `rate(_sum) / rate(_count)`, and a p99 from the bucket rates
-  (see exercise 03).
+  (see 03-latency).
 - Accept OpenMetrics too: `# EOF`, `_created` samples, counter TYPE lines without `_total`.
 
 ## Stuck?

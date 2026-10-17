@@ -161,10 +161,12 @@ Stats() = {Hits: 1, Misses: 1, Evictions: 0, Expirations: 2}, HitRatio() = 0.5
     go test -run TestStats -v ./exercises/09-cache/                      # step 5: counters
     go test -race -run 'TestConcurrent|TestLarge' -v ./exercises/09-cache/   # step 6: goroutines and O(1)
 
-A stub that panics stops the whole test binary, so run one step at a time; the 6 filters do not
-overlap. Every call into the cache has a 5 s timeout, so a lock that is never released fails a
-test instead of hanging. `TestLRUMatchesSimpleModel` compares your cache with a slow, obviously
-correct LRU and prints the last calls when they disagree.
+Run one step at a time; the 6 filters do not overlap. In steps 1 to 5 every call into the cache
+runs with a 5 s timeout and a recover, so a "TODO: implement" panic or a lock that is never
+released fails one test with a message instead of crashing or hanging the run. The goroutines of
+step 6 call the cache directly: a panic there kills the test binary.
+`TestLRUMatchesSimpleModel` compares your cache with a slow, obviously correct LRU and prints the
+last calls when they disagree.
 
 ## Docs you can use
 

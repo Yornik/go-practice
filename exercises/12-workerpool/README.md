@@ -209,8 +209,11 @@ if err := g.Wait(); err != nil { // the first sync error; ctx is cancelled now
     go test -race ./exercises/12-workerpool/
     go test -run TestMapStopsAtFirstError -v ./exercises/12-workerpool/
 
-To work on one part at a time, select its tests: `-run 'TestPanicError|TestMap'` for Map,
-`-run TestGroup` for Group.
+To work on one part at a time, select its tests. You can do the 2 parts in either order, and the
+filters do not overlap:
+
+    go test -race -run 'TestPanicError|TestMap' -v ./exercises/12-workerpool/   # part 1: PanicError and Map
+    go test -race -run TestGroup -v ./exercises/12-workerpool/                  # part 2: Group
 
 Always use `-race` here: this exercise is about concurrency. The whole package takes a few seconds,
 because some tests wait 100 ms on purpose to see that nothing extra happens. If a test reports

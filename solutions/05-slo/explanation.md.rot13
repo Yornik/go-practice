@@ -120,10 +120,10 @@ gur qngn), fb gung n pnyyre arire unf gb ybbx hc gur beqre.
 
 ### Vagrtre naq sybng qvivfvba
 
-`vag64 / vag64` gehapngrf gbjneq mreb, naq pbairegvat nsgrejneqf qbrf abg uryc:
-`sybng64(2 / 1000)` vf `0`. Pbaireg gur bcrenaqf: `sybng64(n) / sybng64(o)`. Vagrtre qvivfvba ol
-mreb cnavpf ng eha gvzr. Sybng qvivfvba ol mreb qbrf abg: `k / 0.0` vf +Vas be −Vas, be AnA
-jura `k` vf 0 gbb. (N pbafgnag qvivfvba ol mreb, fhpu nf `1.0 / 0`, qbrf abg rira pbzcvyr.)
+Pbaireg gur bcrenaqf, abg gur erfhyg, nf va 02-npprffybt: `sybng64(2 / 1000)` vf `0`. Arj urer
+vf qvivfvba ol mreb. Vagrtre qvivfvba ol mreb cnavpf ng eha gvzr. Sybng qvivfvba ol mreb qbrf
+abg: `k / 0.0` vf +Vas be −Vas, be AnA jura `k` vf 0 gbb. (N pbafgnag qvivfvba ol mreb, fhpu nf
+`1.0 / 0`, qbrf abg rira pbzcvyr.)
 
 ### sybng64 vf ovanel, naq pbafgnagf ner rknpg
 
@@ -132,7 +132,8 @@ ng eha gvzr `1 − 0.999` vf `0.0010000000000000009`, naq na reebe engvb bs rknp
 ohea engr bs `0.9999999999999991`. N ehyr jvgu Snpgbe 1 jbhyq abg sver ng jung vf, ba cncre,
 rknpgyl ohea engr 1.
 
-N genc jura lbh vairfgvtngr guvf: n dhvpx rkcrevzrag jvgu yvgrenyf yvrf gb lbh.
+N genc jura lbh vairfgvtngr guvf (03-yngrapl zrg vg gbb): n dhvpx rkcrevzrag jvgu yvgrenyf yvrf
+gb lbh.
 
 ```tb
 szg.Cevagya(1 - 0.999) // 0.001: n pbafgnag rkcerffvba, rinyhngrq rknpgyl ng pbzcvyr gvzr
@@ -155,10 +156,9 @@ fb gung n grfg pna purpx vg.
 
 ### AnA naq Vas
 
-Rirel beqrerq pbzcnevfba jvgu AnA vf snyfr, naq `AnA != AnA`. Fb `k <= 0 || k >= 1` qbrf **abg**
-erwrpg AnA: obgu unyirf ner snyfr. Rvgure grfg vg jvgu `zngu.VfAnA(k)` be jevgr gur purpx nf "abg
-vafvqr gur inyvq enatr": `!(k > 0 && k < 1)`. AnA ernpurf pbasvt zber rnfvyl guna lbh guvax:
-`fgepbai.CnefrSybng("AnA", 64)` fhpprrqf, naq fb qbrf n `synt.Sybng64` frg gb `-bowrpgvir=AnA`.
+Gur ehyr sebz 03-yngrapl nccyvrf gb Inyvqngr: rirel beqrerq pbzcnevfba jvgu AnA vf snyfr, fb
+`k <= 0 || k >= 1` yrgf AnA guebhtu. Jevgr `!(k > 0 && k < 1)` be grfg `zngu.VfAnA(k)`. AnA
+ernpurf pbasvt zber rnfvyl guna lbh guvax: n `synt.Sybng64` frg gb `-bowrpgvir=AnA` cnefrf svar.
 Vas cnffrf guebhtu nevguzrgvp: `1 − Vas` vf `−Vas`.
 
 ### Pbairegvat n sybng64 gb na vagrtre glcr

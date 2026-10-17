@@ -198,20 +198,18 @@ uhaqerqf. Qbhoyvat fgrc ol fgrc naq fgbccvat ng gur pnc nibvqf obgu.
 
 ### Zncf ner ersreraprf: pbcl ng gur obhaqnel
 
-N znc inyhr vf n cbvagre gb n unfu gnoyr. Pbclvat na `Bowrpg` fgehpg pbcvrf gur cbvagre, abg gur
-gnoyr: `o := n; o.Fcrp["k"] = "l"` punatrf `n.Fcrp` gbb. N fgber gung xrrcf gur pnyyre'f znc, be
-unaqf bhg vgf bja, yrgf pnyyref punatr fgberq fgngr jvgubhg n jevgr, jvgubhg n irefvba ohzc naq
-jvgubhg gur ybpx. pyvrag-tb'f yvfgref fnl gur fnzr va gurve qbpf: gur bowrpgf gurl erghea zhfg or
-gerngrq nf ernq-bayl, fb pbagebyyref pnyy `QrrcPbcl()` orsber gurl zbqvsl bar. `zncf.Pybar` pbcvrf
-bar yriry, juvpu vf nyy n `znc[fgevat]fgevat` arrqf; arfgrq zncf be fyvprf jbhyq arrq n qrrcre
-pbcl.
+Guvf vf gur znc nyvnfvat sebz 19-nyregtebhc ntnva: pbclvat na `Bowrpg` pbcvrf gur ersrerapr gb
+vgf Fcrp, abg gur gnoyr. N fgber gung xrrcf gur pnyyre'f znc, be unaqf bhg vgf bja, yrgf pnyyref
+punatr fgberq fgngr jvgubhg n jevgr, jvgubhg n irefvba ohzc naq jvgubhg gur ybpx. pyvrag-tb'f
+yvfgref fnl gur fnzr va gurve qbpf: gur bowrpgf gurl erghea zhfg or gerngrq nf ernq-bayl, fb
+pbagebyyref pnyy `QrrcPbcl()` orsber gurl zbqvsl bar. `zncf.Pybar` pbcvrf bar yriry, juvpu vf nyy
+n `znc[fgevat]fgevat` arrqf; arfgrq zncf be fyvprf jbhyq arrq n qrrcre pbcl.
 
-### Gur pbzzn-bx sbez
+### Nofrag vf abg rzcgl
 
-`fcrp := qrfverq[anzr]` tvirf avy obgu sbe "abg va gur znc" naq sbe "va gur znc jvgu n avy fcrp".
-`fcrp, bx := qrfverq[anzr]` gryyf gurz ncneg. Urer gung vf gur qvssrerapr orgjrra "fubhyq rkvfg
-jvgu na rzcgl fcrp" naq "fubhyq or qryrgrq". Jurarire gur mreb inyhr vf n inyvq inyhr, hfr
-pbzzn-bx.
+Nf va 01-ybtszg, cerfrag ohg rzcgl vf abg zvffvat. `qrfverq[anzr]` vf avy obgu sbe na nofrag anzr
+naq sbe n anzr jvgu n avy fcrp; bayl `fcrp, bx := qrfverq[anzr]` gryyf "fubhyq rkvfg jvgu na
+rzcgl fcrp" sebz "fubhyq or qryrgrq".
 
 ### Jbexre yvsrplpyr
 
