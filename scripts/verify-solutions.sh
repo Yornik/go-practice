@@ -16,8 +16,11 @@ cd "$root"
 if [ "$#" -gt 0 ]; then
   exercises=("$@")
 else
+  # nullglob: an empty exercises/ gives an empty list, not a literal "*".
+  shopt -s nullglob
   exercises=()
   for d in exercises/*/; do exercises+=("$(basename "$d")"); done
+  shopt -u nullglob
 fi
 
 tmp=$(mktemp -d)
