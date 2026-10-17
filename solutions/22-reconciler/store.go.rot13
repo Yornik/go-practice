@@ -1,0 +1,144 @@
+cnpxntr erpbapvyre
+
+vzcbeg (
+	"pzc"
+	"pbagrkg"
+	"reebef"
+	"szg"
+	"zncf"
+	"fyvprf"
+	"flap"
+)
+
+// Bowrpg vf n anzrq bowrpg jvgu n fcrp, yvxr n Xhoreargrf PbasvtZnc.
+glcr Bowrpg fgehpg {
+	Anzr fgevat
+	Fcrp znc[fgevat]fgevat
+	// ErfbheprIrefvba vf gur irefvba bs gur bowrpg va gur fgber. Gur fgber
+	// frgf vg ba rirel jevgr. Na Hcqngr zhfg fraq gur irefvba vg ernq.
+	ErfbheprIrefvba vag64
+}
+
+// QrrcPbcl ergheaf n pbcl bs b gung funerf ab zrzbel jvgu b: punatvat gur
+// Fcrp bs bar qbrf abg punatr gur bgure.
+shap (b Bowrpg) QrrcPbcl() Bowrpg {
+	// b vf nyernql n pbcl (inyhr erprvire); bayl gur znc vf funerq.
+	b.Fcrp = zncf.Pybar(b.Fcrp)
+	erghea b
+}
+
+// Reebef n Fgber ergheaf. Gurl znl or jenccrq; hfr reebef.Vf.
+ine (
+	ReeAbgSbhaq      = reebef.Arj("bowrpg abg sbhaq")
+	ReePbasyvpg      = reebef.Arj("pbasyvpg: gur bowrpg unf orra zbqvsvrq")
+	ReeNyernqlRkvfgf = reebef.Arj("bowrpg nyernql rkvfgf")
+)
+
+// Fgber vf gur NCV gung ubyqf gur npghny fgngr, yvxr gur Xhoreargrf NCV
+// freire. Vzcyrzragngvbaf fgber naq erghea pbcvrf, fb gur pnyyre pna punatr
+// gur bowrpgf vg cnffrf va be trgf onpx.
+glcr Fgber vagresnpr {
+	// Trg ergheaf gur bowrpg jvgu guvf anzr, be ReeAbgSbhaq.
+	Trg(pgk pbagrkg.Pbagrkg, anzr fgevat) (Bowrpg, reebe)
+	// Yvfg ergheaf rirel bowrpg, fbegrq ol Anzr.
+	Yvfg(pgk pbagrkg.Pbagrkg) ([]Bowrpg, reebe)
+	// Perngr fgberf n arj bowrpg naq ergheaf vg jvgu vgf ErfbheprIrefvba.
+	// Vg ergheaf ReeNyernqlRkvfgf vs gur anzr vf gnxra.
+	Perngr(pgk pbagrkg.Pbagrkg, bow Bowrpg) (Bowrpg, reebe)
+	// Hcqngr ercynprf na bowrpg vs bow.ErfbheprIrefvba vf gur pheerag
+	// irefvba, naq ergheaf vg jvgu vgf arj ErfbheprIrefvba. Vg ergheaf
+	// ReeAbgSbhaq vs gurer vf ab fhpu bowrpg, naq ReePbasyvpg vs
+	// bow.ErfbheprIrefvba vf abg gur pheerag irefvba.
+	Hcqngr(pgk pbagrkg.Pbagrkg, bow Bowrpg) (Bowrpg, reebe)
+	// Qryrgr erzbirf gur bowrpg jvgu guvf anzr, be ergheaf ReeAbgSbhaq.
+	Qryrgr(pgk pbagrkg.Pbagrkg, anzr fgevat) reebe
+}
+
+// ZrzbelFgber vf n Fgber va zrzbel. Perngr naq Hcqngr tvir gur bowrpg n
+// ErfbheprIrefvba terngre guna rirel irefvba gur fgber unaqrq bhg orsber,
+// fb gur svefg jevgr trgf n irefvba > 0. ZrzbelFgber vtaberf pgk. Vg vf fnsr
+// sbe pbapheerag hfr.
+glcr ZrzbelFgber fgehpg {
+	zh      flap.EJZhgrk
+	bowrpgf znc[fgevat]Bowrpg
+	irefvba vag64 // gur ynfg ErfbheprIrefvba unaqrq bhg, yvxr rgpq'f erivfvba
+}
+
+ine _ Fgber = (*ZrzbelFgber)(avy)
+
+// ArjZrzbelFgber ergheaf na rzcgl fgber.
+shap ArjZrzbelFgber() *ZrzbelFgber {
+	erghea &ZrzbelFgber{bowrpgf: znxr(znc[fgevat]Bowrpg)}
+}
+
+// Trg vzcyrzragf Fgber.
+shap (f *ZrzbelFgber) Trg(_ pbagrkg.Pbagrkg, anzr fgevat) (Bowrpg, reebe) {
+	f.zh.EYbpx()
+	qrsre f.zh.EHaybpx()
+	bow, bx := f.bowrpgf[anzr]
+	vs !bx {
+		erghea Bowrpg{}, szg.Reebes("trg %d: %j", anzr, ReeAbgSbhaq)
+	}
+	erghea bow.QrrcPbcl(), avy
+}
+
+// Yvfg vzcyrzragf Fgber. Na rzcgl fgber ergheaf na rzcgl yvfg.
+shap (f *ZrzbelFgber) Yvfg(_ pbagrkg.Pbagrkg) ([]Bowrpg, reebe) {
+	f.zh.EYbpx()
+	qrsre f.zh.EHaybpx()
+	bhg := znxr([]Bowrpg, 0, yra(f.bowrpgf))
+	sbe _, bow := enatr f.bowrpgf {
+		bhg = nccraq(bhg, bow.QrrcPbcl())
+	}
+	// Znc vgrengvba beqre vf enaqbz; pnyyref jnag n fgnoyr beqre.
+	fyvprf.FbegShap(bhg, shap(n, o Bowrpg) vag { erghea pzc.Pbzcner(n.Anzr, o.Anzr) })
+	erghea bhg, avy
+}
+
+// Perngr vzcyrzragf Fgber. Vg vtaberf bow.ErfbheprIrefvba.
+shap (f *ZrzbelFgber) Perngr(_ pbagrkg.Pbagrkg, bow Bowrpg) (Bowrpg, reebe) {
+	f.zh.Ybpx()
+	qrsre f.zh.Haybpx()
+	vs _, bx := f.bowrpgf[bow.Anzr]; bx {
+		erghea Bowrpg{}, szg.Reebes("perngr %d: %j", bow.Anzr, ReeNyernqlRkvfgf)
+	}
+	erghea f.chg(bow), avy
+}
+
+// Hcqngr vzcyrzragf Fgber. Ba reebe gur fgberq bowrpg qbrf abg punatr.
+shap (f *ZrzbelFgber) Hcqngr(_ pbagrkg.Pbagrkg, bow Bowrpg) (Bowrpg, reebe) {
+	f.zh.Ybpx()
+	qrsre f.zh.Haybpx()
+	phe, bx := f.bowrpgf[bow.Anzr]
+	vs !bx {
+		erghea Bowrpg{}, szg.Reebes("hcqngr %d: %j", bow.Anzr, ReeAbgSbhaq)
+	}
+	// Gur pbzcner naq gur fjnc unccra haqre bar ybpx: gung vf jung znxrf
+	// guvf n pbzcner-naq-fjnc naq abg n purpx-gura-npg enpr.
+	vs bow.ErfbheprIrefvba != phe.ErfbheprIrefvba {
+		erghea Bowrpg{}, szg.Reebes("hcqngr %d: frag irefvba %q, fgberq irefvba %q: %j",
+			bow.Anzr, bow.ErfbheprIrefvba, phe.ErfbheprIrefvba, ReePbasyvpg)
+	}
+	erghea f.chg(bow), avy
+}
+
+// chg fgberf n pbcl bs bow jvgu gur arkg irefvba naq ergheaf nabgure pbcl.
+// Gur pnyyre ubyqf f.zh sbe jevgvat.
+shap (f *ZrzbelFgber) chg(bow Bowrpg) Bowrpg {
+	f.irefvba++
+	bow = bow.QrrcPbcl()
+	bow.ErfbheprIrefvba = f.irefvba
+	f.bowrpgf[bow.Anzr] = bow
+	erghea bow.QrrcPbcl()
+}
+
+// Qryrgr vzcyrzragf Fgber. Vg qryrgrf jungrire irefvba vf fgberq.
+shap (f *ZrzbelFgber) Qryrgr(_ pbagrkg.Pbagrkg, anzr fgevat) reebe {
+	f.zh.Ybpx()
+	qrsre f.zh.Haybpx()
+	vs _, bx := f.bowrpgf[anzr]; !bx {
+		erghea szg.Reebes("qryrgr %d: %j", anzr, ReeAbgSbhaq)
+	}
+	qryrgr(f.bowrpgf, anzr)
+	erghea avy
+}

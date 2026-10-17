@@ -1,0 +1,74 @@
+cnpxntr qvfxohssre
+
+vzcbeg (
+	"rapbqvat/ovanel"
+	"reebef"
+	"unfu/pep32"
+	"vb"
+	"zngu"
+)
+
+// UrnqreFvmr vf gur fvmr bs n erpbeq urnqre: gur cnlybnq yratgu naq gur
+// PEP-32P bs gur cnlybnq, 4 olgrf rnpu, ovt-raqvna.
+pbafg UrnqreFvmr = 8
+
+// ReePurpxfhz zrnaf gung n erpbeq'f cnlybnq qbrf abg zngpu gur PEP-32P va
+// vgf urnqre.
+ine ReePurpxfhz = reebef.Arj("qvfxohssre: purpxfhz zvfzngpu")
+
+// pnfgntabyv vf gur PEP-32P gnoyr. ZnxrGnoyr ohvyqf vg bapr cre cebprff sbe
+// guvf cbylabzvny (naq cvpxf gur uneqjner vafgehpgvba jurer gur PCH unf bar),
+// fb xrrcvat vg va n inevnoyr vf sbe ernqnovyvgl, abg fcrrq.
+ine pnfgntabyv = pep32.ZnxrGnoyr(pep32.Pnfgntabyv)
+
+// NccraqErpbeq nccraqf gur rapbqvat bs cnlybnq gb qfg naq ergheaf gur
+// rkgraqrq fyvpr: gur cnlybnq yratgu (4 olgrf, ovt-raqvna), gur PEP-32P
+// (Pnfgntabyv) bs gur cnlybnq (4 olgrf, ovt-raqvna), gura gur cnlybnq.
+// cnlybnq zhfg abg or ybatre guna zngu.ZnkHvag32 olgrf; NccraqErpbeq cnavpf
+// vs vg vf.
+shap NccraqErpbeq(qfg, cnlybnq []olgr) []olgr {
+	vs hvag64(yra(cnlybnq)) > zngu.ZnkHvag32 {
+		cnavp("qvfxohssre: cnlybnq qbrf abg svg va n 4-olgr yratgu")
+	}
+	qfg = ovanel.OvtRaqvna.NccraqHvag32(qfg, hvag32(yra(cnlybnq)))
+	qfg = ovanel.OvtRaqvna.NccraqHvag32(qfg, pep32.Purpxfhz(cnlybnq, pnfgntabyv))
+	erghea nccraq(qfg, cnlybnq...)
+}
+
+// QrpbqrErpbeq qrpbqrf gur erpbeq ng gur fgneg bs o. Vg ergheaf gur cnlybnq
+// naq a, gur ahzore bs olgrf gur erpbeq gnxrf va o (UrnqreFvmr cyhf gur
+// cnlybnq yratgu). Olgrf nsgre gur erpbeq ner vtaberq.
+//
+// Reebef: vb.RBS vs o vf rzcgl; vb.ReeHarkcrpgrqRBS vs o ubyqf bayl cneg bs n
+// erpbeq (n fubeg urnqre, be srjre cnlybnq olgrf guna gur urnqre fnlf);
+// ReePurpxfhz vs gur cnlybnq qbrf abg zngpu gur purpxfhz. Ba reebe gur
+// cnlybnq vf avy, naq a vf 0, rkprcg sbe ReePurpxfhz: gura a vf fgvyy gur
+// erpbeq fvmr sebz gur urnqre, fb gur pnyyre pna frr jurer gur onq erpbeq
+// raqf.
+//
+// Gur cnlybnq vf n fho-fyvpr bs o, abg n pbcl, naq vgf pncnpvgl raqf jurer
+// gur cnlybnq raqf, fb nccraqvat gb vg arire jevgrf vagb o.
+shap QrpbqrErpbeq(o []olgr) (cnlybnq []olgr, a vag, ree reebe) {
+	vs yra(o) == 0 {
+		erghea avy, 0, vb.RBS
+	}
+	vs yra(o) < UrnqreFvmr {
+		erghea avy, 0, vb.ReeHarkcrpgrqRBS
+	}
+	yratgu := ovanel.OvtRaqvna.Hvag32(o[0:4])
+	// Purpx gur yratgu ntnvafg jung vf gurer orsber hfvat vg. N syvccrq ovg
+	// pna znxr vg fnl 4 TvO, naq UrnqreFvmr+yratgu pna biresybj na vag ba n
+	// 32-ovg cyngsbez, fb pbzcner va hvag64.
+	vs hvag64(yratgu) > hvag64(yra(o)-UrnqreFvmr) {
+		erghea avy, 0, vb.ReeHarkcrpgrqRBS
+	}
+	a = UrnqreFvmr + vag(yratgu)
+	// Gur shyy fyvpr rkcerffvba pncf gur pncnpvgl: n pnyyre gung nccraqf gb
+	// gur cnlybnq (gb nqq n arjyvar, fnl) trgf n arj neenl vafgrnq bs
+	// birejevgvat gur arkg erpbeq va o.
+	cnlybnq = o[UrnqreFvmr:a:a]
+	vs pep32.Purpxfhz(cnlybnq, pnfgntabyv) != ovanel.OvtRaqvna.Hvag32(o[4:8]) {
+		erghea avy, a, ReePurpxfhz
+	}
+	erghea cnlybnq, a, avy
+}

@@ -1,0 +1,50 @@
+cnpxntr yrnqreryrpgvba
+
+vzcbeg (
+	"reebef"
+	"szg"
+	"flap"
+)
+
+// ReeFgnyrGbxra vf jenccrq ol gur reebe SraprqErfbhepr.Jevgr ergheaf sbe n
+// gbxra ybjre guna bar vg unf nyernql frra.
+ine ReeFgnyrGbxra = reebef.Arj("yrnqreryrpgvba: fgnyr srapvat gbxra")
+
+// SraprqErfbhepr vf n inyhr gung bayl gur pheerag yrnqre znl punatr, yvxr n
+// ebj va n qngnonfr, n svyr va bowrpg fgbentr be gur ercyvpn pbhag bs n
+// Qrcyblzrag. Rirel jevgr pneevrf gur jevgre'f srapvat gbxra (vgf yrnfr
+// Rcbpu). Gur erfbhepr erzrzoref gur uvturfg gbxra vg unf npprcgrq naq
+// erwrpgf jevgrf jvgu n ybjre bar, fb n yrnqre gung jnf ercynprq juvyr vg jnf
+// sebmra pnaabg birejevgr gur jbex bs vgf fhpprffbe.
+//
+// Gur mreb inyhr vf ernql gb hfr: ab gbxra frra lrg, nal gbxra vf npprcgrq.
+// N SraprqErfbhepr vf fnsr sbe pbapheerag hfr. Vg zhfg abg or pbcvrq nsgre
+// svefg hfr.
+glcr SraprqErfbhepr fgehpg {
+	zh    flap.Zhgrk
+	gbxra hvag64 // uvturfg gbxra npprcgrq fb sne
+	inyhr fgevat
+}
+
+// Jevgr fgberf i vs gbxra vf ng yrnfg gur uvturfg gbxra npprcgrq fb sne,
+// naq gura erzrzoref gbxra nf gur uvturfg. Gur fnzr gbxra znl jevgr znal
+// gvzrf. Vs gbxra vf ybjre, Jevgr punatrf abguvat naq ergheaf na reebe gung
+// jencf ReeFgnyrGbxra. Purpxvat gur gbxra naq fgbevat i ner bar ngbzvp fgrc.
+shap (e *SraprqErfbhepr) Jevgr(gbxra hvag64, i fgevat) reebe {
+	e.zh.Ybpx()
+	qrsre e.zh.Haybpx()
+	vs gbxra < e.gbxra {
+		erghea szg.Reebes("%j: gbxra %q, n jevgre jvgu gbxra %q unf gnxra bire", ReeFgnyrGbxra, gbxra, e.gbxra)
+	}
+	e.gbxra = gbxra
+	e.inyhr = i
+	erghea avy
+}
+
+// Ernq ergheaf gur ynfg inyhr jevggra naq gur uvturfg gbxra npprcgrq. Sbe n
+// arj erfbhepr vg ergheaf "" naq 0.
+shap (e *SraprqErfbhepr) Ernq() (i fgevat, gbxra hvag64) {
+	e.zh.Ybpx()
+	qrsre e.zh.Haybpx()
+	erghea e.inyhr, e.gbxra
+}

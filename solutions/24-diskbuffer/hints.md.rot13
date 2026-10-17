@@ -1,0 +1,49 @@
+# Uvagf · 24 · Penfu-fnsr qvfx ohssre sbe n ybt fuvccre
+
+## Uvag 1
+
+Fgneg ba cncre: jevgr gur olgrf bs n erpbeq, jung n frtzrag'f anzr gryyf lbh, naq jung gur npx
+svyr ubyqf. Gura yvfg gur fgngr n Ohssre xrrcf va zrzbel: gur svefg frd bs rirel frtzrag, gur bcra
+svyr bs gur ynfg bar naq vgf fvmr, gur arkg frd, gur npxrq frd. Gur anzrf ner gur vaqrk: frtzrag
+*v* ubyqf gur frdf sebz vgf bja anzr gb gur arkg frtzrag'f anzr zvahf 1, naq gur ynfg bar hc gb
+`arkg - 1`. Jevgr QrpbqrErpbeq nf n cher shapgvba ba n `[]olgr`, fb gung ernqvat n frtzrag vf
+`bf.ErnqSvyr` cyhf n ybbc.
+
+## Uvag 2
+
+N penfu bayl qnzntrf gur raq bs gur svyr gung jnf orvat jevggra, naq vs lbh flap n frtzrag orsber
+lbh perngr gur arkg bar, gung vf nyjnlf gur ynfg frtzrag. Fb n oebxra erpbeq ng gur irel raq bs
+gur ynfg frtzrag vf n gbea jevgr: phg vg. Rirelguvat ryfr (n oebxra erpbeq jvgu vagnpg qngn nsgre
+vg, qnzntr va na byqre frtzrag, n jebat erpbeq pbhag, erpbeqf zvffvat nsgre gur npx) vf fbzrguvat
+n penfu pnaabg qb: ercbeg vg naq punatr abguvat. Guerr zber gencf: jevgr gur npx qhenoyl orsber
+lbh qryrgr n frtzrag; gnxr gur arkg frd nf `znk(npx, ynfg frd ba qvfx) + 1`, orpnhfr nsgre n
+cbjre ybff gur npx pna or nurnq bs gur qngn; naq erghea `o[8:a:a]`, abg `o[8:a]`, be n pnyyre'f
+`nccraq` birejevgrf gur arkg erpbeq.
+
+## Uvag 3
+
+Bcra, va gjb cunfrf. Cunfr 1 bayl ernqf naq qrpvqrf:
+
+1. Inyvqngr gur bcgvbaf, `bf.ZxqveNyy` gur qverpgbel, ernq `npx` (ab svyr zrnaf 0; tneontr vf n
+   `*PbeehcgReebe` sbe `npx`).
+2. Yvfg gur `.frt` svyrf jvgu `bf.ErnqQve` (fbegrq ol anzr) naq cnefr gurve svefg frdf.
+3. Sbe rnpu byqre frtzrag: vs vgf jubyr enatr vf npxrq, cyna gb qryrgr vg, haernq. Bgurejvfr ernq
+   vg naq purpx gung vg ubyqf rknpgyl `arkg anzr - bja anzr` vagnpg erpbeqf naq ab rkgen olgrf.
+4. Sbe gur ynfg frtzrag: qrpbqr hagvy `vb.RBS`. Ba `vb.ReeHarkcrpgrqRBS`, be ba `ReePurpxfhz` jurer
+   bssfrg + a vf gur svyr fvmr, erzrzore gur bssfrg nf gur phg cbvag naq fgbc. Nal bgure reebe vf
+   n `*PbeehcgReebe`. Vs nyy vgf erpbeqf ner npxrq, cyna gb qryrgr vg.
+5. Gur svefg frtzrag lbh xrrc zhfg fgneg ng be orsber `npx + 1`.
+
+Cunfr 2 nccyvrf gur cyna: qryrgr, gehapngr naq flap, bcra gur ynfg xrcg frtzrag jvgu
+`B_JEBAYL|B_NCCRAQ`, naq frg `arkg` gb vgf svefg frd cyhf vgf erpbeq pbhag (be `npx + 1`).
+
+Nccraq: ybpx, purpx pybfrq naq fvmr, rapbqr, ebgngr vs gurer vf ab bcra frtzrag be vs vg vf abg
+rzcgl naq gur erpbeq qbrf abg svg (flap naq pybfr gur byq svyr, perngr gur arj bar jvgu `B_RKPY`,
+flap gur qverpgbel), jevgr, flap vs nfxrq, erghea `arkg` naq vaperzrag vg.
+
+ErnqSebz: fgneg ng `znk(frd, npxrq + 1)`, fxvc frtzragf gung raq orsber gung, ernq rnpu erznvavat
+bar vagb n arj fyvpr (sa xrrcf gur cnlybnqf, fb arire erhfr n ernq ohssre), qrpbqr vg naq pnyy sa.
+
+Npx: jevgr n grzcbenel svyr, flap, pybfr, eranzr, flap gur qverpgbel, frg `npxrq`, gura qryrgr gur
+byqrfg frtzragf juvyr gurve jubyr enatr vf npxrq (pybfr gur bcra svyr svefg vs vg vf gur ynfg
+bar).
