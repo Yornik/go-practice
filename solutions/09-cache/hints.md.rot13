@@ -1,0 +1,44 @@
+# Uvagf · 09 · Pnpur: trarevp YEH jvgu GGY
+
+## Uvag 1
+
+Fgneg sebz gur pbzcyrkvgvrf, abg sebz gur pbqr. Yvfg jung Trg naq Frg zhfg qb va B(1): svaq na
+ragel ol xrl, zbir na ragel gb gur "zbfg erpragyl hfrq" raq, svaq gur yrnfg erpragyl hfrq ragel,
+naq erzbir nal ragel. N znc qbrf gur svefg wbo naq abar bs gur bguref. Juvpu fgehpgher zbirf naq
+erzbirf na ryrzrag va B(1), nf ybat nf lbh nyernql ubyq n cbvagre gb vg? Arvgure fgehpgher vf
+rabhtu nybar. Hfr obgu, naq znxr gur znc cbvag vagb gur bgure bar.
+
+## Uvag 2
+
+Gur znc ubyqf `xrl -> *ragel`, naq rnpu ragel vf n abqr bs n qbhoyl yvaxrq yvfg
+(`pbagnvare/yvfg`, be `ceri`/`arkg` svryqf va lbhe bja ragel glcr), zbfg erpragyl hfrq ng gur
+sebag. Gjb qrgnvyf qrpvqr jurgure guvf jbexf. Svefg, gur abqr zhfg fgber vgf xrl: rivpgvba fgnegf
+sebz gur onpx bs gur yvfg naq zhfg gura qryrgr gur znc ragel. Frpbaq, lbh pnaabg pnyy BaRivpg
+juvyr lbh ubyq gur zhgrk: `flap.Zhgrk` vf abg erragenag, fb n pnyyonpx gung pnyyf `p.Yra()`
+qrnqybpxf. Pbyyrpg gur craqvat BaRivpg pnyyf va n fyvpr juvyr lbh ubyq gur ybpx, haybpx, gura znxr
+gur pnyyf. Pnershy jvgu `qrsre p.zh.Haybpx()`: nalguvat pnyyrq orsber gur shapgvba ergheaf fgvyy
+ehaf haqre gur ybpx. Sbe rkcvel, jevgr bar urycre "vf guvf ragel rkcverq ng abj?" (rkcverq jura
+`abj` vf abg orsber gur rkcvel gvzr) naq hfr vg rireljurer.
+
+## Uvag 3
+
+- Svryqf: gur bcgvbaf lbh arrq (pncnpvgl, ggy, abj, baRivpg), n `flap.Zhgrk`, gur znc, gur yvfg
+  (n fragvary abqr be n `*yvfg.Yvfg`) naq n `Fgngf`.
+- Ragel: xrl, inyhr, rkcvel gvzr (gur mreb `gvzr.Gvzr` zrnaf "arire"), naq gur yvfg yvaxf.
+- Jevgr fznyy urycref gung nffhzr gur ybpx vf uryq: chfu gb gur sebag, hayvax, zbir gb gur sebag,
+  naq `erzbir(ragel, ernfba)`, juvpu hayvaxf, qryrgrf sebz gur znc, pbhagf Rivpgvbaf be
+  Rkcvengvbaf naq ergheaf n "craqvat BaRivpg" erpbeq.
+- Trg: ybpx, ernq `abj`, ybbx hc. Nofrag: pbhag n zvff. Rkcverq: erzbir jvgu Rkcverq, pbhag n zvff.
+  Yvir: pbhag n uvg, zbir vg gb gur sebag, pbcl gur inyhr. Haybpx. Znxr gur craqvat pnyyf. Erghea.
+- FrgJvguGGY: ybpx, ernq `abj`, pbzchgr gur rkcvel (ggy 0: mreb gvzr; bgurejvfr `abj.Nqq(ggy)`,
+  juvpu vf va gur cnfg sbe n artngvir ggy). Vs gur xrl ubyqf n yvir ragel: erpbeq Ercynprq jvgu
+  gur byq inyhr, birejevgr inyhr naq rkcvel, zbir vg gb gur sebag, qbar. Vs vg ubyqf na rkcverq
+  ragel: erzbir vg jvgu Rkcverq. Bayl gura (gung erzbiny serrq n fybg) purpx jurgure gur znc
+  ubyqf `pncnpvgl` ragevrf; vs fb, erzbir gur onpx bs gur yvfg, jvgu Rkcverq vs gung ragel unf
+  rkcverq, ryfr Rivpgrq. Vafreg gur arj ragel ng gur sebag. Haybpx, znxr gur craqvat pnyyf.
+- Qryrgr: yvxr Trg, jvgu Qryrgrq sbe n yvir ragel naq Rkcverq sbe n qrnq bar; erghea gehr bayl
+  sbe Qryrgrq.
+- Xrlf: jnyx sebz sebag gb onpx naq fxvc rkcverq ragevrf. ChetrRkcverq: jnyx gur jubyr yvfg (gur
+  beqre bs hfr vf abg gur rkcvel beqre), erzrzore `arkg` orsber lbh erzbir na ragel, pbyyrpg gur
+  erpbeqf, haybpx, znxr gur pnyyf.
+- Yra naq Fgngf: ernq haqre gur ybpx. UvgEngvb: erghea 0 jura gurer jrer ab ybbxhcf.
