@@ -1,6 +1,6 @@
 # 14 · Circuit breaker: stop hammering a dead dependency
 
-**Tier 3 · about 3 h** · Go: an explicit state machine, `sync.Mutex` and how long to hold it, a generation counter, `defer` when fn panics, callbacks outside a lock, an injected clock · Problem solving: draw the state diagram and the transition table before you code; walk through what concurrent calls see while the state changes
+**Tier 3 · about 3.5 h** · Go: an explicit state machine, `sync.Mutex` and how long to hold it, results that arrive after the state changed, `defer` when fn panics, callbacks outside a lock, an injected clock · Problem solving: draw the state diagram and the transition table before you code; walk through what concurrent calls see while the state changes
 
 Your checkout service calls the payments API with a 2 s timeout. Payments goes down. Now every
 checkout request waits 2 s for nothing. At 300 requests per second that is 600 requests in flight

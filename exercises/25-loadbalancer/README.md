@@ -220,15 +220,15 @@ healthy:      yes  yes  yes  yes  no   no   no   no   no   no   yes
     go test -race ./exercises/25-loadbalancer/
     go test -run TestDrainWaitsForResponseBody -v ./exercises/25-loadbalancer/
 
-Work in steps; each step only needs the ones before it. Add `-race` to each:
+Work in steps; each step only needs the ones before it:
 
-    go test -run 'TestBackend|TestStrategy' ./exercises/25-loadbalancer/       # step 1: strategies, no network
-    go test -run 'TestNew|TestProxy|TestStatus' ./exercises/25-loadbalancer/   # step 2: proxy, in flight, Status
-    go test -run TestRetry ./exercises/25-loadbalancer/                        # step 3: retries
-    go test -run TestEject ./exercises/25-loadbalancer/                        # step 4: passive ejection
-    go test -run TestHealth ./exercises/25-loadbalancer/                       # step 5: active health checks
-    go test -run TestDrain ./exercises/25-loadbalancer/                        # step 6: drain
-    go test -run TestConcurrent ./exercises/25-loadbalancer/                   # step 7: everything at once
+    go test -race -run 'TestBackend|TestStrategy' ./exercises/25-loadbalancer/       # step 1: strategies, no network
+    go test -race -run 'TestNew|TestProxy|TestStatus' ./exercises/25-loadbalancer/   # step 2: proxy, in flight, Status
+    go test -race -run TestRetry ./exercises/25-loadbalancer/                        # step 3: retries
+    go test -race -run TestEject ./exercises/25-loadbalancer/                        # step 4: passive ejection
+    go test -race -run TestHealth ./exercises/25-loadbalancer/                       # step 5: active health checks
+    go test -race -run TestDrain ./exercises/25-loadbalancer/                        # step 6: drain
+    go test -race -run TestConcurrent ./exercises/25-loadbalancer/                   # step 7: everything at once
 
 The fake backends are `httptest` servers; a slow one holds each request until the test releases
 it, and a "dead" one refuses every connection. "did not return within 5s" means something is

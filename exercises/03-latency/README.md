@@ -1,6 +1,6 @@
 # 03 · Percentiles and histogram quantiles
 
-**Tier 1 · about 1 h** · Go: slices share backing arrays (`slices.Clone`, `slices.Sort`), binary search (`sort.Search`), `math.Ceil`, `NaN` and `Inf`, float64 rounding, `time.Duration` arithmetic · Problem solving: pin down a definition precisely; compute small examples by hand
+**Tier 1 · about 1.5 h** · Go: slices share backing arrays (`slices.Clone`, `slices.Sort`), binary search (`sort.Search`), `math.Ceil`, `NaN` and `Inf`, float64 rounding, `time.Duration` arithmetic · Problem solving: pin down a definition precisely; compute small examples by hand
 
 After a deploy, Grafana shows a p99 latency of 235 ms for the checkout API. The load test tool says
 250 ms. A colleague says the mean is 45 ms, so all is fine. All three are "right", and you have to

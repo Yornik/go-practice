@@ -193,8 +193,9 @@ The text after `<Key>="<Value>": ` depends on the parser you call (`strconv.Atoi
     go test -run TestNested -v ./exercises/06-envconfig/                # step 5: nested structs
     go test -run 'TestErrors|ExampleLoad' -v ./exercises/06-envconfig/  # step 6: all errors
 
-The tests recover panics, so a `reflect` panic ("call of reflect.Value.SetInt on string Value")
-fails one test with its message. When a value is wrong, most failures list every key your `Load`
+The Test functions recover panics, so a `reflect` panic ("call of reflect.Value.SetInt on string
+Value") fails one test with its message. `ExampleLoad` (step 6) cannot recover, so a panic in
+`Load` there ends the run after the tests have reported. When a value is wrong, most failures list every key your `Load`
 looked up, in order.
 
 ## Docs you can use

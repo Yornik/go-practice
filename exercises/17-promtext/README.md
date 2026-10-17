@@ -1,6 +1,6 @@
 # 17 · Parse Prometheus metrics and compute rates
 
-**Tier 4 · about 3.5 h** · Go: a hand-written line lexer, `bufio.Scanner`, `strconv` with NaN and ±Inf, canonical map keys and escaping, `io.Writer` errors, round-trip and fuzz tests · Problem solving: turn a format spec into a grammar; define "the same series" precisely; use a round trip as a test oracle
+**Tier 4 · about 4.5 h** · Go: a hand-written line lexer, `bufio.Scanner`, `strconv` with NaN and ±Inf, canonical map keys and escaping, `io.Writer` errors, round-trip and fuzz tests · Problem solving: turn a format spec into a grammar; define "the same series" precisely; use a round trip as a test oracle
 
 Since the last deploy, Grafana shows 0 orders per second for the checkout service, but customers
 are buying things. Either the app stopped counting, or Prometheus stopped scraping it (a relabel

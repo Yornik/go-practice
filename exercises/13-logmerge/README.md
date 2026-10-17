@@ -1,6 +1,6 @@
 # 13 · Merge logs from many pods in time order
 
-**Tier 3 · about 2 h** · Go: `iter.Seq` and `iter.Seq2`, range-over-func, `iter.Pull` and its `stop`, `container/heap`, `bufio.Scanner`, comparing `time.Time` · Problem solving: k-way merge, laziness and bounded memory, cleanup when the consumer stops early
+**Tier 3 · about 2.5 h** · Go: `iter.Seq` and `iter.Seq2`, range-over-func, early termination and cleanup, `bufio.Scanner`, comparing `time.Time` · Problem solving: merge many sorted streams lazily, in bounded memory; clean up when the consumer stops early
 
 Checkout failed for some users between 12:00 and 12:05. The checkout Deployment has 20 pods, and
 `kubectl logs --timestamps` gives you 20 files, each in time order. To see what happened you need

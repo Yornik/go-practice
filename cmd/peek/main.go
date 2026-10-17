@@ -10,7 +10,9 @@
 //	go run ./cmd/peek <exercise> solution
 //
 // <exercise> is the number ("7" or "07") or the directory name ("07-retry").
-// Run peek from the repository root.
+// Run it from the repository root. From an exercise directory, use
+// "go run ../../cmd/peek ..."; peek finds solutions/ from any directory
+// inside the repository.
 package main
 
 import (
@@ -48,7 +50,7 @@ func run(args []string, out io.Writer) error {
 			return errors.New("usage: peek <exercise> hint <1|2|3>")
 		}
 		n, err := strconv.Atoi(args[2])
-		if err != nil || n < 1 {
+		if err != nil || n < 1 || n > 3 {
 			return fmt.Errorf("hint number must be 1, 2 or 3, got %q", args[2])
 		}
 		text, err := decodeFile(filepath.Join(dir, "hints.md.rot13"))
@@ -93,20 +95,46 @@ func run(args []string, out io.Writer) error {
 	}
 }
 
-// findExercise maps "7", "07" or "07-retry" to solutions/07-retry.
+// findExercise maps "7", "07" or "07-retry" to <repo>/solutions/07-retry.
 func findExercise(arg string) (string, error) {
+	root, err := repoRoot()
+	if err != nil {
+		return "", err
+	}
 	prefix := arg
 	if n, err := strconv.Atoi(arg); err == nil {
 		prefix = fmt.Sprintf("%02d-", n)
 	}
-	matches, err := filepath.Glob(filepath.Join(solutionsDir, prefix+"*"))
+	matches, err := filepath.Glob(filepath.Join(root, solutionsDir, prefix+"*"))
 	if err != nil {
 		return "", err
 	}
 	if len(matches) != 1 {
-		return "", fmt.Errorf("no single exercise matches %q in %s/ (run peek from the repository root)", arg, solutionsDir)
+		return "", fmt.Errorf("no single exercise matches %q in %s", arg, filepath.Join(root, solutionsDir))
 	}
 	return matches[0], nil
+}
+
+// repoRoot walks up from the working directory to the first directory that
+// has a go.mod and a solutions/ directory. Learners often run commands from
+// inside an exercise directory, not from the root.
+func repoRoot() (string, error) {
+	dir, err := os.Getwd()
+	if err != nil {
+		return "", err
+	}
+	for {
+		_, errMod := os.Stat(filepath.Join(dir, "go.mod"))
+		info, errSol := os.Stat(filepath.Join(dir, solutionsDir))
+		if errMod == nil && errSol == nil && info.IsDir() {
+			return dir, nil
+		}
+		parent := filepath.Dir(dir)
+		if parent == dir {
+			return "", errors.New("no go.mod with a solutions/ directory next to it in this directory or above: run peek inside the go-practice repository")
+		}
+		dir = parent
+	}
 }
 
 // section returns the text from heading up to the next heading of the same level.

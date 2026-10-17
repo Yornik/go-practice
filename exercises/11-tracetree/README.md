@@ -1,6 +1,6 @@
 # 11 · Make sense of a distributed trace
 
-**Tier 3 · about 2.5 h** · Go: a map of pointers as an index, recursion over a tree, `slices.SortFunc` with `cmp.Or`, `time.Duration` arithmetic, `strings.Builder` with `fmt.Fprintf` · Problem solving: build in two passes, merge intervals, work out timelines on paper
+**Tier 3 · about 2.5 h** · Go: a map of pointers as an index, recursion over a tree, `slices.SortFunc` with `cmp.Or`, `time.Duration` arithmetic, `strings.Builder` with `fmt.Fprintf` · Problem solving: build a tree from flat records; reason about overlapping time intervals; work out timelines on paper
 
 After a deploy the checkout p99 went from 400 ms to 1.3 s. You export one slow trace from Tempo
 or Jaeger: 40 spans in a flat list, each with a span ID, a parent ID, a service, a name, a start and

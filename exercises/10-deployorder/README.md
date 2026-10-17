@@ -181,7 +181,7 @@ g.Waves() → nil, &CycleError{Path: [auth config auth]}
     go test -race ./exercises/10-deployorder/
     go test -run TestWhy -v ./exercises/10-deployorder/
 
-A stub that panics stops the whole test binary, so work one step at a time. The filters do not
+A stub that panics stops the whole test binary, so work one step at a time. Steps 1 to 5 do not
 overlap:
 
     go test -run 'TestNew|TestErrorStrings' -v ./exercises/10-deployorder/   # step 1: New, Error()

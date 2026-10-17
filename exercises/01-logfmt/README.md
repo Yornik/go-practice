@@ -1,6 +1,6 @@
 # 01 · Parse logfmt log lines
 
-**Tier 1 · about 1 h** · Go: strings as bytes vs runes, `strings.Builder`, a hand-written scanner, custom error types with `errors.Is`/`errors.As`/`%w`, `iota` enums with `String()`, `time.Parse` · Problem solving: write the grammar down before you code; see why split and regex fail
+**Tier 1 · about 1.5 h** · Go: strings as bytes vs runes, `strings.Builder`, a hand-written scanner, custom error types with `errors.Is`/`errors.As`/`%w`, `iota` enums with `String()`, `time.Parse` · Problem solving: write the grammar down before you code; see why split and regex fail
 
 Many services log in logfmt: one line per event, `key=value` pairs separated by spaces. Prometheus
 and Alertmanager log this way by default, Go's `log/slog` `TextHandler` writes it, Heroku's router
@@ -45,9 +45,8 @@ Suggested order: `Parse` and `SyntaxError` first (most of the work), then `Level
 ### Parse: the syntax
 
 - Whitespace means a space (0x20) or a tab (0x09), and a tab works everywhere a space does.
-  Nothing else is whitespace: a `\r` (from a Windows line ending) or a non-breaking space
-  (U+00A0, bytes `C2 A0`) is an ordinary byte of a key or value. `a=x\ry` is one pair with the
-  value `x\ry`.
+  Nothing else is whitespace: a `\r` (from a Windows line ending) is an ordinary byte of a key
+  or value. `a=x\ry` is one pair with the value `x\ry`.
 - A line is a list of pairs separated by whitespace. Any amount of whitespace is allowed between
   pairs, before the first pair and after the last one.
 - A pair has one of three forms: `key=value`, `key=` or `key`.
@@ -175,7 +174,9 @@ ParseRecord(`ts=2026-10-16T12:00:00Z level=`)  → error `level: unknown level "
     go test -fuzz=FuzzParse ./exercises/01-logfmt/      # optional: let Go invent inputs, Ctrl-C to stop
 
 A stub that panics stops the whole test binary, so while you work, run only the tests for the
-step you are on. The test names are chosen so that the 3 filters above do not overlap.
+step you are on. The test names are chosen so that the 3 filters above do not overlap. The 2
+examples (`ExampleParse`, `ExampleParseRecord`) run only in a plain `go test`; an example cannot
+recover a panic, so a plain run crashes until all 3 steps work.
 
 ## Docs you can use
 

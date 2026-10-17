@@ -28,5 +28,7 @@ jobs:
         run: go vet ./...
       - name: peek tool tests
         run: go test ./cmd/...
+      - name: every test fails fast against the stubs
+        run: scripts/check-stubs.sh
       - name: reference solutions pass the tests
         run: scripts/verify-solutions.sh

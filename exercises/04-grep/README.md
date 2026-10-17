@@ -1,6 +1,6 @@
 # 04 · Streaming log filter with context
 
-**Tier 1 · about 2 h** · Go: `io.Reader` and `io.Writer` contracts, `bufio.Scanner` and `Scanner.Buffer`, wrapping a reader, `testing/iotest`, a ring buffer, `%w` · Problem solving: keep memory constant while you stream; a small state machine for context and separators
+**Tier 2 · about 2.5 h** · Go: `io.Reader` and `io.Writer` contracts, `bufio.Scanner` and `Scanner.Buffer`, wrapping a reader, `testing/iotest`, `%w` · Problem solving: keep memory constant while you stream; a small state machine for context and separators
 
 A node went `NotReady` at 03:12. You have a 6 GB journal export from it, or a `kubectl logs -f`
 stream that never ends, and you want every error with 2 lines around it, like
@@ -164,7 +164,8 @@ MaxLineBytes 10
     go test -fuzz=FuzzContext ./exercises/04-grep/            # optional: random inputs, Ctrl-C to stop
 
 A function that panics can stop the whole test binary, so while you work, run only the step you
-are on. The 6 filters above do not overlap.
+are on. The 6 filters above do not overlap. `ExampleFilter` runs only in a plain `go test`; an
+example cannot recover a panic, so a plain run crashes until all steps work.
 
 ## Docs you can use
 

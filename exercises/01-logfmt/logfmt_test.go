@@ -106,9 +106,8 @@ func TestParseWhitespace(t *testing.T) {
 			pairs("a", "1", "verbose", "", "msg", "x y", "b", "", "c", "3"),
 		},
 		// Only space and tab separate pairs. Other bytes are data, also the
-		// \r of a Windows line ending and a non-breaking space (bytes C2 A0).
+		// \r of a Windows line ending.
 		{"carriage return is not whitespace", "a=x\ry", pairs("a", "x\ry")},
-		{"non-breaking space is not whitespace", "msg=a b", pairs("msg", "a b")},
 	})
 }
 

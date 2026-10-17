@@ -58,8 +58,15 @@ func TestRun(t *testing.T) {
 	write("hints.md.rot13", "# Hints\n\n## Hint 1\nLook at the map.\n\n## Hint 2\nSort it.\n\n## Hint 3\nDone.\n")
 	write("explanation.md.rot13", "Explanation text.\n")
 	write("demo.go.rot13", "package demo\n")
-
-	t.Chdir(dir)
+	if err := os.WriteFile(filepath.Join(dir, "go.mod"), []byte("module demo\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	// Run from inside an exercise directory, as learners do.
+	sub := filepath.Join(dir, "exercises", "07-demo")
+	if err := os.MkdirAll(sub, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	t.Chdir(sub)
 
 	tests := []struct {
 		args []string
@@ -79,7 +86,7 @@ func TestRun(t *testing.T) {
 		}
 	}
 
-	for _, args := range [][]string{{"8", "hint", "1"}, {"7", "hint", "x"}, {"7", "nope"}, {"7"}} {
+	for _, args := range [][]string{{"8", "hint", "1"}, {"7", "hint", "x"}, {"7", "hint", "4"}, {"7", "nope"}, {"7"}} {
 		if err := run(args, &bytes.Buffer{}); err == nil {
 			t.Errorf("run(%v): got nil error", args)
 		} else if strings.Contains(err.Error(), "panic") {

@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # Check that every hidden reference solution passes its exercise's tests.
 #
-# For each exercise, the script copies the module into a temporary directory,
-# decodes solutions/<exercise>/*.go.rot13 over the stub files and runs the
-# tests with the race detector. Your own work in exercises/ is not touched.
+# For each exercise, the script builds a temporary module from go.mod, the
+# exercise's tests and testdata/, and the decoded solutions/<exercise>/*.go.rot13
+# files, then runs the tests with the race detector. It copies none of the
+# other files in exercises/, so your code there is not touched and does not
+# get in the way. A test file you added or changed is copied, though.
 #
 # Usage: scripts/verify-solutions.sh [exercise ...]
 #   scripts/verify-solutions.sh                  # all exercises
@@ -43,9 +45,12 @@ for ex in "${exercises[@]}"; do
   done
 
   work="$tmp/$ex"
-  mkdir -p "$work/exercises"
+  mkdir -p "$work/exercises/$ex"
   cp go.mod "$work/"
-  cp -R "exercises/$ex" "$work/exercises/"
+  cp "exercises/$ex"/*_test.go "$work/exercises/$ex/"
+  if [ -d "exercises/$ex/testdata" ]; then
+    cp -R "exercises/$ex/testdata" "$work/exercises/$ex/"
+  fi
   for f in "$sol"/*.go.rot13; do
     name=$(basename "$f" .rot13)
     # ROT13 is its own inverse, so the same tr command encodes and decodes.

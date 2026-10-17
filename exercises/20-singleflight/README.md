@@ -1,6 +1,6 @@
 # 20 · Singleflight: stop the cache stampede
 
-**Tier 5 · about 3 h** · Go: generics, a map of in-flight work under a `sync.Mutex`, closing a channel to wake every waiter, `recover` and re-panic across goroutines, `context.WithoutCancel`, reference counting · Problem solving: decide who waits on whom; separate the lifetime of the shared work from the lifetime of each caller
+**Tier 5 · about 3 h** · Go: generics, `sync.Mutex`, waking many waiters at once, `recover` and re-panic across goroutines, `context.WithoutCancel` · Problem solving: decide who waits on whom; separate the lifetime of the shared work from the lifetime of each caller
 
 Your service caches user profiles for 60 s in front of Postgres, with the cache from 09-cache. The
 entry for a popular profile expires at 12:00:00. In the next 50 ms, 1000 requests miss and each

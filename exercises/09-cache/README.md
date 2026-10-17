@@ -1,6 +1,6 @@
 # 09 · Cache: generic LRU with TTL
 
-**Tier 2 · about 2 h** · Go: generics and `comparable`, the zero value of a type parameter, a map plus a doubly linked list, `sync.Mutex`, callbacks outside a lock, an injected clock · Problem solving: choose data structures from the required complexities; keep two structures in sync; decide what each operation does with an expired entry
+**Tier 2 · about 2 h** · Go: generics and `comparable`, the zero value of a type parameter, `sync.Mutex`, callbacks outside a lock, an injected clock · Problem solving: choose data structures from the required complexities (O(1) for Get, Set and Delete); keep two structures in sync; decide what each operation does with an expired entry
 
 Every request to your API needs the tenant's config from an internal config service. It answers
 in 200 ms on a good day and falls over when 40 pods ask on every request, so you cache the
