@@ -380,7 +380,7 @@ func TestIncident(t *testing.T) {
 		// symptom groups wait 30s before they say anything.
 		{at: 0, receive: all(firing, append([]string{unrelated}, symptoms...)...)},
 		{at: 15 * second, receive: all(firing, cause)},
-		// Prometheus re-sends every firing alert with each evaluation.
+		// Prometheus keeps re-sending every firing alert.
 		{at: 30 * second, receive: all(firing, everything...), want: []string{
 			`{alertname="KubePodNotReady", cluster="prod"} firing=[namespace=shop,node=n2,pod=web-0,severity=warning] resolved=[]`,
 		}},

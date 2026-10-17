@@ -6,7 +6,7 @@ You run 13 public HTTPS domains behind ingress controllers and a CDN. cert-manag
 certificates, until the day it silently stops: rotated DNS credentials, a rate limit, a broken
 webhook. Let's Encrypt stopped sending expiry reminder emails in 2025, so nobody warns you any more.
 And the leaf is not the only certificate that can expire: intermediates expire too, and a server
-can send a chain that your browser accepts while `curl` and every Go client reject it. You want a
+can send a chain that your browser accepts while `curl` and Go clients reject it. You want a
 small tool for a cron job: connect to every endpoint the way a client does, verify the chain and
 the host name, and print a table with the most urgent problem on top, weeks before a customer
 sees a certificate error.
@@ -49,9 +49,9 @@ func WriteReport(w io.Writer, rs []Result) error                    // a sorted 
 ```
 
 The core problem: a TLS client with the default configuration aborts the handshake when the chain
-does not verify. Then you have no certificate to look at, and "certificate signed by unknown
-authority" says nothing about when it expires. Find a way to get the chain the server sends even
-when it is bad, and verify it yourself with `crypto/x509`.
+does not verify, and "certificate signed by unknown authority" says nothing about when anything
+expires. Find a way to get the chain the server sends even when it is bad, and verify it yourself
+with `crypto/x509`.
 
 ## Rules
 
@@ -59,7 +59,7 @@ when it is bad, and verify it yourself with `crypto/x509`.
 
 - `ServerName` defaults to the host part of `Addr` (`"127.0.0.1"` for `"127.0.0.1:8443"`).
   Check sends it in the handshake (SNI): a server with many certificates picks one by that name.
-  (TLS never sends an IP address as SNI; that is fine.)
+  (Go never sends an IP address as SNI; that is fine.)
 - `Timeout` covers connect and handshake together. A server that accepts the TCP connection and
   then never answers must not hold Check longer than `Timeout`.
 - Check stops as soon as `ctx` is done. `Err` then matches `ctx.Err()` with `errors.Is`.

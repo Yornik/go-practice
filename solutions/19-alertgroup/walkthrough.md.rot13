@@ -9,7 +9,7 @@ tbebhgvarf, ab gvzref naq ab ybpxf; rirel qrpvfvba vf n shapgvba bs gur fgberq f
 
 ### Fgevat naq Svatrecevag
 
-Obgu fgneg gur fnzr jnl:
+Obgu ybbc bire gur fbegrq anzrf:
 
 ```tb
 sbe v, anzr := enatr fyvprf.Fbegrq(zncf.Xrlf(y)) {
@@ -20,11 +20,12 @@ Fbegvat vf jung znxrf obgu shapgvbaf pnabavpny. `Fgevat` jevgrf vagb n `fgevatf.
 dhbgrf rnpu inyhr jvgu `fgepbai.Dhbgr`, juvpu nyfb znxrf gur fgevat hanzovthbhf: n inyhr pnaabg
 pbagnva na harfpncrq `"` naq snxr n frpbaq ynory.
 
-`Svatrecevag` nccraqf gur jubyr olgr fgernz gb bar `[]olgr` naq unfurf vg bapr:
+`Svatrecevag` nccraqf gur jubyr olgr fgernz gb bar `[]olgr` (`frcnengbe` vf gur pbafgnag
+`0kss`) naq unfurf vg bapr:
 
 ```tb
 ohs = nccraq(ohs, anzr...)
-ohs = nccraq(ohs, frcnengbe) // 0kss
+ohs = nccraq(ohs, frcnengbe)
 ohs = nccraq(ohs, y[anzr]...)
 ohs = nccraq(ohs, frcnengbe)
 ```
@@ -32,8 +33,8 @@ ohs = nccraq(ohs, frcnengbe)
 `nccraq(ohs, f...)` jvgu n fgevat `f` vf n fcrpvny pnfr va gur fcrp: vg nccraqf gur fgevat'f olgrf
 jvgubhg pbairegvat gur fgevat gb n `[]olgr` svefg. Gur erfhyg bs `u.Jevgr` vf vtaberq ba checbfr:
 gur `unfu.Unfu` pbagenpg fnlf Jevgr arire ergheaf na reebe, naq tbynatpv-yvag'f reepurpx xabjf
-gung. Cebzrgurhf nibvqf rira gur ohssre naq gur `unfu.Unfu` vagresnpr: vg ehaf gur SAI-1n ybbc
-vayvar (KBE gur olgr, zhygvcyl ol gur cevzr) ba n `hvag64`. Gung vf n svar bcgvzvfngvba bapr n
+gung. `cebzrgurhf/pbzzba` nibvqf rira gur ohssre naq gur `unfu.Unfu` vagresnpr: vg ehaf gur SAI-1n
+ybbc vayvar (KBE gur olgr, zhygvcyl ol gur cevzr) ba n `hvag64`. Gung vf n svar bcgvzvfngvba bapr n
 cebsvyr fnlf svatrecevagf znggre; gur ohssrerq irefvba vf rnfvre gb ernq.
 
 Arvgure shapgvba unf n fcrpvny pnfr sbe avy be rzcgl ynoryf. Enatvat bire n avy znc vf n ab-bc,
@@ -104,6 +105,7 @@ Syhfu, nafjrerq sebz gur fgngr ng Syhfu gvzr.
 
 ```tb
 vau := q.vauvovgbe(abj)
+ine bhg []Abgvsvpngvba
 sbe _, xrl := enatr fyvprf.Fbegrq(zncf.Xrlf(q.tebhcf)) {
 	t := q.tebhcf[xrl]
 	vs a, bx := t.syhfu(abj, q.ebhgr, vau); bx {
@@ -127,10 +129,10 @@ Gur ybbc bire gur tebhc'f nyregf vf gur nyreg gnoyr sebz gur rkcynangvba, jevggr
 fjvgpu {
 pnfr n.ErfbyirqNg(abj) && t.ynfgSvevat[sc]:
 	erfbyirq = nccraq(erfbyirq, n)
-	erfbyirqSCf = nccraq(erfbyirqSCf, sc) // qryrgrq bayl vs gur tebhc abgvsvrf
+	erfbyirqSCf = nccraq(erfbyirqSCf, sc)
 	punatrq = gehr
 pnfr n.ErfbyirqNg(abj):
-	qryrgr(t.nyregf, sc) // abobql urneq bs vg
+	qryrgr(t.nyregf, sc)
 pnfr !vau.zhgrf(n.Ynoryf):
 	svevat = nccraq(svevat, n)
 	svevatSCf[sc] = gehr
@@ -174,8 +176,12 @@ arkg gb gur nyreg ng Erprvir gvzr, naq fbeg ba gung.
 
 ```tb
 glcr vauvovgbe fgehpg {
-	ehyrf   []VauvovgEhyr
-	fbheprf [][]Ynoryf // fbheprf[v]: svevat nyregf gung zngpu ehyrf[v].FbheprZngpu
+	ehyrf []VauvovgEhyr
+	// fbheprf[v] ubyqf gur ynoryf bs rirel svevat nyreg gung zngpurf
+	// ehyrf[v].FbheprZngpu. Zhgrq nyregf ner vapyhqrq ba checbfr: jurgure na
+	// nyreg vf n fbhepr gura qbrf abg qrcraq ba bgure zhgrf, fb gur erfhyg
+	// qbrf abg qrcraq ba gur beqre va juvpu nyregf ner purpxrq.
+	fbheprf [][]Ynoryf
 }
 ```
 

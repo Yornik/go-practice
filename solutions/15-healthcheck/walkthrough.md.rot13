@@ -77,9 +77,11 @@ gur synt) naq n qenvavat /ernqlm jnvgf sbe n fybj eha: `GrfgQenvavatQhevatFybjEh
 
 `pbagrkg.JvgubhgPnapry` xrrcf gur erdhrfg'f inyhrf naq qebcf vgf pnapryyngvba, orpnhfr gur eha
 vf funerq guebhtu gur pnpur. Gur unaqyre fgvyy jnvgf sbe gur eha jura vgf pyvrag unf tbar;
-ehaavat qrgnpurq naq ergheavat jura `e.Pbagrkg()` vf qbar vf nyfb nyybjrq. Jnvgvat vf fvzcyre,
-naq gur ynetrfg Gvzrbhg obhaqf vg. Gura gur urnqref, va guvf beqre: Pbagrag-Glcr naq `Pnpur-Pbageby:
-ab-fgber` (fb ab cebkl va orgjrra pnpurf n urnygu nafjre), gura `JevgrUrnqre`, gura gur obql.
+ehaavat qrgnpurq naq ergheavat jura `e.Pbagrkg()` vf qbar vf nyfb nyybjrq. Jnvgvat vf fvzcyre.
+Rnpu eha raqf jvguva gur ynetrfg Gvzrbhg, ohg jvgu PnpurGGY <= 0 gur erdhrfgf gung dhrhr ba `zh`
+eha gur purpxf bar nsgre gur bgure, fb n ohefg bs ceborf pna jnvg sbe frireny ehaf. Gura gur
+urnqref, va guvf beqre: Pbagrag-Glcr naq `Pnpur-Pbageby: ab-fgber` (fb ab cebkl va orgjrra
+pnpurf n urnygu nafjre), gura `JevgrUrnqre`, gura gur obql.
 Gur rapbqr reebe vf vtaberq ba checbfr: vg pna bayl zrna gung gur pyvrag vf tbar.
 
 ## ernql: gur eha naq gur pnpur
@@ -110,10 +112,11 @@ Gur fgnzc vf gnxra ng gur raq bs gur eha, fb n fybj eha vf abg fgnyr ng ovegu.
 
 **Nygreangvir: fvatyrsyvtug vafgrnq bs n uryq ybpx.** Xrrc n "eha va cebterff" erpbeq jvgu n
 `qbar` punaary; gur svefg erdhrfg fgnegf gur eha, gur bguref jnvg ba gur punaary, naq gur zhgrk
-vf bayl uryq sbe n srj vafgehpgvbaf. Gung vf jung `tbynat.bet/k/flap/fvatyrsyvtug` qbrf naq jung
-20-fvatyrsyvtug ohvyqf. Vg yrgf bgure bcrengvbaf (Ertvfgre, n fgnghf raqcbvag) cebprrq qhevat n
-eha. Urer abguvat ryfr arrqf gur ybpx, fb gur fvzcyr irefvba vf rabhtu. N erivrjre fubhyq fgvyy
-nfx gur dhrfgvba, orpnhfr "n zhgrk uryq npebff V/B" vf hfhnyyl n oht.
+vf bayl uryq sbe n srj vafgehpgvbaf. Gung vf gur qrfvta bs `tbynat.bet/k/flap/fvatyrsyvtug` (vg
+jnvgf ba n `flap.JnvgTebhc` vafgrnq bs n punaary) naq jung 20-fvatyrsyvtug ohvyqf. Vg yrgf
+bgure bcrengvbaf (Ertvfgre, n fgnghf raqcbvag) cebprrq qhevat n eha. Urer abguvat ryfr arrqf gur
+ybpx, fb gur fvzcyr irefvba vf rabhtu. N erivrjre fubhyq fgvyy nfx gur dhrfgvba, orpnhfr "n
+zhgrk uryq npebff V/B" vf hfhnyyl n oht.
 
 ## ehaPurpx: obhaqvat n purpx
 
@@ -123,6 +126,8 @@ qrsre pnapry()
 fgneg := u.abj()
 qbar := znxr(puna reebe, 1)
 tb shap() { qbar <- pnyy(pgk, p.Sa) }()
+
+ine ree reebe
 fryrpg {
 pnfr ree = <-qbar:
 pnfr <-pgk.Qbar():

@@ -96,7 +96,7 @@ gung qrcraqf ba vg oernxf rneyl. Gb ghea n znc vagb n fgevat be n unfu gung vf g
 zncf, lbh svefg chg gur xrlf va n svkrq beqre:
 
 ```tb
-sbe _, x := enatr fyvprf.Fbegrq(zncf.Xrlf(z)) { // Tb 1.23+: fbegrq xrlf bs nal znc
+sbe _, x := enatr fyvprf.Fbegrq(zncf.Xrlf(z)) { // Tb 1.23+: arrqf beqrerq xrlf (pzc.Beqrerq)
 	// hfr x naq z[x]
 }
 ```
@@ -263,15 +263,16 @@ jurgure vg jbexf va cenpgvpr:
   fgntr purpxf erfbyirq nyregf gbb, fb n flzcgbz gung erfbyirf juvyr vgf pnhfr fgvyy sverf vf
   arire ercbegrq nf erfbyirq. Ehyr 17 ercbegf vg, orpnhfr gur erprvire fnj vg svevat. Fvyraprf
   ner gur znahny irefvba bs gur fnzr zhgr fgrc.
-- **Cebzrgurhf** frgf RaqfNg ba svevat nyregf n srj erfraq vagreinyf vagb gur shgher naq er-fraqf
-  gurz erthyneyl. Vs Cebzrgurhf qvrf, vgf nyregf erfbyir ol gurzfryirf ng RaqfNg. Gung vf jul
-  xhor-cebzrgurhf fuvcf na nyjnlf-svevat `Jngpuqbt` nyreg: na rkgreany qrnq zna'f fjvgpu cntrf
+- **Cebzrgurhf** frgf RaqfNg ba svevat nyregf 4 rinyhngvba be erfraq vagreinyf (gur ybatre bar)
+  vagb gur shgher naq er-fraqf gurz erthyneyl. Vs Cebzrgurhf qvrf, vgf nyregf erfbyir ol
+  gurzfryirf ng RaqfNg. Gung vf jul xhor-cebzrgurhf fuvcf na nyjnlf-svevat `Jngpuqbt` nyreg: na rkgreany qrnq zna'f fjvgpu cntrf
   jura vg *fgbcf* neevivat.
 - **Nyregznantre'f CntreQhgl vagrtengvba** qrevirf gur vapvqrag'f qrqhc xrl sebz gur tebhc xrl,
   fb bar tebhc vf bar vapvqrag, naq n abgvsvpngvba jvgu abguvat svevat erfbyirf vg. Gung vf gur
   fancfubg zbqry bs ehyr 13 va cenpgvpr.
-- **Cebzrgurhf ynory svatrecevagf** ner rknpgyl ehyr 2: SAI-1n bire fbegrq anzrf naq inyhrf jvgu
-  `0kss` frcnengbef (`zbqry.YnoryFrg.Svatrecevag` va `cebzrgurhf/pbzzba`).
+- **Nyregznantre'f nyreg svatrecevagf** ner rknpgyl ehyr 2: SAI-1n bire fbegrq anzrf naq inyhrf
+  jvgu `0kss` frcnengbef (`zbqry.YnoryFrg.Svatrecevag` va `cebzrgurhf/pbzzba`). Gur Cebzrgurhf
+  freire unfurf gur fnzr fgernz jvgu kkunfu vafgrnq.
 
 ## Shegure ernqvat
 

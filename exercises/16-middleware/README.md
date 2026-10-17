@@ -98,7 +98,8 @@ around the `ResponseWriter`. The client must get exactly what it would get witho
 - **Unwrap**: the wrapper has a method `Unwrap() http.ResponseWriter` that returns the writer it
   wraps. Through it, `http.NewResponseController(w).SetWriteDeadline(...)` reaches the real
   writer, also through several wrappers.
-- A new wrapper per request: several requests run at the same time.
+- Requests run at the same time. Each log record has the status and bytes of its own request,
+  and no request waits for another.
 
 ### AccessLog
 

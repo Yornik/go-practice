@@ -2,10 +2,10 @@
 
 **Tier 4 · about 4 h** · Go: canonical keys from maps (sorted keys), `hash/fnv`, map aliasing and `maps.Clone`, `slices.SortFunc`, `time.Time` comparisons, a state machine driven by explicit timestamps · Problem solving: turn prose rules into a table of scenarios; simulate time by hand
 
-At 03:00 one Kubernetes node loses its network. Prometheus fires `NodeDown` for it, and within a
-minute also 30 `KubePodNotReady` and 9 `TargetDown` alerts, all caused by that one node. It re-sends
-every firing alert about once a minute. If each of those became a page, the on-call engineer
-would get 40 pages, and then the same 40 again a minute later. Alertmanager sits between
+At 03:00 one Kubernetes node loses its network. Prometheus fires `NodeDown` for it, and around the
+same time 30 `KubePodNotReady` and 9 `TargetDown` alerts, all caused by that one node. It re-sends
+every firing alert every minute or two. If each of those became a page, the on-call engineer
+would get 40 pages, and then the same 40 again at every re-send. Alertmanager sits between
 Prometheus and the pager to stop that: it **deduplicates** re-sent alerts, **groups** related alerts
 into one notification, decides **when** a group may notify again, and **inhibits** (mutes) the
 symptoms while their cause is firing. Every reliability engineer configures `group_by`,
@@ -74,7 +74,8 @@ not in `Firing`.
    `}`. The value is quoted like `strconv.Quote`: `{msg="say \"hi\""}`. Nil or empty: `{}`.
 2. `Fingerprint()`: the FNV-1a 64-bit hash (`hash/fnv`) of this byte stream: for every label sorted
    by name, the name, a byte `0xff`, the value, a byte `0xff`. Nil or empty Labels hash no bytes
-   (14695981039346656037). This is what Prometheus and Alertmanager use.
+   (14695981039346656037). This is Prometheus's `model.LabelSet.Fingerprint`, the alert identity
+   in Alertmanager.
 3. `ResolvedAt(now)` is true when EndsAt is not zero and EndsAt <= now. A zero EndsAt means firing.
    An EndsAt in the future means firing until then: Prometheus sends EndsAt a few minutes ahead
    as a "valid until", and re-sends the alert to push it further out.
@@ -147,7 +148,7 @@ not in `Firing`.
 ## Examples
 
 `GroupBy: [alertname]`, `GroupWait: 30s`, `GroupInterval: 5m`, `RepeatInterval: 4h`
-(Alertmanager's defaults). Each line is a Receive or a Flush at that time. Flush runs every few
+(the timings are Alertmanager's defaults). Each line is a Receive or a Flush at that time. Flush runs every few
 seconds; only the interesting calls are shown.
 
 ```text

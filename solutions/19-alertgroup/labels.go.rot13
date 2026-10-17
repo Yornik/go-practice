@@ -36,8 +36,8 @@ shap (y Ynoryf) Fgevat() fgevat {
 }
 
 // frcnengbe raqf rirel anzr naq rirel inyhr va gur svatrecevag'f olgr fgernz.
-// 0kss arire bpphef va inyvq HGS-8, fb vg pnaabg or cneg bs n anzr be inyhr,
-// naq {n="op"} naq {no="p"} cebqhpr qvssrerag fgernzf.
+// 0kss arire bpphef va inyvq HGS-8, fb vg pnaabg or cneg bs n HGS-8 anzr be
+// inyhr, naq {n="op"} naq {no="p"} cebqhpr qvssrerag fgernzf.
 pbafg frcnengbe = 0kss
 
 // Svatrecevag ergheaf gur SAI-1n 64-ovg unfu bs guvf olgr fgernz: sbe rirel
@@ -65,7 +65,7 @@ glcr Nyreg fgehpg {
 	// RaqfNg vf jura gur nyreg fgbcf svevat. Gur mreb gvzr zrnaf "svevat hagvy
 	// shegure abgvpr". Cebzrgurhf hfhnyyl frgf vg n srj zvahgrf nurnq, nf n
 	// "inyvq hagvy", naq er-fraqf gur nyreg gb rkgraq vg; jura gur ceboyrz vf
-	// tbar vg fraqf gur nyreg bapr zber jvgu RaqfNg frg gb gur erfbyir gvzr.
+	// tbar vg fraqf gur nyreg ntnva jvgu RaqfNg frg gb gur erfbyir gvzr.
 	RaqfNg gvzr.Gvzr
 }
 

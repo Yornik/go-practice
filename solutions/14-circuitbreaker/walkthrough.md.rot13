@@ -19,8 +19,9 @@ fgngr      Fgngr
 trarengvba hvag64    // +1 ba rirel fgngr punatr; n erfhyg pbhagf bayl va vgf bja trarengvba
 pbhagf     Pbhagf    // bs gur pheerag trarengvba
 bcrarqNg   gvzr.Gvzr // jura gur oernxre ynfg bcrarq; hfrq juvyr Bcra
-craqvat    []punatr
-ercbegvat  obby
+
+craqvat   []punatr
+ercbegvat obby
 ```
 
 Nobir gurz fvg gur frggvatf, pbcvrq va `Arj` naq arire jevggra ntnva, fb gurl ner ernq jvgubhg
@@ -164,8 +165,8 @@ dhrhr ubyqf ng zbfg gur punatrf znqr juvyr bar ercbeg vf ehaavat, fb n srj ragev
   Gnxra orsber `zh` vf eryrnfrq, gb xrrc gur beqre, vg nyfb znxrf gur arkg punatr ubyq `zh`
   juvyr vg jnvgf, fb rirel pnyyre jnvgf sbe n fybj pnyyonpx (GrfgBaFgngrPunatrVaBeqre). Jvgu gur
   synt, ab tbebhgvar rire jnvgf sbe n ercbeg gung nabgure bar vf qryvirevat.
-- *Jul abg `gvzr.NsgreShap` sbe gur bcra gvzrbhg?* Vg nqqf n tbebhgvar gung zhfg or fgbccrq, n enpr
-  orgjrra gur gvzre naq Rkrphgr, naq grfgf gung arrq erny gvzr.
+- *Jul abg `gvzr.NsgreShap` sbe gur bcra gvzrbhg?* Vg nqqf n gvzre gung zhfg or fgbccrq, n pnyyonpx
+  va vgf bja tbebhgvar gung enprf jvgu Rkrphgr, naq grfgf gung arrq erny gvzr.
 - *Vf VfSnvyher pnyyrq haqre gur ybpx?* Ab, vg ehaf va Rkrphgr orsber `erpbeq` gnxrf gur ybpx, fb
   n fybj be er-ragenag VfSnvyher pnaabg oybpx gur oernxre.
 - *Jul `hvag64` pbhagf?* Ng n zvyyvba pnyyf cre frpbaq, gurl biresybj nsgre zber guna 500 000

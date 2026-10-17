@@ -13,7 +13,7 @@ import (
 )
 
 // checkRates compares two rate maps: the same keys, values equal up to a
-// relative error of 1e-9 (float division is not exact: 3/15 is not 0.2).
+// relative error of 1e-9 (float64 math is not exact: 0.3 - 0.1 is 0.19999999999999998).
 func checkRates(t *testing.T, call string, got, want map[string]float64) {
 	t.Helper()
 	ok := len(got) == len(want)

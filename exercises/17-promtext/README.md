@@ -193,12 +193,12 @@ Rates(prev, curr, 15*time.Second) → {`jobs_total{queue="a"}`: 2, `jobs_total{q
 A stub that panics stops the whole test binary, so run one step at a time; the 4 filters do not
 overlap. Step 2 splits further into `TestParseSampleLines`, `TestParseFamilies` and
 `TestParseErrors`. The Parse tests catch a panic and give up after 5 s, so a lexer that loops
-forever fails with a message. The Write and Rates tests build their input with `Parse`.
+forever fails with a message. Most Write and Rates tests build their input with `Parse`.
 `testdata/` holds two scrapes of a checkout service, taken 15 s apart.
 
 ## Docs you can use
 
-- [Exposition formats](https://prometheus.io/docs/instrumenting/exposition_formats/) (Prometheus), the text format section: the spec for `Parse`
+- [Exposition formats](https://prometheus.io/docs/instrumenting/exposition_formats/) (Prometheus), the text format section: the spec for `Parse`, minus the quoted UTF-8 names
 - [Data model](https://prometheus.io/docs/concepts/data_model/) and [metric types](https://prometheus.io/docs/concepts/metric_types/) (Prometheus)
 - [PromQL functions](https://prometheus.io/docs/prometheus/latest/querying/functions/): `rate()`, `irate()`, `increase()`
 - [`bufio.Scanner`](https://pkg.go.dev/bufio#Scanner), [`strconv`](https://pkg.go.dev/strconv), [`strings`](https://pkg.go.dev/strings) (`Builder`, `NewReplacer`, `CutSuffix`), [`slices`](https://pkg.go.dev/slices), [`io`](https://pkg.go.dev/io)
@@ -210,7 +210,7 @@ forever fails with a message. The Write and Rates tests build their input with `
 
 - A command: `promrate -interval 15s http://localhost:8080/metrics` scrapes twice and prints the
   20 highest rates with `text/tabwriter`. Give the `http.Client` a timeout.
-- Lint like `promtool check metrics`: counters without `_total`, families without HELP,
+- Lint like `promtool check metrics` (counters without `_total`, families without HELP), plus
   histograms whose `le` values do not increase or that have no `+Inf` bucket.
 - Average latency from a histogram, `rate(_sum) / rate(_count)`, and a p99 from the bucket rates
   (see exercise 03).

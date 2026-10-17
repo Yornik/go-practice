@@ -2,7 +2,7 @@
 
 ## Fgehpgher
 
-Gjb svyrf. `pregpurpx.tb` ubyqf gur glcrf (nf tvira va gur fgho), `Purpx` jvgu guerr urycref, naq
+Gjb svyrf. `pregpurpx.tb` ubyqf gur glcrf (nf tvira va gur fgho), `Purpx` jvgu vgf urycref, naq
 `PurpxNyy`. `ercbeg.tb` ubyqf `JevgrErcbeg`. Purpx vf fcyvg nybat gur yvar gur rkcynangvba qenjf:
 `srgpuPunva` qbrf nyy gur V/B, naq `irevsl` cyhf `pynffvsl` ner cher shapgvbaf bs gur pregvsvpngrf
 naq bar pybpx ernqvat.
@@ -117,6 +117,7 @@ frrf vg.
 erfhygf := znxr([]Erfhyg, yra(gf))
 jbexref := zva(znk(p.Pbapheerapl, 1), yra(gf))
 vaqrkrf := znxr(puna vag)
+ine jt flap.JnvgTebhc
 sbe enatr jbexref {
 	jt.Nqq(1)
 	tb shap() {
@@ -181,7 +182,7 @@ jvgu fcnprf), cnqqvat 2, cnq jvgu fcnprf, ab syntf. Gung vf rknpgyl gur ERNQZR y
 nf jvqr nf vgf jvqrfg pryy cyhf 2, gur ynfg pryy hacnqqrq. Gur `-` cynprubyqref nibvq gur
 rzcgl-ynfg-pryy genvyvat fcnpr.
 
-Qnlf ner `vag64(e.Erznvavat / (24 * gvzr.Ubhe))`: `Qhengvba` vf na `vag64`, naq vagrtre qvivfvba
+Qnlf ner `vag64(e.Erznvavat/(24*gvzr.Ubhe))`: `Qhengvba` vf na `vag64`, naq vagrtre qvivfvba
 gehapngrf gbjneq mreb, juvpu vf gur ERNQZR ehyr. `e.AbgNsgre.HGP().Sbezng(gvzr.ESP3339)` abeznyvmrf
 nal ybpngvba gur pnyyre hfrq.
 
@@ -189,7 +190,7 @@ nal ybpngvba gur pnyyre hfrq.
 
 Purpx vf bar GYF unaqfunxr cyhf punva ohvyqvat bire n unaqshy bs pregvsvpngrf. PurpxNyy ehaf
 `yra(gf)` purpxf jvgu `jbexref` tbebhgvarf; jnyy gvzr vf nobhg `yra(gf) / jbexref` unaqfunxrf, naq
-ng zbfg `jbexref × Gvzrbhg` sbe n eha bs fvyrag gnetrgf. JevgrErcbeg vf B(a ybt a).
+hc gb `prvy(yra(gf) / jbexref) × Gvzrbhg` jura rirel gnetrg vf fvyrag. JevgrErcbeg vf B(a ybt a).
 
 ## Jung n erivrjre jbhyq nfx
 

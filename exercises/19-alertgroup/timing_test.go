@@ -23,8 +23,8 @@ func TestTimingGroupInterval(t *testing.T) {
 		}},
 		// New alerts: a change, but the last notification was at 30s.
 		{at: 1 * minute, receive: []alertgroup.Alert{firing("alertname=Disk node=b")}},
-		// Prometheus re-sends a with every evaluation. That is the same
-		// alert, not a change (rule 4).
+		// Prometheus keeps re-sending a. That is the same alert, not a
+		// change (rule 4).
 		{at: 2 * minute, receive: []alertgroup.Alert{firing("alertname=Disk node=c"), firing("alertname=Disk node=a")}},
 		{at: 5*minute + 30*second - time.Nanosecond},
 		{at: 5*minute + 30*second, want: []string{

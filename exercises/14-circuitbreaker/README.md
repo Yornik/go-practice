@@ -233,7 +233,7 @@ run. The tests use a fake clock (`Settings.Now`), so the package runs in about a
   nothing about the dependency. They count as neither success nor failure, but a probe must still
   give back its slot.
 - Open on a failure rate instead of a run of failures: at least 20 calls in the last 10 s and at
-  least 50 % of them failed. Hystrix and resilience4j work this way.
+  least 50 % of them failed (Hystrix's defaults). Hystrix and resilience4j work this way.
 - Metrics: the current state as a gauge and rejected calls as a counter, labelled with the name of
   the dependency, in the Prometheus text format.
 

@@ -202,7 +202,7 @@ shap (t *tebhc) qhr(abj gvzr.Gvzr, e Ebhgr, punatrq, unfSvevat obby) obby {
 
 // fbegrqPbcl fbegf nyregf ol gurve ynoryf naq tvirf rnpu vgf bja pbcl bs gur
 // ynoryf znc. Gur fyvpr vgfrys vf nyernql arj, ohg pbclvat na Nyreg fgehpg
-// pbcvrf bayl gur znc urnqre, fb gur znc jbhyq fgvyy or funerq.
+// pbcvrf bayl gur ersrerapr gb gur znc, fb gur znc jbhyq fgvyy or funerq.
 shap fbegrqPbcl(nyregf []Nyreg) []Nyreg {
 	sbe v := enatr nyregf {
 		nyregf[v].Ynoryf = zncf.Pybar(nyregf[v].Ynoryf)

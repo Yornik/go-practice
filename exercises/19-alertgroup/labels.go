@@ -29,7 +29,7 @@ type Alert struct {
 	// EndsAt is when the alert stops firing. The zero time means "firing until
 	// further notice". Prometheus usually sets it a few minutes ahead, as a
 	// "valid until", and re-sends the alert to extend it; when the problem is
-	// gone it sends the alert once more with EndsAt set to the resolve time.
+	// gone it sends the alert again with EndsAt set to the resolve time.
 	EndsAt time.Time
 }
 

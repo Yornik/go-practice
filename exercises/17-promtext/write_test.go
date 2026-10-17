@@ -35,7 +35,7 @@ func TestSeriesKey(t *testing.T) {
 		{"empty value", "up", labels("job", ""), `up{job=""}`},
 		{
 			// Only \ " and newline are escaped. A tab and UTF-8 stay as they
-			// are, which is where strconv.Quote would differ.
+			// are; strconv.Quote would write the tab as \t.
 			"escapes",
 			"log_lines_total", labels("msg", "say \"hi\"\n\tC:\\temp", "city", "São Paulo"),
 			"log_lines_total{city=\"São Paulo\",msg=\"say \\\"hi\\\"\\n\tC:\\\\temp\"}",

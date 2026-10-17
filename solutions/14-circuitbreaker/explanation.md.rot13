@@ -77,8 +77,8 @@ ybpx, naq jub ubyqf vg? N tbebhgvar gung jnvgf sbe vgfrys, be n pnyyre fghpx oru
 ryfr'f ercbeg, zrnaf gur qrfvta vf jebat. Cncre vf snfgre guna qrohttvat n qrnqybpx.
 
 **8. Hfr gur grfgf nf gur fcrp, fgrc ol fgrc.** Grfg fgrc 3 (UnysBcra) nyernql fgnegf ceborf gung
-oybpx, fb qrfvta gur guerr cunfrf sebz gur fgneg. Gur urycref eha rirel pnyy jvgu n gvzrbhg, fb n qrnqybpx fubjf hc
-nf "qvq abg erghea jvguva 5f", abg nf n unat.
+oybpx, fb qrfvta gur guerr cunfrf sebz gur fgneg. Gur urycref eha rirel pnyy jvgu n gvzrbhg, fb n
+qrnqybpx fubjf hc nf "qvq abg erghea jvguva 5f", abg nf n unat.
 
 ## Pbaprcgf
 
@@ -187,8 +187,8 @@ Gur jnl bhg: dhrhr rnpu punatr juvyr lbh ubyq gur ybpx (gur dhrhr beqre vf gura 
 punatrf, orpnhfr obgu unccra haqre gur fnzr ybpx), naq qryvire sebz gur dhrhr nsgre haybpxvat.
 Jub qryviref?
 
-- **N qrqvpngrq tbebhgvar ernqvat n punaary.** Beqrerq, ohg gur ercbeg nyjnlf pbzrf nsgre Rkrphgr
-  erghearq, gur tbebhgvar arrqf n `Pybfr`, naq n shyy punaary oybpxf gur oernxre.
+- **N qrqvpngrq tbebhgvar ernqvat n punaary.** Beqrerq, ohg Rkrphgr pna erghea orsber vgf ercbeg
+  unf eha, gur tbebhgvar arrqf n `Pybfr`, naq n shyy punaary oybpxf gur oernxre.
 - **N frpbaq zhgrk, uryq juvyr qryvirevat.** Beqrerq naq fvzcyr. Ohg n pnyyonpx gung pnhfrf nabgure
   punatr (vg pnyyf Rkrphgr be Fgngr) jnvgf sbe gur qryvirel zhgrk vgf bja tbebhgvar ubyqf:
   qrnqybpx. Gnxvat gur frpbaq zhgrk *orsber* eryrnfvat gur svefg, gb xrrc gur beqre, vf jbefr:
@@ -204,11 +204,11 @@ Jub qryviref?
 
 Gur oernxre nfxf bar dhrfgvba: vf gur qrcraqrapl urnygul? N 5kk, n gvzrbhg be n ershfrq pbaarpgvba
 fnlf ab. N 404 be n inyvqngvba reebe fnlf lrf: vg nafjrerq, gur erdhrfg jnf onq. Fbzr pnfrf ner
-whqtrzrag pnyyf: n 429 zrnaf "V nz bireybnqrq", nethnoyl n snvyher; `pbagrkg.QrnqyvarRkprrqrq`
-hfhnyyl zrnaf gur qrcraqrapl jnf fybj; `pbagrkg.Pnapryrq` hfhnyyl zrnaf *lbhe* pnyyre tnir hc,
-juvpu fnlf abguvat nobhg gur qrcraqrapl. Jvgu gjb bhgpbzrf, rirel aba-snvyher pbhagf nf n fhpprff
-naq erfrgf gur eha bs snvyherf. Gung vf jul tboernxre i2 nqqrq n guveq bhgpbzr, `VfRkpyhqrq` (n
-fgergpu tbny urer).
+whqtrzrag pnyyf: n 429 zrnaf "lbh fraq gbb znal erdhrfgf", nethnoyl n snvyher;
+`pbagrkg.QrnqyvarRkprrqrq` hfhnyyl zrnaf gur qrcraqrapl jnf fybj; `pbagrkg.Pnapryrq` hfhnyyl zrnaf
+*lbhe* pnyyre tnir hc, juvpu fnlf abguvat nobhg gur qrcraqrapl. Jvgu gjb bhgpbzrf, rirel
+aba-snvyher pbhagf nf n fhpprff naq erfrgf gur eha bs snvyherf. Gung vf jul tboernxre i2 nqqrq n
+guveq bhgpbzr, `VfRkpyhqrq` (n fgergpu tbny urer).
 
 ## Cvgsnyyf
 
@@ -230,8 +230,8 @@ fgergpu tbny urer).
   yngre pnyy unccraf gb ercbeg gurz. Ybbc hagvy gur dhrhr vf rzcgl.
 - **Gur bcra gvzr gnxra ng gur fgneg bs gur pnyy**, be **gur gvzrbhg purpxrq bayl va Fgngr**.
 - **Bss ol bar.** "Ernpurf gur guerfubyq" zrnaf `>=`. Jevgr gur obhaqnel qbja, grfg obgu fvqrf.
-- **N gvzre tbebhgvar sbe Bcra gb UnysBcra** (`gvzr.NsgreShap`): n tbebhgvar gb fgbc, n enpr
-  jvgu Rkrphgr, naq grfgf gung arrq erny gvzr.
+- **N gvzre sbe Bcra gb UnysBcra** (`gvzr.NsgreShap`): n gvzre gb fgbc, n pnyyonpx tbebhgvar gung
+  enprf jvgu Rkrphgr, naq grfgf gung arrq erny gvzr.
 
 ## Va cebqhpgvba
 
@@ -248,9 +248,9 @@ fgergpu tbny urer).
 - **Raibl** hfrf "pvephvg oernxvat" sbe fbzrguvat ryfr: cre hcfgernz pyhfgre yvzvgf ba
   pbaarpgvbaf, craqvat erdhrfgf, erdhrfgf naq ergevrf (qrsnhygf 1024, 1024, 1024 naq 3), nobir
   juvpu erdhrfgf snvy snfg. Gur cre-ubfg oernxre vf **bhgyvre qrgrpgvba**: ol qrsnhyg 5
-  pbafrphgvir 5kk rwrpg n ubfg sbe 30 f gvzrf gur ahzore bs gvzrf vg jnf rwrpgrq, naq ng zbfg 10 %
-  bs gur ubfgf ner rwrpgrq. Vfgvb rkcbfrf obgu va n QrfgvangvbaEhyr (`pbaarpgvbaCbby`,
-  `bhgyvreQrgrpgvba`).
+  pbafrphgvir 5kk rwrpg n ubfg sbe 30 f gvzrf gur ahzore bs gvzrf vg jnf rwrpgrq (ng zbfg
+  300 f), naq ng zbfg 10 % bs gur ubfgf ner rwrpgrq. Vfgvb rkcbfrf obgu va n QrfgvangvbaEhyr
+  (`pbaarpgvbaCbby`, `bhgyvreQrgrpgvba`).
 - **Gur FER obbx** ("Unaqyvat Bireybnq") qrfpevorf pyvrag-fvqr nqncgvir guebggyvat: erwrpg ybpnyyl
   jvgu cebonovyvgl `znk(0, (erdhrfgf - X * npprcgf) / (erdhrfgf + 1))`, X glcvpnyyl 2: n oernxre
   jvgubhg fgngrf.
