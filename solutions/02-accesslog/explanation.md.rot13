@@ -126,7 +126,7 @@ fyvpr lbh erghea, fb pnyyref arire ubyq cbvagref vagb lbhe fgngr.
 Gur fcrp fnlf gur vgrengvba beqre bire n znc "vf abg fcrpvsvrq naq vf abg thnenagrrq gb or gur
 fnzr sebz bar vgrengvba gb gur arkg", naq gur ehagvzr enaqbzvfrf vg ba checbfr. Nalguvat ohvyg ol
 enatvat bire n znc unf n enaqbz beqre hagvy lbh fbeg vg, naq n fbeg gung yrnirf gvrf haqrpvqrq yrgf
-gung enaqbzarff onpx va. Fhpu n grfg cnffrf ba lbhe yncgbc naq snvyf va PV.
+gung enaqbzarff onpx va. Fhpu n grfg cnffrf ba bar eha naq snvyf ba gur arkg.
 
 ### Fbegvat ol frireny xrlf: pzc.Pbzcner naq pzc.Be
 
@@ -189,9 +189,9 @@ hc. Gung vf jul gur ercbeg pbhagf 4kk frcnengryl.
   pbagebyyref, ybnq onynapref, guveq-cnegl freivprf.
 - **Cebzrgurhf pyvrag_tbynat**: gur `cebzuggc.VafgehzragUnaqyre*` zvqqyrjnerf (sbe rknzcyr
   `VafgehzragUnaqyrePbhagre`) svyy va bayl gur ynoryf `pbqr` naq `zrgubq` sebz gur erdhrfg (arjre
-  irefvbaf nqq `JvguYnorySebzPgk` sbe bar zber; xrrcvat vg obhaqrq vf gura lbhe wbo). Gur unaqyre
-  anzr vf svkrq cre unaqyre jvgu `ZhfgPheelJvgu(cebzrgurhf.Ynoryf{"unaqyre": "..."})` jura lbh
-  jver hc gur zhk, fb vg arire pbzrf sebz gur enj cngu. Zrgubqf bhgfvqr n cerqrsvarq frg ner
+  irefvbaf nqq `JvguYnorySebzPgk` sbe rkgen ynoryf; xrrcvat gurz obhaqrq vf gura lbhe wbo). Gur
+  unaqyre anzr vf svkrq cre unaqyre jvgu `ZhfgPheelJvgu(cebzrgurhf.Ynoryf{"unaqyre": "..."})` jura
+  lbh jver hc gur zhk, fb vg arire pbzrf sebz gur enj cngu. Zrgubqf bhgfvqr n cerqrsvarq frg ner
   pbhagrq nf `haxabja`: gur zrgubq ynory vf pnccrq gbb.
 - **Cebzrgurhf anzvat cenpgvprf** fnl vg qverpgyl: rirel havdhr pbzovangvba bs ynory inyhrf vf n
   arj gvzr frevrf, fb qb abg hfr ynoryf sbe haobhaqrq inyhrf fhpu nf hfre VQf.

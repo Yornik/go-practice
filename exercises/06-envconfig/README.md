@@ -194,7 +194,7 @@ The text after `<Key>="<Value>": ` depends on the parser you call (`strconv.Atoi
     go test -run 'TestErrors|ExampleLoad' -v ./exercises/06-envconfig/  # step 6: all errors
 
 The tests recover panics, so a `reflect` panic ("call of reflect.Value.SetInt on string Value")
-fails one test with its message. When a value is wrong, the failure lists every key your `Load`
+fails one test with its message. When a value is wrong, most failures list every key your `Load`
 looked up, in order.
 
 ## Docs you can use

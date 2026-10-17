@@ -29,6 +29,7 @@ shap Cnefr(yvar fgevat) ([]Cnve, reebe) {
 		}
 		c, ree := f.cnve()
 		vs ree != avy {
+			// Ab cnegvny erfhygf: n pnyyre fubhyq abg npg ba unys n yvar.
 			erghea avy, ree
 		}
 		cnvef = nccraq(cnvef, c)
@@ -86,6 +87,7 @@ oner ybbc, juvpu vf jung znxrf `svygre=n=o` jbex; `"` vf na reebe.
 ```tb
 		pnfr '\\':
 			vs f.cbf+1 >= yra(f.yvar) {
+				// N genvyvat onpxfynfu rfpncrf abguvat; gur dhbgr arire pybfrf.
 				erghea "", reeNg(bcra, "hagrezvangrq dhbgrq inyhr")
 			}
 			fjvgpu rfp := f.yvar[f.cbf+1]; rfp {
@@ -133,10 +135,11 @@ orarsvg bayl fubjf hc ng uvtu ibyhzr; zrnfher orsber lbh qb vg.
 
 ```tb
 	}
+	// Pbaireg gb vag: sbeznggvat y vgfrys jvgu %i jbhyq pnyy Fgevat ntnva.
 	erghea szg.Fcevags("Yriry(%q)", vag(y))
 ```
 
-Gur `fjvgpu` ergheaf gur 4 anzrf; rirelguvat ryfr snyyf guebhtu gb `Yriry(A)`, gur fnzr sbezng
+Gur `fjvgpu` ergheaf gur 4 anzrf; rirelguvat ryfr ernpurf gur `Yriry(A)` erghea, gur fnzr sbezng
 `fgevatre` trarengrf. Gur `vag(y)` pbairefvba vf abg fgevpgyl arrqrq sbe `%q` (`szg` bayl pnyyf
 `Fgevat` sbe ireof yvxr `%i` naq `%f`), ohg vg znxrf gur vagrag boivbhf naq fheivirf fbzrbar
 punatvat gur ireo gb `%i`.
@@ -163,7 +166,7 @@ jura `ree != avy`.
 ```
 
 Pbyyncfvat gur cnvef vagb n znc svefg tvirf "ynfg bppheerapr jvaf" sbe serr, sbe rirel xrl. Gur
-fnzr znc gura orpbzrf `Svryqf` nsgre qryrgvat `gf`, `yriry` naq `zft`, fb gurer vf bar nyybpngvba
+fnzr znc gura orpbzrf `Svryqf` nsgre qryrgvat `gf`, `yriry` naq `zft`, fb bayl bar znc vf ohvyg
 naq `Svryqf` vf arire avy, rira sbe n yvar jvgu bayl `gf` naq `yriry`.
 
 ```tb
@@ -197,7 +200,7 @@ ERNQZR fnlf gur ynfg bppheerapr jvaf.
   pbageby olgrf), gura rfpncr `\` naq `"`. Gur grfg svyr'f `rapbqr` urycre vf gur nyjnlf-dhbgr
   irefvba. N ebhaq-gevc grfg `Cnefr(Sbezng(c)) == c` vf gur angheny cebcregl.
 - **PYV svygre**: `ohsvb.Fpnaare` bire fgqva, `CnefrErpbeq` cre yvar, cevag yvarf gung zngpu.
-  Pbhag znysbezrq yvarf vafgrnq bs fgbccvat. Pnyy `Fpnaare.Ohssre` gb npprcg yvarf bire 64 XvO.
+  Pbhag znysbezrq yvarf vafgrnq bs fgbccvat. Pnyy `Fpnaare.Ohssre` gb npprcg yvarf bs 64 XvO be zber.
 - **Zber rfpncrf**: `\e` vf bar zber `pnfr`; `\hKKKK` arrqf 4 urk qvtvgf naq `hgs8.NccraqEhar`
   be `fgepbai.HadhbgrPune`. Gur pbyhza bs n onq `\h` rfpncr fgnlf gur onpxfynfu.
 - **Srjre nyybpngvbaf**: nqq n orapuznex svefg, gura gur fhofgevat snfg cngu va `dhbgrq()`.

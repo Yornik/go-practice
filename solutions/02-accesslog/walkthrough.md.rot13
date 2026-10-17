@@ -28,17 +28,17 @@ gjb pynffvsvref, gura `cnefrYvar`, gura `Nanylmr`, juvpu nttertngrf naq enaxf.
 ```
 
 `fgevatf.Phg` qebcf gur dhrel va bar yvar; gur `sbhaq` erfhyg vf abg arrqrq, orpnhfr jvgubhg n `?`
-gur "orsber" cneg vf gur jubyr fgevat. Ernffvtavat gur cnenzrgre `c` vf svar va Tb naq xrrcf gur
-anzrf fubeg.
+gur "orsber" cneg vf gur jubyr fgevat.
 
 Gur ybbc vf gur "bar ehyr" sebz gur rkcynangvba: rirel aba-rzcgl frtzrag vf jevggra nf `/frt`.
 Ercrngrq fynfurf, n genvyvat fynfu, n zvffvat yrnqvat fynfu naq gur rzcgl cngu arrq ab pbqr bs
 gurve bja. Gur bayl fcrpvny pnfr yrsg vf "abguvat jnf jevggra", juvpu vf gur ebbg.
 
 `fgevatf.FcyvgFrd` (Tb 1.24) lvryqf gur frtzragf bar ol bar vafgrnq bs ohvyqvat n `[]fgevat`. Jvgu
-`fgevatf.Fcyvg` gur pbqr vf gur fnzr ncneg sebz gur enatr rkcerffvba; ba Tb 1.23 be byqre gung vf
-jung lbh jbhyq jevgr. Gur `fjvgpu` jvgu ab gnt ernqf gbc gb obggbz yvxr gur ehyrf va gur ERNQZR,
-naq erjevgvat `frt` xrrcf n fvatyr jevgr cngu ng gur obggbz.
+`fgevatf.Fcyvg` gur pbqr vf gur fnzr ncneg sebz gur enatr pynhfr
+(`sbe _, frt := enatr fgevatf.Fcyvg(c, "/")`); ba Tb 1.23 be byqre gung vf jung lbh jbhyq jevgr.
+Gur `fjvgpu` jvgu ab gnt ernqf gbc gb obggbz yvxr gur ehyrf va gur ERNQZR, naq erjevgvat `frt`
+xrrcf n fvatyr jevgr cngu ng gur obggbz.
 
 Na nygreangvir qrfvta pbyyrpgf gur frtzragf va n `[]fgevat` naq pnyyf `fgevatf.Wbva(cnegf, "/")`.
 Vg vf whfg nf pyrne; vg nyybpngrf bar zber fyvpr. Rvgure vf svar sbe n ybt gbby; gur Ohvyqre
@@ -62,8 +62,9 @@ irefvba vf jung lbh jbhyq jevgr va na UGGC zvqqyrjner gung ehaf ba rirel erdhrfg
 ```
 
 Obgu jbex ba olgrf (`f[v]`), abg eharf. Rirel olgr gur ehyrf npprcg vf NFPVV, naq gur olgrf bs n
-zhygv-olgr HGS-8 punenpgre ner nyy `>= 0k80`, fb n aba-NFPVV frtzrag snvyf gur purpx ng vgf svefg
-olgr, juvpu vf jung jr jnag. `enatr yra(f)` vf gur Tb 1.22 enatr-bire-vag sbez.
+zhygv-olgr HGS-8 punenpgre ner nyy `>= 0k80`, fb n frtzrag jvgu n aba-NFPVV punenpgre snvyf gur
+purpx ng gur svefg olgr bs gung punenpgre, juvpu vf jung jr jnag. `enatr yra(f)` vf gur Tb 1.22
+enatr-bire-vag sbez.
 
 Gur HHVQ purpx fgngrf gur sbezng qverpgyl: gur yratgu svefg (purnc, naq vg znxrf rirel vaqrk
 inyvq), gura n svkrq cbfvgvba sbe rnpu ulcura naq n urk qvtvg rireljurer ryfr. N erivrjre pna purpx
@@ -145,8 +146,8 @@ gbb, naq vg vf gur irefvba jurer n sbetbggra fgber-onpx fvyragyl qebcf qngn.
 Gur 4kk/5kk `fjvgpu` eryvrf ba gur fgnghf nyernql orvat va 100–599, fb `>= 500` zrnaf 5kk. Gur
 ohvyg-va `znk` (Tb 1.21) xrrcf gur fybjrfg qhengvba.
 
-`OlPynff` hfrf `szg.Fcevags("%qkk", fgnghf/100)` cre yvar. Gung nyybpngrf n fubeg fgevat cre yvar,
-juvpu abobql jvyy abgvpr va na vapvqrag gbby. Sbe n ubg cngu, pbhag va n `[6]vag` vaqrkrq ol
+`OlPynff` hfrf `szg.Fcevags("%qkk", erd.fgnghf/100)` cre yvar. Gung nyybpngrf n fubeg fgevat cre
+yvar, juvpu abobql jvyy abgvpr va na vapvqrag gbby. Sbe n ubg cngu, pbhag va n `[6]vag` vaqrkrq ol
 `fgnghf/100` naq ohvyq gur znc bapr ng gur raq.
 
 ## Nanylmr: enax
@@ -189,8 +190,9 @@ yvarf. Gur ERNQZR nyybjf obgu, orpnhfr n pnyyre fubhyq hfr `yra`, abg pbzcner jv
 
 Jvgu a yvarf naq e ebhgrf: cnefvat naq nttertngvat ner B(a) (rnpu yvar qbrf n pbafgnag ahzore bs
 znc bcrengvbaf, naq `AbeznyvmrCngu` vf yvarne va gur cngu yratgu). Fbegvat vf B(e ybt e). Zrzbel vf
-B(e), cyhf gur vachg fyvpr. Gur pneqvanyvgl nethzrag fubjf hc urer gbb: e vf obhaqrq ol gur pbqr'f
-ebhgrf bapr gur cnguf ner abeznyvmrq; jvgubhg abeznyvmngvba e tebjf jvgu a.
+B(e) cyhf bar ragel cre znysbezrq yvar, ba gbc bs gur vachg fyvpr. Gur pneqvanyvgl nethzrag fubjf
+hc urer gbb: e vf obhaqrq ol gur pbqr'f ebhgrf bapr gur cnguf ner abeznyvmrq; jvgubhg
+abeznyvmngvba e tebjf jvgu a.
 
 ## Jung n erivrjre jbhyq nfx
 

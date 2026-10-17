@@ -437,8 +437,8 @@ func TestDoContextCancelledDuringSleep(t *testing.T) {
 		name string
 		// sleepResult is what the fake Sleep returns after it cancelled ctx.
 		// A real Sleep returns ctx.Err(). But a select whose timer fired at
-		// the same moment can pick the timer and return nil: Do must check
-		// ctx itself before every attempt.
+		// the same moment can pick the timer and return nil: Do must still
+		// not call op again.
 		sleepResult func(ctx context.Context) error
 	}{
 		{"Sleep returns ctx.Err()", func(ctx context.Context) error { return ctx.Err() }},
@@ -477,7 +477,7 @@ func TestDoContextCancelledDuringAttempt(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	p := basePolicy
-	p.Sleep = (&sleeper{}).Sleep // returns nil: Do must check ctx itself
+	p.Sleep = (&sleeper{}).Sleep // returns nil: Do must still see that ctx is done
 	f := &fakeOp{
 		results: []error{errRefused, nil},
 		before:  func(_ context.Context, n int) { cancel() },

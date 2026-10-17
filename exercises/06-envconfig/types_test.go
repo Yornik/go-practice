@@ -80,10 +80,10 @@ func TestTypesBadValues(t *testing.T) {
 		{"int: letters", "Retries", "RETRIES", "3x"},
 		{"int: a fraction", "Retries", "RETRIES", "2.5"},
 		{"uint: negative", "Shards", "SHARDS", "-1"},
-		// reflect's SetUint would silently store 70000 % 65536 = 4464.
+		// An error, not 70000 % 65536 = 4464: a silent wrap is worse.
 		{"uint16: does not fit", "Port", "PORT", "70000"},
 		{"float64: decimal comma", "SampleRatio", "SAMPLE_RATIO", "0,25"},
-		// The most common mistake in a Deployment: seconds without a unit.
+		// A common mistake in a Deployment: seconds without a unit.
 		{"time.Duration: no unit", "Timeout", "TIMEOUT", "30"},
 		{"slog.Level: unknown name", "LogLevel", "LOG_LEVEL", "verbose"},
 		{"netip.Addr: octet too big", "Bind", "BIND", "10.0.0.300"},

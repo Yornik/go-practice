@@ -189,7 +189,7 @@ step you are on. The test names are chosen so that the 3 filters above do not ov
 - [`time.Parse`](https://pkg.go.dev/time#Parse) and the [layout constants](https://pkg.go.dev/time#pkg-constants) such as `time.RFC3339`
 - [`fmt.Stringer`](https://pkg.go.dev/fmt#Stringer)
 - [Go fuzzing](https://go.dev/security/fuzz/) and the [fuzzing tutorial](https://go.dev/doc/tutorial/fuzz)
-- [logfmt](https://brandur.org/logfmt) by Brandur Leach, the article that made the format widely known
+- [logfmt](https://brandur.org/logfmt) by Brandur Leach, the article that first documented the format
 
 ## Stretch goals
 
@@ -197,7 +197,7 @@ step you are on. The test names are chosen so that the 3 filters above do not ov
   (empty, or has whitespace, `=`, `"` or a control byte). Add a round-trip test.
 - Turn it into a command: read stdin with `bufio.Scanner`, keep lines with `-level warn` or a
   `-match db=orders` filter, print them unchanged. Watch out: `bufio.Scanner` gives up on lines
-  longer than 64 KiB unless you call `Scanner.Buffer`.
+  of 64 KiB or more unless you call `Scanner.Buffer`.
 - Accept what other encoders write: `slog` uses the key `time` instead of `ts` and quotes a key
   that contains a space or `=`, and some encoders emit `\r` and `\uXXXX` escapes (see
   `strconv.Unquote`).

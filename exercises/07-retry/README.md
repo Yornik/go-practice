@@ -5,10 +5,10 @@
 During a rollout of the config service, calls to it fail for a few seconds with
 `connection refused` or `503`. One retry hides the blip; a naive retry loop causes the next
 incident. 200 replicas that sleep a fixed 1 s retry in lockstep and hit the recovering service as
-one wave. `time.Sleep` ignores the deadline and SIGTERM. A `400` is retried although it can never
-succeed, and `Retry-After: 30` is ignored. You write the retry helper your team's clients share:
-capped exponential backoff, full jitter, permanent errors, Retry-After, and a context that stops
-it at once.
+one wave. `time.Sleep` ignores the deadline and the graceful shutdown on SIGTERM. A `400` is
+retried although it can never succeed, and `Retry-After: 30` is ignored. You write the retry
+helper your team's clients share: capped exponential backoff, full jitter, permanent errors,
+Retry-After, and a context that stops it at once.
 
 ## Task
 
@@ -109,9 +109,8 @@ is never negative, and `false` always comes with 0 (the optional fuzz test check
 ### Do: the context
 
 - op receives `ctx` (or a context derived from it).
-- **op is never called once ctx is done.** Check `ctx.Err()` before every attempt yourself: a
-  Sleep can return nil although ctx is done (a `select` with a fired timer and a closed
-  `ctx.Done()` picks either one).
+- **op is never called once ctx is done**, even when Sleep returned nil: a `select` with a fired
+  timer and a closed `ctx.Done()` picks either one, so a Sleep can return nil although ctx is done.
 - ctx done before the first attempt: return an error that matches `ctx.Err()` (`errors.Is`).
 - ctx done before a later attempt (it ended during the previous attempt or the sleep): return an
   error that matches **both** `ctx.Err()` and the last attempt's error.
@@ -161,8 +160,8 @@ errors.Is(err, errRefused)               true
     go test -fuzz=FuzzParseRetryAfter ./exercises/07-retry/        # optional, Ctrl-C to stop
 
 The step filters do not overlap, and a "TODO: implement" panic shows up as a failing test, not a
-crash. A fake Sleep records the delays, so the tests take about a second. Use `-race`: only then
-does `TestDoConcurrentUse` find an unsafe shared random source.
+crash. A fake Sleep records the delays, so the tests take well under a second. Use `-race`: only
+then does `TestDoConcurrentUse` find an unsafe shared random source.
 
 ## Docs you can use
 

@@ -93,9 +93,9 @@ func TestPolicyBackoff(t *testing.T) {
 func TestPolicyBackoffNoOverflow(t *testing.T) {
 	defer catchPanic(t)
 	// A controller that "retries forever" reaches attempt numbers where
-	// Initial*Multiplier^(attempt-1) no longer fits in an int64 (attempt 64
-	// with Multiplier 2), and then not even in a float64 (it becomes +Inf
-	// around attempt 1000). Backoff must still return Max.
+	// Initial*Multiplier^(attempt-1) no longer fits in an int64 (attempt 35
+	// with Initial 1s and Multiplier 2), and then not even in a float64 (it
+	// becomes +Inf around attempt 1000). Backoff must still return Max.
 	hour := retry.Policy{MaxAttempts: math.MaxInt, Initial: time.Second, Max: time.Hour, Multiplier: 2}
 	// Max is the largest possible Duration: "no cap" in practice.
 	noCap := retry.Policy{MaxAttempts: math.MaxInt, Initial: time.Second, Max: math.MaxInt64, Multiplier: 2}

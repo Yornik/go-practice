@@ -81,7 +81,7 @@ d = 0.9 → enax 90 → svefg phzhyngvir `>= 90` vf yr=0.5 → 10 bs vgf 15 bofr
 raq gb vagrecbyngr gb). Enax va gur svefg ohpxrg (ab cerivbhf obhaq: nffhzr 0, hayrff gur obhaq vf
 nyernql `<= 0`). N ohpxrg jvgu 0 bofreingvbaf (qvivfvba ol mreb: bayl cbffvoyr sbe enax 0). d
 bhgfvqr [0, 1] be AnA. Ab bofreingvbaf ng nyy. Rnpu dhrfgvba orpnzr n ebj va gur ERNQZR, naq
-`uvfgbtenz_dhnagvyr` qbphzragf rknpgyl gurfr fcrpvny pnfrf.
+gur `uvfgbtenz_dhnagvyr` qbphzragngvba yvfgf zbfg bs gurz nf fcrpvny pnfrf.
 
 **6. Jura bar pnfr vf bss ol bar, svaq gur pnhfr orsber lbh punatr pbqr.** Fnl `c99.9 bs 1000`
 ergheaf 1000 zf vafgrnq bs 999 zf. Gur ersyrk vf gb zbir n `-1` nebhaq be gb erbeqre gur
@@ -135,7 +135,7 @@ N genc jura lbh gel guvf bhg: Tb rinyhngrf pbafgnag rkcerffvbaf rknpgyl. `zngu.P
 oht bayl fubjf hc jura c vf n inevnoyr, nf vg vf va gur grfgf.
 
 **AnA** pbzrf sebz vainyvq bcrengvbaf, naq nyfb sebz `fgepbai.CnefrSybng("AnA", 64)`, fb n synt be n
-pbasvt svyr pna unaq vg gb lbh. Rirel pbzcnevfba jvgu AnA vf snyfr, rira `AnA == AnA`. Fb
+pbasvt svyr pna unaq vg gb lbh. Rirel pbzcnevfba jvgu AnA rkprcg `!=` vf snyfr, rira `AnA == AnA`. Fb
 `vs c <= 0 || c > 100 { reebe }` yrgf AnA guebhtu, juvyr `vs !(c > 0 && c <= 100) { reebe }` erwrpgf
 vg: inyvqngr ol fgngvat jung vf nyybjrq, be grfg jvgu `zngu.VfAnA`. Pbairegvat AnA gb na vag qbrf abg
 snvy rvgure; gur fcrp pnyyf gur erfhyg vzcyrzragngvba-qrcraqrag (ba nzq64 vg vf gur zvavzhz vag64),
@@ -194,8 +194,8 @@ vafvqr vg. Gjb pbafrdhraprf znggre va cenpgvpr:
   anabfrpbaq.
 - **`<` vafgrnq bs `<=` va `Bofreir`.** N inyhr rknpgyl ba n obhaq orybatf gb gung ohpxrg. Jvgu
   `gvzr.Qhengvba.Frpbaqf()` guvf unccraf bsgra: 250 zf orpbzrf rknpgyl 0.25.
-- **Inyvqngvat obhaqf bayl jvgu `o <= cerivbhf`.** AnA snvyf rirel pbzcnevfba, fb `[0.1, AnA, 1]`
-  ybbxf vapernfvat. Purpx AnA naq Vas rkcyvpvgyl.
+- **Inyvqngvat obhaqf bayl jvgu `o <= cerivbhf`.** AnA snvyf rirel `<`, `<=`, `>` naq `>=`, fb
+  `[0.1, AnA, 1]` ybbxf vapernfvat. Purpx AnA naq Vas rkcyvpvgyl.
 - **`>` vafgrnq bs `>=` jura lbh frnepu sbe gur enax.** Jura gur enax rdhnyf n phzhyngvir pbhag naq
   gur arkg ohpxrg vf rzcgl, lbh vagrecbyngr va gur jebat ohpxrg.
 - **Purpxvat "ab bofreingvbaf" orsber gur d purpxf.** Gur ERNQZR beqre vf gur Cebzrgurhf beqre: na

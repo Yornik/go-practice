@@ -70,8 +70,9 @@ shap Fhzznevmr(fnzcyrf []gvzr.Qhengvba) (Fhzznel, reebe) {
 // (vapyhqvat AnA naq gur vasvavgvrf), naq ReeAbFnzcyrf sbe n avy be rzcgl
 // fyvpr. Vg qbrf abg zbqvsl fnzcyrf.
 shap Crepragvyr(fnzcyrf []gvzr.Qhengvba, c sybng64) (gvzr.Qhengvba, reebe) {
-	// Rirel pbzcnevfba jvgu AnA vf snyfr. Nfxvat "vf c vafvqr gur enatr?" naq
-	// artngvat erwrpgf AnA; nfxvat "c <= 0 || c > 100" jbhyq yrg vg guebhtu.
+	// Rirel pbzcnevfba jvgu AnA rkprcg != vf snyfr. Nfxvat "vf c vafvqr gur
+	// enatr?" naq artngvat erwrpgf AnA; nfxvat "c <= 0 || c > 100" jbhyq yrg
+	// vg guebhtu.
 	vs !(c > 0 && c <= 100) {
 		erghea 0, szg.Reebes("%j: %i (jnag 0 < c <= 100)", ReeVainyvqCrepragvyr, c)
 	}

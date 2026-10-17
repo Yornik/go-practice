@@ -21,7 +21,7 @@ Bar genc cre nern:
   gung vf irel pybfr gb n jubyr ahzore gb gung ahzore orsber lbh ebhaq hc, be qb gur rknpg cneg va
   vagrtref. Gb cvpx n gbyrenapr, pbzcner ubj ynetr gur sybng reebe pna or jvgu ubj pybfr n gehr
   senpgvba (c jvgu 3 qrpvznyf) pna pbzr gb n jubyr ahzore.
-- **AnA.** Rirel pbzcnevfba jvgu AnA vf snyfr, fb `c <= 0 || c > 100` yrgf AnA guebhtu, juvyr
+- **AnA.** Rirel pbzcnevfba jvgu AnA rkprcg `!=` vf snyfr, fb `c <= 0 || c > 100` yrgf AnA guebhtu, juvyr
   `!(c > 0 && c <= 100)` qbrf abg. Gur fnzr tbrf sbe `o <= cerivbhf` va gur obhaqf purpx naq
   `d < 0` va `Dhnagvyr`.
 - **Ohpxrgf.** "Gur svefg ohpxrg jubfr obhaq vf `>=` i" vf rknpgyl jung `fbeg.FrnepuSybng64f`

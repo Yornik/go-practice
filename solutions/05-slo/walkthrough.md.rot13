@@ -26,8 +26,8 @@ xabj jul vg vf jevggra hcfvqr qbja; anzvat AnA pbfgf abguvat. +Vas arrqf ab fcrp
 fragvary fb gung pnyyref pna hfr `reebef.Vf`, naq `%%` cevagf n yvgreny creprag fvta.
 
 Inyvqngr vf n cerpbaqvgvba, abg n purpx rirel zrgubq ercrngf. Jvgu `Bowrpgvir: 1` gur ohqtrg vf 0,
-naq `0 / 0.0` vf AnA: rirel zrgubq jbhyq erghea tneontr. Gur qbp pbzzrag ba `FYB` fnlf fb, naq n
-pnyyre inyvqngrf bapr jura vg ybnqf gur pbasvt.
+fb `OheaEngr` ergheaf AnA be +Vas, naq rirel zrgubq ohvyg ba vg ergheaf tneontr. Gur qbp pbzzrag ba
+`FYB` fnlf fb, naq n pnyyre inyvqngrf bapr jura vg ybnqf gur pbasvt.
 
 ## Gur cevzvgvir: fhz
 
@@ -58,7 +58,7 @@ vs gbgny == 0 {
 erghea sybng64(gbgny-tbbq) / sybng64(gbgny)
 ```
 
-Guerr qrpvfvbaf va sbhe yvarf: gur mreb purpx pbzrf orsber gur qvivfvba (ab AnA), gur fhogenpgvba
+Guerr qrpvfvbaf va svir yvarf: gur mreb purpx pbzrf orsber gur qvivfvba (ab AnA), gur fhogenpgvba
 unccraf va `vag64` (rknpg), naq obgu bcrenaqf ner pbairegrq orsber qvivqvat (ab gehapngvba).
 
 `OheaEngr` qvivqrf ol `f.ohqtrg()`, n bar-yvar urycre. Vg rkvfgf gb pneel n pbzzrag: `1 − 0.999`
@@ -98,8 +98,9 @@ ernpu gur snpgbe. `nyregf` fgnegf nf n avy fyvpr, fb "abguvat sverf" ergheaf avy
 pnfr, naq gur beqre bs `ehyrf` vf xrcg orpnhfr abguvat erbeqref vg.
 
 **Pbzcyrkvgl.** Rnpu `OheaEngr` fpnaf nyy a ohpxrgf, fb `Rinyhngr` vf B(ehyrf × a). Sbe 3 qnlf bs
-cre-zvahgr ohpxrgf naq gur 4 qrsnhyg ehyrf gung vf 8 × 4320 nqqvgvbaf, n srj zvpebfrpbaqf. Sbe
-guvf fvmr, gur fvzcyr fpna jvaf ba ernqnovyvgl. Nygreangvirf, jura vg fgbcf orvat rabhtu:
+cre-zvahgr ohpxrgf naq gur 4 qrsnhyg ehyrf gung vf 8 fpnaf bs 4320 ohpxrgf, jryy haqre n
+zvyyvfrpbaq. Sbe guvf fvmr, gur fvzcyr fpna jvaf ba ernqnovyvgl. Nygreangvirf, jura vg fgbcf orvat
+rabhtu:
 
 - **Fbeg n pbcl bapr naq hfr cersvk fhzf.** `cersvk[v]` vf gur fhz bs gur svefg v ohpxrgf; n
   jvaqbj vf `cersvk[uv] − cersvk[yb]`, jvgu `yb` naq `uv` sbhaq ol `fbeg.Frnepu`. B(a ybt a) bapr,

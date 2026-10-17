@@ -258,8 +258,8 @@ func TestErrRead(t *testing.T) {
 	for _, src := range sources {
 		for _, rd := range readers {
 			if rd.name == "DataErrReader" && src.name == "error together with the last data" {
-				// iotest.DataErrReader itself drops data that comes
-				// together with an error other than io.EOF.
+				// iotest.DataErrReader itself drops data that the
+				// reader under it returns together with an error.
 				continue
 			}
 			t.Run(src.name+"/"+rd.name, func(t *testing.T) {
