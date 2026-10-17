@@ -226,7 +226,7 @@ path: r a b c          path: r b              path: r a b
     go test -run 'TestSelfTime|TestServiceTimes' -v ./exercises/11-tracetree/  # step 2
     go test -run TestCriticalPath -v ./exercises/11-tracetree/                 # step 3
     go test -run TestRender -v ./exercises/11-tracetree/                       # step 4
-    go test -run 'TestCriticalPath/overlaps' -v ./exercises/11-tracetree/      # one case
+    go test -run 'TestCriticalPath$/overlaps' -v ./exercises/11-tracetree/     # one case
 
 A stub that panics stops the whole test binary, so run only the step you are on. Build failures
 print trees as `root(a b(b1 b2))`, children in order; SelfTime and CriticalPath failures print the

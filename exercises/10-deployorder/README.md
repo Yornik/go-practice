@@ -126,7 +126,8 @@ Path = [b d b]                  (a is on the path but not in the cycle)
 - Every slice that a method returns, including `CycleError.Path`, is new. The caller may change it,
   and later results stay the same.
 - A Graph does not change after New. All methods are safe to call from several goroutines at once.
-  `TestConcurrentUse` checks this; it can only catch a data race when you run it with `-race`.
+  `TestConcurrentUse` checks this; it reliably catches a data race only when you run it with
+  `-race`.
 
 ## Examples
 
@@ -218,8 +219,9 @@ rule did not pick, or not a cycle at all.
 - Teardown order for deleting an environment: dependents first, the reverse of Waves.
 - Limit the parallelism: split each wave into batches of at most n services, and run them with the
   worker pool from 12-workerpool.
-- Report all cycles instead of the first (Tarjan's strongly connected components), and print the
-  graph in DOT format for Graphviz, as `terraform graph` does.
+- Report every group of services caught in a cycle, not only the first cycle (Tarjan's strongly
+  connected components), and print the graph in DOT format for Graphviz, as `terraform graph`
+  does.
 
 ## Stuck?
 

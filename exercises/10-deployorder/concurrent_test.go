@@ -9,7 +9,7 @@ import (
 
 // A Graph does not change after New, so many goroutines can query it at once.
 // Run with -race: a Graph that fills a cache on first use without a lock
-// passes without -race and fails with it.
+// usually passes without -race and fails with it.
 func TestConcurrentUse(t *testing.T) {
 	g := mustNew(t, platform())
 	wantWaves := [][]string{

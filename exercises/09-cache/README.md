@@ -9,7 +9,7 @@ answers in memory. A plain map grows until the pod is OOM-killed, so the cache n
 config that changed an hour ago, so entries **expire** after a time to live (TTL). Values that
 hold resources, such as a gRPC client per tenant, must be closed when they leave: a **callback
 for every removal**. **Hit and miss counters** tell you whether the cache earns its memory.
-`hashicorp/golang-lru` and Kubernetes' `LRUExpireCache` do this; here you build it.
+`hashicorp/golang-lru` and Kubernetes' `LRUExpireCache` do parts of this; here you build it.
 
 ## Task
 
@@ -120,7 +120,8 @@ removed to make room is an expiry, not an eviction: no live data was pushed out.
 - Every value written is either still in the cache or was passed to OnEvict exactly once, and
   the counters match the OnEvict calls. The tests check both with 8 goroutines.
 - `TestConcurrentHotKeys` has 8 goroutines call Set and Get on the same 2 keys. Run step 6 with
-  `-race`: the race detector fails it on any access the lock does not cover.
+  `-race`: the race detector fails it on any access to state that another goroutine writes,
+  if the lock does not cover both.
 
 ## Examples
 

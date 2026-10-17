@@ -482,9 +482,8 @@ func TestMapContextEnds(t *testing.T) {
 	}
 	for _, tc := range alreadyDone {
 		t.Run(tc.name, func(t *testing.T) {
-			// Repeated, because select picks a random case when several are
-			// ready: a Map that relies on select alone to notice the done ctx
-			// gets this right by luck most of the time.
+			// Repeated, because a Map that notices the done ctx only by
+			// chance can still pass a single attempt.
 			for attempt := range 20 {
 				ctx, cancel := tc.ctx()
 				var calls atomic.Int32

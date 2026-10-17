@@ -96,17 +96,17 @@ p.zh.Haybpx()
 p.ercbeg(tbar)
 ```
 
-Gur fjvgpu vf gur ERNQZR'f ebj sbe Trg, pryy ol pryy: nofrag, rkcverq, yvir. Gur inyhr vf pbcvrq
-vagb n ybpny *orsber* gur haybpx; nsgre gur haybpx nabgure tbebhgvar znl nyernql birejevgr
-`r.inyhr`. Gur pybpx vf bayl ernq jura gurer vf na ragel gb purpx, fb n zvff ba na nofrag xrl
-pbfgf bar znc ybbxhc.
+Gur fjvgpu vf gur Trg ebj bs gur qrpvfvba gnoyr (rkcynangvba, fgrc 4), pryy ol pryy: nofrag,
+rkcverq, yvir. Gur inyhr vf pbcvrq vagb n ybpny *orsber* gur haybpx; nsgre gur haybpx nabgure
+tbebhgvar znl nyernql birejevgr `r.inyhr`. Gur pybpx vf bayl ernq jura gurer vf na ragel gb
+purpx, fb n zvff ba na nofrag xrl pbfgf bar znc ybbxhc.
 
 `tbar` vf n avy fyvpr va gur pbzzba pnfr, fb n uvg nyybpngrf abguvat.
 
 ## FrgJvguGGY naq frg
 
 Gur choyvp zrgubq vf ybpx, `frg`, haybpx, ercbeg. `frg` ubyqf gur qrpvfvbaf, va gur beqre gur
-ERNQZR qrfpevorf gurz:
+qbp pbzzrag bs FrgJvguGGY qrfpevorf gurz:
 
 1. Pbzchgr `rkcverf`: mreb sbe ggy 0, bgurejvfr `abj.Nqq(ggy)`. N artngvir ggy tvirf n gvzr va
    gur cnfg, fb gur ragel vf fgberq nyernql rkcverq jvgubhg nal fcrpvny pnfr.
@@ -176,10 +176,12 @@ Zrzbel cre ragel: gur xrl, gur inyhr, n `gvzr.Gvzr` (24 olgrf), gjb cbvagref, cy
   rirel npprff vf `r.Inyhr.(*ragel[X, I])`. Vg vf fubegre gb jevgr naq jryy grfgrq, naq vg pbfgf
   na nffregvba cre npprff naq n frpbaq nyybpngvba cre ragel. Obgu ner svar pubvprf.
 - **`qrsre p.zh.Haybpx()`** rireljurer. Vg vf gur qrsnhyg sbe n ernfba (n cnavp pnaabg yrnir gur
-  ybpx uryq), ohg urer vg jbhyq chg BaRivpg haqre gur ybpx. Na nygreangvir vf `qrsre p.ercbeg(...)`
-  ertvfgrerq *orsber* `qrsre p.zh.Haybpx()`: qrsreerq pnyyf eha ynfg va, svefg bhg, fb gur haybpx
-  ehaf svefg. Vg jbexf, ohg gur beqre bs gjb qrsre yvarf gura pneevrf gur jubyr pbeerpgarff
-  nethzrag. Gur rkcyvpvg Haybpx, jvgu `frg` nf n ybpxrq urycre, vf rnfvre gb erivrj.
+  ybpx uryq), ohg urer vg jbhyq chg BaRivpg haqre gur ybpx. Na nygreangvir vf
+  `qrsre shap() { p.ercbeg(tbar) }()` ertvfgrerq *orsber* `qrsre p.zh.Haybpx()`: qrsreerq pnyyf
+  eha ynfg va, svefg bhg, fb gur haybpx ehaf svefg. Vg arrqf gur pybfher: `qrsre p.ercbeg(tbar)`
+  rinyhngrf `tbar` ng bapr, juvyr vg vf fgvyy rzcgl. Vg jbexf, ohg gur beqre bs gjb qrsre yvarf
+  gura pneevrf gur jubyr pbeerpgarff nethzrag. Gur rkcyvpvg Haybpx, jvgu `frg` nf n ybpxrq
+  urycre, vf rnfvre gb erivrj.
 - **Ernqvat gur pybpx haqre gur ybpx.** Gur fbyhgvba pnyyf `p.abj()` juvyr ubyqvat `zh`, fb
   bcrengvbaf frr gvzr va gur fnzr beqre va juvpu gurl gnxr gur ybpx. N fybj pybpx shapgvba jbhyq
   fgnyy rirel pnyyre; `gvzr.Abj` naq n grfg pybpx ner snfg.

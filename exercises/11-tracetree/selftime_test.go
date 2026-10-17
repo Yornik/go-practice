@@ -32,8 +32,7 @@ func TestSelfTime(t *testing.T) {
 			node("p", "api", 0, 100, node("a", "db", 10, 50), node("b", "cache", 20, 60)), ms(50)},
 		{"child within another child's time",
 			node("p", "api", 0, 100, node("a", "db", 10, 80), node("b", "cache", 20, 40)), ms(30)},
-		// Covered: 10-70 and 80-90. The short child b must not shrink the
-		// covered part that a already reaches.
+		// Covered: 10-70 and 80-90. b lies inside a, and c overlaps a.
 		{"short child inside a long one, then a child that overlaps the long one",
 			node("p", "api", 0, 100,
 				node("a", "db", 10, 40), node("b", "db", 20, 30), node("c", "db", 35, 70), node("d", "db", 80, 90)),

@@ -82,7 +82,7 @@ func TestNewUnknownDependency(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			// Several times: Go randomizes the iteration order of maps, so a
-			// New that ranges over the map reports a different error each time.
+			// New that ranges over the map can report a different error each time.
 			for range 5 {
 				g, err := deployorder.New(tc.deps)
 				if g != nil {

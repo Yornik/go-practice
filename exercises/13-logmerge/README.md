@@ -9,7 +9,7 @@ started. `cat *.log | sort` works on small files, but a sort must read everythin
 the first line: with 20 files of 2 GB that is slow and eats memory, and with `kubectl logs -f` it
 never prints anything, because the input never ends. Each file is already sorted, so you only
 need to compare the next line of each of the 20 streams, again and again. That is a k-way merge,
-the thing `sort -m` does. Logs from a log shipper (Fluent Bit, Promtail, a Loki export) have a
+the thing `sort -m` does. Logs from a log shipper (Fluent Bit, Promtail) have a
 second problem: lines arrive slightly out of order, because they travel in batches over different
 paths. A small reorder window fixes that, the same way Loki and Prometheus accept samples that
 arrive a bit late. In this exercise you build all three pieces as lazy Go iterators.

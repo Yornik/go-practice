@@ -97,7 +97,7 @@ func TestCycleReported(t *testing.T) {
 }
 
 // Go randomizes the iteration order of maps. With 20 separate cycles, a
-// search that ranges over a map picks a different cycle from run to run.
+// search that ranges over a map can pick a different cycle from run to run.
 func TestCycleSameEveryTime(t *testing.T) {
 	deps := make(map[string][]string)
 	for i := range 20 {

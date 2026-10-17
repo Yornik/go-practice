@@ -32,9 +32,10 @@ Tebhc:
 - Tb: vs gurer vf n punaary, fraq gb vg (guvf oybpxf juvyr vg vf shyy). Gura `jt.Nqq(1)`, gura
   fgneg gur tbebhgvar.
 - GelTb: gur fnzr, ohg gur fraq vf n `fryrpg` jvgu n `qrsnhyg` gung ergheaf snyfr.
-- Gur tbebhgvar: qrsre "erprvir sebz gur punaary" naq `jt.Qbar()`. Eha s guebhtu n fznyy urycre
-  jubfr qrsreerq `erpbire` gheaf n cnavp vagb n `*CnavpReebe`. Vs gur erfhyg vf abg avy: vafvqr gur
-  Bapr, fgber vg naq pnapry jvgu vg nf gur pnhfr.
+- Gur tbebhgvar: qrsre `jt.Qbar()`, gura qrsre "erprvir sebz gur punaary", fb gur fybg vf tvira
+  onpx orsber `jt.Qbar()` ehaf (gur beqre sebz Uvag 2). Eha s guebhtu n fznyy urycre jubfr
+  qrsreerq `erpbire` gheaf n cnavp vagb n `*CnavpReebe`. Vs gur erfhyg vf abg avy: vafvqr gur Bapr,
+  fgber vg naq pnapry jvgu vg nf gur pnhfr.
 - Jnvg: `jt.Jnvg()`, pnapry (vs gurer vf n pnapry shap), erghea gur fgberq reebe.
 
 Znc:
