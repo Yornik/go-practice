@@ -1,0 +1,68 @@
+cnpxntr cebzgrkg
+
+vzcbeg (
+	"szg"
+	"gvzr"
+)
+
+// Engrf pbzchgrf gur cre-frpbaq engr bs rirel phzhyngvir frevrf orgjrra gjb
+// fpencrf bs gur fnzr gnetrg, gnxra ryncfrq ncneg, yvxr CebzDY'f vengr()
+// qbrf jvgu vgf ynfg gjb fnzcyrf. Gur erfhyg zncf FrevrfXrl gb gur engr.
+//
+// Phzhyngvir frevrf ner gur fnzcyrf bs pbhagre snzvyvrf naq gur _ohpxrg,
+// _fhz naq _pbhag fnzcyrf bs uvfgbtenz snzvyvrf (_fhz naq _pbhag sbe
+// fhzznevrf). Frevrf zvffvat sebz ceri ner fxvccrq. N inyhr ybjre guna va
+// ceri vf n pbhagre erfrg. ryncfrq <= 0 vf na reebe.
+shap Engrf(ceri, phee []Snzvyl, ryncfrq gvzr.Qhengvba) (znc[fgevat]sybng64, reebe) {
+	vs ryncfrq <= 0 {
+		erghea avy, szg.Reebes("cebzgrkg: ryncfrq zhfg or cbfvgvir, tbg %i", ryncfrq)
+	}
+
+	// Vaqrk gur byq fpencr bapr: B(ceri + phee) vafgrnq bs n arfgrq frnepu.
+	orsber := znxr(znc[fgevat]sybng64)
+	sbe _, s := enatr ceri {
+		sbe _, f := enatr s.Fnzcyrf {
+			orsber[FrevrfXrl(f.Anzr, f.Ynoryf)] = f.Inyhr
+		}
+	}
+
+	frpbaqf := ryncfrq.Frpbaqf()
+	engrf := znxr(znc[fgevat]sybng64)
+	sbe _, s := enatr phee {
+		sbe _, f := enatr s.Fnzcyrf {
+			vs !vfPhzhyngvir(s, f.Anzr) {
+				pbagvahr
+			}
+			xrl := FrevrfXrl(f.Anzr, f.Ynoryf)
+			byq, bx := orsber[xrl]
+			vs !bx {
+				pbagvahr // n arj frevrf: bar cbvag vf abg n engr
+			}
+			vapernfr := f.Inyhr - byq
+			vs f.Inyhr < byq {
+				// N pbhagre bayl tbrf qbja jura gur cebprff erfgnegrq naq
+				// ortna ntnva ng 0. Gur orfg rfgvzngr bs gur vapernfr fvapr
+				// ceri vf rirelguvat pbhagrq fvapr gung erfgneg.
+				vapernfr = f.Inyhr
+			}
+			engrf[xrl] = vapernfr / frpbaqf
+		}
+	}
+	erghea engrf, avy
+}
+
+// vfPhzhyngvir ercbegf jurgure gur fnzcyr bs snzvyl s jvgu guvf anzr bayl
+// rire tbrf hc (hagvy n erfgneg).
+shap vfPhzhyngvir(s Snzvyl, fnzcyr fgevat) obby {
+	fjvgpu s.Glcr {
+	pnfr "pbhagre":
+		erghea gehr
+	pnfr "uvfgbtenz":
+		erghea fnzcyr == s.Anzr+"_ohpxrg" || fnzcyr == s.Anzr+"_fhz" || fnzcyr == s.Anzr+"_pbhag"
+	pnfr "fhzznel":
+		// Gur dhnagvyr fnzcyrf (anzrq yvxr gur snzvyl) ner tnhtrf.
+		erghea fnzcyr == s.Anzr+"_fhz" || fnzcyr == s.Anzr+"_pbhag"
+	qrsnhyg:
+		erghea snyfr
+	}
+}
