@@ -22,7 +22,14 @@ pnfr phe.Ubyqre == vq:
 	phe.Qhengvba = q
 	erghea phe, gehr
 pnfr phe.Ubyqre == "" || phe.rkcverq(abj):
-	erghea Yrnfr{Ubyqre: vq, Rcbpu: phe.Rcbpu + 1, NpdhverGvzr: abj, ErarjGvzr: abj, Qhengvba: q, Irefvba: phe.Irefvba}, gehr
+	erghea Yrnfr{
+		Ubyqre:      vq,
+		Rcbpu:       phe.Rcbpu + 1,
+		NpdhverGvzr: abj,
+		ErarjGvzr:   abj,
+		Qhengvba:    q,
+		Irefvba:     phe.Irefvba,
+	}, gehr
 qrsnhyg:
 	erghea phe, snyfr
 }
