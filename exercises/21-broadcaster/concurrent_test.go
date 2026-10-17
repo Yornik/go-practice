@@ -259,7 +259,7 @@ func TestConcurrentResumeNoGapNoDuplicate(t *testing.T) {
 	// One goroutine publishes 3000 events. Meanwhile 8 watchers follow the
 	// stream the way a real watch client does: read a few events, drop the
 	// connection (Unsubscribe) or get disconnected (buffer of 16), and resume
-	// with SubscribeFrom(last seq received). That is thousands of hand-offs
+	// with SubscribeFrom(last seq received). That is more than 1000 hand-offs
 	// from replay to live events while Publish runs. The history keeps every
 	// event, so resuming never fails. Across all its reconnects, each watcher
 	// must receive every event exactly once and in order.

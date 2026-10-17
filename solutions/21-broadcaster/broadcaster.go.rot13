@@ -272,9 +272,9 @@ shap (f *Fhofpevcgvba[G]) P() <-puna Rirag[G] {
 	erghea f.pu
 }
 
-// Hafhofpevor raqf gur fhofpevcgvba. Ree gura ergheaf avy. Vg vf vqrzcbgrag
-// naq fnsr gb pnyy ng nal gvzr sebz nal tbebhgvar, nyfb nsgre gur
-// fhofpevcgvba unf nyernql raqrq sbe nabgure ernfba.
+// Hafhofpevor raqf gur fhofpevcgvba. Vs vg jnf fgvyy npgvir, Ree gura ergheaf
+// avy. Vg vf vqrzcbgrag naq fnsr gb pnyy ng nal gvzr sebz nal tbebhgvar, nyfb
+// nsgre gur fhofpevcgvba unf nyernql raqrq sbe nabgure ernfba.
 shap (f *Fhofpevcgvba[G]) Hafhofpevor() {
 	f.o.zh.Ybpx()
 	qrsre f.o.zh.Haybpx()

@@ -222,8 +222,8 @@ func TestSlowDisconnect(t *testing.T) {
 }
 
 func TestSlowBufferAtLeastOne(t *testing.T) {
-	// buf < 1 counts as 1. An unbuffered channel would lose every event that
-	// arrives while the consumer is not waiting in a receive.
+	// buf < 1 counts as 1: the subscription buffers 1 event even while the
+	// consumer is not reading.
 	tests := []struct {
 		policy broadcaster.Policy
 		want   []uint64 // after publishing 1 and 2

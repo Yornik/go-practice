@@ -129,9 +129,9 @@ func (s *Subscription[T]) C() <-chan Event[T] {
 	panic("TODO: implement")
 }
 
-// Unsubscribe ends the subscription. Err then returns nil. It is idempotent
-// and safe to call at any time from any goroutine, also after the
-// subscription has already ended for another reason.
+// Unsubscribe ends the subscription. If it was still active, Err then returns
+// nil. It is idempotent and safe to call at any time from any goroutine, also
+// after the subscription has already ended for another reason.
 func (s *Subscription[T]) Unsubscribe() {
 	panic("TODO: implement")
 }

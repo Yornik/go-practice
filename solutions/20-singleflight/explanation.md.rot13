@@ -95,7 +95,7 @@ N fraq ba n punaary jnxrf bar erprvire. N pybfr jnxrf nyy bs gurz, naq rirel erp
 ergheaf ng bapr. Gung vf jung "gur erfhyg vf ernql" arrqf: lbh qb abg xabj ubj znal pnyyref jnvg,
 naq zber pna neevir hagvy gur ragel yrnirf gur znc. Gur zrzbel zbqry znxrf vg fnsr gb ernq gur
 erfhyg jvgubhg gur ybpx: "Gur pybfvat bs n punaary vf flapuebavmrq orsber n erprvir gung ergheaf
-orpnhfr gur punaary vf pybfrq." Rirelguvat gur jevgre qvq orsber `pybfr` vf ivfvoyr gb rirel
+n mreb inyhr orpnhfr gur punaary vf pybfrq." Rirelguvat gur jevgre qvq orsber `pybfr` vf ivfvoyr gb rirel
 ernqre nsgre `<-qbar`. Fb: jevgr gur svryqf, gura pybfr.
 
 ```tb
@@ -140,8 +140,8 @@ naq lbh qb abg pngpu vg, gur bgure pnyyref jnvg sberire, orpnhfr abobql naabhapr
 Fb: erpbire jurer sa ehaf, erpbeq n `*CnavpReebe` jvgu `qroht.Fgnpx()` gnxra vafvqr gur qrsreerq
 shapgvba (gur cnavpxvat senzrf ner fgvyy ba gur fgnpx gurer), naabhapr "svavfurq" va n `qrsre`,
 naq yrg rnpu jnvgvat pnyyre cnavp ntnva va vgf *bja* tbebhgvar. Rnpu pnyyre gura snvyf gur jnl vg
-jbhyq unir snvyrq jvgubhg fvatyrsyvtug, naq vgf bja erpbire (be `arg/uggc`'f, juvpu ybtf naq
-pybfrf gur pbaarpgvba) unaqyrf vg.
+jbhyq unir snvyrq jvgubhg fvatyrsyvtug, naq vgf bja erpbire (be `arg/uggc`'f, juvpu ybtf vg naq
+pybfrf gur pbaarpgvba be erfrgf gur UGGC/2 fgernz) unaqyrf vg.
 
 Jul abg ghea gur cnavp vagb na beqvanel reebe va Qb? N cnavp vf n oht, naq pbqr gung unaqyrf
 reebef ergevrf gurz be ybtf gurz nf jneavatf. QbPuna unf ab pnyyre tbebhgvar gb cnavp va, fb gurer
@@ -235,7 +235,8 @@ pbzcyrgrf, jurgure nalbar ernqf be abg.
   ybpnyyl be sebz gur crre gung bjaf gur xrl.
 - **Cebkvrf naq PQAf** qb gur fnzr jvgu UGGC: atvak `cebkl_pnpur_ybpx` yrgf bar erdhrfg svyy n
   pnpur ragel juvyr gur bguref jnvg, Ineavfu chgf qhcyvpngr erdhrfgf ba n jnvgvat yvfg, naq
-  `fgnyr-juvyr-erinyvqngr` (ESP 5861) freirf gur byq erfcbafr juvyr bar erdhrfg erserfurf vg.
+  `fgnyr-juvyr-erinyvqngr` (ESP 5861) freirf gur byq erfcbafr juvyr gur pnpur erinyvqngrf vg va
+  gur onpxtebhaq.
 - **Bgure fgnzcrqr qrsraprf** jbex ba gur pnpur fvqr: nqq wvggre gb GGYf fb xrlf qb abg rkcver
   gbtrgure, erserfu ubg xrlf va gur onpxtebhaq be n yvggyr orsber gurl rkcver (cebonovyvfgvp
   rneyl rkcvengvba), naq freir fgnyr qngn jura gur onpxraq vf fgehttyvat. Gurl pbzovar jryy jvgu

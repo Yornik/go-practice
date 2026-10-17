@@ -179,8 +179,8 @@ Vs vg pna, A+1 vf ybfg (choyvfurq orsber ertvfgengvba, abg cneg bs gur ercynl) b
 (ertvfgrerq svefg naq nyfb ercynlrq), be neevirf bhg bs beqre. Gur svk vf abg n fznegre purpx.
 Vg vf gb qb gur ercynl naq gur ertvfgengvba va gur fnzr pevgvpny frpgvba nf Choyvfu. Gur ercynl
 gura ehaf haqre gur ybpx, juvpu pbfgf B(ercynlrq riragf) bs aba-oybpxvat jbex. Xhoreargrf' jngpu
-pnpur unf gur fnzr fgehpgher: n jngpu fgnegf sebz gur pnpur'f fancfubg naq gur riragf nsgre vg haqre
-gur pnpur'f ybpx.
+pnpur unf gur fnzr fgehpgher: vg pbyyrpgf gur xrcg riragf nsgre gur erdhrfgrq irefvba naq
+ertvfgref gur arj jngpure juvyr vg ubyqf gur jngpu pnpur'f ybpx, fb ab arj rirag trgf va orgjrra.
 
 ### N evat ohssre vaqrkrq ol frdhrapr ahzore
 
@@ -227,17 +227,17 @@ nf n frg. Naq `Rirag[G]` vf pbzcnenoyr jvgu `==` jurarire G vf, juvpu gur grfgf 
 naq gung gur enpr qrgrpgbe haqrefgnaqf. Vg svgf Qebccrq, juvpu n zrgevpf fpencre znl ernq bsgra. Lbh
 pbhyq xrrc vg haqre gur zhgrk whfg nf jryy; jung lbh zhfg abg qb vf ernq n cynva svryq jevggra haqre
 n ybpx jvgubhg gnxvat gur ybpx. Gur enpr qrgrpgbe pngpurf gung bayl vs gur grfg npghnyyl ernqf naq
-jevgrf ng gur fnzr gvzr, juvpu vf jul fgrc 5 ehaf n "fpencre" tbebhgvar arkg gb gur choyvfure.
+jevgrf pbapheeragyl, juvpu vf jul fgrc 5 ehaf n "fpencre" tbebhgvar arkg gb gur choyvfure.
 
 ### Grfgvat pbapheerag pbqr
 
 N pbapheerapl grfg gung cnffrf bapr cebirf yvggyr. Guerr unovgf uryc. Grfg qrgrezvavfgvp cnegf
 qrgrezvavfgvpnyyl (urer: n pbafhzre gung qbrf abg ernq). Haqre erny pbapheerapl, purpx vainevnagf
 vafgrnq bs rknpg bhgchgf. Naq znxr gur qnatrebhf vagreyrnivat serdhrag: gur erpbaarpgvat-jngpuref
-grfg qbrf gubhfnaqf bs erfhzrf juvyr Choyvfu ehaf, orpnhfr n oht va gur unaq-bss jvaqbj fubjf hc
+grfg qbrf zber guna 1000 erfhzrf juvyr Choyvfu ehaf, orpnhfr n oht va gur unaq-bss jvaqbj fubjf hc
 bayl vs fbzrguvat vf choyvfurq va gung jvaqbj. Juvyr guvf rkrepvfr jnf jevggra, n irefvba gung
 eryrnfrq naq er-gbbx gur ybpx orgjrra ercynl naq ertvfgengvba cnffrq n grfg jvgu 30 erfhzrf, naq
-snvyrq va 10 bs 10 ehaf bs gur grfg jvgu gubhfnaqf, ba n 4-pber znpuvar. Jvgu `-pch 1` vg cnffrq
+snvyrq va 10 bs 10 ehaf bs gur grfg jvgu zber guna 1000, ba n 4-pber znpuvar. Jvgu `-pch 1` vg cnffrq
 rirel gvzr: ba bar pber, abguvat vagreehcgf n tbebhgvar va n jvaqbj gung fubeg. Fbzr ohtf arrq erny
 cnenyyryvfz gb fubj, juvpu vf bar zber ernfba gb ernfba nobhg vagreyrnivatf vafgrnq bs gehfgvat n
 terra eha.

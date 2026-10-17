@@ -218,7 +218,7 @@ seconds.
   `ErrGone`, and calls Unsubscribe when the request's context is done.
 - Filtered subscriptions (`func(T) bool`). Why does a watcher with a narrow filter now get
   `ErrGone` more often, and how do Kubernetes BOOKMARK events fix that?
-- A grace period for `Disconnect`: wait a few milliseconds for room before giving up, as the
+- A grace period for `Disconnect`: wait a short, bounded time for room before giving up, as the
   Kubernetes watch cache does. What does that cost the producer and the other watchers?
 - Metrics: subscribers, dropped events and disconnects as Prometheus metrics (17-promtext has the
   format).
