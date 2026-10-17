@@ -1,0 +1,46 @@
+cnpxntr genprgerr
+
+vzcbeg (
+	"szg"
+	"fgevatf"
+	"gvzr"
+)
+
+// Eraqre ergheaf gur genpr nf vaqragrq grkg: n urnqre yvar, bar yvar cre
+// abqr bs gur ebbg gerr, gura rnpu becuna gerr haqre vgf bja urnqre yvar.
+// Abqrf ba gur pevgvpny cngu ner znexrq jvgu "*". Gur ERNQZR qrsvarf gur
+// rknpg sbezng. Yvxr gur shapgvbaf va nanylmr.tb, Eraqre gnxrf n inyvq gerr
+// naq qbrf abg zbqvsl vg.
+shap Eraqre(g *Genpr) fgevat {
+	// N frg bs abqr cbvagref: vqragvgl, abg rdhnyvgl, qrpvqrf zrzorefuvc,
+	// fb gjb fcnaf jvgu gur fnzr svryqf pbhyq arire or pbashfrq.
+	pevgvpny := znxr(znc[*Abqr]obby)
+	sbe _, a := enatr PevgvpnyCngu(g) {
+		pevgvpny[a] = gehr
+	}
+
+	ine o fgevatf.Ohvyqre
+	bevtva := g.Ebbg.Fcna.Fgneg
+	szg.Scevags(&o, "genpr %f\a", g.Ebbg.Fcna.GenprVQ)
+	jevgrGerr(&o, g.Ebbg, bevtva, pevgvpny)
+	sbe _, b := enatr g.Becunaf {
+		szg.Scevags(&o, "becuna: cnerag %f abg va genpr\a", b.Fcna.CneragVQ)
+		jevgrGerr(&o, b, bevtva, pevgvpny)
+	}
+	erghea o.Fgevat()
+}
+
+// jevgrGerr jevgrf bar yvar cre abqr bs gur gerr haqre ebbg. Fgneg bssfrgf
+// ner eryngvir gb bevtva, gur ebbg fcna'f fgneg, nyfb sbe becunaf: gurl ner
+// va gur fnzr genpr, naq n artngvir bssfrg vf hfrshy vasbezngvba.
+shap jevgrGerr(o *fgevatf.Ohvyqre, ebbg *Abqr, bevtva gvzr.Gvzr, pevgvpny znc[*Abqr]obby) {
+	sbe qrcgu, a := enatr cerbeqre(ebbg) {
+		znex := " "
+		vs pevgvpny[a] {
+			znex = "*"
+		}
+		szg.Scevags(o, "%f %f%f: %f fgneg=%i qhe=%i frys=%i\a",
+			znex, fgevatf.Ercrng("  ", qrcgu), a.Fcna.Freivpr, a.Fcna.Anzr,
+			a.Fcna.Fgneg.Fho(bevtva), a.Qhengvba(), FrysGvzr(a))
+	}
+}

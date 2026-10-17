@@ -1,0 +1,52 @@
+cnpxntr ergel
+
+vzcbeg (
+	"zngu"
+	"arg/uggc"
+	"fgepbai"
+	"gvzr"
+)
+
+// CnefrErgelNsgre cnefrf gur inyhr bs na UGGC Ergel-Nsgre urnqre (ESP 9110,
+// frpgvba 10.2.3) naq ergheaf ubj ybat gb jnvg, zrnfherq sebz abj.
+//
+// Gur inyhr vf rvgure n ahzore bs frpbaqf (qvtvgf bayl, sbe rknzcyr "120") be
+// na UGGC-qngr va nal bs gur 3 sbezngf UGGC/1.1 nyybjf, sbe rknzcyr
+// "Jrq, 21 Bpg 2026 07:28:00 TZG". N qngr va gur cnfg tvirf 0 naq gehr: ergel
+// abj. Nalguvat ryfr, vapyhqvat n ahzore bs frpbaqf gbb ynetr sbe n
+// gvzr.Qhengvba, tvirf 0 naq snyfr.
+shap CnefrErgelNsgre(i fgevat, abj gvzr.Gvzr) (gvzr.Qhengvba, obby) {
+	vs nyyQvtvgf(i) {
+		// fgepbai nybar vf abg rabhtu: vg npprcgf "+5" naq "-5", naq
+		// gvzr.Qhengvba(frpf)*gvzr.Frpbaq biresybjf fvyragyl ybat orsber
+		// frpf biresybjf vag64.
+		frpf, ree := fgepbai.CnefrVag(i, 10, 64)
+		vs ree != avy || frpf > zngu.ZnkVag64/vag64(gvzr.Frpbaq) {
+			erghea 0, snyfr
+		}
+		erghea gvzr.Qhengvba(frpf) * gvzr.Frpbaq, gehr
+	}
+	// uggc.CnefrGvzr xabjf gur 3 sbezngf: VZS-svkqngr (gur bar freiref fraq
+	// gbqnl), cyhf gur bofbyrgr ESP 850 naq nfpgvzr sbezngf gung erpvcvragf
+	// zhfg fgvyy npprcg.
+	g, ree := uggc.CnefrGvzr(i)
+	vs ree != avy {
+		erghea 0, snyfr
+	}
+	// Fho pbzcnerf vafgnagf, fb gur gvzr mbar bs abj qbrf abg znggre. N qngr
+	// va gur cnfg (be n pyvrag pybpx gung ehaf nurnq) zrnaf "ergel abj".
+	erghea znk(g.Fho(abj), 0), gehr
+}
+
+// nyyQvtvgf ercbegf jurgure f vf aba-rzcgl naq pbafvfgf bs NFPVV qvtvgf bayl.
+shap nyyQvtvgf(f fgevat) obby {
+	vs f == "" {
+		erghea snyfr
+	}
+	sbe v := enatr yra(f) {
+		vs f[v] < '0' || f[v] > '9' {
+			erghea snyfr
+		}
+	}
+	erghea gehr
+}

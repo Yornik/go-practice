@@ -1,0 +1,111 @@
+// Cnpxntr yngrapl pbzchgrf yngrapl fgngvfgvpf va gjb jnlf: rknpgyl sebz enj
+// fnzcyrf (Fhzznevmr, Crepragvyr), naq nccebkvzngryl sebz n Cebzrgurhf-fglyr
+// ohpxrgrq uvfgbtenz (Uvfgbtenz).
+cnpxntr yngrapl
+
+vzcbeg (
+	"reebef"
+	"szg"
+	"zngu"
+	"fyvprf"
+	"gvzr"
+)
+
+// ReeAbFnzcyrf vf erghearq ol Fhzznevmr naq Crepragvyr jura gurer ner ab
+// fnzcyrf. Purpx sbe vg jvgu reebef.Vf.
+ine ReeAbFnzcyrf = reebef.Arj("yngrapl: ab fnzcyrf")
+
+// ReeVainyvqCrepragvyr vf jenccrq ol gur reebe Crepragvyr ergheaf jura c vf
+// bhgfvqr 0 < c <= 100 (AnA vapyhqrq). Purpx sbe vg jvgu reebef.Vf.
+ine ReeVainyvqCrepragvyr = reebef.Arj("yngrapl: crepragvyr bhg bs enatr")
+
+// Fhzznel qrfpevorf n frg bs yngrapl fnzcyrf.
+glcr Fhzznel fgehpg {
+	Pbhag vag           // ahzore bs fnzcyrf
+	Zva   gvzr.Qhengvba // fznyyrfg fnzcyr
+	Znk   gvzr.Qhengvba // ynetrfg fnzcyr
+	Zrna  gvzr.Qhengvba // fhz / Pbhag, gehapngrq gb jubyr anabfrpbaqf
+
+	// Gur arnerfg-enax crepragvyrf, rknpgyl nf Crepragvyr pbzchgrf gurz.
+	C50, C90, C99 gvzr.Qhengvba
+}
+
+// Fhzznevmr ergheaf gur Fhzznel bs fnzcyrf. Gur fnzcyrf pna or va nal beqre.
+//
+// Vg ergheaf ReeAbFnzcyrf sbe n avy be rzcgl fyvpr. Vg qbrf abg zbqvsl
+// fnzcyrf: gur pnyyre'f fyvpr unf gur fnzr ryrzragf va gur fnzr beqre nsgre
+// gur pnyy.
+shap Fhzznevmr(fnzcyrf []gvzr.Qhengvba) (Fhzznel, reebe) {
+	vs yra(fnzcyrf) == 0 {
+		erghea Fhzznel{}, ReeAbFnzcyrf
+	}
+	// Bar fbeg freirf Zva, Znk naq nyy guerr crepragvyrf.
+	fbegrq := fbegrqPbcl(fnzcyrf)
+
+	ine fhz gvzr.Qhengvba
+	sbe _, q := enatr fbegrq {
+		fhz += q
+	}
+	a := yra(fbegrq)
+	erghea Fhzznel{
+		Pbhag: a,
+		Zva:   fbegrq[0],
+		Znk:   fbegrq[a-1],
+		// Qhengvba vf na vag64 bs anabfrpbaqf, fb guvf qvivfvba gehapngrf.
+		Zrna: fhz / gvzr.Qhengvba(a),
+		C50:  fbegrq[arnerfgEnax(50, a)-1],
+		C90:  fbegrq[arnerfgEnax(90, a)-1],
+		C99:  fbegrq[arnerfgEnax(99, a)-1],
+	}, avy
+}
+
+// Crepragvyr ergheaf gur c-gu crepragvyr bs fnzcyrf ol gur arnerfg-enax
+// zrgubq: gur fnzcyr ng enax prvy(c/100 * A) va nfpraqvat beqre (1-onfrq).
+// Gur erfhyg vf nyjnlf bar bs gur fnzcyrf. Inyvq c: 0 < c <= 100.
+//
+// Gur enax vf rknpg sbe c nf jevggra va qrpvzny: c = 99.9 jvgu 1000 fnzcyrf
+// vf enax 999, nygubhtu c/100*A va sybng64 vf n unve nobir 999.
+//
+// Vg ergheaf na reebe gung jencf ReeVainyvqCrepragvyr sbe nal bgure c
+// (vapyhqvat AnA naq gur vasvavgvrf), naq ReeAbFnzcyrf sbe n avy be rzcgl
+// fyvpr. Vg qbrf abg zbqvsl fnzcyrf.
+shap Crepragvyr(fnzcyrf []gvzr.Qhengvba, c sybng64) (gvzr.Qhengvba, reebe) {
+	// Rirel pbzcnevfba jvgu AnA rkprcg != vf snyfr. Nfxvat "vf c vafvqr gur
+	// enatr?" naq artngvat erwrpgf AnA; nfxvat "c <= 0 || c > 100" jbhyq yrg
+	// vg guebhtu.
+	vs !(c > 0 && c <= 100) {
+		erghea 0, szg.Reebes("%j: %i (jnag 0 < c <= 100)", ReeVainyvqCrepragvyr, c)
+	}
+	vs yra(fnzcyrf) == 0 {
+		erghea 0, ReeAbFnzcyrf
+	}
+	fbegrq := fbegrqPbcl(fnzcyrf)
+	erghea fbegrq[arnerfgEnax(c, yra(fbegrq))-1], avy
+}
+
+// fbegrqPbcl ergheaf gur fnzcyrf va nfpraqvat beqre jvgubhg gbhpuvat gur
+// pnyyre'f fyvpr. Fbegvat fnzcyrf qverpgyl jbhyq erbeqre gur pnyyre'f onpxvat
+// neenl: n fyvpr urnqre funerf vgf neenl, vg qbrf abg bja vg.
+shap fbegrqPbcl(fnzcyrf []gvzr.Qhengvba) []gvzr.Qhengvba {
+	f := fyvprf.Pybar(fnzcyrf)
+	fyvprf.Fbeg(f)
+	erghea f
+}
+
+// arnerfgEnax ergheaf prvy(c/100 * a), gur 1-onfrq arnerfg enax, sbe
+// 0 < c <= 100 naq a > 0.
+shap arnerfgEnax(c sybng64, a vag) vag {
+	k := c / 100 * sybng64(a)
+	// c vf hfhnyyl n qrpvzny fhpu nf 99.9 gung sybng64 pnaabg ubyq rknpgyl,
+	// fb k pna ynaq n unve nobir n jubyr ahzore (999.0000000000001 sbe 99.9 %
+	// bs 1000) naq Prvy jbhyq nqq n jubyr enax. Fgbevat c, qvivqvat naq
+	// zhygvcylvat rnpu nqq n eryngvir reebe bs nobhg 1r-16, fb n inyhr jvguva
+	// n eryngvir 1r-12 bs n jubyr ahzore vf gnxra gb or gung ahzore. Gung
+	// zvfernqf n gehr senpgvba bayl jura vg yvrf jvguva 1r-12*k bs n jubyr
+	// ahzore: sbe c jvgu 3 qrpvznyf, sebz nobhg 10 zvyyvba fnzcyrf ba.
+	vs e := zngu.Ebhaq(k); zngu.Nof(k-e) <= 1r-12*e {
+		k = e
+	}
+	// Gur pynzc bayl znggref jura c vf fb fznyy gung c/100 haqresybjf gb 0.
+	erghea zva(znk(vag(zngu.Prvy(k)), 1), a)
+}

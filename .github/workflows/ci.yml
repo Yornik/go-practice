@@ -1,0 +1,34 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - name: gofmt
+        run: |
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then
+            echo "Run gofmt on:"; echo "$unformatted"; exit 1
+          fi
+      # The stubs panic with "TODO: implement", so CI does not run the
+      # exercise tests directly. go vet proves that stubs and tests compile.
+      - name: go vet
+        run: go vet ./...
+      - name: peek tool tests
+        run: go test ./cmd/...
+      - name: every test fails fast against the stubs
+        run: scripts/check-stubs.sh
+      - name: reference solutions pass the tests
+        run: scripts/verify-solutions.sh

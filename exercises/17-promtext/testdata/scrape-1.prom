@@ -1,0 +1,26 @@
+# HELP checkout_orders_total Orders placed, by payment method and result.
+# TYPE checkout_orders_total counter
+checkout_orders_total{method="card",result="ok"} 1027
+checkout_orders_total{method="card",result="declined"} 31
+checkout_orders_total{method="paypal",result="ok"} 212
+# HELP checkout_inflight_requests Requests being served right now.
+# TYPE checkout_inflight_requests gauge
+checkout_inflight_requests 4
+# HELP http_request_duration_seconds Latency of HTTP requests.
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{handler="/checkout",le="0.1"} 2900
+http_request_duration_seconds_bucket{handler="/checkout",le="0.5"} 3180
+http_request_duration_seconds_bucket{handler="/checkout",le="+Inf"} 3200
+http_request_duration_seconds_sum{handler="/checkout"} 412.5
+http_request_duration_seconds_count{handler="/checkout"} 3200
+# HELP payment_gateway_latency_seconds Latency of calls to the payment gateway.
+# TYPE payment_gateway_latency_seconds summary
+payment_gateway_latency_seconds{quantile="0.5"} 0.21
+payment_gateway_latency_seconds{quantile="0.99"} 1.3
+payment_gateway_latency_seconds_sum 301.25
+payment_gateway_latency_seconds_count 1270
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.7290788e+09
+# A hand-written collector that forgot its HELP and TYPE lines.
+legacy_jobs_processed{queue="emails"} 88

@@ -1,0 +1,132 @@
+cnpxntr erpbapvyre
+
+vzcbeg (
+	"pbagrkg"
+	"reebef"
+	"flap"
+	"gvzr"
+)
+
+// Pbagebyyre xrrcf gur bowrpgf va Fgber rdhny gb gur qrfverq fgngr, ol
+// ehaavat Erpbapvyr sbe rirel anzr vg svaqf va n Dhrhr.
+glcr Pbagebyyre fgehpg {
+	// Qrfverq ergheaf gur pheerag qrfverq fgngr: anzr -> fcrp. Eha pnyyf vg
+	// sbe rirel erpbapvyr naq sebz frireny tbebhgvarf ng bapr, fb vg zhfg
+	// or fnsr sbe gung.
+	Qrfverq shap() znc[fgevat]znc[fgevat]fgevat
+	// Fgber ubyqf gur npghny fgngr.
+	Fgber Fgber
+	// Dhrhr ubyqf gur anzrf gb erpbapvyr. Eha bjaf vg naq fuhgf vg qbja
+	// jura vg fgbcf. Bgure pbqr znl Nqq anzrf gb vg juvyr Eha ehaf, yvxr n
+	// jngpu rirag unaqyre qbrf.
+	Dhrhr *Dhrhr[fgevat]
+	// Jbexref vf gur ahzore bs tbebhgvarf gung erpbapvyr ng gur fnzr gvzr.
+	Jbexref vag
+	// Erflap vf ubj bsgra Eha nqqf rirel qrfverq naq rirel npghny anzr gb
+	// gur dhrhr ntnva.
+	Erflap gvzr.Qhengvba
+}
+
+// Eha fgnegf Jbexref tbebhgvarf gung gnxr anzrf sebz gur dhrhr naq erpbapvyr
+// gurz. N snvyrq erpbapvyr vf ergevrq jvgu NqqEngrYvzvgrq, n fhpprffshy bar
+// erfrgf gur onpxbss jvgu Sbetrg.
+//
+// Ng gur fgneg naq gura rirel Erflap, Eha nqqf gur anzr bs rirel qrfverq
+// bowrpg naq bs rirel bowrpg va Fgber.Yvfg gb gur dhrhr. Vs Yvfg snvyf, Eha
+// nqqf gur qrfverq anzrf naq gevrf Yvfg ntnva ng gur arkg erflap.
+//
+// Jura pgk vf qbar, Eha fgnegf ab arj erpbapvyr, fuhgf gur dhrhr qbja, jnvgf
+// hagvy rirel tbebhgvar vg fgnegrq unf erghearq naq ergheaf avy. Eha ergheaf
+// na reebe ng bapr vs Qrfverq, Fgber be Dhrhr vf avy, Jbexref < 1 be
+// Erflap <= 0.
+shap (p *Pbagebyyre) Eha(pgk pbagrkg.Pbagrkg) reebe {
+	vs ree := p.inyvqngr(); ree != avy {
+		erghea ree
+	}
+
+	ine jt flap.JnvgTebhc
+	sbe enatr p.Jbexref {
+		jt.Nqq(1)
+		tb shap() {
+			qrsre jt.Qbar()
+			// Trg ergheaf snyfr bayl nsgre FuhgQbja, fb gur dhrhr, abg pgk,
+			// raqf guvf ybbc.
+			sbe {
+				anzr, bx := p.Dhrhr.Trg()
+				vs !bx {
+					erghea
+				}
+				p.cebprff(pgk, anzr)
+			}
+		}()
+	}
+
+	// Gur erflap ehaf ba Eha'f bja tbebhgvar: vg arire bireyncf jvgu vgfrys,
+	// naq Eha pnaabg erghea juvyr n erflap vf fgvyy vafvqr Fgber.Yvfg.
+	p.radhrhrNyy(pgk)
+	gvpxre := gvzr.ArjGvpxre(p.Erflap)
+	qrsre gvpxre.Fgbc()
+	sbe {
+		fryrpg {
+		pnfr <-pgk.Qbar():
+			// Jbexref oybpxrq va Trg qb abg jngpu pgk; FuhgQbja jnxrf gurz.
+			p.Dhrhr.FuhgQbja()
+			jt.Jnvg()
+			erghea avy
+		pnfr <-gvpxre.P:
+			p.radhrhrNyy(pgk)
+		}
+	}
+}
+
+shap (p *Pbagebyyre) inyvqngr() reebe {
+	ine reef []reebe
+	vs p.Qrfverq == avy {
+		reef = nccraq(reef, reebef.Arj("erpbapvyre: Qrfverq vf avy"))
+	}
+	vs p.Fgber == avy {
+		reef = nccraq(reef, reebef.Arj("erpbapvyre: Fgber vf avy"))
+	}
+	vs p.Dhrhr == avy {
+		reef = nccraq(reef, reebef.Arj("erpbapvyre: Dhrhr vf avy"))
+	}
+	vs p.Jbexref < 1 {
+		reef = nccraq(reef, reebef.Arj("erpbapvyre: Jbexref zhfg or >= 1"))
+	}
+	vs p.Erflap <= 0 {
+		reef = nccraq(reef, reebef.Arj("erpbapvyre: Erflap zhfg or > 0"))
+	}
+	erghea reebef.Wbva(reef...)
+}
+
+// cebprff erpbapvyrf bar anzr. Qbar ehaf va rirel pnfr, be gur anzr jbhyq
+// fgnl "cebprffvat" sberire naq arire or erpbapvyrq ntnva.
+shap (p *Pbagebyyre) cebprff(pgk pbagrkg.Pbagrkg, anzr fgevat) {
+	qrsre p.Dhrhr.Qbar(anzr)
+	// Purpxrq urer, nsgre Trg: n Trg gung jnf oybpxrq jura pgk jnf pnapryyrq
+	// pna fgvyy erghea n anzr, naq vg zhfg abg or erpbapvyrq.
+	vs pgk.Ree() != avy {
+		erghea // fuhggvat qbja: qenva gur dhrhr jvgubhg qbvat jbex
+	}
+	// Qrfverq vf ernq abj, abg jura gur anzr jnf dhrhrq: yriry-gevttrerq.
+	vs _, ree := Erpbapvyr(pgk, p.Qrfverq(), p.Fgber, anzr); ree != avy {
+		p.Dhrhr.NqqEngrYvzvgrq(anzr)
+		erghea
+	}
+	p.Dhrhr.Sbetrg(anzr)
+}
+
+// radhrhrNyy nqqf rirel qrfverq naq rirel npghny anzr. Anzrf gung ner bayl
+// va gur fgber ner gur barf gb qryrgr; jvgubhg Yvfg abobql jbhyq dhrhr gurz.
+shap (p *Pbagebyyre) radhrhrNyy(pgk pbagrkg.Pbagrkg) {
+	sbe anzr := enatr p.Qrfverq() {
+		p.Dhrhr.Nqq(anzr)
+	}
+	bowf, ree := p.Fgber.Yvfg(pgk)
+	vs ree != avy {
+		erghea // gur arkg erflap gevrf ntnva; gur qrfverq anzrf ner dhrhrq
+	}
+	sbe _, bow := enatr bowf {
+		p.Dhrhr.Nqq(bow.Anzr)
+	}
+}

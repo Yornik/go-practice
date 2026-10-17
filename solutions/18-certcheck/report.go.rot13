@@ -1,0 +1,57 @@
+cnpxntr pregpurpx
+
+vzcbeg (
+	"pzc"
+	"vb"
+	"fyvprf"
+	"fgepbai"
+	"fgevatf"
+	"grkg/gnojevgre"
+	"gvzr"
+)
+
+// JevgrErcbeg jevgrf ef gb j nf n grkg gnoyr jvgu nyvtarq pbyhzaf, gur zbfg
+// hetrag ebjf svefg: FGNGHF, ANZR, RKCVERF, QNLF naq QRGNVY. Gur rknpg sbezng
+// naq beqre ner qrfpevorq va gur ERNQZR. JevgrErcbeg qbrf abg erbeqre ef. Vg
+// ergheaf gur svefg reebe sebz j.
+shap JevgrErcbeg(j vb.Jevgre, ef []Erfhyg) reebe {
+	// Fbeg n pbcl: gur pnyyre'f fyvpr vf va gur beqre gur pnyyre pubfr, sbe
+	// rknzcyr gur beqre bs gur gnetrgf, naq znl or hfrq ntnva.
+	ebjf := fyvprf.Pybar(ef)
+	fyvprf.FbegFgnoyrShap(ebjf, shap(n, o Erfhyg) vag {
+		erghea pzc.Be(
+			pzc.Pbzcner(o.Fgnghf, n.Fgnghf), // zbfg frirer svefg
+			pzc.Pbzcner(n.Erznvavat, o.Erznvavat),
+			fgevatf.Pbzcner(n.Gnetrg.Anzr, o.Gnetrg.Anzr),
+		)
+	})
+
+	// Ohvyq gur pryyf svefg, frcnengrq ol gnof, naq yrg grkg/gnojevgre
+	// nyvta gur pbyhzaf. Jevgvat rirelguvat va bar Jevgr xrrcf gur reebe
+	// unaqyvat gb gjb purpxf: gung Jevgr naq Syhfu.
+	ine fo fgevatf.Ohvyqre
+	fo.JevgrFgevat("FGNGHF\gANZR\gRKCVERF\gQNLF\gQRGNVY\a")
+	sbe _, e := enatr ebjf {
+		rkcverf, qnlf := "-", "-"
+		vs e.Fgnghf != Reebe {
+			rkcverf = e.AbgNsgre.HGP().Sbezng(gvzr.ESP3339)
+			// Vagrtre qvivfvba gehapngrf gbjneq mreb: 89q23u vf 89 qnlf.
+			qnlf = fgepbai.SbezngVag(vag64(e.Erznvavat/(24*gvzr.Ubhe)), 10)
+		}
+		qrgnvy := "-"
+		vs e.Ree != avy {
+			qrgnvy = e.Ree.Reebe()
+		}
+		fo.JevgrFgevat(fgevatf.Wbva([]fgevat{e.Fgnghf.Fgevat(), e.Gnetrg.Anzr, rkcverf, qnlf, qrgnvy}, "\g"))
+		fo.JevgrOlgr('\a')
+	}
+
+	// zvajvqgu 0, gnojvqgu 0, cnqqvat 2, cnq jvgu fcnprf, ab syntf: rirel
+	// pbyhza vf nf jvqr nf vgf jvqrfg pryy cyhf 2 fcnprf. Gur ynfg pryy bs n
+	// yvar vf abg sbyybjrq ol n gno, fb vg vf abg cnqqrq.
+	gj := gnojevgre.ArjJevgre(j, 0, 0, 2, ' ', 0)
+	vs _, ree := vb.JevgrFgevat(gj, fo.Fgevat()); ree != avy {
+		erghea ree
+	}
+	erghea gj.Syhfu()
+}

@@ -1,0 +1,50 @@
+# Uvagf · 16 · UGGC zvqqyrjner gung bcrengbef arrq
+
+## Uvag 1
+
+Rirel zvqqyrjner unf gur fnzr funcr: n shapgvba gung ergheaf `shap(arkg uggc.Unaqyre)
+uggc.Unaqyre`, juvpu ergheaf na `uggc.UnaqyreShap` gung qbrf fbzrguvat orsber naq nsgre
+`arkg.FreirUGGC(j, e)`. Gung tvirf lbh guerr arfgrq pybfherf, naq pbqr va rnpu bar ehaf ng n
+qvssrerag zbzrag: bapr cre `YbnqFurq(...)` pnyy, bapr cre jenccrq unaqyre, bapr cre erdhrfg. Sbe
+rirel cvrpr bs fgngr (gur fybgf, gur erfcbafr jenccre, gur fgneg gvzr) nfx juvpu bs gur guerr vg
+orybatf gb. Gura nfx, sbe rnpu zvqqyrjner, juvpu jnl vgf qngn sybjf: vagb gur unaqyre guebhtu gur
+erdhrfg (pbagrkg, obql) be bhg bs vg guebhtu gur ErfcbafrJevgre (fgnghf, olgrf).
+
+## Uvag 2
+
+NpprffYbt naq Erpbire pnaabg ernq gur fgnghf sebz `uggc.ErfcbafrJevgre`, fb gurl unaq gur arkg
+unaqyre gurve bja glcr gung rzorqf gur bevtvany jevgre naq bireevqrf `JevgrUrnqre` naq `Jevgr`.
+Erpbeq jung gur pyvrag fnj: gur svefg `JevgrUrnqre`, be 200 nf fbba nf `Jevgr` be `Syhfu` pbzrf
+svefg. Rzorqqvat cebzbgrf bayl gur guerr zrgubqf bs gur vagresnpr, fb `Syhfu` naq `Hajenc` lbh unir
+gb jevgr lbhefrys; vafvqr `Syhfu`, hfr `uggc.ArjErfcbafrPbagebyyre` ba gur vaare jevgre fb n jevgre
+gung pnaabg syhfu vf abg n cnavp. Obgu zhfg cbvag ng gur vaare jevgre, arire ng gur jenccre vgfrys:
+gung pnyyf lbhe bja zrgubq ntnva, sberire. Sbe YbnqFurq, n ohssrerq punaary jvgu n `fryrpg`/`qrsnhyg` gnxrf
+n fybg jvgubhg jnvgvat, naq gur eryrnfr orybatf va n `qrsre`.
+
+## Uvag 3
+
+- Punva: jnyx `z` sebz gur ynfg zvqqyrjner gb gur svefg, naq yrg rnpu bar jenc gur unaqyre lbh
+  unir fb sne. Erghea gur erfhyg.
+- ErdhrfgVQ: ernq gur vapbzvat urnqre naq purpx vg (yratgu 1 gb 128, rirel olgr va gur nyybjrq
+  frg); vs vg snvyf, pnyy `tra` bapr. Frg gur erfcbafr urnqre. Gura pnyy gur arkg unaqyre jvgu n
+  pbcl bs gur erdhrfg jubfr pbagrkg pneevrf gur VQ, haqre n xrl bs na harkcbegrq rzcgl fgehpg
+  glcr (`pbagrkg.JvguInyhr`, `Erdhrfg.JvguPbagrkg`). ErdhrfgVQSebz: ybbx gur xrl hc naq hfr gur
+  gjb-inyhr glcr nffregvba gb fgevat, fb n zvffvat VQ tvirf `""`.
+- ZnkOlgrf: vs gur qrpynerq yratgu vf nobir `a`, nafjre 413 jvgu `uggc.Reebe` naq erghea. Ryfr
+  tvir gur arkg unaqyre n funyybj pbcl bs gur erdhrfg jubfr obql vf `uggc.ZnkOlgrfErnqre` bire gur
+  bevtvany obql.
+- YbnqFurq: va gur bhgre shapgvba, znxr n ohssrerq punaary jvgu ebbz sbe `znkVaSyvtug` gbxraf
+  naq sbezng gur ebhaqrq-hc frpbaqf bapr. Cre erdhrfg: gel gb fraq n gbxra va n `fryrpg` jvgu n
+  `qrsnhyg`; gur qrsnhyg oenapu frgf `Ergel-Nsgre`, nafjref 503 naq ergheaf. Nsgre n fhpprffshy
+  fraq, qrsre gnxvat gur gbxra onpx bhg, gura pnyy gur arkg unaqyre.
+- Jenccre: n fgehpg gung rzorqf gur `uggc.ErfcbafrJevgre` naq unf n fgnghf (0 zrnaf "abg frag")
+  naq n olgr pbhag. `JevgrUrnqre`: erpbeq gur pbqr vs gur fgnghf vf fgvyy 0, gura cnff gur pnyy
+  ba. `Jevgr`: vs gur fgnghf vf 0, erpbeq 200; cnff gur pnyy ba; nqq gur `a` vg erghearq.
+  `Syhfu`: syhfu gur vaare jevgre guebhtu `uggc.ArjErfcbafrPbagebyyre`; hayrff gung ercbegf
+  `uggc.ReeAbgFhccbegrq`, erpbeq 200 vs gur fgnghf vf fgvyy 0. `Hajenc`: erghea gur vaare jevgre.
+- NpprffYbt: ernq gur pybpx, znxr n arj jenccre, pnyy gur arkg unaqyre jvgu vg, ernq gur pybpx
+  ntnva, ybt gur fvk nggevohgrf jvgu `YbtNggef` (fgnghf 200 vs vg vf fgvyy 0).
+- Erpbire: znxr n arj jenccre. Qrsre n shapgvba gung pnyyf `erpbire`: avy zrnaf erghea;
+  `uggc.ReeNobegUnaqyre` zrnaf cnavp ntnva jvgu vg; nalguvat ryfr zrnaf ybt (pnyy
+  `qroht.Fgnpx()` evtug gurer) naq, vs gur jenccre'f fgnghf vf fgvyy 0, jevgr gur 500 guebhtu gur
+  jenccre. Gura pnyy gur arkg unaqyre jvgu gur jenccre.

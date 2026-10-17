@@ -1,0 +1,249 @@
+# 05 · Reebe ohqtrgf naq ohea-engr nyregf — rkcynangvba
+
+## Gur ceboyrz oruvaq gur ceboyrz
+
+Na FYB vf n cebzvfr nobhg n engvb bire n ybat crevbq: "99.9 % bs erdhrfgf fhpprrq bire 30 qnlf".
+Gur 0.1 % gung znl snvy vf gur reebe ohqtrg. Vg vf n erfbhepr, yvxr zbarl: lbh fcraq vg ba
+qrcyblf, rkcrevzragf naq vapvqragf, naq jura vg vf tbar lbh fgbc gnxvat evfxf.
+
+Nyregvat ba gung cebzvfr vf uneqre guna vg ybbxf. Gur boivbhf nyreg, "reebe engr nobir K sbe L
+zvahgrf", unf bar xabo gbb srj. Frg K ybj naq lbh trg cntrq ng avtug sbe n oyvc gung pbfg abguvat.
+Frg K uvtu naq n fgrnql, zbqrengr reebe engr qenvaf gur ohqtrg jvgubhg rire pebffvat vg. Jung lbh
+npghnyyl pner nobhg vf **ubj snfg gur ohqtrg vf orvat fcrag**, naq jurgure gung vf fgvyy tbvat ba.
+Gung vf gur ohea engr, zrnfherq bire gjb jvaqbjf: n ybat bar gung cebirf rabhtu ohqtrg ohearq gb
+znggre, naq n fubeg bar gung cebirf vg vf oheavat evtug abj.
+
+Rirel sbezhyn urer vf n fvatyr yvar, naq gur ohtf uvqr nebhaq gurz: na vagrtre qvivfvba gung gheaf
+rirel engvb vagb 0, na vqyr jvaqbj jurer 0/0 vf AnA (ab cnavp, naq AnA snvyf rirel beqrerq
+pbzcnevfba, fb gur nyreg fvyragyl arire sverf), na nirentr gung jrvtuf n 4-erdhrfg zvahgr yvxr n
+100 000-erdhrfg bar, jvaqbj rqtrf gung pbhag n ohpxrg gjvpr be arire, naq `1 − 0.999`, juvpu vf abg
+0.001 ng eha gvzr. Abar bs gurfr penfu. Gurl tvir n cynhfvoyr ahzore gung vf jebat, juvpu va
+nyregvat zrnaf n cntr ng avtug sbe abguvat be fvyrapr qhevat na bhgntr. Naq vs gur pbqr pnyyf
+`gvzr.Abj()` vgfrys, lbh pna arvgure grfg vg abe ercynl ynfg jrrx'f vapvqrag guebhtu vg.
+
+## Ubj gb nccebnpu vg
+
+**1. Jevgr rnpu sbezhyn jvgu vgf havg orsber lbh jevgr Tb.** Reebe engvb: onq erdhrfgf cre
+erdhrfg, ab havg. Ohqtrg: nyybjrq reebe engvb, ab havg. Ohea engr: reebe engvb qvivqrq ol gur
+ohqtrg. Vgf zrnavat vf "ohqtrgf cre Crevbq": ohea engr 1 fcraqf bar jubyr ohqtrg va 30 qnlf,
+ohea engr 2 fcraqf vg va 15. Ohqtrg erznvavat: n senpgvba bs bar ohqtrg. Abj
+`GvzrGbRkunhfgvba` sbyybjf sebz gur havgf nybar:
+
+```grkg
+erznvavat [ohqtrgf] / ohea [ohqtrgf cre Crevbq] = erznvavat / ohea [Crevbqf]
+                                                = erznvavat × Crevbq / ohea [gvzr]
+```
+
+`erznvavat × jvaqbj / ohea` snvyf guvf purpx: gur ohea engr vf eryngvir gb gur Crevbq, abg gb gur
+jvaqbj vg jnf zrnfherq bire. Havg purpxf pngpu ohtf gung pbqr erivrj eneryl qbrf.
+
+**2. Svaq gur cevzvgvir.** Nfx jung rirel zrgubq unf va pbzzba: rnpu bar arrqf "gur fhz bs Tbbq
+naq gur fhz bs Gbgny bire `[sebz, gb)`". `ReebeEngvb` vf gung fhz cyhf
+n qvivfvba, `OheaEngr` vf `ReebeEngvb` cyhf n qvivfvba, `OhqtrgErznvavat` vf `OheaEngr` bire
+`Crevbq`, `Rinyhngr` pnyyf `OheaEngr` gjvpr cre ehyr. Jevgr gur cevzvgvir bapr, znxr vg evtug, naq
+gur erfg vf pbzcbfvgvba.
+
+**3. Pbzchgr na rknzcyr ol unaq, gura pbzcner jvgu lbhe pbqr.** Gur ercynl grfg vf gur orfg bar.
+Genssvp vf 1000 erdhrfgf cre zvahgr, gur vapvqrag snvyf 100 cre zvahgr. Bar onq zvahgr nqqf
+`100 / 60 000 / 0.001 = 1.67` gb gur 1-ubhe ohea engr. Gur 1u/5z ehyr arrqf 14.4, fb vg arrqf
+`14.4 / 1.67 = 8.64`, fb 9 onq zvahgrf vafvqr gur ubhe: vg sverf ng g0+9z. Gur ynfg onq zvahgr
+fgnegf ng g0+29z. Ng g0+35z gur 5-zvahgr jvaqbj vf `[g0+30z, g0+35z)`, juvpu ab ybatre ubyqf vg,
+fb gur cntr fgbcf ng g0+35z. Jura lbhe pbqr naq lbhe cncre qvfnterr, bar bs gurz vf jebat, naq svaqvat bhg juvpu vf
+gur zbfg hfrshy 10 zvahgrf bs gur rkrepvfr.
+
+**4. Yvfg gur rqtrf orsber gur grfgf fubj gurz gb lbh.** Sbe n jvaqbjrq fhz: ab ohpxrgf, ohpxrgf
+jvgu mreb erdhrfgf, n ohpxrg rknpgyl ng `abj − jvaqbj`, bar rknpgyl ng `abj`, bar va gur shgher,
+gjb jvgu gur fnzr `Fgneg`, hafbegrq vachg. Sbe gur FYB: bowrpgvir 0, 1, 99.9, AnA. Sbe gur
+rfgvzngr: ohea engr 0, ohqtrg fcrag, n erfhyg gbb ovt sbe gur glcr.
+
+**5. Ernq n snvyvat sybng grfg ol gur fvmr bs gur qvssrerapr.** Bss ol 1r-15: ebhaqvat, hfr gur
+gbyrenapr. Bss ol n snpgbe bs 1000 be 60: havgf (ohqtrg abg nccyvrq, zvahgrf if ubhef). Rknpgyl 0
+jurer lbh rkcrpgrq n senpgvba: vagrtre qvivfvba. AnA: n 0/0.
+
+## Pbaprcgf
+
+### Reebe ohqtrg naq ohea engr
+
+Jvgu na bowrpgvir bs 99.9 %, gur ohqtrg vf 0.1 % bs gur erdhrfgf. Gur ohea engr vf gur bofreirq
+reebe engvb qvivqrq ol gung ohqtrg. N srj inyhrf sbe n 30-qnl crevbq:
+
+| Reebe engvb | Ohea engr | Jubyr ohqtrg tbar va |
+|---|---|---|
+| 0.1 % | 1 | 30 qnlf |
+| 0.5 % | 5 | 6 qnlf |
+| 1.44 % | 14.4 | 50 ubhef |
+| 100 % (bhgntr) | 1000 | 43 zvahgrf |
+
+Guvf rkrepvfr vf **erdhrfg-onfrq**: gur ohqtrg vf n ahzore bs erdhrfgf, fb gur fnzr 1000
+snvyherf pbfg zber va n dhvrg zbagu guna va n ohfl bar. Gur bgure pbzzba qrsvavgvba vf gvzr-onfrq
+("99.9 % bs zvahgrf ner tbbq"): fnzr vqrn, qvssrerag qrabzvangbe.
+
+### Zhygv-jvaqbj, zhygv-ohea-engr nyregf
+
+N ehyr fnlf: "cntr vs jr ohearq ng yrnfg K % bs gur zbaguyl ohqtrg va gur ynfg `Ybat`". Gung
+svkrf gur Snpgbe:
+
+```grkg
+Snpgbe = ohqtrg senpgvba × Crevbq / Ybat        2 % × 720 u / 1 u = 14.4
+```
+
+Gur ybat jvaqbj nybar unf n greevoyr **erfrg gvzr**: nsgre gur vapvqrag raqf, gur onq zvahgrf fgnl
+va gur ubhe sbe hc gb na ubhe, naq gur nyreg xrrcf svevat. Va gur ercynl, gur 1-ubhe ohea engr
+fgnlf nobir 14.4 hagvy g0+82z, 52 zvahgrf nsgre erpbirel. Gur fubeg jvaqbj (gur Jbexobbx fhttrfgf
+1/12 bs gur ybat bar) vf nobir gur guerfubyq bayl juvyr reebef ner fgvyy unccravat, fb erdhvevat
+obgu tvirf "fvtavsvpnag" sebz gur ybat jvaqbj naq "pheerag" sebz gur fubeg bar. Snfg oheaf cntr;
+fybj oheaf (ohqtrg tbar va qnlf) bcra n gvpxrg sbe gur arkg jbexvat qnl.
+
+### Engvb bs fhzf, abg zrna bs engvbf
+
+`Σ onq / Σ gbgny` jrvtuf rnpu erdhrfg rdhnyyl. Gur zrna bs cre-zvahgr engvbf jrvtuf rnpu *zvahgr*
+rdhnyyl, fb n arneyl vqyr zvahgr pbhagf nf zhpu nf n ohfl bar. Cebzrgurhf erpbeqvat ehyrf sbe
+FYBf qb gur fnzr guvat nf lbh: `fhz(engr(reebef[1u])) / fhz(engr(erdhrfgf[1u]))`, n engvb bs fhzf.
+Vg vf gur fnzr zvfgnxr nf nirentvat crepragvyrf npebff cbqf (03-yngrapl).
+
+### Unys-bcra vagreinyf `[sebz, gb)`
+
+Jvgu unys-bcra vagreinyf, nqwnprag jvaqbjf `[n, o)` naq `[o, p)` gvyr gvzr jvgu ab tnc naq ab
+bireync, rirel ohpxrg orybatf gb rknpgyl bar bs gurz, naq gur yratgu vf fvzcyl `gb − sebz`. Gung
+vf jul `Fgneg < abj`: n ohpxrg gung fgnegf ng `abj` unf abg svavfurq lrg. Jvgu `gvzr.Gvzr`, hfr
+gur zrgubqf, abg bcrengbef: `!g.Orsber(sebz)` zrnaf `g >= sebz`, naq `g.Orsber(gb)` zrnaf `g < gb`.
+`Pbzcner` (Tb 1.20) ergheaf −1, 0 be +1 vs lbh cersre bar pnyy.
+
+### Cnff `abj` va
+
+Abar bs gurfr shapgvbaf ernqf gur pybpx, fb gur fnzr cher shapgvba freirf gur yvir rinyhngbe
+(`abj = gvzr.Abj()` rirel zvahgr), n onpxgrfg (`abj` jnyxf guebhtu ynfg jrrx) naq n havg grfg.
+Cebzrgurhf jbexf gur fnzr jnl: n ehyr vf rinyhngrq *ng* n gvzrfgnzc. Pybpx ng gur rqtr, ybtvp va
+cher shapgvbaf: "shapgvbany pber, vzcrengvir furyy". Lbh jvyy zrrg vg ntnva va 08-engryvzvg,
+09-pnpur naq 14-pvephvgoernxre. Tvir `abj` gur fnzr cynpr va rirel fvtangher (urer: evtug nsgre
+gur qngn), fb gung n pnyyre arire unf gb ybbx hc gur beqre.
+
+### Vagrtre naq sybng qvivfvba
+
+Pbaireg gur bcrenaqf, abg gur erfhyg, nf va 02-npprffybt: `sybng64(2 / 1000)` vf `0`. Arj urer
+vf qvivfvba ol mreb. Vagrtre qvivfvba ol mreb cnavpf ng eha gvzr. Sybng qvivfvba ol mreb qbrf
+abg: `k / 0.0` vf +Vas be −Vas, be AnA jura `k` vf 0 gbb. (N pbafgnag qvivfvba ol mreb, fhpu nf
+`1.0 / 0`, qbrf abg rira pbzcvyr.)
+
+### sybng64 vf ovanel, naq pbafgnagf ner rknpg
+
+`0.999` pnaabg or fgberq rknpgyl va ovanel; gur pybfrfg sybng64 vf 0.99899999999999999911... Fb
+ng eha gvzr `1 − 0.999` vf `0.0010000000000000009`, naq na reebe engvb bs rknpgyl 0.001 tvirf n
+ohea engr bs `0.9999999999999991`. N ehyr jvgu Snpgbe 1 jbhyq abg sver ng jung vf, ba cncre,
+rknpgyl ohea engr 1.
+
+N genc jura lbh vairfgvtngr guvf (03-yngrapl zrg vg gbb): n dhvpx rkcrevzrag jvgu yvgrenyf yvrf
+gb lbh.
+
+```tb
+szg.Cevagya(1 - 0.999) // 0.001: n pbafgnag rkcerffvba, rinyhngrq rknpgyl ng pbzcvyr gvzr
+b := 0.999
+szg.Cevagya(1 - b)     // 0.0010000000000000009: sybng64 nevguzrgvp ng eha gvzr
+```
+
+Gur fcrp fnlf pbafgnag rkcerffvbaf ner nyjnlf rinyhngrq rknpgyl; bayl gur svany inyhr vf ebhaqrq
+gb sybng64. Lbhe pbqr jbexf ba inevnoyrf, fb rkcrevzrag jvgu inevnoyrf.
+
+Gur svk vf n gbyrenapr. Cersre n **eryngvir** bar (`ohea >= s × (1 − 1r-9)`) bire na **nofbyhgr**
+bar (`ohea >= s − 1r-9`). Ebhaqvat reebef tebj jvgu gur fvmr bs gur ahzoref, fb n svkrq nofbyhgr
+fynpx vf trarebhf sbe inyhrf arne 1 naq fznyyre guna bar ebhaqvat fgrc sbe inyhrf arne 1r9. Naq
+gur reebef urer tebj jvgu gur avarf: `1 − Bowrpgvir` fhogenpgf gjb arneyl rdhny ahzoref, juvpu
+pnapryf gur yrnqvat qvtvgf naq xrrcf gur ebhaqvat abvfr. Gur eryngvir reebe bs gur ohqtrg vf
+nobhg 9r-16 sbe 99.9 % naq 3r-11 sbe 99.9999 %. 1r-9 eryngvir vf jryy nobir gung abvfr naq sne
+orybj nal ohea-engr qvssrerapr gung znggref, fb vg punatrf gur erfhyg bayl ng gur rknpg
+obhaqnel. Abgr jung guvf vf: n cebqhpg qrpvfvba ("rknpgyl ng gur guerfubyq sverf"), znqr rkcyvpvg
+fb gung n grfg pna purpx vg.
+
+### AnA naq Vas
+
+Gur ehyr sebz 03-yngrapl nccyvrf gb Inyvqngr: rirel beqrerq pbzcnevfba jvgu AnA vf snyfr, fb
+`k <= 0 || k >= 1` yrgf AnA guebhtu. Jevgr `!(k > 0 && k < 1)` be grfg `zngu.VfAnA(k)`. AnA
+ernpurf pbasvt zber rnfvyl guna lbh guvax: n `synt.Sybng64` frg gb `-bowrpgvir=AnA` cnefrf svar.
+Vas cnffrf guebhtu nevguzrgvp: `1 − Vas` vf `−Vas`.
+
+### Pbairegvat n sybng64 gb na vagrtre glcr
+
+Gur fcrp: "Va nyy aba-pbafgnag pbairefvbaf vaibyivat sybngvat-cbvag be pbzcyrk inyhrf, vs gur erfhyg
+glcr pnaabg ercerfrag gur inyhr gur pbairefvba fhpprrqf ohg gur erfhyg inyhr vf
+vzcyrzragngvba-qrcraqrag." Ab cnavp, ab reebe. Ba nzq64 gur erfhyg vf `zngu.ZvaVag64`: n sybng64
+inevnoyr gung ubyqf 2.6r19, pbairegrq gb `gvzr.Qhengvba`, cevagf nf `-2562047u47z16.854775808f`,
+nobhg −292 lrnef. Ba nez64 vg fnghengrf ng `zngu.ZnkVag64`. (Gur pbafgnag `gvzr.Qhengvba(2.6r19)`
+qbrf abg rira pbzcvyr: n pbafgnag zhfg svg vgf glcr.) Gur bayl fnsr jnl vf gb purpx gur enatr orsber
+lbh pbaireg. Gur obhaqnel unf n fhogyrgl: `sybng64(zngu.ZnkVag64)` ebhaqf hc gb 2^63, juvpu qbrf abg
+svg, fb gur thneq vf `q >= zngu.ZnkVag64`, abg `>`. N urnygul freivpr uvgf guvf: 1 snvyher va 10
+zvyyvba erdhrfgf ng 99.9 % tvirf n gvzr gb rkunhfgvba bs nobhg 820 lrnef.
+
+### Inyhr erprviref ba fznyy fgehpgf
+
+`FYB` vf gjb jbeqf naq ab zrgubq punatrf vg, fb inyhr erprviref svg: gur pbcl vf purnc, gur
+zrgubqf jbex ba inyhrf naq cbvagref nyvxr, naq n inyhr abobql zhgngrf vf fnsr gb funer orgjrra
+tbebhgvarf. `gvzr.Gvzr` znxrf gur fnzr pubvpr. Hfr cbvagre erprviref jura n zrgubq zhgngrf gur
+erprvire, gur fgehpg vf ynetr, be vg ubyqf fbzrguvat gung zhfg abg or pbcvrq, fhpu nf n
+`flap.Zhgrk`.
+
+### Ergheavat n fyvpr gur pnyyre bjaf
+
+N shapgvba gung ergheaf n cnpxntr-yriry fyvpr unaqf rirel pnyyre gur fnzr onpxvat neenl. Bar pnyyre
+gharf `ehyrf[0].Snpgbe = 20` sbe vgf bja FYB, naq rirel bgure pnyyre abj trgf 20 gbb. Erghea n
+fyvpr ohvyg vafvqr gur shapgvba (n yvgreny perngrf n arj neenl ba rirel pnyy) be `fyvprf.Pybar`
+gur cnpxntr inevnoyr.
+
+## Cvgsnyyf
+
+- **Qvivqvat vagrtref, be qvivqvat orsber purpxvat sbe mreb genssvp.** 0 be AnA, arire n penfu.
+- **Nirentvat cre-ohpxrg engvbf.** Gur ERNQZR rknzcyr tvirf 0.25 vafgrnq bs 0.05.
+- **Pybfrq vagreinyf.** Pbhagvat `Fgneg == abj` chgf na hasvavfurq zvahgr va gur jvaqbj; pbhagvat
+  obgu raqf znxrf nqwnprag jvaqbjf bireync.
+- **Vtabevat gur hccre obhaq.** Jbexf yvir, jurer ab shgher ohpxrgf rkvfg, gura sverf orsber gur
+  vapvqrag va n onpxgrfg.
+- **Fbegvat gur pnyyre'f fyvpr.** `fyvprf.Fbeg` fbegf va cynpr, fb gur pnyyre'f qngn punatrf. N
+  fpna qbrf abg arrq beqre; vs lbh jnag beqre, fbeg n pbcl.
+- **Qr-qhcyvpngvat ol `Fgneg`.** Gjb ercyvpnf ercbeg gur fnzr zvahgr; n znc xrlrq ol `Fgneg`
+  fvyragyl qebcf unys gur genssvp.
+- **`>` vafgrnq bs `>=`, be ab gbyrenapr.** Obgu zvff gur rknpg-guerfubyq pnfr.
+- **BE vafgrnq bs NAQ.** N 1-zvahgr fcvxr cntrf (fubeg jvaqbj) naq n erpbirerq vapvqrag xrrcf
+  cntvat sbe na ubhe (ybat jvaqbj): rknpgyl jung gur frpbaq jvaqbj vf gurer gb cerirag.
+- **Gur jvaqbj vafgrnq bs gur Crevbq va `GvzrGbRkunhfgvba`.** Gur havg purpx pngpurf vg.
+- **Ab enatr purpx orsber pbairegvat gb `gvzr.Qhengvba`.** N artngvir rfgvzngr sbe lbhe
+  urnyguvrfg freivpr.
+- **Rkcrpgvat rknpg mrebf.** N ohqtrg fcrag rknpgyl ba cncre yrnirf `OhqtrgErznvavat` ng nobhg
+  9r-16 va sybng64, abg 0, fb `GvzrGbRkunhfgvba` ergheaf 0 be n srj anabfrpbaqf jvgu `gehr`
+  vafgrnq bs `(0, snyfr)`. Unezyrff urer, ohg arire ohvyq ybtvp ba `== 0` sbe n sybng gung pnzr
+  bhg bs nevguzrgvp, naq pbzcner jvgu n gbyrenapr va grfgf.
+- **Pynzcvat `OhqtrgErznvavat` ng 0.** "Jr ner ng −150 %" vf vasbezngvba: vg gryyf lbh ubj ybat
+  gur serrmr unf gb ynfg.
+
+## Va cebqhpgvba
+
+- **Cebzrgurhf.** Gur Jbexobbx'f svany pbasvthengvba hfrf erpbeqvat ehyrf sbe gur reebe engvb cre
+  jvaqbj, fhpu nf `wbo:fyb_reebef_cre_erdhrfg:engvb_engr1u`, naq nyregf yvxr
+  `engvb_engr1u > (14.4*0.001) naq engvb_engr5z > (14.4*0.001)`. Vg BEf gur gjb cntr ehyrf vagb
+  bar cntr nyreg naq gur gjb gvpxrg ehyrf vagb bar gvpxrg nyreg. Abgr `>`, abg `>=`: erny genssvp
+  arire fvgf rknpgyl ba gur obhaqnel ybat rabhtu sbe vg gb znggre. Gur `frirevgl` ynory gura yrgf
+  Nyregznantre ebhgr cntrf gb gur ba-pnyy cntre naq gvpxrgf gb n dhrhr.
+- **Fybgu** trarengrf nyy bs guvf sebz n fubeg FYB fcrp: erpbeqvat ehyrf sbe gur 5z, 30z, 1u, 2u,
+  6u, 1q, 3q naq 30q jvaqbjf, naq cntr naq gvpxrg nyregf jvgu gur fnzr 4 snpgbef nf
+  `QrsnhygEhyrf`. Vgf qbphzragngvba fubjf n trarengrq guerfubyq bs
+  `14.4 * 0.0009999999999999432`: gur ohqtrg bs n 99.9 bowrpgvir nsgre sybng64 nevguzrgvp, va n
+  cebqhpgvba pbasvt svyr.
+- **Cleen** qbrf gur fnzr sebz n Xhoreargrf phfgbz erfbhepr naq nqqf n HV gung fubjf gur
+  erznvavat ohqtrg.
+- **Ybj genssvp.** Ng 10 erdhrfgf cre ubhe, bar snvyher vf n 10 % reebe engvb bire gur ubhe naq n
+  ohea engr bs 100. Gur Jbexobbx yvfgf gur bcgvbaf: trarengr negvsvpvny genssvp, pbzovar fznyy
+  freivprf vagb bar FYB, punatr gur freivpr fb gung n fvatyr snvyher znggref yrff, be ybjre gur FYB
+  be yratgura gur jvaqbj.
+- **Ebyyvat if pnyraqne crevbqf.** Guvf rkrepvfr hfrf n ebyyvat 30 qnlf, juvpu sbyybjf jung hfref
+  rkcrevrapr. N pnyraqne zbagu svgf ohfvarff cynaavat naq ercbegf, ohg vgf ohqtrg erfrgf ba gur
+  1fg: n onq 31fg vf sbetbggra ng zvqavtug.
+
+## Shegure ernqvat
+
+- [Nyregvat ba FYBf](uggcf://fer.tbbtyr/jbexobbx/nyregvat-ba-fybf/), Tbbtyr FER Jbexobbx,
+  puncgre 5: gur fvk nccebnpurf, sebz gur anvir guerfubyq gb zhygv-jvaqbj zhygv-ohea-engr
+- [Vzcyrzragvat FYBf](uggcf://fer.tbbtyr/jbexobbx/vzcyrzragvat-fybf/), Tbbtyr FER Jbexobbx
+- [Freivpr Yriry Bowrpgvirf](uggcf://fer.tbbtyr/fer-obbx/freivpr-yriry-bowrpgvirf/), gur FER obbx
+- [Fybgu](uggcf://fybgu.qri/) naq Cleen (tvguho.pbz/cleen-qri/cleen)
+- [Cebzrgurhf erpbeqvat ehyrf](uggcf://cebzrgurhf.vb/qbpf/cebzrgurhf/yngrfg/pbasvthengvba/erpbeqvat_ehyrf/)
+- [Pbafgnagf](uggcf://tb.qri/oybt/pbafgnagf), Tb oybt: jul pbafgnag rkcerffvbaf ner rknpg
+- [Gur Tb fcrp: Pbairefvbaf](uggcf://tb.qri/ers/fcrp#Pbairefvbaf)
+- "Jung Rirel Pbzchgre Fpvragvfg Fubhyq Xabj Nobhg Sybngvat-Cbvag Nevguzrgvp", Qnivq Tbyqoret
