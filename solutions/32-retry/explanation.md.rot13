@@ -125,7 +125,7 @@ glcr pbairegf jvgubhg n cnavp, gb na vzcyrzragngvba-qrcraqrag inyhr (zngu.ZvaVag
 zngu.ZnkVag64 ba nez64). Fb `zva(gvzr.Qhengvba(s), Znk)` vf jebat: gur qnzntr vf qbar orsber
 `zva` frrf gur inyhr. Vg cnffrf rirel grfg ba na Nccyr Fvyvpba Znp naq ergheaf n artngvir onpxbss
 ba na nzq64 freire. Pbzcner va sybng64, jurer `+Vas` pbzcnerf pbeerpgyl, naq pbaireg bayl n inyhr
-lbh xabj svgf, jvgu gur fnzr rqtr nf va 05: `sybng64(zngu.ZnkVag64)` vf rknpgyl 2^63, fb hfr `>=`.
+lbh xabj svgf, jvgu gur fnzr rqtr nf va 30: `sybng64(zngu.ZnkVag64)` vf rknpgyl 2^63, fb hfr `>=`.
 
 Vagrtre nevguzrgvp biresybjf fvyragyl gbb, ohg vg jencf va n qrsvarq jnl: jvgu
 `frpf := vag64(9999999999)`, `gvzr.Qhengvba(frpf) * gvzr.Frpbaq` vf nobhg -267 lrnef. (Jvgu
