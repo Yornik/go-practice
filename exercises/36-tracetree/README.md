@@ -2,15 +2,17 @@
 
 **Tier 8 · about 2.5 h** · Go: a map of pointers as an index, recursion over a tree, `slices.SortFunc` with `cmp.Or`, `time.Duration` arithmetic, `strings.Builder` with `fmt.Fprintf` · Problem solving: build a tree from flat records; reason about overlapping time intervals; work out timelines on paper
 
-After a deploy the checkout p99 went from 400 ms to 1.3 s. You export one slow trace from Tempo
-or Jaeger: 40 spans in a flat list, each with a span ID, a parent ID, a service, a name, a start and
-an end. You want answers you can paste into the incident channel: which service spent the time
-itself, and which chain of calls made the request slow. The shortcuts give wrong answers. Summing
-durations per service counts the same milliseconds several times, because a parent's duration
-includes its children's. "The slowest span" is always the root. And the data is messy: children
-arrive before their parents (a span is exported when it ends), a collector can drop a parent,
-calls run in parallel, and host clocks disagree, so a child can stick out of its parent. You build
-the tree, compute self time per span and per service, find the critical path, and print the trace.
+After a deploy, on a June night when even the Undercroft runs hot, the checkout p99 went from 400 ms
+to 1.3 s. You export one slow trace from Tempo or Jaeger: 40 spans in a flat list, each with a span
+ID, a parent ID, a service, a name, a start and an end. You want answers you can paste into the
+incident channel: which service spent the time itself, and which chain of calls made the request
+slow. The shortcuts give wrong answers. Summing durations per service counts the same milliseconds
+several times, because a parent's duration includes its children's. "The slowest span" is always the
+root. And the data is messy: children arrive before their parents (a span is exported when it ends),
+a collector can drop a parent, calls run in parallel, and host clocks disagree, so a child can stick
+out of its parent. The chain that made this one slow runs through a span from `hush-sidecar`, a
+sidecar that nobody deployed. In this exercise you build the tree, compute self time per span and
+per service, find the critical path, and print the trace.
 
 ## Task
 
@@ -166,16 +168,16 @@ orphan: parent <ParentID of the orphan> not in trace
 One checkout, as a tree. Times are ms after the root's start; `*` marks the critical path.
 
 ```text
-  span ID     service    name              start-end   self time
-* checkout    frontend   POST /checkout      0-500      45
-*   auth      auth       Authorize           5-25       20
-*   cart      cart       GetCart            30-80       50
-*   inventory inventory  Reserve            85-200      15
-*     db      postgres   UPDATE stock       90-190     100
-    pricing   pricing    Quote              85-150      65
-*   payment   payment    Charge            210-480      15
-*     fraud   fraud      Score             215-300      85
-*     psp     payment    POST /v1/capture  300-470     170
+  span ID     service       name              start-end   self time
+* checkout    frontend      POST /checkout      0-500      45
+*   auth      auth          Authorize           5-25       20
+*   cart      cart          GetCart            30-80       50
+*   inventory inventory     Reserve            85-200      15
+*     db      postgres      UPDATE stock       90-190     100
+    pricing   pricing       Quote              85-150      65
+*   payment   payment       Charge            210-480      15
+*     sidecar hush-sidecar  Inspect           215-300      85
+*     psp     payment       POST /v1/capture  300-470     170
 ```
 
 - `Build` on these 9 spans, in any order, gives this tree. `inventory` comes before `pricing`:
@@ -183,12 +185,12 @@ One checkout, as a tree. Times are ms after the root's start; `*` marks the crit
 - `SelfTime(checkout)`: the children cover 5-25, 30-80, 85-200 (inventory and pricing overlap) and
   210-480. That is 20 + 50 + 115 + 270 = 455 ms, so the self time is 500 − 455 = 45 ms.
 - `ServiceTimes`: frontend 45ms, auth 20ms, cart 50ms, inventory 15ms, postgres 100ms, pricing
-  65ms, payment 185ms (15 + 170), fraud 85ms. Together 565 ms, more than the 500 ms the request
-  took, because pricing ran in parallel with inventory.
+  65ms, payment 185ms (15 + 170), hush-sidecar 85ms. Together 565 ms, more than the 500 ms the
+  request took, because pricing ran in parallel with inventory.
 - `CriticalPath`: cursor 500 picks payment (ends 480). Cursor 210 picks inventory (200 beats
   pricing's 150). Cursor 85 picks cart. Cursor 30 picks auth. Cursor 5: no child starts before 5.
-  Inside inventory (cursor 200) db; inside payment (cursor 480) psp, then fraud. Result:
-  `checkout auth cart inventory db payment fraud psp`.
+  Inside inventory (cursor 200) db; inside payment (cursor 480) psp, then sidecar. Result:
+  `checkout auth cart inventory db payment sidecar psp`.
 - `Render`:
 
 ```text
@@ -200,7 +202,7 @@ trace 4bf92f3577b34da6a3ce929d0e0e4736
 *     postgres: UPDATE stock start=90ms dur=100ms self=100ms
     pricing: Quote start=85ms dur=65ms self=65ms
 *   payment: Charge start=210ms dur=270ms self=15ms
-*     fraud: Score start=215ms dur=85ms self=85ms
+*     hush-sidecar: Inspect start=215ms dur=85ms self=85ms
 *     payment: POST /v1/capture start=300ms dur=170ms self=170ms
 ```
 

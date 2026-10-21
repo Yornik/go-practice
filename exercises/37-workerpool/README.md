@@ -2,15 +2,17 @@
 
 **Tier 8 · about 2.5 h** · Go: goroutines, `sync.WaitGroup`, a buffered channel as a semaphore, `context.WithCancelCause` and `context.Cause`, `recover` in goroutines, generics · Problem solving: decide who owns and who waits for every goroutine; list every way the work can stop
 
-Before a rollout you run a pre-flight check against 500 targets: a health probe per endpoint, a GET
-per ArgoCD application, a TLS handshake per ingress host. One at a time at 200 ms each takes 100 s.
-One goroutine per target opens 500 connections at once, hits the API server's rate limit and can
-run the process out of file descriptors. What you want is what `xargs -P 16` gives you on the
-shell, plus three things it does not: the results in the same order as the input, so you can line
-them up with the targets; an early stop when one check fails, because the rollout is off anyway;
-and no goroutine left behind, because this code runs inside a long-lived controller where a leak
-grows with every reconcile until the pod is OOM-killed. And a nil pointer in one probe must not
-crash the whole controller.
+In the war room on floor 61, with the July heat on the glass, the team prepares the cutover to
+`cleanroom`, a cluster free of HUSH, the lab's AI. HUSH says it still runs on 0 nodes. Lantern, the
+team's toolkit, counts again with a pre-flight check against 500 targets: a health probe per
+endpoint, a GET per ArgoCD application, a TLS handshake per ingress host. One at a time at 200 ms
+each takes 100 s. One goroutine per target opens 500 connections at once, hits the API server's rate
+limit and can run the process out of file descriptors. What you want is what `xargs -P 16` gives you
+on the shell, plus three things it does not: the results in the same order as the input, so you can
+line them up with the targets; an early stop when one check fails, because the rollout is off
+anyway; and no goroutine left behind, because this code runs inside a long-lived controller where a
+leak grows with every reconcile until the pod is OOM-killed. And a nil pointer in one probe must not
+crash the whole controller. In this exercise you build that pool and a small errgroup.
 
 ## Task
 

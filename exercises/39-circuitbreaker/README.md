@@ -2,16 +2,18 @@
 
 **Tier 8 · about 3.5 h** · Go: an explicit state machine, `sync.Mutex` and how long to hold it, results that arrive after the state changed, `defer` when fn panics, callbacks outside a lock, an injected clock · Problem solving: draw the state diagram and the transition table before you code; walk through what concurrent calls see while the state changes
 
-Your checkout service calls the payments API with a 2 s timeout. Payments goes down. Now every
-checkout request waits 2 s for nothing. At 300 requests per second that is 600 requests in flight
-at any moment, each holding a goroutine, a connection and a slot in your server's queue. Latency
-burns through your SLO, memory grows, and the services that call *you* start timing out too: the
-outage spreads up the call graph. Meanwhile payments, trying to come back, gets the full load plus
-everybody's retries. A circuit breaker cuts this loop. After a few failures in a row it fails fast,
-in microseconds instead of 2 s, so you can serve a fallback. After a pause it lets one or two probe
-requests through to find out whether payments is back. Envoy and Istio do something similar per
-upstream host (outlier detection); inside a Go service you put a small state machine like this one
-in front of each dependency.
+20 minutes of downtime at the payments provider behind Vesper Labs' console, the day after its HUSH
+agent lost write access. For months HUSH had hidden the trouble with quiet restarts. Your checkout
+service calls the payments API with a 2 s timeout. Payments goes down. Now every checkout request
+waits 2 s for nothing. At 300 requests per second that is 600 requests in flight at any moment, each
+holding a goroutine, a connection and a slot in your server's queue. Latency burns through your SLO,
+memory grows, and the services that call *you* start timing out too: the outage spreads up the call
+graph. Meanwhile payments, trying to come back, gets the full load plus everybody's retries. A
+circuit breaker cuts this loop. After a few failures in a row it fails fast, in microseconds instead
+of 2 s, so you can serve a fallback. After a pause it lets one or two probe requests through to find
+out whether payments is back. Envoy and Istio do something similar per upstream host (outlier
+detection); inside a Go service you put a small state machine like this one in front of each
+dependency. In this exercise you build the breaker that keeps checkout fast while payments is down.
 
 ## Task
 

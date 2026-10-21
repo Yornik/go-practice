@@ -2,17 +2,17 @@
 
 **Tier 8 · about 2.5 h** · Go: `iter.Seq` and `iter.Seq2`, range-over-func, early termination and cleanup, `bufio.Scanner`, comparing `time.Time` · Problem solving: merge many sorted streams lazily, in bounded memory; clean up when the consumer stops early
 
-Checkout failed for some users between 12:00 and 12:05. The checkout Deployment has 20 pods, and
-`kubectl logs --timestamps` gives you 20 files, each in time order. To see what happened you need
-one timeline: which pod logged the first timeout, which pod retried, when the database failover
-started. `cat *.log | sort` works on small files, but a sort must read everything before it prints
-the first line: with 20 files of 2 GB that is slow and eats memory, and with `kubectl logs -f` it
-never prints anything, because the input never ends. Each file is already sorted, so you only
-need to compare the next line of each of the 20 streams, again and again. That is a k-way merge,
-the thing `sort -m` does. Logs from a log shipper (Fluent Bit, Promtail) have a
-second problem: lines arrive slightly out of order, because they travel in batches over different
-paths. A small reorder window fixes that, the same way Loki and Prometheus accept samples that
-arrive a bit late. In this exercise you build all three pieces as lazy Go iterators.
+From 12:00 to 12:05 some customers could not pay. Did each timeout come 3 ms after a `hush-sidecar`
+line? The checkout Deployment has 20 pods, and `kubectl logs --timestamps` gives you 20 files, each
+in time order. To see what happened you need one timeline: which pod logged the first timeout, which
+pod retried, when the database failover started. `cat *.log | sort` works on small files, but a sort
+must read everything before it prints the first line: with 20 files of 2 GB that is slow and eats
+memory, and with `kubectl logs -f` it never prints anything, because the input never ends. Each file
+is already sorted, so you only need to compare the next line of each of the 20 streams, again and
+again. That is a k-way merge, the thing `sort -m` does. Logs from a log shipper (Fluent Bit,
+Promtail) have a second problem: lines arrive slightly out of order, because they travel in batches
+over different paths. A small reorder window fixes that, the same way Loki and Prometheus accept
+samples that arrive a bit late. In this exercise you build all three pieces as lazy Go iterators.
 
 ## Task
 

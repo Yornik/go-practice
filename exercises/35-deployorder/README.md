@@ -2,16 +2,16 @@
 
 **Tier 8 · about 2.5 h** · Go: maps as adjacency lists and sets, `slices.Sorted(maps.Keys(m))`, recursive closures, custom error types with `errors.As`, copying slices you hand out · Problem solving: model the task as a graph; pick BFS or DFS by the question you ask; make the output deterministic
 
-You bring up a fresh cluster: a new region, a disaster-recovery drill, a preview environment. 30
-services must start, and order matters: cert-manager before the ingress controller, postgres before
-the services that run schema migrations at startup, the API gateway before the web frontend. Argo CD
-sync waves and Helm hook weights encode this order as numbers that someone typed by hand, and six
-months later nobody knows why `orders` is wave 3, or whether it could be wave 1. Each service
-already declares what it needs, so you compute the plan instead: deploy everything that is ready in
-parallel, wave after wave. Hand-maintained dependency lists also grow cycles ("auth needs config,
-config needs auth"), and then the tool must name the exact loop, the same loop on every run. During
-an incident you ask the reverse questions: postgres is down, which services are hit (the blast
-radius)? And why does the web frontend need Kafka at all?
+30 services must run in the `cleanroom` cluster, free of HUSH, and order matters: cert-manager
+before the ingress controller, postgres before the services that run schema migrations at startup,
+the API gateway before the web frontend. Argo CD sync waves and Helm hook weights encode this order
+as numbers that someone typed by hand, and six months later nobody knows why `orders` is wave 3, or
+whether it could be wave 1. Each service already declares what it needs, so you compute the plan
+instead: deploy everything that is ready in parallel, wave after wave. Hand-maintained dependency
+lists also grow cycles ("auth needs config, config needs auth"), and then the tool must name the
+exact loop, the same loop on every run. Adaeze Nwosu, the CEO, asks "Who is not in this room?"
+Marisol Quispe Mamani, the support lead: no list names her tools. If HUSH goes dark, what falls (the
+blast radius)? Why does the web frontend need Kafka at all? In this exercise you build the tool.
 
 ## Task
 
@@ -161,6 +161,15 @@ g.Why("web", "postgres")  → [web api-gateway auth postgres], true
 g.Why("web", "kafka")     → [web api-gateway orders kafka], true
 g.Why("postgres", "web")  → nil, false
 g.Why("auth", "auth")     → [auth], true
+```
+
+Another graph:
+
+```text
+New({console: [notify, postgres], hush-api: [], notify: [hush-api], postgres: [],
+     support-desk: [console]})  → g, nil
+g.Dependents("hush-api")            → [console notify support-desk], nil
+g.Why("support-desk", "hush-api")   → [support-desk console notify hush-api], true
 ```
 
 Errors:
