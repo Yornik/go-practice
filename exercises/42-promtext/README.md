@@ -2,13 +2,15 @@
 
 **Tier 9 · about 4.5 h** · Go: a hand-written line lexer, `bufio.Scanner`, `strconv` with NaN and ±Inf, canonical map keys and escaping, `io.Writer` errors, round-trip and fuzz tests · Problem solving: turn a format spec into a grammar; define "the same series" precisely; use a round trip as a test oracle
 
-Since the last deploy, Grafana shows 0 orders per second for the checkout service, but customers
-are buying things. Either the app stopped counting, or Prometheus stopped scraping it (a relabel
-rule, a wrong port, a NetworkPolicy). You take Prometheus out of the loop: `kubectl port-forward`
-to the pod, `curl /metrics` twice, 15 s apart, and compare. By eye that works for 5 lines, not for
-400 lines with 12-bucket histograms and counters that drop to 0 when the pod restarts. So you
-write the tool: parse the Prometheus text exposition format, turn two scrapes into per-second
-rates the way PromQL does, and write metrics back in a canonical form that you can diff.
+Noor Haddad, the principal SRE, comes back from the prayer room next to Hall 3 at 19:10. Since the
+last deploy, Grafana shows 0 orders per second for the checkout service, but customers are buying
+seats. Either the app stopped counting, or Prometheus stopped scraping it (a relabel rule, a wrong
+port, a NetworkPolicy). The newest relabel rule says `action: drop  # noise 🌙`. You take Prometheus
+out of the loop: `kubectl port-forward` to the pod, `curl /metrics` twice, 15 s apart, and compare.
+By eye that works for 5 lines, not for 400 lines with 12-bucket histograms and counters that drop to
+0 when the pod restarts. In this exercise you write the tool: parse the Prometheus text exposition
+format, turn two scrapes into per-second rates the way PromQL does, and write metrics back in a
+canonical form that you can diff.
 
 ## Task
 

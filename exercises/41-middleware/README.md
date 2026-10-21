@@ -2,15 +2,17 @@
 
 **Tier 9 · about 3 h** · Go: closures as decorators, wrapping `http.ResponseWriter` (the optional-interface problem, `Unwrap`, `http.ResponseController`), context values with an unexported key type, `log/slog`, `recover`, a non-blocking semaphore, `httptest` · Problem solving: reason explicitly about the order of middleware; decide where each piece of state lives
 
-It is 03:00 and a customer reports a 500. You want the request ID from their error page to find
-every log line of that request, in every service it passed. You want an access log line per
-request with status, size and duration. A nil map in one handler must become a 500 and a stack
-trace, not a dropped connection. A 2 GB upload must not run the pod out of memory. And when
-traffic doubles, the service must answer the excess with a fast 503 and `Retry-After`, instead of
-queueing until every request times out. You write this once, as middleware: functions that wrap
-an `http.Handler`, like `chi/middleware`, `gorilla/handlers` or the filters in Envoy and NGINX.
-Each one is short. The hard parts are the `ResponseWriter` you must wrap to see the status
-without breaking streaming, and the order you stack them in.
+At 04:10, in an autumn storm, Marisol Quispe Mamani, the support lead, answers a customer in
+Quechua. The customer replies with a screenshot: a 500 with request ID `edge-7f3a`, which no log
+line contains. A sidecar stripped the ID on the way in. You want the request ID from their error
+page to find every log line of that request, in every service it passed. You want an access log line
+per request with status, size and duration. A nil map in one handler must become a 500 and a stack
+trace, not a dropped connection. A 2 GB upload must not run the pod out of memory. And when traffic
+doubles, the service must answer the excess with a fast 503 and `Retry-After`, instead of queueing
+until every request times out. You write this once, as middleware: functions that wrap an
+`http.Handler`, like `chi/middleware`, `gorilla/handlers` or the filters in Envoy and NGINX. Each
+one is short. The hard parts are the `ResponseWriter` you must wrap to see the status without
+breaking streaming, and the order you stack them in. In this exercise you write these 5 middleware.
 
 ## Task
 
