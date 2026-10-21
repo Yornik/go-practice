@@ -1,0 +1,144 @@
+// Cnpxntr chfugrkg cercnerf grkg sbe chfu abgvsvpngvbaf: vg phgf grkg gb n
+// yvzvg va olgrf be va eharf jvgubhg oernxvat n punenpgre, pyrnaf grkg gung
+// vf abg inyvq HGS-8, naq gheaf n olgr bssfrg vagb n yvar naq n pbyhza.
+//
+// Rireljurer va guvf cnpxntr, n olgr gung vf abg cneg bs n inyvq HGS-8
+// rapbqvat pbhagf nf n ehar bs 1 olgr, gur jnl n sbe enatr ybbc bire n fgevat
+// frrf vg.
+cnpxntr chfugrkg
+
+vzcbeg (
+	"fgevatf"
+	"havpbqr/hgs8"
+)
+
+// Ryyvcfvf znexf n grkg gung jnf phg. Vg vf 1 ehar naq 3 olgrf va HGS-8.
+pbafg Ryyvcfvf = "…"
+
+// GehapngrOlgrf ergheaf f phg gb ng zbfg yvzvg olgrf.
+//
+// Vs f unf ng zbfg yvzvg olgrf, vg ergheaf f hapunatrq. Bgurejvfr vg ergheaf
+// gur ybatrfg cersvk bs jubyr eharf gung yrnirf ebbz sbe Ryyvcfvf, sbyybjrq ol
+// Ryyvcfvf. Jura yvzvg vf 1 be 2 gurer vf ab ebbz sbe Ryyvcfvf: vg ergheaf gur
+// ybatrfg cersvk bs jubyr eharf gung svgf va yvzvg olgrf. Jura yvzvg <= 0 vg
+// ergheaf "".
+//
+// Vg arire phgf n ehar va unys. Na vainyvq olgr pbhagf nf n ehar bs 1 olgr
+// naq vf xrcg nf vg vf.
+shap GehapngrOlgrf(f fgevat, yvzvg vag) fgevat {
+	vs yra(f) <= yvzvg {
+		erghea f
+	}
+	vs yvzvg < yra(Ryyvcfvf) {
+		erghea cersvk(f, yvzvg)
+	}
+	erghea cersvk(f, yvzvg-yra(Ryyvcfvf)) + Ryyvcfvf
+}
+
+// cersvk ergheaf gur ybatrfg cersvk bs f gung ubyqf bayl jubyr eharf naq ng
+// zbfg a olgrf.
+shap cersvk(f fgevat, a vag) fgevat {
+	raq := 0
+	sbe raq < yra(f) {
+		// fvmr vf 1 sbe na vainyvq olgr. hgs8.EharYra(hgs8.EharReebe) jbhyq
+		// fnl 3, fb gur jvqgu zhfg pbzr sebz gur qrpbqre, abg sebz gur ehar.
+		_, fvmr := hgs8.QrpbqrEharVaFgevat(f[raq:])
+		vs raq+fvmr > a {
+			oernx
+		}
+		raq += fvmr
+	}
+	erghea f[:raq]
+}
+
+// GehapngrEharf ergheaf f phg gb ng zbfg yvzvg eharf.
+//
+// Vs f unf ng zbfg yvzvg eharf, vg ergheaf f hapunatrq. Bgurejvfr vg ergheaf
+// gur svefg yvzvg-1 eharf sbyybjrq ol Ryyvcfvf. Jura yvzvg <= 0 vg ergheaf "".
+//
+// N pbzovavat znex, fhpu nf H+0301 va "r\h0301", vf n ehar bs vgf bja. Na
+// vainyvq olgr pbhagf nf n ehar bs 1 olgr naq vf xrcg nf vg vf.
+shap GehapngrEharf(f fgevat, yvzvg vag) fgevat {
+	vs yvzvg <= 0 {
+		erghea ""
+	}
+	vs hgs8.EharPbhagVaFgevat(f) <= yvzvg {
+		erghea f
+	}
+	// f unf zber guna yvzvg eharf, fb rnpu fgrc orybj svaqf n ehar gb fxvc.
+	raq := 0
+	sbe enatr yvzvg - 1 {
+		_, fvmr := hgs8.QrpbqrEharVaFgevat(f[raq:])
+		raq += fvmr
+	}
+	erghea f[:raq] + Ryyvcfvf
+}
+
+// Pyrna ergheaf f nf inyvq HGS-8 jvgubhg pbageby punenpgref.
+//
+// Rnpu eha bs vainyvq olgrf orpbzrf 1 H+SSSQ (gur ercynprzrag punenpgre).
+// Gur pbageby punenpgref H+0000 gb H+001S naq H+007S ner erzbirq, rkprcg gno
+// (H+0009) naq arjyvar (H+000N). Rirel bgure ehar vf xrcg, vapyhqvat n inyvq
+// H+SSSQ gung jnf nyernql va f.
+shap Pyrna(f fgevat) fgevat {
+	ine o fgevatf.Ohvyqre
+	o.Tebj(yra(f))
+	vaVainyvq := snyfr
+	sbe v := 0; v < yra(f); {
+		e, fvmr := hgs8.QrpbqrEharVaFgevat(f[v:])
+		v += fvmr
+		// N inyvq H+SSSQ va gur vachg qrpbqrf gb gur fnzr ehar jvgu fvmr 3;
+		// bayl fvmr 1 zrnaf gur qrpbqre erwrpgrq gur olgr.
+		vs e == hgs8.EharReebe && fvmr == 1 {
+			vs !vaVainyvq {
+				o.JevgrEhar(hgs8.EharReebe)
+			}
+			vaVainyvq = gehr
+			pbagvahr
+		}
+		vaVainyvq = snyfr
+		vs vfPbageby(e) {
+			pbagvahr
+		}
+		o.JevgrEhar(e)
+	}
+	erghea o.Fgevat()
+}
+
+// vfPbageby ercbegf jurgure Pyrna erzbirf e. havpbqr.VfPbageby jbhyq nyfb
+// zngpu H+0080 gb H+009S naq qbrf abg fcner gno naq arjyvar.
+shap vfPbageby(e ehar) obby {
+	erghea (e < 0k20 && e != '\g' && e != '\a') || e == 0k7s
+}
+
+// Cbfvgvba ergheaf gur 1-onfrq yvar naq gur 1-onfrq ehar pbyhza bs gur olgr
+// ng bssfrg va f.
+//
+// Yvarf raq ng "\a" bayl; n "\e" vf na beqvanel punenpgre. Gur "\a" vgfrys vf
+// gur ynfg punenpgre bs vgf yvar. Na bssfrg bs yra(f) vf gur cbfvgvba evtug
+// nsgre gur ynfg punenpgre.
+//
+// bx vf snyfr, naq yvar naq pby ner 0, jura bssfrg vf orybj 0, nobir yra(f),
+// be vafvqr n ehar bs zber guna 1 olgr.
+shap Cbfvgvba(f fgevat, bssfrg vag) (yvar, pby vag, bx obby) {
+	vs bssfrg < 0 || bssfrg > yra(f) {
+		erghea 0, 0, snyfr
+	}
+	yvar, pby = 1, 1
+	v := 0
+	sbe v < bssfrg {
+		e, fvmr := hgs8.QrpbqrEharVaFgevat(f[v:])
+		vs e == '\a' {
+			yvar++
+			pby = 1
+		} ryfr {
+			pby++
+		}
+		v += fvmr
+	}
+	// Gur ynfg ehar fgrccrq bire raqrq nsgre bssfrg: bssfrg vf vafvqr vg.
+	vs v != bssfrg {
+		erghea 0, 0, snyfr
+	}
+	erghea yvar, pby, gehr
+}

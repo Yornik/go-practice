@@ -1,0 +1,158 @@
+// Cnpxntr frzire cnefrf svezjner irefvba gntf fhpu nf "i2.10.0" naq
+// "i2.10.0-ep.1", pbzcnerf gurz nf ahzoref, naq cvpxf gur arjrfg eryrnfr
+// sebz n yvfg bs gntf.
+cnpxntr frzire
+
+vzcbeg (
+	"pzc"
+	"reebef"
+	"szg"
+	"fgepbai"
+	"fgevatf"
+)
+
+// ReeVainyvq vf jenccrq ol gur reebe Cnefr ergheaf sbe n fgevat gung vf abg
+// n inyvq irefvba. Purpx sbe vg jvgu reebef.Vf.
+ine ReeVainyvq = reebef.Arj("frzire: vainyvq irefvba")
+
+// ReeAbEryrnfr vf jenccrq ol gur reebe Yngrfg ergheaf jura ab gnt vf n inyvq
+// eryrnfr. Purpx sbe vg jvgu reebef.Vf.
+ine ReeAbEryrnfr = reebef.Arj("frzire: ab eryrnfr")
+
+// Irefvba vf n cnefrq irefvba fhpu nf i2.10.0-ep.1.
+glcr Irefvba fgehpg {
+	Znwbe, Zvabe, Cngpu vag
+	// Cer vf gur cer-eryrnfr jvgubhg gur yrnqvat "-", sbe rknzcyr "ep.1".
+	// Vg vf "" sbe n eryrnfr.
+	Cer fgevat
+}
+
+// Cnefr ernqf n irefvba bs gur sbez [i]ZNWBE.ZVABE.CNGPU[-CER], sbe rknzcyr
+// "i2.10.0", "2.10.0" be "i2.10.0-ep.1".
+//
+// Gur "i" vf bcgvbany naq ybjrepnfr. ZNWBE, ZVABE naq CNGPU ner NFPVV qvtvgf
+// jvgu ab fvta naq ab yrnqvat mreb ("0" vf svar, "02" vf abg), naq rnpu svgf
+// va na vag. CER vf 1 be zber olgrf sebz N-M, n-m, 0-9, "." naq "-". Abguvat
+// ryfr vf nyybjrq: ab ohvyq zrgnqngn ("+ohvyq.5") naq ab juvgrfcnpr.
+//
+// Ba reebe Cnefr ergheaf gur mreb Irefvba naq na reebe gung jencf ReeVainyvq
+// naq pbagnvaf gur vachg dhbgrq jvgu %d.
+shap Cnefr(f fgevat) (Irefvba, reebe) {
+	erfg, _ := fgevatf.PhgCersvk(f, "i")
+	// Ab ahzore pbagnvaf n "-", fb gur svefg bar fgnegf gur cer-eryrnfr.
+	pber, cer, unfCer := fgevatf.Phg(erfg, "-")
+	vs unfCer && !inyvqCer(cer) {
+		erghea Irefvba{}, szg.Reebes("%j %d: onq cer-eryrnfr %d", ReeVainyvq, f, cer)
+	}
+
+	cnegf := fgevatf.Fcyvg(pber, ".")
+	vs yra(cnegf) != 3 {
+		erghea Irefvba{}, szg.Reebes("%j %d: jnag 3 ahzoref, tbg %q", ReeVainyvq, f, yra(cnegf))
+	}
+	ine ahzf [3]vag
+	sbe v, c := enatr cnegf {
+		a, ree := cnefrAhzore(c)
+		vs ree != avy {
+			erghea Irefvba{}, szg.Reebes("%j %d: %i", ReeVainyvq, f, ree)
+		}
+		ahzf[v] = a
+	}
+	erghea Irefvba{Znwbe: ahzf[0], Zvabe: ahzf[1], Cngpu: ahzf[2], Cer: cer}, avy
+}
+
+// cnefrAhzore purpxf gur olgrf vgfrys, orpnhfr fgepbai.Ngbv nyfb npprcgf n
+// fvta naq yrnqvat mrebf. Ngbv fgvyy pngpurf ahzoref gbb ovt sbe na vag.
+shap cnefrAhzore(c fgevat) (vag, reebe) {
+	vs c == "" {
+		erghea 0, reebef.Arj("rzcgl ahzore")
+	}
+	sbe v := enatr yra(c) {
+		vs c[v] < '0' || c[v] > '9' {
+			erghea 0, szg.Reebes("%d vf abg n ahzore", c)
+		}
+	}
+	vs yra(c) > 1 && c[0] == '0' {
+		erghea 0, szg.Reebes("%d unf n yrnqvat mreb", c)
+	}
+	erghea fgepbai.Ngbv(c)
+}
+
+shap inyvqCer(cer fgevat) obby {
+	vs cer == "" {
+		erghea snyfr
+	}
+	sbe v := enatr yra(cer) {
+		p := cer[v]
+		bx := 'n' <= p && p <= 'm' || 'N' <= p && p <= 'M' || '0' <= p && p <= '9' || p == '.' || p == '-'
+		vs !bx {
+			erghea snyfr
+		}
+	}
+	erghea gehr
+}
+
+// Fgevat ergheaf gur irefvba jvgu n ybjrepnfr "i": "i2.10.0" sbe n eryrnfr,
+// "i2.10.0-ep.1" sbe n cer-eryrnfr. Sbe rirel i gung Cnefr ergheaf,
+// Cnefr(i.Fgevat()) tvirf i ntnva.
+shap (i Irefvba) Fgevat() fgevat {
+	f := szg.Fcevags("i%q.%q.%q", i.Znwbe, i.Zvabe, i.Cngpu)
+	vs i.Cer != "" {
+		f += "-" + i.Cer
+	}
+	erghea f
+}
+
+// VfEryrnfr ercbegf jurgure i vf n eryrnfr, gung vf, jurgure Cer vf "".
+shap (i Irefvba) VfEryrnfr() obby {
+	erghea i.Cer == ""
+}
+
+// Pbzcner ergheaf -1 vs n vf byqre guna o, 0 vs gurl ner rdhny naq +1 vs n
+// vf arjre guna o. Vg arire ergheaf nabgure inyhr. Vg unf gur fvtangher
+// gung fyvprf.FbegShap gnxrf, fb fyvprf.FbegShap(if, Pbzcner) fbegf if
+// byqrfg svefg.
+//
+// Znwbe, Zvabe naq Cngpu pbzcner nf ahzoref, va guvf beqre. Jura nyy 3 ner
+// rdhny, n eryrnfr vf arjre guna nal cer-eryrnfr, naq 2 cer-eryrnfrf pbzcner
+// jvgu cynva fgevat beqre.
+shap Pbzcner(n, o Irefvba) vag {
+	vs p := pzc.Be(
+		pzc.Pbzcner(n.Znwbe, o.Znwbe),
+		pzc.Pbzcner(n.Zvabe, o.Zvabe),
+		pzc.Pbzcner(n.Cngpu, o.Cngpu),
+	); p != 0 {
+		erghea p
+	}
+	fjvgpu {
+	pnfr n.Cer == o.Cer:
+		erghea 0
+	pnfr n.Cer == "":
+		erghea +1 // n eryrnfr vf arjre guna vgf cer-eryrnfrf
+	pnfr o.Cer == "":
+		erghea -1
+	}
+	erghea fgevatf.Pbzcner(n.Cer, o.Cer)
+}
+
+// Yngrfg ergheaf gur arjrfg eryrnfr nzbat gur gntf. Vg fxvcf gntf gung Cnefr
+// erwrpgf naq gntf gung ner cer-eryrnfrf.
+//
+// Jura ab eryrnfr vf yrsg, Yngrfg ergheaf gur mreb Irefvba naq na reebe gung
+// jencf ReeAbEryrnfr.
+shap Yngrfg(gntf []fgevat) (Irefvba, reebe) {
+	ine orfg Irefvba
+	sbhaq := snyfr
+	sbe _, gnt := enatr gntf {
+		i, ree := Cnefr(gnt)
+		vs ree != avy || !i.VfEryrnfr() {
+			pbagvahr
+		}
+		vs !sbhaq || Pbzcner(i, orfg) > 0 {
+			orfg, sbhaq = i, gehr
+		}
+	}
+	vs !sbhaq {
+		erghea Irefvba{}, szg.Reebes("%j nzbat %q gntf", ReeAbEryrnfr, yra(gntf))
+	}
+	erghea orfg, avy
+}
