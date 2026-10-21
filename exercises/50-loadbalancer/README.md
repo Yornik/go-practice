@@ -8,8 +8,8 @@ users see errors, and knobs like `max_fails`, `consecutive_5xx` or `retry_on: co
 only make sense once you know what happens inside. Here you build that inside: spread requests
 over backends, stop sending to a backend that fails health checks (active) or real requests
 (passive), retry a request that never reached a backend on another one, and drain a backend
-before maintenance without cutting off a download. It combines 08 (time as a value), 12
-(goroutine owners), 14 (timed recovery), 15 (draining) and 16 (HTTP handlers).
+before maintenance without cutting off a download. It combines 33 (time as a value), 37
+(goroutine owners), 39 (timed recovery), 40 (draining) and 41 (HTTP handlers).
 
 ## Task
 
@@ -104,7 +104,7 @@ get new requests.
 - The client gets the backend's response as it is: status (4xx and 5xx too), headers, body.
   A body without `Content-Length` (a stream, such as a chunked download) is passed on as it
   arrives: what the backend flushes reaches the client at once. `ReverseProxy` does this by
-  itself; if you wrap `w`, keep `Flush` working (16).
+  itself; if you wrap `w`, keep `Flush` working (41).
 - No response at all (a **transport error**, such as connection refused) and no retry: the LB
   answers **502**. The body of a 502 or 503 is up to you.
 - **In flight**: `Begin` when an attempt is sent to a backend, `End` when that attempt is over:
@@ -251,9 +251,9 @@ blocked.
 
 - Never eject more than half of the backends, and if fewer than a third are eligible, use all of
   them (Envoy's `max_ejection_percent` and panic threshold).
-- A retry budget: retries for at most 20 % of the requests of the last 10 s (08 has the tools).
+- A retry budget: retries for at most 20 % of the requests of the last 10 s (33 has the tools).
 - Dynamic backends: `SetBackends(urls)`, as an EndpointSlice watch would call it, plus `Undrain`.
-- Per-backend metrics in the Prometheus text format (17) on an admin handler.
+- Per-backend metrics in the Prometheus text format (42) on an admin handler.
 
 ## Stuck?
 
