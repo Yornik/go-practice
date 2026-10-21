@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-A Go practice course: 25 exercises for a reliability engineer (SRE / CRE), ordered by difficulty in 5 tiers. The owner solves them **without an LLM** (rule 1 in `README.md`). So do not implement stubs in `exercises/`, do not decode or summarise anything in `solutions/`, and do not give hints unless the user explicitly asks for that in the current conversation. Work on the course itself (tooling, specs, tests, docs) is fine.
+A Go practice course: 50 exercises for a reliability engineer (SRE / CRE), ordered by difficulty in 10 tiers. Tiers 1 to 5 (01-25) are for a learner who did A Tour of Go once; tiers 6 to 10 (26-50) are for a medior engineer. The owner solves them **without an LLM** (rule 1 in `README.md`). So do not implement stubs in `exercises/`, do not decode or summarise anything in `solutions/`, and do not give hints unless the user explicitly asks for that in the current conversation. Work on the course itself (tooling, specs, tests, docs) is fine.
 
 ## Commands
 
@@ -45,7 +45,8 @@ How the pieces depend on each other:
 
 - The tests are the executable spec. Every behaviour a test checks is stated in the exercise README. Nothing is hidden, and no test checks trivia or a trick.
 - Every test fails fast against the stub, and the reference solution passes under `-race -count=3`. Tests stay deterministic: they inject clocks, sleep and randomness, and put a timeout around every blocking call. Do not assert tight wall-clock bounds.
-- Explanations are written for a medior engineer. They do not explain basics such as loops or maps. They teach how to approach the problem and how production systems solve it. Later explanations point back to the exercise that first taught a concept.
+- Explanations of tiers 6 to 10 are written for a medior engineer. They do not explain basics such as loops or maps. Explanations of tiers 1 to 5 may explain a Go basic where a bug hides in it. All of them teach how to approach the problem and how production systems solve it. Later explanations point back to the exercise that first taught a concept.
+- Every exercise opens with 1 moment of the Peckish story (a bird-feeder startup; the cast is Ines, Bram, Dot, Kevin the squirrel and the Owl). The story lives only in the opening paragraph, between line 3 and `## Task`. Task, Rules, Examples, tests and hidden material stay neutral and exact. Nobody is mocked and the postmortems are blameless.
 - The headers and the root table name Go topics, not the approach. Naming the approach would give away what the hints are meant to reveal.
 
 ## Changing hidden material
