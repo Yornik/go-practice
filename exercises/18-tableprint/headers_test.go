@@ -11,10 +11,10 @@ import (
 )
 
 func TestHeaders(t *testing.T) {
-	type feeder struct {
+	type node struct {
 		Name     string
-		Firmware string `table:"FW"`
-		Battery  int    `table:"BATTERY%"`
+		Driver   string `table:"DRV"`
+		GPUUtil  int    `table:"GPU UTIL"`
 		LastSeen string `table:"LAST SEEN"`
 	}
 	type withHidden struct {
@@ -49,17 +49,17 @@ func TestHeaders(t *testing.T) {
 		want []string
 	}{
 		{"no tag gives the field name in upper case", []pod{{"checkout-7f9c4", "Running", 0}}, []string{"NAME", "STATUS", "RESTARTS"}},
-		{"a tag sets the header", []feeder{{}}, []string{"NAME", "FW", "BATTERY%", "LAST SEEN"}},
+		{"a tag sets the header", []node{{}}, []string{"NAME", "DRV", "GPU UTIL", "LAST SEEN"}},
 		{"table:\"-\" and unexported fields are not columns", []withHidden{{}}, []string{"NAME", "ZONE"}},
 		{"a tag is used as written, other tag keys are ignored, an empty tag is no tag", []tagSpelling{{}}, []string{"Restarts", "ZONE", "AZ", "NODE"}},
 		{"an embedded struct is 1 column named after its type", []withEmbedded{{}}, []string{"META", "PHASE"}},
 		{"an embedded pointer is 1 column named after its type", []withEmbeddedPointer{{}}, []string{"META", "PHASE"}},
 		{"an embedded unexported type is not a column", []withUnexportedEmbedded{{}}, []string{"PHASE"}},
-		{"empty slice", []feeder{}, []string{"NAME", "FW", "BATTERY%", "LAST SEEN"}},
-		{"nil slice", []feeder(nil), []string{"NAME", "FW", "BATTERY%", "LAST SEEN"}},
+		{"empty slice", []node{}, []string{"NAME", "DRV", "GPU UTIL", "LAST SEEN"}},
+		{"nil slice", []node(nil), []string{"NAME", "DRV", "GPU UTIL", "LAST SEEN"}},
 		{"slice of pointers", []*pod{{"checkout-7f9c4", "Running", 0}}, []string{"NAME", "STATUS", "RESTARTS"}},
 		{"slice of pointers with a nil row", []*pod{nil}, []string{"NAME", "STATUS", "RESTARTS"}},
-		{"empty slice of pointers", []*feeder{}, []string{"NAME", "FW", "BATTERY%", "LAST SEEN"}},
+		{"empty slice of pointers", []*node{}, []string{"NAME", "DRV", "GPU UTIL", "LAST SEEN"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -81,21 +81,21 @@ func notStructs() []struct {
 	name string
 	rows any
 } {
-	type feeder struct{ Name string }
-	rows := []feeder{{"hq-window-01"}}
+	type node struct{ Name string }
+	rows := []node{{"canary-h3-01"}}
 	return []struct {
 		name string
 		rows any
 	}{
 		{"nil", nil},
-		{"a struct", feeder{"hq-window-01"}},
-		{"a pointer to a struct", &feeder{"hq-window-01"}},
-		{"an array of structs", [2]feeder{}},
-		{"a map of structs", map[string]feeder{"a": {"hq-window-01"}}},
+		{"a struct", node{"canary-h3-01"}},
+		{"a pointer to a struct", &node{"canary-h3-01"}},
+		{"an array of structs", [2]node{}},
+		{"a map of structs", map[string]node{"a": {"canary-h3-01"}}},
 		{"a slice of ints", []int{1, 2}},
 		{"a slice of pointers to ints", []*int{nil}},
 		{"a slice of strings", []string(nil)},
-		{"a slice of any that holds structs", []any{feeder{"hq-window-01"}}},
+		{"a slice of any that holds structs", []any{node{"canary-h3-01"}}},
 		{"a pointer to a slice of structs", &rows},
 	}
 }

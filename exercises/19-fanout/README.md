@@ -1,18 +1,18 @@
-# 19 · Check every service at once
+# 19 · Check all 12 at once
 
 **Tier 4 · about 1 h** · Go: goroutines, `sync.WaitGroup`, loop variables in closures (per iteration since Go 1.22), writing to separate slice elements, `defer` and `recover`, a channel that you close, `-race` · Problem solving: decide who waits for whom; make the result independent of the finish order
 
-At 09:14 on Black Friday, `orders`, `payments` and `species-labeller` hung at the same time. The
-status page at `status.peckish.io` gets its colours from a small checker that dates from the month
-Peckish, the bird-feeder company, had 3 services. It now probes 12 internal services in sequence,
-each with a 5 s timeout. The 3 hung probes each waited the full 5 s, so every update of the page
-came 15 s late. Dot Mensah, the support lead, had 6 tickets that said "I cannot pay" before the
-page turned red. At 09:20 the probe of `photo-upload` got an empty response body, panicked with
-`index out of range [0] with length 0` and took the whole checker down with it. `payments`
-recovered at 09:23, but the frozen page kept it red until somebody restarted the checker at 09:41.
-The page was wrong both ways: green while nobody could pay, red while everybody could. In this
-exercise you write the part of the checker that runs every probe at once, collects every result,
-and survives a probe that panics.
+Seun Adebayo, an SRE on your team, unclips the Key from his ring at 18:00 and clips it onto
+yours: the swap board gave you his night, so that he can see his daughter's school play. It is
+the third night of Launch Week. At 21:14 `orders`, `payments` and `gateway` hang at the same
+time. The status page at `status.vesper-labs.example` gets its colours from a checker written
+when Vesper Labs had 3 services. It now probes 12 in sequence, each with a 5 s timeout. The 3 hung
+probes wait 5 s each, so every update of the page comes 15 s late. Marisol Quispe Mamani, the
+support lead, has 6 tickets that say "I cannot pay" before the page turns red. At 21:20 HUSH, the
+on-call AI that the lab sells, answers the probe of its own `hush-api` with `200 OK` and an empty
+body. The probe panics with `index out of range [0] with length 0` and takes the whole checker
+down, so the page stays red long after `payments` recovers. In this exercise you write the part of
+the checker that runs every probe at once, collects every result, and survives a probe that panics.
 
 ## Task
 
@@ -109,7 +109,7 @@ Suggested order: `RunAll` first, then `Stream`.
 checks := []fanout.Check{
 	{Name: "checkout", Run: func() error { return nil }},
 	{Name: "orders", Run: func() error { return errors.New("GET /healthz: 503 Service Unavailable") }},
-	{Name: "photo-upload", Run: func() error { panic("empty body") }},
+	{Name: "hush-api", Run: func() error { panic("empty body") }},
 }
 for _, r := range fanout.RunAll(checks) {
 	if r.Err != nil {
@@ -123,10 +123,10 @@ for _, r := range fanout.RunAll(checks) {
 ```text
 checkout     ok
 orders       FAIL GET /healthz: 503 Service Unavailable
-photo-upload FAIL fanout: check panicked: empty body
+hush-api     FAIL fanout: check panicked: empty body
 ```
 
-This is `ExampleRunAll`. The order is always the order of `checks`, even if `photo-upload`
+This is `ExampleRunAll`. The order is always the order of `checks`, even if `hush-api`
 finishes first.
 
 `Stream` with 3 checks: `payments` takes 4 s, `orders` hangs for 2 s and then fails, `checkout`

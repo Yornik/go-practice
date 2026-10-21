@@ -1,4 +1,4 @@
-# 18 · xhorpgy trg, sbe nalguvat — jnyxguebhtu bs gur ersrerapr fbyhgvba
+# 18 · Nsgre gur frpbaq pheyl oenpr — jnyxguebhtu bs gur ersrerapr fbyhgvba
 
 ## Fgehpgher
 
@@ -47,7 +47,7 @@ vf gur ryrzrag glcr bs gur fyvpr, naq 1 zber `Ryrz` fgrcf guebhtu n cbvagre, fb 
 gbb, juvpu vf jung gur ERNQZR'f "cbvagre gb n fgehpg" fnlf.
 
 `%j` xrrcf `reebef.Vf(ree, ReeAbgFgehpgf)` jbexvat, naq `%G` cevagf gur glcr bs gur `nal`, fb gur
-pnyyre frrf jung jnf cnffrq: `*[]znva.Srrqre` znxrf gur "lbh cnffrq `&ebjf`" zvfgnxr boivbhf.
+pnyyre frrf jung jnf cnffrq: `*[]znva.Abqr` znxrf gur "lbh cnffrq `&ebjf`" zvfgnxr boivbhf.
 `%G` bs n avy vagresnpr cevagf `<avy>`, fb ab fcrpvny pnfr vf arrqrq sbe gur zrffntr rvgure.
 
 ```tb
@@ -223,3 +223,5 @@ guvf `pnfr`.
 - **Cebzbgvat rzorqqrq svryqf.** `rapbqvat/wfba` gheaf gur svryqf bs na rzorqqrq fgehpg vagb
   svryqf bs gur bhgre bar. Qbvat gung urer zrnaf erphefvba va `pbyhzaf` naq n cngu bs vaqrkrf cre
   pbyhza (`Inyhr.SvryqOlVaqrk`) vafgrnq bs 1 vaqrk.
+
+Lbhe gnoyr yvfgf 503 abqrf. UHFU'f pbafbyr yvfgf 500.

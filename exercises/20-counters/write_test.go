@@ -27,8 +27,8 @@ func (w *stallingWriter) Write(p []byte) (int, error) {
 	w.calls++
 	if w.calls == 1 {
 		done := async(func() {
-			w.r.Counter("uploads_new").Add(1)
-			w.r.Counter("uploads_us").Add(1)
+			w.r.Counter("requests_old_town").Add(1)
+			w.r.Counter("requests_spire").Add(1)
 		})
 		select {
 		case w.panic = <-done:
@@ -42,8 +42,8 @@ func (w *stallingWriter) Write(p []byte) (int, error) {
 func TestWriteDoesNotBlock(t *testing.T) {
 	defer guard(t)()
 	r := newRegistry(t)
-	add(t, counter(t, r, "uploads_eu"), 3)
-	add(t, counter(t, r, "uploads_us"), 2)
+	add(t, counter(t, r, "requests_lightrail"), 3)
+	add(t, counter(t, r, "requests_spire"), 2)
 
 	w := &stallingWriter{r: r}
 	var err error
@@ -59,26 +59,26 @@ func TestWriteDoesNotBlock(t *testing.T) {
 	if w.blocked {
 		t.Fatalf("Add and Counter blocked while Write was writing: Counter(%q).Add(1) and Counter(%q).Add(1) "+
 			"in another goroutine did not return within %v while w.Write was running. "+
-			"Write must not hold a lock while it calls w.Write", "uploads_new", "uploads_us", timeout)
+			"Write must not hold a lock while it calls w.Write", "requests_old_town", "requests_spire", timeout)
 	}
 	if w.panic != nil {
 		t.Fatalf("Counter(name).Add(1) in another goroutine panicked while Write was writing: %v", w.panic)
 	}
 	if w.calls == 0 {
-		t.Fatalf("Write(w) did not call w.Write; want the text %q", "uploads_eu 3\nuploads_us 2\n")
+		t.Fatalf("Write(w) did not call w.Write; want the text %q", "requests_lightrail 3\nrequests_spire 2\n")
 	}
 	if err != nil {
 		t.Errorf("Write(w) returned the error %v, want nil", err)
 	}
-	if got, want := w.text.String(), "uploads_eu 3\nuploads_us 2\n"; got != want {
+	if got, want := w.text.String(), "requests_lightrail 3\nrequests_spire 2\n"; got != want {
 		t.Errorf("Write(w) wrote %q, want %q: the values of 1 snapshot taken when Write starts, "+
 			"without the counter and the Add that another goroutine made while Write was writing", got, want)
 	}
 
 	wantSamples(t, "Snapshot() after Write", snapshot(t, r),
-		s("uploads_eu", 3), s("uploads_new", 1), s("uploads_us", 3))
-	if got, err := write(t, r); got != "uploads_eu 3\nuploads_new 1\nuploads_us 3\n" || err != nil {
+		s("requests_lightrail", 3), s("requests_old_town", 1), s("requests_spire", 3))
+	if got, err := write(t, r); got != "requests_lightrail 3\nrequests_old_town 1\nrequests_spire 3\n" || err != nil {
 		t.Errorf("the next Write(w) wrote %q and returned %v, want %q and nil",
-			got, err, "uploads_eu 3\nuploads_new 1\nuploads_us 3\n")
+			got, err, "requests_lightrail 3\nrequests_old_town 1\nrequests_spire 3\n")
 	}
 }

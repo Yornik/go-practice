@@ -1,18 +1,18 @@
-# 20 · Count photos without crashing
+# 20 · Concurrent map writes at 11:58
 
-**Tier 4 · about 1 h** · Go: `sync.Mutex` and `defer` to unlock, data races and `go test -race`, `sync.WaitGroup` in tests, pointers to shared values, a map that many goroutines share, `io.Writer` · Problem solving: list what each lock protects; keep slow work out of it
+**Tier 4 · about 1.5 h** · Go: `sync.Mutex` and `defer` to unlock, data races and `go test -race`, `sync.WaitGroup` in tests, pointers to shared values, a map that many goroutines share, `io.Writer` · Problem solving: list what each lock protects; keep slow work out of it
 
-At 11:58 on Black Friday, the busiest minute of the year at Peckish, the photo upload service died
-with 1 log line: `fatal error: concurrent map writes`. Peckish sells bird feeders with a camera.
-The feeders were 30% off, and thousands of new feeders sent their first photos at the same time.
-The service counted those photos per region in a plain `map[string]int`, and every upload runs in
-its own goroutine. On a normal day, 2 uploads almost never wrote to the map at the same moment. At
-20 times the traffic, they did, and the Go runtime stopped the whole process; no `recover` catches
-that. So the line that measured the busiest minute is the line that ended it. The hotfix at 12:03
-deleted the counter, and the graph "Photos per region" now shows the biggest day in the history of
-the company as a flat line. Ines Okafor, the senior SRE, wants the counter back, correct under any
-load, with 1 more wish: a slow scrape of the numbers must never slow down an upload. In this
-exercise you write a small registry of counters that many goroutines can use at the same time.
+At 11:58 on launch day, with the HUSH 5 light show running down all 64 floors of the Spire, the
+inference gateway died with 1 log line: `fatal error: concurrent map writes`. 40 000 companies
+had just switched on HUSH, the on-call AI that Vesper Labs sells. The gateway counted their
+requests per district of Meridian in a plain `map[string]int`, and every request runs in its own
+goroutine. At 20 times the normal traffic, 2 requests wrote to the map at the same moment, and
+the Go runtime stopped the whole process; no `recover` catches that. So the line that counted the
+busiest minute of the year is the line that ended it. The hotfix at 12:03 deleted the counter,
+and for 6 hours the only request count in the war room was HUSH's own, which said "nominal". The
+incident review gives you the action item: the counter comes back, correct under any load, and a
+slow scrape of the numbers must never slow down a request. In this exercise you write a small
+registry of counters that many goroutines can use at the same time.
 
 ## Task
 
@@ -106,39 +106,39 @@ Suggested order: `NewRegistry`, `Counter`, `Add` and `Value` first, then `Snapsh
 
 ```go
 r := counters.NewRegistry()
-r.Counter("uploads_eu").Add(3)
-r.Counter("uploads_us").Add(2)
-r.Counter("uploads_eu").Add(1)
+r.Counter("requests_lightrail").Add(3)
+r.Counter("requests_spire").Add(2)
+r.Counter("requests_lightrail").Add(1)
 r.Counter("rejected") // created with the value 0
 r.Write(os.Stdout)
 ```
 
 ```text
 rejected 0
-uploads_eu 4
-uploads_us 2
+requests_lightrail 4
+requests_spire 2
 ```
 
 This is `ExampleRegistry_Write`. `ExampleRegistry_Drain` shows `Drain`:
 
 ```text
-eu := r.Counter("uploads_eu"); eu.Add(4)
-r.Counter("uploads_us").Add(2)
-r.Drain()      → [{uploads_eu 4} {uploads_us 2}]
-r.Snapshot()   → [{uploads_eu 0} {uploads_us 0}]
-eu.Add(5)
-r.Snapshot()   → [{uploads_eu 5} {uploads_us 0}]
+lightrail := r.Counter("requests_lightrail"); lightrail.Add(4)
+r.Counter("requests_spire").Add(2)
+r.Drain()      → [{requests_lightrail 4} {requests_spire 2}]
+r.Snapshot()   → [{requests_lightrail 0} {requests_spire 0}]
+lightrail.Add(5)
+r.Snapshot()   → [{requests_lightrail 5} {requests_spire 0}]
 ```
 
-`Write` while another goroutine counts, with `uploads_eu` at 3 and `uploads_us` at 2:
+`Write` while another goroutine counts, with `requests_lightrail` at 3 and `requests_spire` at 2:
 
 ```text
 goroutine 1                          goroutine 2
 r.Write(w) starts
-  w.Write is slow ...                r.Counter("uploads_new").Add(1)   returns at once
-                                     r.Counter("uploads_us").Add(1)    returns at once
-r.Write(w) returns nil; w got "uploads_eu 3\nuploads_us 2\n"
-r.Write(w) again; w gets "uploads_eu 3\nuploads_new 1\nuploads_us 3\n"
+  w.Write is slow ...                r.Counter("requests_old_town").Add(1)   returns at once
+                                     r.Counter("requests_spire").Add(1)      returns at once
+r.Write(w) returns nil; w got "requests_lightrail 3\nrequests_spire 2\n"
+r.Write(w) again; w gets "requests_lightrail 3\nrequests_old_town 1\nrequests_spire 3\n"
 ```
 
 ## Run the tests
@@ -166,8 +166,8 @@ their results, and only when the goroutines really overlap. On a machine with 1 
 less, so add `-count=10` there to run each test 10 times.
 
 In step 4 the writer that `Write` gets stops in its first `w.Write` call. While it waits, another
-goroutine calls `Counter("uploads_new").Add(1)` and `Counter("uploads_us").Add(1)`. If those calls
-need a lock that `Write` holds, they wait too, and after 5 s the test fails with
+goroutine calls `Counter("requests_old_town").Add(1)` and `Counter("requests_spire").Add(1)`. If
+those calls need a lock that `Write` holds, they wait too, and after 5 s the test fails with
 "Add and Counter blocked while Write was writing".
 
 `ExampleRegistry_Write` and `ExampleRegistry_Drain` run in every `go test` without `-run`, such as
@@ -195,7 +195,8 @@ crashes until steps 1 and 2 work.
   (`Add`, `Load` and `Swap`). Compare both with a benchmark that uses `b.RunParallel`.
 - Most calls of `Counter` ask for a name that already exists. Try a `sync.RWMutex`: look up under
   `RLock`, and create under `Lock`. Why must you look up a second time after `Lock`?
-- Serve `Write` over HTTP: a handler for `GET /metrics` that any `curl` can scrape.
+- Serve `Write` over HTTP: a handler for `GET /metrics` that any `curl` can scrape. The war room
+  wants a request count on its wall that HUSH does not report.
 - Add a `Gauge` with `Set` and `Add` that can go down, and think about what `Drain` should do
   with it.
 

@@ -1,4 +1,4 @@
-# 17 · Xrrc gur ynfg 500 riragf — rkcynangvba
+# 17 · Gur ynfg 500 riragf orsber gur penfu — rkcynangvba
 
 ## Gur ceboyrz oruvaq gur ceboyrz
 
@@ -15,32 +15,33 @@ gung Tb 1.25 nqqrq gb `ehagvzr/genpr`.
 
 Gur anvir irefvbaf snvy va vafgehpgvir jnlf:
 
-- **Nccraq gb n fyvpr sberire.** Zrzbel tebjf jvgu genssvp. Ba Oynpx Sevqnl, genssvp vf 20 gvzrf
+- **Nccraq gb n fyvpr sberire.** Zrzbel tebjf jvgu genssvp. Va Ynhapu Jrrx, genssvp vf 20 gvzrf
   abezny, naq gur cbq vf BBZ-xvyyrq: lbh ybfr gur uvfgbel naq gur freivpr.
 - **Nccraq, naq zbir rirel inyhr 1 cynpr gb gur yrsg jura shyy.** Pbeerpg, naq obhaqrq, ohg rirel
   `Nqq` abj pbfgf `fvmr` zbirf. Ng 500 inyhrf naq gubhfnaqf bs riragf cre frpbaq gung vf zvyyvbaf
   bs pbcvrf cre frpbaq sbe qngn abobql ernqf.
-- **1 evat sbe nyy srrqref.** N punggl srrqre gung fraqf 1 urnegorng cre frpbaq chfurf bhg gur
-  dhvrg srrqre gung penfurq. Gung vf jul gur erpbeqre xrrcf 1 evat cre xrl.
+- **1 evat sbe nyy abqrf.** N punggl abqr gung fraqf 1 urnegorng cre frpbaq chfurf bhg gur
+  dhvrg abqr gung penfurq. Gung vf jul gur erpbeqre xrrcf 1 evat cre xrl.
 
-Orsber lbh jevgr nal pbqr, qb gur zrzbel nevguzrgvp, orpnhfr gur fvmr vf n ohqtrg: 40 000
-srrqref × 500 riragf × nobhg 100 olgrf cre rirag vf 2 TO. Znlor 500 vf gbb znal; znlor gur rirag
-fubhyq or fznyyre. N syvtug erpbeqre unf n svkrq pbfg cre xrl, fb fbzrobql zhfg qrpvqr vg.
+Orsber lbh jevgr nal pbqr, qb gur zrzbel nevguzrgvp, orpnhfr gur fvmr vf n ohqtrg: 500 abqrf ×
+500 riragf × nobhg 100 olgrf cre rirag vf 25 ZO, ohg gur fnzr erpbeqre xrlrq ol phfgbzre, sbe
+40 000 pbzcnavrf, vf 2 TO. Znlor 500 vf gbb znal; znlor gur rirag fubhyq or fznyyre. N syvtug
+erpbeqre unf n svkrq pbfg cre xrl, fb fbzrobql zhfg qrpvqr vg.
 
 ## Ubj gb nccebnpu vg
 
 **1. Qb gur vaqrk nevguzrgvp ba cncre svefg.** Qenj 3 obkrf. Cynl gur ERNQZR rknzcyr: `Nqq` obbg,
-jvsv, hcybnq, ergel, penfu. Qb abg zbir inyhrf; zbir na neebj gung znexf jurer gur arkg inyhr
+yvax, vasre, ergel, penfu. Qb abg zbir inyhrf; zbir na neebj gung znexf jurer gur arkg inyhr
 tbrf. Nsgre rnpu pnyy jevgr qbja 3 ahzoref: gur neebj, gur pbhag bs inyhrf uryq, naq gur obk bs
 gur byqrfg inyhr.
 
 | nsgre Nqq | obkrf | arkg | pbhag | byqrfg obk |
 |---|---|---|---|---|
 | obbg | obbg · · | 1 | 1 | 0 |
-| jvsv | obbg jvsv · | 2 | 2 | 0 |
-| hcybnq | obbg jvsv hcybnq | 0 | 3 | 0 |
-| ergel | ergel jvsv hcybnq | 1 | 3 | 1 |
-| penfu | ergel penfu hcybnq | 2 | 3 | 2 |
+| yvax | obbg yvax · | 2 | 2 | 0 |
+| vasre | obbg yvax vasre | 0 | 3 | 0 |
+| ergel | ergel yvax vasre | 1 | 3 | 1 |
+| penfu | ergel penfu vasre | 2 | 3 | 2 |
 
 Abj svaq gur sbezhyn sbe gur ynfg pbyhza sebz gur bgure 2. "pbhag obkrf oruvaq arkg" svgf rirel
 ebj: 1 - 1 = 0, 0 - 3 = -3 ≡ 0, 2 - 3 = -1 ≡ 2. Purpx vg ba gur obhaqnevrf orsber lbh gehfg vg:
@@ -183,10 +184,10 @@ xabj jung gb erghea.
 - **Na rzcgl, aba-avy `Qhzc` sbe n zvffvat xrl.** Gur ERNQZR fnlf avy, fb gung `Qhzc(xrl) == avy`
   zrnaf "abguvat erpbeqrq".
 - **Zrzbel gung arire pbzrf onpx.** N erpbeqre xrrcf rirel xrl vg unf frra hagvy `Sbetrg`. N evat
-  bs cbvagref xrrcf hc gb `fvmr` bowrpgf nyvir cre xrl, rira sbe n srrqre gung jnf fbyq gb fbzrbar
-  jub arire fjvgpurq vg ba.
-- **Funevat vg orgjrra tbebhgvarf jvgubhg n ybpx.** Gur hcybnq freivpr unaqyrf rnpu srrqre va vgf
-  bja tbebhgvar; gur enpr qrgrpgbe ercbegf gur svefg pbapheerag `Nqq`. 20-pbhagref nqqf gur ybpx.
+  bs cbvagref xrrcf hc gb `fvmr` bowrpgf nyvir cre xrl, rira sbe n abqr gung jnf gnxra bhg bs gur
+  syrrg naq arire fraqf ntnva.
+- **Funevat vg orgjrra tbebhgvarf jvgubhg n ybpx.** Gur tngrjnl unaqyrf rnpu abqr va vgf bja
+  tbebhgvar; gur enpr qrgrpgbe ercbegf gur svefg pbapheerag `Nqq`. 20-pbhagref nqqf gur ybpx.
 
 ## Va cebqhpgvba
 

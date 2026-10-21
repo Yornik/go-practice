@@ -58,12 +58,12 @@ func TestRunAllOrderEmpty(t *testing.T) {
 
 func TestRunAllOrderDuplicateNames(t *testing.T) {
 	defer guard(t)()
-	names := []string{"photo-store", "photo-store", "orders", "photo-store", "photo-store", "orders"}
+	names := []string{"chkpt-store", "chkpt-store", "orders", "chkpt-store", "chkpt-store", "orders"}
 	errs := []error{
 		nil,
-		errors.New("photo-store-2: disk 97% full"),
+		errors.New("chkpt-store-2: disk 97% full"),
 		nil,
-		errors.New("photo-store-4: connection refused"),
+		errors.New("chkpt-store-4: connection refused"),
 		nil,
 		errors.New("orders: GET /healthz: 503 Service Unavailable"),
 	}
@@ -190,7 +190,7 @@ func TestRunAllPanic(t *testing.T) {
 			defer guard(t)()
 			checks := []fanout.Check{
 				{Name: "checkout", Run: func() error { return nil }},
-				{Name: "photo-upload", Run: tt.run},
+				{Name: "hush-api", Run: tt.run},
 				{Name: "orders", Run: func() error { return errOrders }},
 			}
 			got := runAll(t, checks)
@@ -204,8 +204,8 @@ func TestRunAllPanic(t *testing.T) {
 				t.Errorf("result 2 = %s, want %s (a panic in another check must not change it)", show(got[2]), show(want))
 			}
 			r := got[1]
-			if r.Name != "photo-upload" {
-				t.Errorf("result 1 has Name %q, want %q", r.Name, "photo-upload")
+			if r.Name != "hush-api" {
+				t.Errorf("result 1 has Name %q, want %q", r.Name, "hush-api")
 			}
 			if r.Err == nil {
 				t.Fatalf("result 1 (the check that panicked) has Err nil, want an error that wraps ErrPanic")
@@ -224,8 +224,8 @@ func TestRunAllPanicNilRun(t *testing.T) {
 	defer guard(t)()
 	checks := []fanout.Check{
 		{Name: "checkout", Run: func() error { return nil }},
-		{Name: "photo-upload"}, // Run is nil
-		{Name: "push", Run: func() error { return nil }},
+		{Name: "hush-api"}, // Run is nil
+		{Name: "notify", Run: func() error { return nil }},
 	}
 	got := runAll(t, checks)
 	if len(got) != 3 {
@@ -237,8 +237,8 @@ func TestRunAllPanicNilRun(t *testing.T) {
 		}
 	}
 	r := got[1]
-	if r.Name != "photo-upload" {
-		t.Errorf("result 1 has Name %q, want %q", r.Name, "photo-upload")
+	if r.Name != "hush-api" {
+		t.Errorf("result 1 has Name %q, want %q", r.Name, "hush-api")
 	}
 	if !errors.Is(r.Err, fanout.ErrPanic) {
 		t.Errorf("the check with a nil Run has Err %v, want an error that wraps ErrPanic (calling a nil func panics)", r.Err)
@@ -252,7 +252,7 @@ func TestRunAllPanicReturnedError(t *testing.T) {
 	errAuth := errors.New("auth: token expired")
 	checks := []fanout.Check{
 		{Name: "auth", Run: func() error { return errAuth }},
-		{Name: "photo-upload", Run: func() error { panic("empty body") }},
+		{Name: "hush-api", Run: func() error { panic("empty body") }},
 	}
 	got := runAll(t, checks)
 	if len(got) != 2 {

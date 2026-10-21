@@ -1,17 +1,18 @@
-# 17 · Keep the last 500 events
+# 17 · The last 500 events before the crash
 
 **Tier 4 · about 1 h** · Go: generics (type parameters on types and functions), `any` and `comparable`, the zero value of a type parameter, `copy`, a constructor that panics, maps with pointer values · Problem solving: do the index arithmetic on paper first; decide what the caller may change
 
-It is Black Friday week at Peckish, the company that sells bird feeders with a camera. Feeders are
-30% off, the upload service takes 20 times its usual traffic, and the feeder firmware crashes about
-once an hour. After each crash Ines Okafor, the senior SRE, says what she always says: "Show me the
-log line." There is none. The upload service keeps 3 log files of 100 MB, and at this traffic that
-is 9 minutes of history for all 40 000 feeders together. A crashed feeder reports in only when it
-is back, 40 minutes later. By then its last lines have been gone for half an hour. Ines wants the
-upload service to keep the last 500 events of every feeder in memory and to dump them when a feeder
-reports a crash. The firmware team wants to keep log lines, the photo team wants to keep structs,
-and by Wednesday each team has started its own copy. In this exercise you write 1 type that keeps
-the last N values of any type, and a recorder that keeps 1 of them per feeder.
+10 minutes of logs. Since Tuesday that is all a GPU node keeps, because its log rotation now runs
+every 10 minutes. The commit says `chore: save disk 🌙`, in the node config repository. HUSH, the
+on-call AI that Vesper Labs sells, lost its commit rights to its own agent repository this month,
+after a bisect traced a bad build to it, and nobody thought to check this one. It is Launch Week,
+and under 20 times the usual traffic the node daemon `gpud` crashes about once an hour. A crashed
+node reports in only when it is back, and by then its last lines have rotated away. The
+postmortem's action item: the inference gateway keeps the last 500 events of every node in memory
+and dumps them when a node reports a crash. The driver team wants to keep log lines, the inference
+team wants to keep structs, and by Wednesday each team has started its own copy. In this exercise
+you write 1 type that keeps the last N values of any type, and a recorder that keeps 1 of them
+per node.
 
 ## Task
 
@@ -90,7 +91,7 @@ Suggested order: `Ring` first (most of the work), then `Recorder`, which keeps 1
   returns `false` and changes nothing. A later `Add` for that key starts with an empty ring.
 - `Len()` is the number of keys that hold values.
 - A key can be of any comparable type: a `string`, an `int`, or a struct of comparable fields such
-  as `struct{ Feeder string; Boot int }`. 2 struct keys are the same key when all their fields are
+  as `struct{ Node string; Boot int }`. 2 struct keys are the same key when all their fields are
   equal.
 
 ### Concurrency
@@ -105,12 +106,12 @@ A ring of size 3:
 ```text
 r := NewRing[string](3)
 r.Oldest() = "", false         r.Last(2) = []
-r.Add("boot"); r.Add("wifi")
-r.Len() = 2   r.Dropped() = 0   r.Last(5) = [boot wifi]
-r.Add("upload"); r.Add("retry"); r.Add("crash")
+r.Add("boot"); r.Add("link")
+r.Len() = 2   r.Dropped() = 0   r.Last(5) = [boot link]
+r.Add("infer"); r.Add("retry"); r.Add("crash")
 r.Len() = 3   r.Dropped() = 2
-r.Oldest() = "upload", true    r.Newest() = "crash", true
-r.Last(2) = [retry crash]      r.Last(3) = [upload retry crash]      r.Last(0) = []
+r.Oldest() = "infer", true     r.Newest() = "crash", true
+r.Last(2) = [retry crash]      r.Last(3) = [infer retry crash]      r.Last(0) = []
 ```
 
 A recorder with 2 values per key (this is `ExampleRecorder`):
@@ -121,15 +122,15 @@ type entry struct {
 	Msg string
 }
 rec := flightrec.NewRecorder[string, entry](2)
-rec.Add("feeder-0412", entry{1, "boot"})
-rec.Add("feeder-0007", entry{1, "boot"})
-rec.Add("feeder-0412", entry{2, "upload"})
-rec.Add("feeder-0412", entry{3, "crash"})
+rec.Add("vl-gpu-0412", entry{1, "boot"})
+rec.Add("vl-gpu-0007", entry{1, "boot"})
+rec.Add("vl-gpu-0412", entry{2, "infer"})
+rec.Add("vl-gpu-0412", entry{3, "crash"})
 
 rec.Len()                   // 2
-rec.Dump("feeder-0412")     // [{Seq:2 Msg:upload} {Seq:3 Msg:crash}]
-rec.Dump("feeder-0007")     // [{Seq:1 Msg:boot}]
-rec.Dump("hq-window-01")    // nil
+rec.Dump("vl-gpu-0412")     // [{Seq:2 Msg:infer} {Seq:3 Msg:crash}]
+rec.Dump("vl-gpu-0007")     // [{Seq:1 Msg:boot}]
+rec.Dump("canary-h3-01")    // nil
 ```
 
 ## Run the tests
@@ -168,8 +169,8 @@ cannot recover a panic, so a plain run crashes until `Recorder` works.
 - Add `All() iter.Seq[T]`, so that a caller can range over the values, oldest first, without a
   copy. Decide what happens when the loop body calls `Add`.
 - Make `Recorder` safe for concurrent use with a `sync.Mutex` (20-counters shows how), and serve `Dump` as
-  JSON on a debug endpoint such as `/debug/flightrec?feeder=feeder-0412`.
-- Forget the keys of feeders that sent nothing for an hour, with an injected clock (23-silences does
+  JSON on a debug endpoint such as `/debug/flightrec?node=vl-gpu-0412`.
+- Forget the keys of nodes that sent nothing for an hour, with an injected clock (23-silences does
   the same for silences that have ended).
 - Keep a time window instead of a count: every event of the last 10 minutes, however many that is.
 

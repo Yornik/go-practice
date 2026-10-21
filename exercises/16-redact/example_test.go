@@ -12,22 +12,22 @@ func ExampleSecret() {
 		Host     string        `json:"host"`
 		Password redact.Secret `json:"password"`
 	}
-	cfg := config{Host: "db-1.peckish.example", Password: "hunter2"}
+	cfg := config{Host: "db-1.vesper-labs.example", Password: "hunter2"}
 
 	fmt.Printf("%+v\n", cfg)
 	out, _ := json.Marshal(cfg)
 	fmt.Println(string(out))
 	// Output:
-	// {Host:db-1.peckish.example Password:[REDACTED]}
-	// {"host":"db-1.peckish.example","password":"[REDACTED]"}
+	// {Host:db-1.vesper-labs.example Password:[REDACTED]}
+	// {"host":"db-1.vesper-labs.example","password":"[REDACTED]"}
 }
 
 func ExampleRedactURL() {
-	fmt.Println(redact.RedactURL("postgres://orders_app:hunter2@db-1.peckish.example:5432/orders"))
-	fmt.Println(redact.RedactURL("https://hooks.peckish.example/deploy?team=sre&token=abc123"))
-	fmt.Println(redact.RedactURL("postgres://orders_app:hun ter@db-1.peckish.example/orders"))
+	fmt.Println(redact.RedactURL("postgres://orders_app:hunter2@db-1.vesper-labs.example:5432/orders"))
+	fmt.Println(redact.RedactURL("https://hooks.vesper-labs.example/deploy?team=sre&token=abc123"))
+	fmt.Println(redact.RedactURL("postgres://orders_app:hun ter@db-1.vesper-labs.example/orders"))
 	// Output:
-	// postgres://orders_app:xxxxx@db-1.peckish.example:5432/orders
-	// https://hooks.peckish.example/deploy?team=sre&token=xxxxx
+	// postgres://orders_app:xxxxx@db-1.vesper-labs.example:5432/orders
+	// https://hooks.vesper-labs.example/deploy?team=sre&token=xxxxx
 	// [invalid URL]
 }

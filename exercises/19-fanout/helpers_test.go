@@ -24,8 +24,8 @@ const hangLimit = 30 * time.Second
 
 // services are the names the checks in these tests use.
 var services = []string{
-	"checkout", "orders", "payments", "photo-upload", "species-labeller", "push",
-	"feeder-gateway", "seed-subscriptions", "search", "auth", "cdn", "status-db",
+	"checkout", "orders", "payments", "hush-api", "gateway", "notify",
+	"node-gateway", "seat-subscriptions", "search", "auth", "cdn", "status-db",
 }
 
 // guard turns 2 ways a wrong solution can break the test binary into
@@ -313,11 +313,11 @@ func quick(names []string, errs []error) ([]fanout.Check, []atomic.Int32) {
 	return checks, calls
 }
 
-// numbered returns n names: "feeder-gateway-1", "feeder-gateway-2", ...
+// numbered returns n names: "node-gateway-1", "node-gateway-2", ...
 func numbered(n int) []string {
 	names := make([]string, n)
 	for i := range names {
-		names[i] = fmt.Sprintf("feeder-gateway-%d", i+1)
+		names[i] = fmt.Sprintf("node-gateway-%d", i+1)
 	}
 	return names
 }

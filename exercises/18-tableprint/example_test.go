@@ -9,23 +9,23 @@ import (
 )
 
 func ExampleRender() {
-	type feeder struct {
+	type node struct {
 		Name     string
-		Firmware string        `table:"FW"`
-		Battery  *int          `table:"BATTERY%"`
+		Driver   string        `table:"DRV"`
+		GPUUtil  *int          `table:"GPU UTIL"`
 		LastSeen time.Duration `table:"LAST SEEN"`
 		apiToken string
 	}
-	battery := 87
-	rows := []feeder{
-		{"hq-window-01", "2.10.0", &battery, 12 * time.Second, "tok-8f3a91"},
-		{"feeder-0412", "2.9.3", nil, 41 * time.Minute, "tok-c27d40"},
+	gpuUtil := 87
+	rows := []node{
+		{"canary-h3-01", "2.10.0", &gpuUtil, 12 * time.Second, "tok-8f3a91"},
+		{"vl-gpu-0412", "2.9.3", nil, 41 * time.Minute, "tok-c27d40"},
 	}
 	if err := tableprint.Render(os.Stdout, rows); err != nil {
 		fmt.Println(err)
 	}
 	// Output:
-	// NAME          FW      BATTERY%  LAST SEEN
-	// hq-window-01  2.10.0  87        12s
-	// feeder-0412   2.9.3   <none>    41m0s
+	// NAME          DRV     GPU UTIL  LAST SEEN
+	// canary-h3-01  2.10.0  87        12s
+	// vl-gpu-0412   2.9.3   <none>    41m0s
 }

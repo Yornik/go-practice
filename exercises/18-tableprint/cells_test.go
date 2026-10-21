@@ -62,11 +62,11 @@ type location struct {
 	Rack   int
 }
 
-var blackFriday = time.Date(2026, 11, 27, 21, 40, 0, 0, time.FixedZone("CET", 3600))
+var launchWeek = time.Date(2026, 11, 27, 21, 40, 0, 0, time.FixedZone("CET", 3600))
 
 func TestRenderCellsBasicKinds(t *testing.T) {
 	runCellCases(t, []cellCase{
-		{"string", oneCell("photo-store-2"), "photo-store-2"},
+		{"string", oneCell("chkpt-store-2"), "chkpt-store-2"},
 		{"empty string", oneCell(""), ""},
 		{"named string type", oneCell(phase("Degraded")), "Degraded"},
 		{"bool true", oneCell(true), "true"},
@@ -97,7 +97,7 @@ func TestRenderCellsBasicKinds(t *testing.T) {
 func TestRenderCellsStringer(t *testing.T) {
 	runCellCases(t, []cellCase{
 		{"time.Duration", oneCell(90 * time.Second), "1m30s"},
-		{"time.Time in a fixed zone", oneCell(blackFriday), "2026-11-27 21:40:00 +0100 CET"},
+		{"time.Time in a fixed zone", oneCell(launchWeek), "2026-11-27 21:40:00 +0100 CET"},
 		{"netip.Addr", oneCell(netip.MustParseAddr("192.0.2.10")), "192.0.2.10"},
 		{"named int type with String", oneCell(percent(87)), "87%"},
 		{"struct with String", oneCell(version{2, 10, 0}), "v2.10.0"},
@@ -109,7 +109,7 @@ func TestRenderCellsStringer(t *testing.T) {
 
 func TestRenderCellsFallback(t *testing.T) {
 	runCellCases(t, []cellCase{
-		{"nested struct", oneCell(location{"eu-west-1", 3}), "{eu-west-1 3}"},
+		{"nested struct", oneCell(location{"harbour-1", 3}), "{harbour-1 3}"},
 		{"slice of strings", oneCell([]string{"checkout", "orders"}), "[checkout orders]"},
 		{"nil slice of strings", oneCell([]string(nil)), "[]"},
 		{"array of ints", oneCell([2]int{1, 2}), "[1 2]"},
@@ -119,13 +119,13 @@ func TestRenderCellsFallback(t *testing.T) {
 }
 
 func TestRenderPointersFields(t *testing.T) {
-	name := "photo-store-2"
-	battery := 87
-	batteryPtr := &battery
+	name := "chkpt-store-2"
+	util := 87
+	utilPtr := &util
 	var nilInt *int
-	at := blackFriday
+	at := launchWeek
 	tick := 90 * time.Second
-	endpoint, err := url.Parse("https://hq-window-01.peckish.example/healthz")
+	endpoint, err := url.Parse("https://canary-h3-01.vesper-labs.example/healthz")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -133,10 +133,10 @@ func TestRenderPointersFields(t *testing.T) {
 
 	runCellCases(t, []cellCase{
 		{"nil pointer to a string", oneCell((*string)(nil)), "<none>"},
-		{"pointer to a string", oneCell(&name), "photo-store-2"},
+		{"pointer to a string", oneCell(&name), "chkpt-store-2"},
 		{"nil pointer to an int", oneCell(nilInt), "<none>"},
-		{"pointer to an int", oneCell(&battery), "87"},
-		{"pointer to a pointer to an int", oneCell(&batteryPtr), "87"},
+		{"pointer to an int", oneCell(&util), "87"},
+		{"pointer to a pointer to an int", oneCell(&utilPtr), "87"},
 		{"pointer to a nil pointer to an int", oneCell(&nilInt), "<none>"},
 		{"nil pointer to a time.Time", oneCell((*time.Time)(nil)), "<none>"},
 		{"pointer to a time.Time", oneCell(&at), "2026-11-27 21:40:00 +0100 CET"},
@@ -144,12 +144,12 @@ func TestRenderPointersFields(t *testing.T) {
 		{"pointer to a type with String on the value", oneCell(&pct), "87%"},
 		// *url.URL is the usual way to hold a URL; String has a pointer
 		// receiver.
-		{"pointer to a type with String on the pointer", oneCell(endpoint), "https://hq-window-01.peckish.example/healthz"},
+		{"pointer to a type with String on the pointer", oneCell(endpoint), "https://canary-h3-01.vesper-labs.example/healthz"},
 		{"pointer to a gauge", oneCell(&gauge{7}), "7 MB"},
 		{"nil pointer to a type with String on the pointer", oneCell((*gauge)(nil)), "<none>"},
 		{"nil *url.URL", oneCell((*url.URL)(nil)), "<none>"},
-		// The cell of the struct it points to, not &{eu-west-1 3}.
-		{"pointer to a struct without String", oneCell(&location{"eu-west-1", 3}), "{eu-west-1 3}"},
+		// The cell of the struct it points to, not &{harbour-1 3}.
+		{"pointer to a struct without String", oneCell(&location{"harbour-1", 3}), "{harbour-1 3}"},
 	})
 }
 
@@ -158,11 +158,11 @@ func TestRenderPointersRows(t *testing.T) {
 		*Meta
 		Phase string
 	}
-	type feeder struct {
+	type node struct {
 		Name    string
-		Battery *int `table:"BATTERY%"`
+		GPUUtil *int `table:"GPU UTIL"`
 	}
-	battery := 87
+	gpuUtil := 87
 
 	tests := []struct {
 		name string
@@ -187,11 +187,11 @@ func TestRenderPointersRows(t *testing.T) {
 		},
 		{
 			name: "pointer fields in pointer rows",
-			rows: []*feeder{{"hq-window-01", &battery}, {"feeder-0412", nil}},
+			rows: []*node{{"canary-h3-01", &gpuUtil}, {"vl-gpu-0412", nil}},
 			want: "" +
-				"NAME          BATTERY%\n" +
-				"hq-window-01  87\n" +
-				"feeder-0412   <none>\n",
+				"NAME          GPU UTIL\n" +
+				"canary-h3-01  87\n" +
+				"vl-gpu-0412   <none>\n",
 		},
 		{
 			name: "embedded pointer, nil and not nil",

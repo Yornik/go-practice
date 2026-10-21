@@ -29,12 +29,12 @@ func TestSecretJSONMarshal(t *testing.T) {
 		{"Secret", s, `"[REDACTED]"`},
 		{"*Secret", &s, `"[REDACTED]"`},
 		{`Secret("")`, redact.Secret(""), `"[REDACTED]"`},
-		{"struct field", dbConfigJSON{Host: "db-1.peckish.example", Password: password},
-			`{"host":"db-1.peckish.example","password":"[REDACTED]"}`},
-		{"pointer to struct", &dbConfigJSON{Host: "db-1.peckish.example", Password: password},
-			`{"host":"db-1.peckish.example","password":"[REDACTED]"}`},
-		{"*Secret struct field", backupConfigJSON{Host: "db-2.peckish.example", Password: &s},
-			`{"host":"db-2.peckish.example","password":"[REDACTED]"}`},
+		{"struct field", dbConfigJSON{Host: "db-1.vesper-labs.example", Password: password},
+			`{"host":"db-1.vesper-labs.example","password":"[REDACTED]"}`},
+		{"pointer to struct", &dbConfigJSON{Host: "db-1.vesper-labs.example", Password: password},
+			`{"host":"db-1.vesper-labs.example","password":"[REDACTED]"}`},
+		{"*Secret struct field", backupConfigJSON{Host: "db-2.vesper-labs.example", Password: &s},
+			`{"host":"db-2.vesper-labs.example","password":"[REDACTED]"}`},
 		{"slice", []redact.Secret{token1, token2}, `["[REDACTED]","[REDACTED]"]`},
 		{"map value", map[string]redact.Secret{"deploy-bot": token1}, `{"deploy-bot":"[REDACTED]"}`},
 	}
@@ -65,12 +65,12 @@ func TestSecretJSONUnmarshal(t *testing.T) {
 
 	t.Run("struct field", func(t *testing.T) {
 		var c dbConfigJSON
-		in := `{"host":"db-1.peckish.example","password":"hunter2"}`
+		in := `{"host":"db-1.vesper-labs.example","password":"hunter2"}`
 		if err := json.Unmarshal([]byte(in), &c); err != nil {
 			t.Fatalf("json.Unmarshal(%s) error = %v, want nil", in, err)
 		}
-		if c.Host != "db-1.peckish.example" {
-			t.Errorf("after json.Unmarshal(%s): Host = %q, want %q", in, c.Host, "db-1.peckish.example")
+		if c.Host != "db-1.vesper-labs.example" {
+			t.Errorf("after json.Unmarshal(%s): Host = %q, want %q", in, c.Host, "db-1.vesper-labs.example")
 		}
 		if got := c.Password.Reveal(); got != password {
 			t.Errorf("after json.Unmarshal(%s): Password.Reveal() = %q, want %q", in, got, password)

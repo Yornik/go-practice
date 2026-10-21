@@ -24,7 +24,7 @@ type dbConfig struct {
 }
 
 func newDBConfig() dbConfig {
-	return dbConfig{Host: "db-1.peckish.example", User: "orders_app", Password: password}
+	return dbConfig{Host: "db-1.vesper-labs.example", User: "orders_app", Password: password}
 }
 
 // appConfig nests dbConfig and holds secrets in a slice, a map and a

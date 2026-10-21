@@ -44,7 +44,7 @@ func logCases(want [5]string) []logCase {
 	s := redact.Secret(password)
 	return []logCase{
 		{`Info("db connect", "host", ..., "password", Secret)`, func(l *slog.Logger) {
-			l.Info("db connect", "host", "db-1.peckish.example", "password", s)
+			l.Info("db connect", "host", "db-1.vesper-labs.example", "password", s)
 		}, want[0]},
 		{`Info("db connect", "password", *Secret)`, func(l *slog.Logger) {
 			l.Info("db connect", "password", &s)
@@ -66,11 +66,11 @@ func TestSecretSlogText(t *testing.T) {
 		return slog.NewTextHandler(buf, &slog.HandlerOptions{ReplaceAttr: dropTime})
 	}
 	runLogCases(t, newHandler, logCases([5]string{
-		"level=INFO msg=\"db connect\" host=db-1.peckish.example password=[REDACTED]\n",
+		"level=INFO msg=\"db connect\" host=db-1.vesper-labs.example password=[REDACTED]\n",
 		"level=INFO msg=\"db connect\" password=[REDACTED]\n",
 		"level=INFO msg=retry password=[REDACTED]\n",
 		"level=INFO msg=\"db connect\" db.password=[REDACTED]\n",
-		"level=INFO msg=\"config loaded\" db=\"{Host:db-1.peckish.example User:orders_app Password:[REDACTED]}\"\n",
+		"level=INFO msg=\"config loaded\" db=\"{Host:db-1.vesper-labs.example User:orders_app Password:[REDACTED]}\"\n",
 	}))
 }
 
@@ -79,11 +79,11 @@ func TestSecretSlogJSON(t *testing.T) {
 		return slog.NewJSONHandler(buf, &slog.HandlerOptions{ReplaceAttr: dropTime})
 	}
 	runLogCases(t, newHandler, logCases([5]string{
-		`{"level":"INFO","msg":"db connect","host":"db-1.peckish.example","password":"[REDACTED]"}` + "\n",
+		`{"level":"INFO","msg":"db connect","host":"db-1.vesper-labs.example","password":"[REDACTED]"}` + "\n",
 		`{"level":"INFO","msg":"db connect","password":"[REDACTED]"}` + "\n",
 		`{"level":"INFO","msg":"retry","password":"[REDACTED]"}` + "\n",
 		`{"level":"INFO","msg":"db connect","db":{"password":"[REDACTED]"}}` + "\n",
-		`{"level":"INFO","msg":"config loaded","db":{"Host":"db-1.peckish.example","User":"orders_app","Password":"[REDACTED]"}}` + "\n",
+		`{"level":"INFO","msg":"config loaded","db":{"Host":"db-1.vesper-labs.example","User":"orders_app","Password":"[REDACTED]"}}` + "\n",
 	}))
 }
 

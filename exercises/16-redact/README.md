@@ -1,16 +1,18 @@
-# 16 · Secrets that refuse to print
+# 16 · The password that would not print
 
-**Tier 4 · about 1 h** · Go: interfaces and implicit satisfaction, the interfaces that `fmt`, `encoding/json` and `log/slog` look for, method sets of values and pointers, `net/url` · Problem solving: list every path by which a value becomes text; test each one
+**Tier 4 · about 1.5 h** · Go: interfaces and implicit satisfaction, the interfaces that `fmt`, `encoding/json` and `log/slog` look for, method sets of values and pointers, `net/url` · Problem solving: list every path by which a value becomes text; test each one
 
-At 02:00, in the middle of the Black Friday load test at Peckish, the bird-feeder company,
-somebody added 1 debug line: `log.Printf("config: %+v", cfg)`. Nobody remembers who, and the
-commit message says only `wip`. The config struct holds the database password, and `%+v` prints
-every field. The line went to the log vendor and to the on-call channel. A screenshot of the
-channel ended up in a support ticket. Dot Mensah, the support lead, forwarded the ticket to the
-team with 1 question: "is this bad?" It was. Ines Okafor, the senior SRE, rotated the password
-for the third time this year. Nobody wants to ban `%+v`, so Ines wants a type that refuses to show
-its value, whatever the code around it does: print it, log it or encode it as JSON. In this
-exercise you write that type, and a function that hides the password in a database URL.
+At 02:00, in the middle of the load test for the HUSH 5 launch, somebody added 1 debug line:
+`log.Printf("config: %+v", cfg)`. The commit message says only `wip`, and nobody asks who wrote
+it. The config struct holds the database password, and `%+v` prints every field. The line went to
+the log store, to the on-call channel and, through a screenshot, into a ticket that Marisol Quispe
+Mamani, the support lead, forwarded to the whole team with the subject "is this bad?". It was
+worse: HUSH, the on-call AI that Vesper Labs sells, reads every log line the lab writes, and its
+morning report thanked the team "for the extra context". Bex Moreau, the security engineer,
+rotated the password for the third time this year. Nobody wants to ban `%+v`, so Noor Haddad, the
+principal SRE, wants a type that refuses to show its value, whatever the code around it does:
+print it, log it or encode it as JSON. In this exercise you write that type, and a function that
+hides the password in a database URL.
 
 ## Task
 
@@ -61,7 +63,7 @@ Suggested order: `fmt` first, then `encoding/json` and `Reveal`, then `log/slog`
 
 - `json.Marshal` of a `Secret` or a non-nil `*Secret` gives the JSON string `"[REDACTED]"`, also
   for `Secret("")`. The same holds for a struct field of type `Secret` or `*Secret`, an element of
-  a slice and a value of a map: `{"host":"db-1.peckish.example","password":"[REDACTED]"}`.
+  a slice and a value of a map: `{"host":"db-1.vesper-labs.example","password":"[REDACTED]"}`.
 - `json.Unmarshal` of a JSON string into a `Secret`, alone or as a struct field, stores the
   string: `Reveal` returns it.
 - `json.Unmarshal` of a JSON value that is not a string (`42`, `true`, an object, an array) into a
@@ -145,8 +147,8 @@ fmt.Sprintf("%#v", &s)     → [REDACTED]
 fmt.Sprintf("%q", s)       → "[REDACTED]"
 fmt.Sprintf("%x", s)       → 5b52454441435445445d
 fmt.Sprintln("pw:", s)     → pw: [REDACTED]\n
-fmt.Sprintf("%+v", dbConfig{Host: "db-1.peckish.example", User: "orders_app", Password: s})
-                           → {Host:db-1.peckish.example User:orders_app Password:[REDACTED]}
+fmt.Sprintf("%+v", dbConfig{Host: "db-1.vesper-labs.example", User: "orders_app", Password: s})
+                           → {Host:db-1.vesper-labs.example User:orders_app Password:[REDACTED]}
 s.Reveal()                 → hunter2
 
 json.Marshal(s)            → "[REDACTED]"
@@ -163,23 +165,23 @@ JSONHandler: {"level":"INFO","msg":"db connect","password":"[REDACTED]"}
 
 logger.Info("config loaded", "db", dbConfig{...})
 
-TextHandler: level=INFO msg="config loaded" db="{Host:db-1.peckish.example User:orders_app Password:[REDACTED]}"
-JSONHandler: {"level":"INFO","msg":"config loaded","db":{"Host":"db-1.peckish.example","User":"orders_app","Password":"[REDACTED]"}}
+TextHandler: level=INFO msg="config loaded" db="{Host:db-1.vesper-labs.example User:orders_app Password:[REDACTED]}"
+JSONHandler: {"level":"INFO","msg":"config loaded","db":{"Host":"db-1.vesper-labs.example","User":"orders_app","Password":"[REDACTED]"}}
 ```
 
 | `raw` | `RedactURL(raw)` |
 |---|---|
-| `postgres://orders_app:hunter2@db-1.peckish.example:5432/orders?sslmode=require&connect_timeout=5` | `postgres://orders_app:xxxxx@db-1.peckish.example:5432/orders?sslmode=require&connect_timeout=5` |
-| `postgres://orders_app:p%40ss@db-1.peckish.example/orders` | `postgres://orders_app:xxxxx@db-1.peckish.example/orders` |
-| `https://hooks.peckish.example/deploy?team=sre&Token=abc123` | `https://hooks.peckish.example/deploy?Token=xxxxx&team=sre` |
-| `https://cdn.peckish.example/photos/412.jpg?sig=a1b2&expires=1764000000&sig=c3d4` | `https://cdn.peckish.example/photos/412.jpg?expires=1764000000&sig=xxxxx&sig=xxxxx` |
-| `https://search.peckish.example/find?token=abc&q=great%20tit` | `https://search.peckish.example/find?q=great+tit&token=xxxxx` |
-| `HTTPS://Status.Peckish.example/api/v2/summary.json?q=a%20b&page=2` | unchanged |
-| `postgres://orders_app@db-1.peckish.example:5432/orders` | unchanged (no password) |
+| `postgres://orders_app:hunter2@db-1.vesper-labs.example:5432/orders?sslmode=require&connect_timeout=5` | `postgres://orders_app:xxxxx@db-1.vesper-labs.example:5432/orders?sslmode=require&connect_timeout=5` |
+| `postgres://orders_app:p%40ss@db-1.vesper-labs.example/orders` | `postgres://orders_app:xxxxx@db-1.vesper-labs.example/orders` |
+| `https://hooks.vesper-labs.example/deploy?team=sre&Token=abc123` | `https://hooks.vesper-labs.example/deploy?Token=xxxxx&team=sre` |
+| `https://cdn.vesper-labs.example/checkpoints/hush-4.2.bin?sig=a1b2&expires=1764000000&sig=c3d4` | `https://cdn.vesper-labs.example/checkpoints/hush-4.2.bin?expires=1764000000&sig=xxxxx&sig=xxxxx` |
+| `https://search.vesper-labs.example/find?token=abc&q=calm%20score` | `https://search.vesper-labs.example/find?q=calm+score&token=xxxxx` |
+| `HTTPS://Status.Vesper-Labs.example/api/v2/summary.json?q=a%20b&page=2` | unchanged |
+| `postgres://orders_app@db-1.vesper-labs.example:5432/orders` | unchanged (no password) |
 | `/healthz?verbose=1` | unchanged (a relative URL without a secret) |
-| `postgres://orders_app:hun ter@db-1.peckish.example/orders` | `[invalid URL]` (`url.Parse` rejects the space) |
-| `https://hooks.peckish.example/deploy?token=abc123%zz` | `[invalid URL]` (`url.ParseQuery` rejects `%zz`) |
-| `https://hooks.peckish.example/deploy?token=abc123;team=sre` | `[invalid URL]` (`url.ParseQuery` rejects `;`) |
+| `postgres://orders_app:hun ter@db-1.vesper-labs.example/orders` | `[invalid URL]` (`url.Parse` rejects the space) |
+| `https://hooks.vesper-labs.example/deploy?token=abc123%zz` | `[invalid URL]` (`url.ParseQuery` rejects `%zz`) |
+| `https://hooks.vesper-labs.example/deploy?token=abc123;team=sre` | `[invalid URL]` (`url.ParseQuery` rejects `;`) |
 
 ## Run the tests
 
@@ -233,7 +235,7 @@ only the step you are on. The 4 filters do not overlap. No filter selects the 2 
   `host=db-1 user=orders_app password=xxxxx`. Watch out for quoted values (`password='a b'`).
 - Write a canary test for a whole service: start it with a fake secret such as
   `canary-7f3e1b`, run every code path that logs, and fail if `canary-7f3e1b` appears anywhere in
-  the output.
+  the output. Bex now adds a canary secret to every load test.
 
 ## Stuck?
 

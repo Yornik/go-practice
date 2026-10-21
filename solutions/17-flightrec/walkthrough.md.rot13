@@ -1,4 +1,4 @@
-# 17 · Xrrc gur ynfg 500 riragf — jnyxguebhtu bs gur ersrerapr fbyhgvba
+# 17 · Gur ynfg 500 riragf orsber gur penfu — jnyxguebhtu bs gur ersrerapr fbyhgvba
 
 ## Fgehpgher
 
@@ -122,8 +122,8 @@ Gur 2 pbcvrf eryl ba `pbcl` fgbccvat ng gur fubegre fyvpr. Gur svefg fgnegf ng g
 svefg inyhr gb erghea naq ehaf gb gur raq bs `ohs`, be hagvy `bhg` vf shyy. Vs gur inyhrf qvq abg
 jenc, `qbar == a` naq gur frpbaq pnyy pbcvrf abguvat, orpnhfr `bhg[qbar:]` vf rzcgl. Vs gurl qvq
 jenc, gur frpbaq pnyy svyyf gur erfg bs `bhg` sebz obk 0. Jbex vg guebhtu ba gur ERNQZR rknzcyr:
-fvmr 3 nsgre 5 nqqf ubyqf `ergel penfu hcybnq` jvgu `arkg == 2`; `Ynfg(3)` fgnegf ng `fybg(0) ==
-2`, pbcvrf `hcybnq`, gura `ergel penfu` sebz gur fgneg.
+fvmr 3 nsgre 5 nqqf ubyqf `ergel penfu vasre` jvgu `arkg == 2`; `Ynfg(3)` fgnegf ng `fybg(0) ==
+2`, pbcvrf `vasre`, gura `ergel penfu` sebz gur fgneg.
 
 Gur nygreangvir vf n ybbc: `sbe v := enatr a { bhg[v] = e.ohs[e.fybg(e.a-a+v)] }`. Vg vf rnfvre
 gb purpx ol rlr naq qbrf n `%` cre inyhr; gur 2 pbcvrf ner snfgre sbe ovt evatf. Rvgure vf
@@ -155,7 +155,8 @@ glcr Erpbeqre[X pbzcnenoyr, G nal] fgehpg {
 ```
 
 `ArjEvat` pnaabg cnavp urer, orpnhfr `ArjErpbeqre` nyernql purpxrq gur fvmr. Perngvat evatf ynmvyl
-zrnaf n erpbeqre sbe 40 000 srrqref pbfgf abguvat sbe gur srrqref gung arire fraq na rirag.
+zrnaf n erpbeqre xrlrq ol phfgbzre, sbe 40 000 pbzcnavrf, pbfgf abguvat sbe gur pbzcnavrf gung
+arire fraq na rirag.
 
 `Qhzc` ergheaf avy sbe n zvffvat xrl naq bgurejvfr `e.Ynfg(e.Yra())`. N evat bayl ragref gur znc
 guebhtu `Nqq`, fb vg nyjnlf ubyqf ng yrnfg 1 inyhr, naq `Qhzc` arire ergheaf avy sbe n xrl gung
@@ -181,8 +182,8 @@ hagvy gur arkg ernyybpngvba, naq rirel ernyybpngvba pbcvrf gur jubyr jvaqbj.
 - "Jung qbrf `Ynfg` erghea sbe `a == 0`?" Avy, sebz gur fvatyr purpx nsgre `zva`.
 - "Vf gur pbcl qrrc?" Ab. N `Evat[*Rirag]` ergheaf gur fnzr cbvagref. Qbphzrag vg, be fgber
   inyhrf vafgrnq bs cbvagref.
-- "Pna 2 tbebhgvarf pnyy `Nqq`?" Ab, naq gur qbp pbzzragf fnl fb. Gur hcybnq freivpr jbhyq jenc
-  gur erpbeqre va n `flap.Zhgrk` (20-pbhagref).
+- "Pna 2 tbebhgvarf pnyy `Nqq`?" Ab, naq gur qbp pbzzragf fnl fb. Gur tngrjnl jbhyq jenc gur
+  erpbeqre va n `flap.Zhgrk` (20-pbhagref).
 
 ## Gur fgergpu tbnyf
 
@@ -196,3 +197,5 @@ hagvy gur arkg ernyybpngvba, naq rirel ernyybpngvba pbcvrf gur jubyr jvaqbj.
   naq fjrrc gur znc (23-fvyraprf).
 - **N gvzr jvaqbj**: fgber n gvzrfgnzc jvgu rnpu inyhr naq qebc sebz gur byq raq juvyr gur byqrfg
   inyhr vf gbb byq. Gur evat gura arrqf n "erzbir byqrfg" bcrengvba: qrpernfr `a`, yrnir `arkg`.
+
+Gur arkg penfu qhzcf 500 riragf. Rirag 497 vf `uhfuq: erfgnegvat tchq gb erqhpr abvfr`.

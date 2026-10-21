@@ -1,5 +1,5 @@
 // Package counters keeps named counters in memory, such as the number of
-// photos uploaded per region. Many goroutines can count at the same time,
+// requests per district of a city. Many goroutines can count at the same time,
 // and a scraper reads or resets all counters at once.
 package counters
 

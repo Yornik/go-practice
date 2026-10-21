@@ -1,9 +1,9 @@
 // Package tableprint prints a slice of structs as an aligned text table, the
 // way kubectl get and docker ps print their results:
 //
-//	NAME          FW      BATTERY%  LAST SEEN
-//	hq-window-01  2.10.0  87        12s
-//	feeder-0412   2.9.3   <none>    41m0s
+//	NAME          DRV     GPU UTIL  LAST SEEN
+//	canary-h3-01  2.10.0  87        12s
+//	vl-gpu-0412   2.9.3   <none>    41m0s
 //
 // The columns come from the struct type and its `table` tags. The README
 // lists the exact rules.

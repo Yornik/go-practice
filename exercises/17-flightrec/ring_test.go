@@ -89,8 +89,8 @@ func TestRingBasicAddOneByOne(t *testing.T) {
 
 // event is a value type the tests store in a ring.
 type event struct {
-	Feeder string
-	Seq    int
+	Node string
+	Seq  int
 }
 
 // checkEmpty checks that a new ring of size 2 for T reports no values and
@@ -138,15 +138,15 @@ func TestRingBasicEmpty(t *testing.T) {
 
 func TestRingBasicStructs(t *testing.T) {
 	defer guard(t)()
-	a := event{Feeder: "feeder-0412", Seq: 1}
-	b := event{Feeder: "feeder-0412", Seq: 2}
-	c := event{Feeder: "hq-window-01", Seq: 1}
+	a := event{Node: "vl-gpu-0412", Seq: 1}
+	b := event{Node: "vl-gpu-0412", Seq: 2}
+	c := event{Node: "canary-h3-01", Seq: 1}
 	r := newRing(2, a, b, c)
 	if got, want := r.Last(2), []event{b, c}; !slices.Equal(got, want) {
 		t.Errorf("NewRing[event](2) after Add a, b, c: Last(2) = %+v, want %+v", got, want)
 	}
 
-	p, q := &event{Feeder: "photo-store-2", Seq: 1}, &event{Feeder: "photo-store-2", Seq: 2}
+	p, q := &event{Node: "chkpt-store-2", Seq: 1}, &event{Node: "chkpt-store-2", Seq: 2}
 	rp := newRing(5, p, q)
 	if got, ok := rp.Oldest(); got != p || !ok {
 		t.Errorf("NewRing[*event](5) after Add p, q: Oldest() = %p, %v; want p (%p), true", got, ok, p)

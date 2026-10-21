@@ -21,7 +21,7 @@ const (
 func TestConcurrentAddOneCounter(t *testing.T) {
 	defer guard(t)()
 	r := newRegistry(t)
-	c := counter(t, r, "uploads_eu")
+	c := counter(t, r, "requests_lightrail")
 
 	parallel(t, goroutines, func(int) {
 		for range addsEach {
@@ -30,7 +30,7 @@ func TestConcurrentAddOneCounter(t *testing.T) {
 	})
 
 	want := int64(goroutines * addsEach)
-	wantValue(t, c, "uploads_eu", want,
+	wantValue(t, c, "requests_lightrail", want,
 		fmt.Sprintf("%d goroutines called Add(1) %d times each", goroutines, addsEach))
 }
 
@@ -39,7 +39,7 @@ func TestConcurrentAddManyCounters(t *testing.T) {
 	r := newRegistry(t)
 	names := make([]string, goroutines)
 	for i := range names {
-		names[i] = fmt.Sprintf("uploads_region_%02d", i)
+		names[i] = fmt.Sprintf("requests_district_%02d", i)
 	}
 
 	// Goroutine g starts at counter g and walks through all of them, so every
@@ -76,7 +76,7 @@ func TestConcurrentCounterSameName(t *testing.T) {
 	for round := range rounds {
 		names := make([]string, newNames)
 		for k := range names {
-			names[k] = fmt.Sprintf("uploads_new_%03d_%02d", round, k)
+			names[k] = fmt.Sprintf("requests_old_town_%03d_%02d", round, k)
 		}
 		// got[i][k] is the pointer that goroutine i got for names[k]. Each
 		// goroutine writes only its own row.
@@ -111,7 +111,7 @@ func TestConcurrentDrainLosesNothing(t *testing.T) {
 		adders    = 8
 		addsPerGo = 20_000
 	)
-	names := []string{"uploads_ap", "uploads_eu", "uploads_us", "rejected"}
+	names := []string{"requests_harbour", "requests_lightrail", "requests_spire", "rejected"}
 	r := newRegistry(t)
 
 	var (

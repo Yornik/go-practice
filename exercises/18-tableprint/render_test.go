@@ -8,12 +8,12 @@ func TestRenderBasic(t *testing.T) {
 		Desired int `table:"DESIRED REPLICAS"`
 		Ready   int
 	}
-	type feeder struct {
-		Name     string
-		Firmware string `table:"FW"`
-		token    string
-		Owner    string `table:"-"`
-		Battery  int    `table:"BATTERY%"`
+	type node struct {
+		Name    string
+		Driver  string `table:"DRV"`
+		token   string
+		Owner   string `table:"-"`
+		GPUUtil int    `table:"GPU UTIL"`
 	}
 	type host struct {
 		Name string
@@ -46,14 +46,14 @@ func TestRenderBasic(t *testing.T) {
 		},
 		{
 			name: "tags, a hidden field and an unexported field",
-			rows: []feeder{
-				{"hq-window-01", "2.10.0", "t-1", "Ines", 87},
-				{"feeder-0412", "2.9.3", "t-2", "Dot", 4},
+			rows: []node{
+				{"canary-h3-01", "2.10.0", "t-1", "Noor", 87},
+				{"vl-gpu-0412", "2.9.3", "t-2", "Marisol", 4},
 			},
 			want: "" +
-				"NAME          FW      BATTERY%\n" +
-				"hq-window-01  2.10.0  87\n" +
-				"feeder-0412   2.9.3   4\n",
+				"NAME          DRV     GPU UTIL\n" +
+				"canary-h3-01  2.10.0  87\n" +
+				"vl-gpu-0412   2.9.3   4\n",
 		},
 		{
 			name: "an empty string in a middle column is padded",
@@ -65,11 +65,11 @@ func TestRenderBasic(t *testing.T) {
 		},
 		{
 			name: "1 column is not padded",
-			rows: []host{{"hq-window-01"}, {"photo-store-2"}, {"db"}},
+			rows: []host{{"canary-h3-01"}, {"chkpt-store-2"}, {"db"}},
 			want: "" +
 				"NAME\n" +
-				"hq-window-01\n" +
-				"photo-store-2\n" +
+				"canary-h3-01\n" +
+				"chkpt-store-2\n" +
 				"db\n",
 		},
 		{
@@ -96,13 +96,13 @@ func TestRenderWidth(t *testing.T) {
 		Name string `table:"N"`
 		Zone string
 	}
-	type sighting struct {
-		Bird   string
-		Feeder string
+	type summary struct {
+		Summary string
+		Node    string
 	}
 	type city struct {
-		City    string
-		Feeders int
+		City  string
+		Nodes int
 	}
 
 	tests := []struct {
@@ -120,21 +120,21 @@ func TestRenderWidth(t *testing.T) {
 				"bob  eu-2\n",
 		},
 		{
-			// The bird is 4 bytes and 1 rune. A terminal shows it 2 columns
+			// The moon is 4 bytes and 1 rune. A terminal shows it 2 columns
 			// wide, but the width counts runes.
 			name: "an emoji counts as 1",
-			rows: []sighting{{"\U0001F426 robin", "feeder-0412"}, {"great tit", "hq-window-01"}},
+			rows: []summary{{"\U0001F319 quiet", "vl-gpu-0412"}, {"no action", "canary-h3-01"}},
 			want: "" +
-				"BIRD       FEEDER\n" +
-				"\U0001F426 robin    feeder-0412\n" +
-				"great tit  hq-window-01\n",
+				"SUMMARY    NODE\n" +
+				"\U0001F319 quiet    vl-gpu-0412\n" +
+				"no action  canary-h3-01\n",
 		},
 		{
 			// "São Paulo" is 10 bytes and 9 runes, "Łódź" 7 bytes and 4 runes.
 			name: "the widest cell has multi-byte letters",
 			rows: []city{{"São Paulo", 12}, {"Zürich", 4}, {"Łódź", 3}},
 			want: "" +
-				"CITY       FEEDERS\n" +
+				"CITY       NODES\n" +
 				"São Paulo  12\n" +
 				"Zürich     4\n" +
 				"Łódź       3\n",

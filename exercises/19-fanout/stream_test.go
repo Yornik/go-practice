@@ -13,7 +13,7 @@ import (
 
 func TestStreamOrder(t *testing.T) {
 	defer guard(t)()
-	names := []string{"checkout", "orders", "payments", "photo-upload", "push"}
+	names := []string{"checkout", "orders", "payments", "hush-api", "notify"}
 	p := newProbes(t, names, failures(names))
 	before := runtime.NumGoroutine()
 
@@ -98,8 +98,8 @@ func TestStreamPanic(t *testing.T) {
 	errOrders := errors.New("orders: GET /healthz: 503 Service Unavailable")
 	checks := []fanout.Check{
 		{Name: "checkout", Run: func() error { return nil }},
-		{Name: "photo-upload", Run: func() error { panic("empty body") }},
-		{Name: "push"}, // Run is nil
+		{Name: "hush-api", Run: func() error { panic("empty body") }},
+		{Name: "notify"}, // Run is nil
 		{Name: "orders", Run: func() error { return errOrders }},
 	}
 	got := receiveAll(t, stream(t, checks), len(checks))
@@ -114,12 +114,12 @@ func TestStreamPanic(t *testing.T) {
 	if err, ok := byName["orders"]; !ok || err != errOrders {
 		t.Errorf("orders: Err = %v (present: %v), want %q, unchanged", err, ok, errOrders)
 	}
-	if err := byName["photo-upload"]; !errors.Is(err, fanout.ErrPanic) || err.Error() != "fanout: check panicked: empty body" {
-		t.Errorf("photo-upload, which panicked with \"empty body\": Err = %v, want %q (wrapping ErrPanic)",
+	if err := byName["hush-api"]; !errors.Is(err, fanout.ErrPanic) || err.Error() != "fanout: check panicked: empty body" {
+		t.Errorf("hush-api, which panicked with \"empty body\": Err = %v, want %q (wrapping ErrPanic)",
 			err, "fanout: check panicked: empty body")
 	}
-	if err := byName["push"]; !errors.Is(err, fanout.ErrPanic) || !strings.HasPrefix(err.Error(), "fanout: check panicked: ") {
-		t.Errorf("push, whose Run is nil: Err = %v, want an error that wraps ErrPanic and starts with %q",
+	if err := byName["notify"]; !errors.Is(err, fanout.ErrPanic) || !strings.HasPrefix(err.Error(), "fanout: check panicked: ") {
+		t.Errorf("notify, whose Run is nil: Err = %v, want an error that wraps ErrPanic and starts with %q",
 			err, "fanout: check panicked: ")
 	}
 }

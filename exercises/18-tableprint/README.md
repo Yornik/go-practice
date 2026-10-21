@@ -1,17 +1,18 @@
-# 18 · kubectl get, for anything
+# 18 · After the second curly brace
 
-**Tier 4 · about 1.5 h** · Go: `reflect` (`TypeOf` and `ValueOf`, `Kind`, `Elem`, `NumField`, `StructField.Tag`, `IsExported`, `IsNil`), struct tags, a type assertion to `fmt.Stringer`, `utf8.RuneCountInString`, `io.Writer` · Problem solving: work out the columns from the type before you look at a value; make an empty list still print its header
+**Tier 4 · about 2 h** · Go: `reflect` (`TypeOf` and `ValueOf`, `Kind`, `Elem`, `NumField`, `StructField.Tag`, `IsExported`, `IsNil`), struct tags, a type assertion to `fmt.Stringer`, `utf8.RuneCountInString`, `io.Writer` · Problem solving: work out the columns from the type before you look at a value; make an empty list still print its header
 
-At 21:40 on Black Friday, the war room at Peckish, the bird-feeder company, has 6 laptops, 1 big
-screen and 20 times the usual traffic. Every tool on that screen prints its results its own way,
-and most of them print Go structs with `%+v`:
-`{Name:photo-store-2 Status:{Phase:Degraded Since:2026-11-27 21:12:09 +0100 CET} Disk:0xc000014098}`.
+In the Launch Week war room on floor 61, with the light show flickering on the glass, every tool
+prints the state of the fleet its own way, and most of them print Go structs with `%+v`:
+`{Name:chkpt-store-2 Status:{Phase:Degraded Since:2026-11-27 21:12:09 +0100 CET} Disk:0xc000014098}`.
 The runbook explains how to read it: "the phase is after the second curly brace". The disk usage
-is a memory address, because `%+v` prints a pointer inside a struct as an address. Ines Okafor,
-the senior SRE, reads 12 such lines aloud and counts the braces of each one. Then she asks for
-what `kubectl get pods` gives her: 1 header row, aligned columns, `<none>` where a value is
-missing, and the same layout for every tool. In this exercise you write the printer that turns
-any slice of structs into that table.
+is a memory address, because `%+v` prints a pointer inside a struct as an address. The only clean
+table on the wall is the console of HUSH, the on-call AI that Vesper Labs sells, and this week
+nobody in the room trusts what it prints. Noor Haddad, the principal SRE, counts the braces of 12
+such lines aloud. Then she asks for what `kubectl get pods` gives her, for every tool: 1 header
+row, aligned columns, `<none>` where a value is missing, and rows that a tired person can scan and
+a screen reader can read cell by cell. In this exercise you write the printer that turns any slice
+of structs into that table.
 
 ## Task
 
@@ -77,7 +78,7 @@ For each field value, the **first** rule that matches gives the text of the cell
    `func (g *Gauge) String() string`, then a field of type `*Gauge` uses it and a field of type
    `Gauge` does not. `fmt.Sprint` makes the same choice.
 3. A non-nil pointer gives the cell of the value it points to: rules 1 to 5 again. So a pointer to
-   a struct without `String` gives `{eu-west-1 3}`, not `&{eu-west-1 3}`, and a `**int` that
+   a struct without `String` gives `{harbour-1 3}`, not `&{harbour-1 3}`, and a `**int` that
    points to a nil `*int` gives `<none>`.
 4. These kinds, also as named types such as `type Phase string`:
    - a string as it is, also an empty one;
@@ -96,12 +97,12 @@ For each field value, the **first** rule that matches gives the text of the cell
 | `(*int)(nil)`, `(*url.URL)(nil)` | 1 | `<none>` |
 | `90 * time.Second` (a `time.Duration`) | 2 | `1m30s` |
 | `time.Date(2026, 11, 27, 21, 40, 0, 0, time.FixedZone("CET", 3600))` | 2 | `2026-11-27 21:40:00 +0100 CET` |
-| a `*url.URL` (`String` has a pointer receiver) | 2 | `https://hq-window-01.peckish.example/healthz` |
+| a `*url.URL` (`String` has a pointer receiver) | 2 | `https://canary-h3-01.vesper-labs.example/healthz` |
 | a `*int` that points to `87` | 3, then 4 | `87` |
 | `Phase("Degraded")` | 4 | `Degraded` |
 | `int8(-128)`, `uint64(18446744073709551615)` | 4 | `-128`, `18446744073709551615` |
 | `0.5`, `2.0` | 4 | `0.5`, `2` |
-| `Location{"eu-west-1", 3}` (no `String`) | 5 | `{eu-west-1 3}` |
+| `Location{"harbour-1", 3}` (no `String`) | 5 | `{harbour-1 3}` |
 | `[]string{"checkout", "orders"}`, `[]string(nil)` | 5 | `[checkout orders]`, `[]` |
 | `map[string]int{"orders": 2, "checkout": 1}` | 5 | `map[checkout:1 orders:2]` |
 
@@ -111,7 +112,7 @@ For each field value, the **first** rule that matches gives the text of the cell
   empty or nil slice gives only the header row.
 - A column is as wide as its widest cell, the header included. The width counts **runes**
   (`utf8.RuneCountInString`), not bytes: `zoë` is 3 wide (4 bytes), `São Paulo` is 9 wide (10
-  bytes), and the bird emoji `🐦` is 1 wide (4 bytes). A terminal shows that bird 2 columns
+  bytes), and the moon emoji `🌙` is 1 wide (4 bytes). A terminal shows that moon 2 columns
   wide; the width counts it as 1 anyway.
 - In each row, write every cell except the last, then spaces up to the width of its column, then
   2 more spaces. Write the last cell as it is, without padding, and end the row with `\n`. So a
@@ -135,40 +136,40 @@ For each field value, the **first** rule that matches gives the text of the cell
 ## Examples
 
 ```go
-type Feeder struct {
+type Node struct {
 	Name     string
-	Firmware string        `table:"FW"`
-	Battery  *int          `table:"BATTERY%"`
+	Driver   string        `table:"DRV"`
+	GPUUtil  *int          `table:"GPU UTIL"`
 	LastSeen time.Duration `table:"LAST SEEN"`
 	apiToken string
 }
 
-battery := 87
-rows := []Feeder{
-	{"hq-window-01", "2.10.0", &battery, 12 * time.Second, "tok-8f3a91"},
-	{"feeder-0412", "2.9.3", nil, 41 * time.Minute, "tok-c27d40"},
+gpuUtil := 87
+rows := []Node{
+	{"canary-h3-01", "2.10.0", &gpuUtil, 12 * time.Second, "tok-8f3a91"},
+	{"vl-gpu-0412", "2.9.3", nil, 41 * time.Minute, "tok-c27d40"},
 }
 ```
 
 ```text
-Headers(rows)            → ["NAME" "FW" "BATTERY%" "LAST SEEN"], nil
-Headers([]Feeder{})      → ["NAME" "FW" "BATTERY%" "LAST SEEN"], nil
-Headers([]*Feeder{nil})  → ["NAME" "FW" "BATTERY%" "LAST SEEN"], nil
+Headers(rows)          → ["NAME" "DRV" "GPU UTIL" "LAST SEEN"], nil
+Headers([]Node{})      → ["NAME" "DRV" "GPU UTIL" "LAST SEEN"], nil
+Headers([]*Node{nil})  → ["NAME" "DRV" "GPU UTIL" "LAST SEEN"], nil
 
 Render(os.Stdout, rows) prints:
-NAME          FW      BATTERY%  LAST SEEN
-hq-window-01  2.10.0  87        12s
-feeder-0412   2.9.3   <none>    41m0s
+NAME          DRV     GPU UTIL  LAST SEEN
+canary-h3-01  2.10.0  87        12s
+vl-gpu-0412   2.9.3   <none>    41m0s
 
-Render(os.Stdout, []Feeder{}) prints:
-NAME  FW  BATTERY%  LAST SEEN
+Render(os.Stdout, []Node{}) prints:
+NAME  DRV  GPU UTIL  LAST SEEN
 ```
 
 ```text
-Headers([]int{1, 2})                 → nil, error "tableprint: rows must be a slice of structs, got []int"
-Render(w, rows[0])                   → error wraps ErrNotStructs, contains "main.Feeder"; no Write call
-Render(w, &rows)                     → error wraps ErrNotStructs, contains "*[]main.Feeder"; no Write call
-Render(w, []*Feeder{&rows[0], nil})  → error "tableprint: nil row: rows[1]"; no Write call
+Headers([]int{1, 2})               → nil, error "tableprint: rows must be a slice of structs, got []int"
+Render(w, rows[0])                 → error wraps ErrNotStructs, contains "main.Node"; no Write call
+Render(w, &rows)                   → error wraps ErrNotStructs, contains "*[]main.Node"; no Write call
+Render(w, []*Node{&rows[0], nil})  → error "tableprint: nil row: rows[1]"; no Write call
 ```
 
 ## Run the tests
@@ -215,7 +216,7 @@ panic, so a plain run crashes until `Render` works.
 - Add `RenderSorted(w, rows, column string)`, as `kubectl get --sort-by`. Sort by the cell text,
   or by the value when the column is a number.
 - Right-align the columns of integer and float fields, so that the digits line up.
-- Count display width instead of runes, so that `🐦` and CJK characters take 2 columns. The
+- Count display width instead of runes, so that `🌙` and CJK characters take 2 columns. The
   standard library has no width table; `golang.org/x/text/width` has one.
 - Make it a tool: read JSON lines from stdin, 1 object per line, and print them as a table with
   the keys of the first line as the columns.
