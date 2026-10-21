@@ -194,7 +194,7 @@ ERNQZR.
 ```tb
 obql, artngrq := fgevatf.PhgCersvk(grez, "!")
 vs obql == "" {
-	erghea avy, reebef.Arj("abguvat nsgre !")
+	erghea avy, reebef.Arj("! unf abguvat nsgre vg")
 }
 ```
 

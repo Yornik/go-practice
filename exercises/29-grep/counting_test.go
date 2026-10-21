@@ -11,6 +11,7 @@ import (
 )
 
 func TestCountingReader(t *testing.T) {
+	requireCountingReader(t)
 	const data = "ts=2026-10-16T03:12:00Z level=error msg=\"db timeout\"\n"
 
 	t.Run("starts at 0", func(t *testing.T) {

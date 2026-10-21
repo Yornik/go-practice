@@ -18,6 +18,7 @@ import (
 // at a time, like kubectl logs -f | yourtool. After each chunk it waits until
 // the output for that chunk has arrived, while the input is still open.
 func TestStreamOutputBeforeInputEnds(t *testing.T) {
+	requireFilter(t)
 	pr, pw := io.Pipe()
 	// Ends the pipe if the test fails early, so Filter can return.
 	t.Cleanup(func() { pw.CloseWithError(errors.New("test ended")) })
@@ -92,6 +93,7 @@ func TestStreamConstantMemory(t *testing.T) {
 	if testing.Short() {
 		t.Skip("reads 64 MiB")
 	}
+	requireFilter(t)
 	const (
 		total   = 64 << 20
 		lineLen = 256

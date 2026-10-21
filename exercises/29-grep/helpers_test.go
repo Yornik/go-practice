@@ -57,8 +57,8 @@ func filter(t *testing.T, r io.Reader, opt grep.Options) (string, grep.Stats, er
 }
 
 // filterTo runs grep.Filter in a goroutine. It fails the test if Filter
-// panics (with the stack, so you can find the line) or does not return
-// within the timeout.
+// panics (with the stack, so you can find the line, except for the stub's
+// own panic) or does not return within the timeout.
 func filterTo(t *testing.T, r io.Reader, w io.Writer, opt grep.Options) (grep.Stats, error) {
 	t.Helper()
 	return filterWithin(t, timeout, r, w, opt)
@@ -76,7 +76,12 @@ func filterWithin(t *testing.T, limit time.Duration, r io.Reader, w io.Writer, o
 	done := make(chan result, 1)
 	go func() {
 		defer func() {
-			if v := recover(); v != nil {
+			switch v := recover(); {
+			case v == stubPanic:
+				// The stub's stack shows nothing new, and a table of
+				// stacks fills the screen.
+				done <- result{panic: fmt.Sprintf("%v (Filter is not implemented)", v)}
+			case v != nil:
 				done <- result{panic: fmt.Sprintf("%v\n%s", v, debug.Stack())}
 			}
 		}()
@@ -92,6 +97,69 @@ func filterWithin(t *testing.T, limit time.Duration, r io.Reader, w io.Writer, o
 	case <-time.After(limit):
 		t.Fatalf("Filter did not return within %v", limit)
 		return grep.Stats{}, nil
+	}
+}
+
+// stubPanic is the panic value of a function you have not written yet.
+const stubPanic = "TODO: implement"
+
+// requireFilter calls Filter once on empty input before a test runs its
+// cases. If Filter panics, it fails the test with 1 message and the cases do
+// not run. Without it, every case of a table prints its own panic stack, and
+// the first run against the stub prints hundreds of identical stacks.
+func requireFilter(t testing.TB) {
+	t.Helper()
+	type result struct {
+		panic any
+		stack []byte
+	}
+	done := make(chan result, 1)
+	go func() {
+		defer func() {
+			v := recover()
+			var stack []byte
+			if v != nil && v != stubPanic {
+				stack = debug.Stack() // here, while the panicking frames are still on the stack
+			}
+			done <- result{v, stack}
+		}()
+		_, _ = grep.Filter(strings.NewReader(""), io.Discard, grep.Options{Match: all})
+	}()
+	select {
+	case res := <-done:
+		if res.panic == stubPanic {
+			t.Fatalf("Filter is not implemented: it panics with %q. The rest of this test did not run.", res.panic)
+		}
+		if res.panic != nil {
+			t.Fatalf("Filter on empty input panicked: %v\n%s\nThe rest of this test did not run.", res.panic, res.stack)
+		}
+	case <-time.After(timeout):
+		t.Fatalf("Filter on empty input did not return within %v. The rest of this test did not run.", timeout)
+	}
+}
+
+// requireCountingReader does for CountingReader what requireFilter does for
+// Filter. Without it, the panic of the stub in the first subtest stops the
+// test binary, and the tests after this one do not run.
+func requireCountingReader(t *testing.T) {
+	t.Helper()
+	v, stack := func() (v any, stack []byte) {
+		defer func() {
+			v = recover()
+			if v != nil && v != stubPanic {
+				stack = debug.Stack() // here, while the panicking frames are still on the stack
+			}
+		}()
+		c := grep.NewCountingReader(strings.NewReader(""))
+		_, _ = c.Read(make([]byte, 1))
+		c.N()
+		return nil, nil
+	}()
+	if v == stubPanic {
+		t.Fatalf("CountingReader is not implemented: it panics with %q. The rest of this test did not run.", v)
+	}
+	if v != nil {
+		t.Fatalf("CountingReader on empty input panicked: %v\n%s\nThe rest of this test did not run.", v, stack)
 	}
 }
 

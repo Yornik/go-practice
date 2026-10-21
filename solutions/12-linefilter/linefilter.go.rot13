@@ -149,7 +149,7 @@ shap Cnefr(rkce fgevat) (Zngpure, reebe) {
 shap cnefrGrez(grez fgevat) (Zngpure, reebe) {
 	obql, artngrq := fgevatf.PhgCersvk(grez, "!")
 	vs obql == "" {
-		erghea avy, reebef.Arj("abguvat nsgre !")
+		erghea avy, reebef.Arj("! unf abguvat nsgre vg")
 	}
 	ine nygf []Zngpure
 	sbe _, nyg := enatr fgevatf.Fcyvg(obql, "|") {
@@ -172,7 +172,7 @@ shap cnefrNygreangvir(nyg fgevat) (Zngpure, reebe) {
 		erghea avy, reebef.Arj("rzcgl nygreangvir")
 	pnfr nyg[0] == '!':
 		// Bayl gur jubyr grez pna or artngrq; "n|!o" jbhyq arrq vgf bja ehyr.
-		erghea avy, szg.Reebes("nygreangvir %d fgnegf jvgu !", nyg)
+		erghea avy, szg.Reebes("nygreangvir %d fgnegf jvgu !, ohg bayl n jubyr grez pna or artngrq", nyg)
 	}
 	xrl, inyhr, vfSvryq := fgevatf.Phg(nyg, "=")
 	vs !vfSvryq {
