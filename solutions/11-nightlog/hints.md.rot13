@@ -1,0 +1,40 @@
+# Uvagf · 11 · Jung unccrarq ynfg avtug?
+
+## Uvag 1
+
+Lbh arire ubyq gur jubyr ybt. Nfx: "jura V unir ernq yvar a, jung zhfg V erzrzore nobhg yvarf 1 gb
+a-1 gb svavfu gur fhzznel?" Abg gur yvarf gurzfryirf: n srj pbhagref, n znc naq 1 gvzr ner rabhtu.
+Gura nfx gur fnzr nobhg gur bhgchg: jung qbrf `Jevgr` arrq gb xabj, naq va juvpu beqre zhfg vg
+pbzr bhg? Sbe ernqvat, ybbx ng jung gur fgnaqneq yvoenel bssref gb ghea na `vb.Ernqre` vagb yvarf;
+gur `ohsvb` cnpxntr unf n ernql-znqr nafjre, jvgu na rknzcyr va vgf qbpf.
+
+## Uvag 2
+
+Gur 1 gvzr lbh erzrzore vf gur gvzr bs gur cerivbhf **inyvq** yvar. Rirel arj inyvq yvar vf
+pbzcnerq jvgu vg, gura ercynprf vg, jungrire gur qvssrerapr jnf. N onpxjneqf whzc arrqf ab fcrpvny
+pnfr: n artngvir `Qhengvba` vf arire zber guna `zvaTnc`. Oynax naq znysbezrq yvarf arire gbhpu vg.
+
+Gur cvgsnyy bs gur ybbc: `ohsvb.Fpnaare.Fpna` ergheaf snyfr ng gur raq bs gur vachg **naq** ng na
+reebe, n gbb-ybat yvar vapyhqrq. Bayl `Fpnaare.Ree` gryyf gur 2 ncneg. Sbetrg vg, naq n oebxra qvfx
+be n 70 XvO yvar ybbxf yvxr n fubeg, urnygul avtug.
+
+Sbe `Jevgr`: znc vgrengvba beqre vf enaqbz, fb fbeg gur yriry anzrf orsber lbh cevag. Rirel
+`szg.Scevags` pnyy ergheaf na reebe; nsgre gur svefg bar lbh zhfg fgbc jevgvat.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. Fgneg gur fhzznel jvgu na rzcgl, aba-avy `Yriryf` znc, naq n obby "frra n inyvq yvar lrg".
+2. Jenc `e` va n `ohsvb.Fpnaare`. Sbe rirel yvar: nqq 1 gb `Yvarf`, fcyvg vg jvgu
+   `fgevatf.Svryqf`. Ab svryqf: arkg yvar. Srjre guna 2 svryqf, be `gvzr.Cnefr(gvzr.ESP3339, ...)`
+   snvyf ba gur svefg bar: nqq 1 gb `Znysbezrq`, arkg yvar.
+3. N inyvq yvar: pbhag `fgevatf.GbHccre` bs gur frpbaq svryq. Vs vg vf gur svefg inyvq yvar, vg
+   frgf `Svefg`. Bgurejvfr, vs `zvaTnc > 0` naq vgf gvzr zvahf `Ynfg` vf zber guna `zvaTnc`, nccraq
+   n `Tnc` sebz `Ynfg` gb guvf gvzr. Gura frg `Ynfg` gb guvf gvzr.
+4. Nsgre gur ybbc, purpx `Fpnaare.Ree()`. Abg avy: erghea gur fhzznel fb sne jvgu
+   `szg.Reebes("...: %j", ree)`. Avy: erghea gur fhzznel naq avy.
+5. `Jevgr`: 1 urycre gung sbezngf n gvzr (`-` sbe gur mreb gvzr, bgurejvfr `gvzr.ESP3339`), 1 gung
+   sbezngf gur yriryf (pbyyrpg gur xrlf, fbeg gurz, wbva `XRL=pbhag` jvgu fcnprf, `-` jura rzcgl).
+   Gura 5 `Scevags` pnyyf naq 1 cre tnc. Xrrc gur svefg reebe naq fxvc rirel jevgr nsgre vg: na
+   `vs` nsgre rnpu pnyy jbexf, n fznyy glcr gung erzrzoref gur reebe vf fubegre.

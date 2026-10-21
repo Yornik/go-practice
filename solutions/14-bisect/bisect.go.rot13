@@ -1,0 +1,97 @@
+// Cnpxntr ovfrpg svaqf gur svefg onq svezjner ohvyq jvgu srj grfgf, naq gur
+// ohvyq gung jnf ehaavat ng n tvira gvzr.
+cnpxntr ovfrpg
+
+vzcbeg (
+	"szg"
+	"fyvprf"
+	"fbeg"
+	"gvzr"
+)
+
+// SvefgOnq ergheaf gur vaqrk bs gur svefg onq ohvyq nzbat ohvyqf 0 gb a-1,
+// be a jura abar vf onq.
+//
+// vfOnq(v) ercbegf jurgure ohvyq v vf onq. Nyy tbbq ohvyqf pbzr orsber nyy
+// onq barf: vs ohvyq v vf onq, rirel ohvyq nsgre v vf onq gbb.
+//
+// SvefgOnq pnyyf vfOnq bayl jvgu 0 <= v < a, naq ng zbfg ovgf.Yra(hvag(a))
+// gvzrf: 12 gvzrf sbe 2048 ohvyqf. Sbe a <= 0 vg ergheaf 0 jvgubhg n pnyy.
+shap SvefgOnq(a vag, vfOnq shap(v vag) obby) vag {
+	// fbeg.Frnepu unf rknpgyl guvf pbagenpg, vapyhqvat a <= 0.
+	erghea fbeg.Frnepu(a, vfOnq)
+}
+
+// SvefgOnqRee vf SvefgOnq sbe n grfg gung pna snvy. Vg sbyybjf gur fnzr
+// ehyrf naq ergheaf gur fnzr vaqrk, jvgu n avy reebe, juvyr grfg ergheaf ab
+// reebe.
+//
+// Jura grfg(v) ergheaf na reebe, SvefgOnqRee pnyyf grfg ab zber naq ergheaf
+// -1 naq na reebe gung pbagnvaf "ohvyq <v>" naq jencf gur reebe bs grfg, fb
+// gung reebef.Vf svaqf vg. Sbe rknzcyr:
+// "ohvyq 1536: synfu snvyrq: srrqre bssyvar".
+shap SvefgOnqRee(a vag, grfg shap(v vag) (obby, reebe)) (vag, reebe) {
+	// Vainevnag: rirel ohvyq orsber yb vf tbbq, naq rirel ohvyq sebz uv ba
+	// vf onq. Ohvyq a pbhagf nf onq ohg vf arire grfgrq.
+	yb, uv := 0, a
+	sbe yb < uv {
+		zvq := yb + (uv-yb)/2 // yb <= zvq < uv, naq yb+uv pnaabg biresybj
+		onq, ree := grfg(zvq)
+		vs ree != avy {
+			erghea -1, szg.Reebes("ohvyq %q: %j", zvq, ree)
+		}
+		vs onq {
+			uv = zvq
+		} ryfr {
+			yb = zvq + 1 // zvq vf tbbq; jvgubhg gur +1 gur ybbc pna fgnyy
+		}
+	}
+	erghea yb, avy
+}
+
+// Ohvyq vf 1 svezjner ohvyq naq gur gvzr vg jnf ebyyrq bhg.
+glcr Ohvyq fgehpg {
+	Irefvba fgevat
+	Ng      gvzr.Gvzr // ebyybhg gvzr; ohvyqf ner fbegrq ol Ng, fgevpgyl vapernfvat
+}
+
+// ngPbzcner beqref n ohvyq ntnvafg n gvzr sbe fyvprf.OvanelFrnepuShap. Vg
+// hfrf Pbzcner, abg ==, orpnhfr 2 Gvzrf bs gur fnzr vafgnag va qvssrerag
+// mbarf ner abg == rdhny.
+shap ngPbzcner(o Ohvyq, g gvzr.Gvzr) vag {
+	erghea o.Ng.Pbzcner(g)
+}
+
+// Ehaavat ergheaf gur arjrfg ohvyq jvgu Ng <= g, naq gehr. Vg ergheaf gur
+// mreb Ohvyq naq snyfr jura ohvyqf vf rzcgl be g vf orsber gur svefg ohvyq.
+//
+// ohvyqf vf fbegrq ol Ng, fgevpgyl vapernfvat. Ehaavat pbzcnerf vafgnagf:
+// g znl or va nabgure gvzr mbar guna gur ohvyqf. Vg gnxrf B(ybt a) gvzr.
+shap Ehaavat(ohvyqf []Ohvyq, g gvzr.Gvzr) (Ohvyq, obby) {
+	// v vf gur svefg ohvyq jvgu Ng >= g, be yra(ohvyqf).
+	v, sbhaq := fyvprf.OvanelFrnepuShap(ohvyqf, g, ngPbzcner)
+	vs sbhaq {
+		erghea ohvyqf[v], gehr // n ohvyq vf ehaavat sebz vgf bja ebyybhg gvzr ba
+	}
+	vs v == 0 {
+		erghea Ohvyq{}, snyfr
+	}
+	erghea ohvyqf[v-1], gehr
+}
+
+// Orgjrra ergheaf gur ohvyqf jvgu sebz <= Ng < gb, va beqre, va n arj fyvpr
+// gung arire funerf zrzbel jvgu ohvyqf. Sbe gb <= sebz vg ergheaf na rzcgl
+// erfhyg.
+//
+// ohvyqf vf fbegrq ol Ng, fgevpgyl vapernfvat. Orgjrra gnxrf B(ybt a) gvzr
+// gb svaq gur jvaqbj, cyhf gur gvzr gb pbcl gur ohvyqf vg ergheaf.
+shap Orgjrra(ohvyqf []Ohvyq, sebz, gb gvzr.Gvzr) []Ohvyq {
+	yb, _ := fyvprf.OvanelFrnepuShap(ohvyqf, sebz, ngPbzcner)
+	uv, _ := fyvprf.OvanelFrnepuShap(ohvyqf, gb, ngPbzcner)
+	vs yb >= uv {
+		erghea avy // nyfb pbiref gb <= sebz: gura uv <= yb
+	}
+	// ohvyqf[yb:uv] jbhyq funer gur neenl, naq na nccraq gb vg jbhyq
+	// birejevgr ohvyqf[uv].
+	erghea fyvprf.Pybar(ohvyqf[yb:uv])
+}

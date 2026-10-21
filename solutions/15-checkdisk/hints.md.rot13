@@ -1,0 +1,41 @@
+# Uvagf · 15 · N qvfx purpx gung pna snvy
+
+## Uvag 1
+
+`Eha` qbrf 3 wbof, naq rnpu unf vgf bja xvaq bs snvyher: ghea `netf` vagb guerfubyqf naq n frg bs
+zbhagf, ghea fgqva vagb n yvfg bs (zbhag, pncnpvgl) cnvef, naq ghea gung yvfg vagb n fgngr naq n
+yvar. Jevgr qbja jung rnpu wbo gnxrf naq jung vg ergheaf (n inyhr be na reebe) orsber lbh jevgr
+nal pbqr. Gura nfx: juvpu bs gur 3 arrqf n ernqre be n jevgre ng nyy? Gur synt cnpxntr pna cnefr
+`netf` jvgubhg gur tybony `synt.PbzznaqYvar`, naq vg pna or gbyq abg gb rkvg gur cebprff ba n onq
+synt.
+
+## Uvag 2
+
+Gur 2 gencf ner obgu va gur synt cnpxntr. Svefg, `synt.Cnefr` naq `synt.Vag` jbex ba n tybony
+SyntFrg gung rkvgf gur cebprff ba reebe, naq gung n frpbaq pnyy gb `Eha` jbhyq gel gb qrsvar
+ntnva; ohvyq n arj SyntFrg va rirel pnyy, jvgu `synt.PbagvahrBaReebe` naq fgqree nf vgf bhgchg.
+Frpbaq, `-u` vf abg n synt lbh qrsvar: `Cnefr` unaqyrf vg, jevgrf gur hfntr, naq ergheaf gur
+fragvary reebe `synt.ReeUryc`. Gryy vg ncneg sebz gur bgure cnefr reebef jvgu `reebef.Vf`, orpnhfr
+vg vf gur bar pnfr jvgubhg n fgnghf yvar. Sbe `-k`, `SyntFrg.Shap` pnyyf lbhe shapgvba bapr cre
+bppheerapr, fb n pybfher gung nqqf gb n znc be fyvpr pbyyrpgf rirel inyhr. Gur guerfubyqf pna or
+purpxrq ntnvafg rnpu bgure bayl nsgre `Cnefr` erghearq: orsber gung, rvgure bar znl fgvyy or vgf
+qrsnhyg.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. Cnefr gur syntf vagb n fznyy fgehpg: 2 vagf naq n frg bs zbhagf. Ba na reebe gung vf
+   `synt.ReeUryc`, erghea 3 ng bapr. Ba nal bgure reebe, jevgr gur HAXABJA yvar naq erghea 3.
+   Nsgre `Cnefr`, erwrpg `ANet() > 0` naq guerfubyqf bhgfvqr `1 <= j < p <= 100`.
+2. Ernq fgqva jvgu n `ohsvb.Fpnaare`, pbhagvat rirel yvar sebz 1. Fcyvg jvgu `fgevatf.Svryqf`;
+   fxvc n yvar jvgu ab svryqf. Gur svefg aba-oynax yvar zhfg unir `Svyrflfgrz` nf vgf svefg
+   svryq. Sbe rirel yngre yvar, purpx 6 svryqf, phg gur `%` bss svryq 5 naq pbaireg gur erfg jvgu
+   `fgepbai.Ngbv`, gura purpx gur enatr 0 gb 100. Jenc nal ceboyrz jvgu gur yvar ahzore. Yrnir
+   bhg rkpyhqrq zbhagf bayl nsgre gur yvar cnffrq gur purpxf.
+3. Nsgre gur ybbc, purpx `Fpnaare.Ree` svefg, gura "ab urnqre", gura "ab svyr flfgrzf".
+4. N shapgvba jvgubhg V/B gnxrf gur yvfg naq obgu guerfubyqf naq ergheaf gur rkvg pbqr naq gur
+   yvar. Pbyyrpg 2 fyvprf bs fgevatf juvyr lbh ybbc, gur fhzznel vgrzf naq gur cresqngn vgrzf,
+   naq wbva gurz ng gur raq.
+5. Znxr rirel reebe cngu tb guebhtu 1 urycre gung cevagf `QVFX HAXABJA - <ree>` naq ergheaf 3, fb
+   ab cngu pna sbetrg gur yvar be erghea gur jebat pbqr.
