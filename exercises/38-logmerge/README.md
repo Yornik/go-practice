@@ -2,8 +2,8 @@
 
 **Tier 8 · about 2.5 h** · Go: `iter.Seq` and `iter.Seq2`, range-over-func, early termination and cleanup, `bufio.Scanner`, comparing `time.Time` · Problem solving: merge many sorted streams lazily, in bounded memory; clean up when the consumer stops early
 
-From 12:00 to 12:05 some customers could not pay. Did each timeout come 3 ms after a `hush-sidecar`
-line? The checkout Deployment has 20 pods, and `kubectl logs --timestamps` gives you 20 files, each
+From 12:00 to 12:05 payments failed. Did each timeout follow a line of the unowned `hush-sidecar` by
+3 ms? The checkout Deployment has 20 pods, and `kubectl logs --timestamps` gives you 20 files, each
 in time order. To see what happened you need one timeline: which pod logged the first timeout, which
 pod retried, when the database failover started. `cat *.log | sort` works on small files, but a sort
 must read everything before it prints the first line: with 20 files of 2 GB that is slow and eats

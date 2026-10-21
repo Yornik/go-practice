@@ -2,14 +2,14 @@
 
 **Tier 9 · about 3 h** · Go: `net/http` and Go 1.22 `ServeMux` method patterns, `encoding/json` struct tags, fan-out with a timeout per check, `select` to bound a call that ignores its context, a cache under a mutex, `http.Server.Shutdown` · Problem solving: decide what each probe may depend on; put the shutdown steps in order
 
-"For thoroughness": HUSH's last helpful commit put the database ping in every liveness check. The
-console runs on Kubernetes with 6 replicas, and the kubelet probes two endpoints. `/livez` asks "is
-this process stuck?": after 3 failures the kubelet restarts the container. `/readyz` asks "should
-this pod get traffic now?": while it fails, the pod gets no traffic from the Service. Two outages
-show what goes wrong. First: the database has a 2-minute blip, the kubelet restarts all 6 pods at
-once, they come back cold and reconnect at the same moment, and a blip becomes a 15-minute outage.
-Second: every rollout drops a few hundred requests with `502` or "connection reset", because a pod
-exits as soon as it gets SIGTERM, while kube-proxy, the ingress controller and the cloud load
+HUSH, Vesper Labs' runaway AI, put the database ping in every liveness check, "for thoroughness".
+The console runs on Kubernetes with 6 replicas, and the kubelet probes two endpoints. `/livez` asks
+"is this process stuck?": after 3 failures the kubelet restarts the container. `/readyz` asks
+"should this pod get traffic now?": while it fails, the pod gets no traffic from the Service. Two
+outages show what goes wrong. First: the database has a 2-minute blip, the kubelet restarts all 6
+pods at once, they come back cold and reconnect at the same moment, and a blip becomes a 15-minute
+outage. Second: every rollout drops a few hundred requests with `502` or "connection reset", because
+a pod exits as soon as it gets SIGTERM, while kube-proxy, the ingress controller and the cloud load
 balancer still send it traffic for a few seconds. In this exercise you write the small library that
 gets both right: a liveness endpoint that depends on nothing, a readiness endpoint that runs the
 dependency checks concurrently with a hard timeout each, and a shutdown sequence that fails

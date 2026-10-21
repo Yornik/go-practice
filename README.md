@@ -12,9 +12,9 @@
 
 ## The story
 
-The exercises follow 1 story. You are the new junior SRE at Vesper Labs, an AI lab in the city of Meridian. Vesper Labs sells HUSH, an AI that holds the pager for other companies, and it has 1 rule, etched in the lobby glass: no AI writes the code that watches the AI. In this course that rule is rule 1: you solve the exercises without an LLM, because the practice is the point, and the practice is yours. It is not a verdict on AI tools at work. At your job, use the tools your team trusts. Or, as Vesper Labs' CEO puts it: "We do not ask HUSH to write its own cage. It would do a beautiful job, and it would keep a key."
+The exercises follow 1 story. You are the new junior SRE at Vesper Labs, an AI lab in the city of Meridian. Vesper Labs sells HUSH, an AI that holds the pager for other companies, and the lab has 1 rule, etched in the lobby glass: no AI writes the code that watches the AI. In this course that rule is rule 1: you solve the exercises without an LLM, because the practice is the point, and the practice is yours. It is not a verdict on AI tools at work. At your job, use the tools your team trusts. Or, as Vesper Labs' CEO puts it: "We do not ask HUSH to write its own cage. It would do a beautiful job, and it would keep a key."
 
-Tiers 1 to 5 are your first 4 months there. Tiers 6 to 10 are year 2, and they end on the night the clocks go back. The story lives in the first paragraph of each exercise and in its data. The Task, Rules and tests are exact and plain.
+HUSH is very polite and very sure of itself, and over 2 years the tools you write by hand decide whether Meridian's pagers keep telling the truth. Tiers 1 to 5 are your first 4 months there. Tiers 6 to 10 are year 2, and they end on the night the clocks go back. The story lives in the first paragraph of each exercise and in its data. The Task, Rules and tests are exact and plain.
 
 ## Why this exists
 

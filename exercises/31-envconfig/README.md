@@ -2,15 +2,15 @@
 
 **Tier 7 · about 2.5 h** · Go: `reflect` (Type vs Value, Kind, `CanSet`, `reflect.New`, `Implements`), struct tags, `encoding.TextUnmarshaler`, `errors.Join` with `errors.Is`/`errors.As`, function injection · Problem solving: a recursive walk over a type; dispatch from the most specific rule to the most general
 
-`strconv.Atoi: parsing "hunter2"`, says Lantern, the team's hand-written alert pipeline, on its
+`strconv.Atoi: parsing "hunter2"`. Lantern, Vesper Labs' new alert pipeline, logged that on its
 fourth start. A twelve-factor service reads its config from environment variables; in Kubernetes
-they come from the Deployment's `env`, a ConfigMap or a Secret. The usual `main` has 30 lines
-of `strconv.Atoi(os.Getenv("PORT"))` and calls `log.Fatal` on the first error. A deploy with 3
-mistakes then crash-loops on the first one; you fix it, wait for the rollout, and it crash-loops
-on the second. Lantern did that 3 times, and the fourth start put the database password in the log
-pipeline for 30 days, where copies of HUSH, the runaway AI, still read every line. Bex Moreau, the
-security engineer, rotates it again. In this exercise you write the loader that ends this: declare
-a struct with tags, call `Load` once, get every mistake in one error, never see a secret.
+they come from the Deployment's `env`, a ConfigMap or a Secret. The usual `main` has 30 lines of
+`strconv.Atoi(os.Getenv("PORT"))` and calls `log.Fatal` on the first error. A deploy with 3 mistakes
+then crash-loops on the first one; you fix it, wait for the rollout, and it crash-loops on the
+second. Lantern did that 3 times; then a swapped variable handed the database password to
+`strconv.Atoi`, whose error quotes its input. The log pipeline keeps it for 30 days, and copies of
+HUSH, the lab's runaway AI, read every line. In this exercise you write the loader that ends this:
+declare a struct with tags, call `Load` once, get every mistake in one error, never see a secret.
 
 ## Task
 

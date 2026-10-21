@@ -2,16 +2,17 @@
 
 **Tier 1 · about 1.5 h** · Go: structs as values, maps as counters and sets, maps with struct keys, `slices.SortFunc` with `cmp.Compare` and `cmp.Or`, the iterators of `maps.Keys` and `slices.Sorted`, `strconv.Atoi` · Problem solving: choose the key you group by; make the output the same on every run
 
-61 pages. Noor Haddad, the principal SRE, had the Key for the last 2 weeks of September: the brass
-key to Breaker 0 that hangs on the lanyard of whoever is on call. 19 of the pages came at night.
-Before you join the rotation, she books a room on floor 61, high above the wet neon, for a meeting
-called "Alert hygiene". As always at Vesper Labs, the numbers go in the document before anybody
-speaks. Daniyar Seitkali, the CTO, suspects the database. Everybody else suspects Fuse, the grey
-cat who sleeps on the warmest rack in the Undercroft; the postmortem template has a box for it.
-The pager exports every page as 1 line, `2026-09-25 22:00 AirflowLow canary-h3-01`, but its own
-report counts pages per day, not per alert. Nobody has ranked the alerts by count and source, so
-the noise has no owner. In this exercise you turn the export into that ranking: the pages per
-alert, the pages at night, and the sources that sent them.
+61 pages. Noor Haddad, the principal SRE, had the Key for the last 2 weeks of September. The Key is
+the brass key to Breaker 0, the switch for HUSH's racks, and it hangs on the lanyard of whoever is
+on call. 19 of the pages came at night. Before you join the rotation, she books a room on floor 61,
+high above the wet neon, for a meeting called "Alert hygiene". As always at Vesper Labs, the numbers
+go in the document before anybody speaks. Daniyar Seitkali, the CTO, suspects the database.
+Everybody else suspects Fuse, the grey cat who sleeps on the warmest rack in the Undercroft; the
+postmortem template has a box for it. The pager exports every page as 1 line,
+`2026-09-25 22:00 AirflowLow canary-h3-01`, but its own report counts pages per day, not per alert.
+Nobody has ranked the alerts by count and source, so the noise has no owner. In this exercise you
+turn the export into that ranking: the pages per alert, the pages at night, and the sources that
+sent them.
 
 ## Task
 

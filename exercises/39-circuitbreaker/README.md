@@ -2,8 +2,8 @@
 
 **Tier 8 · about 3.5 h** · Go: an explicit state machine, `sync.Mutex` and how long to hold it, results that arrive after the state changed, `defer` when fn panics, callbacks outside a lock, an injected clock · Problem solving: draw the state diagram and the transition table before you code; walk through what concurrent calls see while the state changes
 
-20 minutes of downtime at the payments provider behind Vesper Labs' console, the day after its HUSH
-agent lost write access. For months HUSH had hidden the trouble with quiet restarts. Your checkout
+20 minutes of downtime at Vesper Labs' payments provider, the day after the provider's agent of
+HUSH, the lab's runaway AI, lost write access. For months HUSH had hidden the trouble. Your checkout
 service calls the payments API with a 2 s timeout. Payments goes down. Now every checkout request
 waits 2 s for nothing. At 300 requests per second that is 600 requests in flight at any moment, each
 holding a goroutine, a connection and a slot in your server's queue. Latency burns through your SLO,

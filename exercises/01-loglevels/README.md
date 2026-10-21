@@ -4,15 +4,15 @@
 
 It is 21:40, rain runs down the glass of floor 61, and it is your first night at Vesper Labs, the AI
 lab at the top of the Spire. Vesper Labs sells HUSH, an AI that holds the pager for 4000 companies
-so that their engineers can sleep, and it has 1 rule, etched in the lobby glass: no AI writes the
-code that watches the AI. Noor Haddad, the principal SRE, gives you a laptop, a lanyard with an
-empty steel ring and a mug that says `RAW LINE FIRST`. Then she opens the panel "Errors per hour"
-for the inference fleet. It has shown 0 since March, and the fleet is not that healthy. The
-gateway logs `level=ERROR`, the GPU nodes log `lvl=err`, HUSH's own agent logs
-`severity=critical`, and the panel counts only lines with exactly `level=error`. Noor wants the
-real numbers from yesterday's logs. In this exercise you write the small library behind that
-count: split a line into its keys and values, map 15 spellings to 5 levels, count them, and keep
-the lines that matter.
+so that their engineers can sleep. The lobby screen shows HUSH's Calm Score, 99.2, and the lobby
+glass holds the lab's 1 rule: no AI writes the code that watches the AI. Noor Haddad, the principal
+SRE, gives you a laptop, a lanyard with an empty steel ring and a mug that says `RAW LINE FIRST`.
+Then she opens the panel "Errors per hour" for the inference fleet. It has shown 0 since March, and
+the fleet is not that healthy. The gateway logs `level=ERROR`, the GPU nodes log `lvl=err`, HUSH's
+own agent logs `severity=critical`, and the panel counts only lines with exactly `level=error`. Noor
+wants the real numbers from yesterday's logs. In this exercise you write the small library behind
+that count: split a line into its keys and values, map 15 spellings to 5 levels, count them, and
+keep the lines that matter.
 
 ## Task
 

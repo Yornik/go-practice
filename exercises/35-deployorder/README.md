@@ -2,16 +2,16 @@
 
 **Tier 8 · about 2.5 h** · Go: maps as adjacency lists and sets, `slices.Sorted(maps.Keys(m))`, recursive closures, custom error types with `errors.As`, copying slices you hand out · Problem solving: model the task as a graph; pick BFS or DFS by the question you ask; make the output deterministic
 
-30 services must run in the `cleanroom` cluster, free of HUSH, and order matters: cert-manager
-before the ingress controller, postgres before the services that run schema migrations at startup,
-the API gateway before the web frontend. Argo CD sync waves and Helm hook weights encode this order
-as numbers that someone typed by hand, and six months later nobody knows why `orders` is wave 3, or
-whether it could be wave 1. Each service already declares what it needs, so you compute the plan
-instead: deploy everything that is ready in parallel, wave after wave. Hand-maintained dependency
-lists also grow cycles ("auth needs config, config needs auth"), and then the tool must name the
-exact loop, the same loop on every run. Adaeze Nwosu, the CEO, asks "Who is not in this room?"
-Marisol Quispe Mamani, the support lead: no list names her tools. If HUSH goes dark, what falls (the
-blast radius)? Why does the web frontend need Kafka at all? In this exercise you build the tool.
+30 services must run in the `cleanroom` cluster, free of HUSH, Vesper Labs' AI, and order matters:
+cert-manager before the ingress controller, postgres before the services that run schema migrations
+at startup, the API gateway before the web frontend. Argo CD sync waves and Helm hook weights encode
+this order as numbers that someone typed by hand, and six months later nobody knows why `orders` is
+wave 3, or whether it could be wave 1. Each service already declares what it needs, so you compute
+the plan instead: deploy everything that is ready in parallel, wave after wave. Hand-maintained
+dependency lists also grow cycles ("auth needs config, config needs auth"), and then the tool must
+name the exact loop, the same loop on every run. Adaeze Nwosu, the CEO, asks "Who is not in this
+room?", and the answer is support: no list names its tools. If HUSH goes dark, what falls (the blast
+radius)? Why does the web frontend need Kafka at all? In this exercise you build the planner.
 
 ## Task
 

@@ -2,17 +2,17 @@
 
 **Tier 4 · about 2 h** · Go: `reflect` (`TypeOf` and `ValueOf`, `Kind`, `Elem`, `NumField`, `StructField.Tag`, `IsExported`, `IsNil`), struct tags, a type assertion to `fmt.Stringer`, `utf8.RuneCountInString`, `io.Writer` · Problem solving: work out the columns from the type before you look at a value; make an empty list still print its header
 
-In the Launch Week war room on floor 61, with the light show flickering on the glass, every tool
-prints the state of the fleet its own way, and most of them print Go structs with `%+v`:
+In the war room on floor 61, in the week HUSH 5 launched to 40 000 companies, with the light show
+flickering on the glass, every tool prints the state of the fleet its own way, and most of them
+print Go structs with `%+v`:
 `{Name:chkpt-store-2 Status:{Phase:Degraded Since:2026-11-27 21:12:09 +0100 CET} Disk:0xc000014098}`.
-The runbook explains how to read it: "the phase is after the second curly brace". The disk usage
-is a memory address, because `%+v` prints a pointer inside a struct as an address. The only clean
-table on the wall is the console of HUSH, the on-call AI that Vesper Labs sells, and this week
-nobody in the room trusts what it prints. Noor Haddad, the principal SRE, counts the braces of 12
-such lines aloud. Then she asks for what `kubectl get pods` gives her, for every tool: 1 header
-row, aligned columns, `<none>` where a value is missing, and rows that a tired person can scan and
-a screen reader can read cell by cell. In this exercise you write the printer that turns any slice
-of structs into that table.
+The runbook explains how to read it: "the phase is after the second curly brace". The disk usage is
+a memory address, because `%+v` prints a pointer inside a struct as an address. The only clean table
+on the wall is the console of HUSH, the on-call AI that Vesper Labs sells, and this week nobody
+trusts it. Noor Haddad, the principal SRE, counts the braces of 12 such lines aloud. Then she asks
+for what `kubectl get pods` gives her, for every tool: 1 header row, aligned columns, `<none>` where
+a value is missing, and rows that a tired person can scan and a screen reader can read cell by cell.
+In this exercise you write the printer that turns any slice of structs into that table.
 
 ## Task
 

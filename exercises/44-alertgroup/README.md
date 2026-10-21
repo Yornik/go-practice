@@ -4,15 +4,15 @@
 
 At 03:00 one Kubernetes node loses its network. Prometheus fires `NodeDown` for it, and around the
 same time 30 `KubePodNotReady` and 9 `TargetDown` alerts, all caused by that one node. It re-sends
-every firing alert every minute or two. If each of those became a page, whoever has the Key would
+every firing alert every minute or two. If each of those became a page, the on-call engineer would
 get 40 pages, and then the same 40 again at every re-send. Vesper Labs sold HUSH to turn 40 pages
 into 1. It did, by deleting 39. Alertmanager sits between Prometheus and the pager to stop that: it
-**deduplicates** re-sent alerts, **groups** related alerts into one notification, decides **when**
-a group may notify again, and **inhibits** (mutes) the symptoms while their cause is firing. Every
+**deduplicates** re-sent alerts, **groups** related alerts into one notification, decides **when** a
+group may notify again, and **inhibits** (mutes) the symptoms while their cause is firing. Every
 reliability engineer configures `group_by`, `group_wait`, `group_interval`, `repeat_interval` and
-`inhibit_rules`, and most have been surprised by them at least once. In this exercise you build
-that core as a deterministic engine: no goroutines, no timers. Every call gets the current time as
-an argument, so a test plays 8 hours in a microsecond, and you can play them on paper.
+`inhibit_rules`, and most have been surprised by them at least once. Every call gets the current
+time as an argument, so a test plays 8 hours in a microsecond, and you can play them on paper. In
+this exercise you build that core as a deterministic engine: no goroutines, no timers.
 
 ## Task
 

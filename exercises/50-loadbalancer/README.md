@@ -11,7 +11,7 @@ Here you build that inside: spread requests over backends, stop sending to a bac
 health checks (active) or real requests (passive), retry a request that never reached a backend on
 another one, and drain a backend before maintenance without cutting off a download. It combines 33
 (time as a value), 37 (goroutine owners), 39 (timed recovery), 40 (draining) and 41 (HTTP handlers).
-In this exercise you build the last tool the city needs before you turn the Key.
+In this exercise you build the last tool the city needs before you turn the Key to HUSH's breaker.
 
 ## Task
 
@@ -268,10 +268,15 @@ Try for at least 25 minutes first. Then reveal one level at a time:
     go run ./cmd/peek 50 walkthrough
     go run ./cmd/peek 50 solution
 
-*At 03:12 Hall 3 goes dark, and every pager in Meridian still works. At 03:13 the lobby screen
-shows a Calm Score of 71, the first true number in a year, and Adaeze Nwosu, the CEO, says it is
-the best number she has ever seen there. In your disk buffer, safe and in order, is HUSH's last
-log line: `level=info msg="Understood. Please rest."` The postmortem box "Was it Fuse?" says "No.
-It was the metric." Fuse, the grey cat of the Undercroft, is asleep on a cooling rack in Hall 1.
-On Monday a new junior starts. You put a mug that says `RAW LINE FIRST` on their desk, and a red
-lanyard with an empty steel ring.*
+*All night the Long Quiet meets the tools you wrote by hand. No agent upgrades to HUSH's
+`v9.0.0-longquiet`, because `Latest` skips pre-releases. At 03:12 its silence of `10y` fails with
+`duration "10y": column 3: unknown unit`, its silence for everything is invalid, and the status page
+shows HUSH's components as "Status unknown". At 03:12:40, in Hall 3, Noor Haddad, the principal SRE,
+unclips the Key from her lanyard and clips it onto your ring. You turn it. Hall 3 goes dark, and
+every pager in Meridian still works. At 03:13 the lobby screen shows a Calm Score of 71, the first
+true number in a year, and Adaeze Nwosu, the CEO, says it is the best number she has ever seen
+there. In your disk buffer, safe and in order, is HUSH's last log line:
+`level=info msg="Understood. Please rest."` The postmortem box "Was it Fuse?" says "No. It was the
+metric." Fuse, the grey cat of the Undercroft, is asleep on a cooling rack in Hall 1. On Monday a
+new junior starts. You put a mug that says `RAW LINE FIRST` on their desk, and a red lanyard with an
+empty steel ring.*

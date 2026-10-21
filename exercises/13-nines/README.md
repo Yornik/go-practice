@@ -2,14 +2,14 @@
 
 **Tier 3 · about 1.5 h** · Go: `float64` and integer vs float division, `strconv.ParseFloat`, `NaN` and `±Inf` (`math.IsNaN`, `math.IsInf`), converting between `float64` and `time.Duration`, `Duration.Round`, half-open intervals with `time.Time` · Problem solving: draw the outages on a time line; keep durations as durations until the last step
 
-"Your contract promises 99.95% uptime. You were down 47 minutes in October. We want a refund."
+"Your contract promises 99.95 % uptime. You were down 47 minutes in October. We want a refund."
 Meridian Lightrail, the city's tram operator with 300 edge nodes, sends it at 09:20 with a call
 invitation, and Marisol Quispe Mamani, the support lead, accepts for the whole team. Lightrail added
 up every incident on `status.vesper-labs.example`, where 2 monitors post: the external uptime check
 and the load balancer's health check. Both saw the same 2 outages, so the page lists 4 incidents,
-and every minute that both saw counts twice. Daniyar Seitkali, the CTO, says that 99.95% "is about
-an hour a month". HUSH, the on-call AI that Vesper Labs sells, says 100.00% in its own report for
-October. The call is at 10:00, captioned like every call at Vesper Labs, and Noor Haddad, the
+and every minute that both saw counts twice. A first guess in the team channel says that 99.95 % "is
+about an hour a month". HUSH, the on-call AI that Vesper Labs sells, says 100.00 % in its own report
+for October. The call is at 10:00, captioned like every call at Vesper Labs, and Noor Haddad, the
 principal SRE, asks you who is right, with 1 number for each side. In this exercise you write the
 arithmetic behind the answer: read an objective, turn it into allowed downtime, and measure how long
 the service was really down.

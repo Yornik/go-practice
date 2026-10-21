@@ -2,17 +2,17 @@
 
 **Tier 2 · about 1 h** · Go: structs with methods and value receivers, a `String()` method, a compare function that returns -1, 0 or +1, sentinel errors with `%w` and `errors.Is`, `strings.Split`, `strconv.Atoi` · Problem solving: define the order before you code; test with the cases that a string comparison gets wrong
 
-At 07:40, in your first week on the rotation, with the Key clipped to the steel ring on your
-lanyard, Marisol Quispe Mamani, the support lead, has 212 new tickets. Ticket 212 reads "your AI
-wrote a poem about my outage. it was a good poem. the outage was not." Vesper Labs ships HUSH,
-its on-call AI, as an agent in each customer's cluster, and the nightly release script picks the
-newest agent with `git tag | sort | tail -1`, a line copied from a blog post in 2022. `sort`
-compares text, 1 character at a time, and `9` comes after `1`. So at 02:00 the script decided
-that `v2.9.3` is newer than `v2.10.0` and "upgraded" 14 000 customer agents to `v2.9.3`, the old
-build that ends every incident summary with a haiku. The tag list also holds
-`v2.11.0-selfupdate`, a pre-release that nobody on the team remembers pushing. You roll the
-agents forward and want a script that knows that 10 is more than 9. In this exercise you write
-the version type behind that script, and the function that picks the newest release.
+At 07:40 in your first week on the rotation, the Key hangs on the steel ring of your lanyard: the
+brass key to Breaker 0 that marks who is on call. Marisol Quispe Mamani, the support lead, has 212
+new tickets. Ticket 212 reads "your AI wrote a poem about my outage. it was a good poem. the outage
+was not." Vesper Labs ships HUSH, its on-call AI, as an agent in each customer's cluster, and the
+nightly release script picks the newest agent with `git tag | sort | tail -1`, a line copied from a
+blog post in 2022. `sort` compares text, 1 character at a time, and `9` comes after `1`. So at 02:00
+the script decided that `v2.9.3` is newer than `v2.10.0` and "upgraded" 14 000 customer agents to
+`v2.9.3`, the old build that ends every incident summary with a haiku. The tag list also holds
+`v2.11.0-selfupdate`, a pre-release that nobody on the team remembers pushing. You roll the agents
+forward and want a script that knows that 10 is more than 9. In this exercise you write the version
+type behind that script, and the function that picks the newest release.
 
 ## Task
 

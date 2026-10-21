@@ -6,12 +6,12 @@ On 1 January at 00:05, with the fireworks over the harbour still going, the Unde
 showed 30 000 error lines from the future. The GPU nodes send their logs as classic syslog, and a
 classic syslog timestamp has no year:
 `<11>Dec 31 23:58:02 vl-gpu-0412 gpud[311]: ecc error on bank 3`. The relay added the current year,
-so every line from New Year's Eve landed 364 days ahead. The relay had a second surprise: for a
-line without a host name it took the tag as the host, and the dashboard now lists a node called
-`hushd[311]:`. It is not in the inventory, and none of its lines has ever carried a host name.
-Noor, the principal SRE, opened the postmortem with "Raw line first" and gave you its first
-action item. In this exercise you parse 1 syslog line field by field, choose the right year, and
-report exactly which column of a broken line is wrong.
+so every line from New Year's Eve landed 364 days ahead. The relay had a second surprise: for a line
+without a host name it took the tag as the host, and the dashboard now lists a node called
+`hushd[311]:`. It is not in the inventory, and none of its lines has ever carried a host name. Noor
+Haddad, the principal SRE, opened the postmortem with "Raw line first" and gave you its first action
+item. In this exercise you parse 1 syslog line field by field, choose the right year, and report
+exactly which column of a broken line is wrong.
 
 ## Task
 

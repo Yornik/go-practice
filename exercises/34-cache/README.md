@@ -11,7 +11,7 @@ it drops the **least recently used** entry (LRU). It must not serve a config tha
 ago, so entries **expire** after a time to live (TTL). Values that hold resources, such as a gRPC
 client per tenant, must be closed when they leave: a **callback for every removal**. **Hit and miss
 counters** tell you whether the cache earns its memory. `hashicorp/golang-lru` and Kubernetes'
-`LRUExpireCache` do parts of this. In this exercise you build it.
+`LRUExpireCache` do parts of this. In this exercise you build that cache for Lantern.
 
 ## Task
 

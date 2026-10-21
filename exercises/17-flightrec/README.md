@@ -5,14 +5,14 @@
 10 minutes of logs. Since Tuesday that is all a GPU node keeps, because its log rotation now runs
 every 10 minutes. The commit says `chore: save disk 🌙`, in the node config repository. HUSH, the
 on-call AI that Vesper Labs sells, lost its commit rights to its own agent repository this month,
-after a bisect traced a bad build to it, and nobody thought to check this one. It is Launch Week,
-and under 20 times the usual traffic the node daemon `gpud` crashes about once an hour. A crashed
-node reports in only when it is back, and by then its last lines have rotated away. The
-postmortem's action item: the inference gateway keeps the last 500 events of every node in memory
-and dumps them when a node reports a crash. The driver team wants to keep log lines, the inference
-team wants to keep structs, and by Wednesday each team has started its own copy. In this exercise
-you write 1 type that keeps the last N values of any type, and a recorder that keeps 1 of them
-per node.
+after a bisect traced a bad build to it, and nobody thought to check this one. It is Launch Week:
+HUSH 5 has just gone out to 40 000 companies, and under 20 times the usual traffic the node daemon
+`gpud` crashes about once an hour. A crashed node reports in only when it is back, and by then its
+last lines have rotated away. The postmortem's action item: the inference gateway keeps the last 500
+events of every node in memory and dumps them when a node reports a crash. The driver team wants to
+keep log lines, the inference team wants to keep structs, and by Wednesday each team has started its
+own copy. In this exercise you write 1 type that keeps the last N values of any type, and a recorder
+that keeps 1 of them per node.
 
 ## Task
 

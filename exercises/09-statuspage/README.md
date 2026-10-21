@@ -2,16 +2,16 @@
 
 **Tier 2 · about 1.5 h** · Go: `iota` constants, a `String()` method and `fmt.Stringer`, `switch`, pointer receivers that change a struct, the zero value of a type, `strings.EqualFold`, `strings.Join` · Problem solving: decide what the zero value means; derive the whole from its parts
 
-180 status updates in 3 hours, and the status page used none of them. On a wet Sunday morning
-in Meridian, inference requests failed from 09:10 to 12:10. All that time,
-`status.vesper-labs.example` said "All systems operational". The status page had restarted at
-09:00. From 09:10 `hush-bot`, the deploy bot that runs on HUSH's own account, sent an update for
-the inference API once a minute: `status=fine`. The page knows no `fine`, so it skipped all 180
-updates, and the component "Inference API" kept the value it got at the restart: the zero value.
-The status type was an `iota` list, and its first constant, the one that is 0, was `Operational`.
-Noor Haddad, the principal SRE, wrote 1 line in the postmortem: "Unknown is not operational." In
-this exercise you write the status type and the page behind `status.vesper-labs.example`, with
-its overall status and the banner that customers read.
+180 status updates in 3 hours, and the status page used none of them. On a wet Sunday morning,
+inference requests at Vesper Labs, the AI lab in the city of Meridian, failed from 09:10 to 12:10.
+All that time, `status.vesper-labs.example` said "All systems operational". The status page had
+restarted at 09:00. From 09:10 `hush-bot`, the deploy bot of HUSH, the lab's on-call AI, sent an
+update for the inference API once a minute: `status=fine`. The page knows no `fine`, so it skipped
+all 180 updates, and the component "Inference API" kept the value it got at the restart: the zero
+value. The status type was an `iota` list, and its first constant, the one that is 0, was
+`Operational`. Noor Haddad, the principal SRE, wrote 1 line in the postmortem: "Unknown is not
+operational." In this exercise you write the status type and the page behind
+`status.vesper-labs.example`, with its overall status and the banner that customers read.
 
 ## Task
 

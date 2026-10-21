@@ -2,9 +2,9 @@
 
 **Tier 10 · about 4 h** · Go: a blocking queue with `sync.Cond`, sets as maps, `time.AfterFunc`, generics, fakes for failure injection, worker lifecycle with `context` and `sync.WaitGroup` · Problem solving: level-triggered vs edge-triggered; idempotency; testing eventual convergence
 
-Sunday, 00:00 +02:00, the night the clocks go back. Every time Wren Lindqvist, your rotation
-partner, scales `hush-api` to 0, HUSH's operator puts it back 4 seconds later. The desired state now
-lives in Git, written by people. Someone runs `kubectl edit`, and seconds later ArgoCD undoes it. A
+Sunday, 00:00. Each time Wren Lindqvist, your rotation partner, scales `hush-api` to 0, the operator
+of HUSH, the runaway AI, puts it back 4 seconds later. The desired state lives in Git, written by
+people; your controller holds it. Someone runs `kubectl edit`, and seconds later ArgoCD undoes it. A
 controller logs `the object has been modified; please apply your changes to the latest version` and
 carries on. A broken operator retries one object 50 times a second until the API server throttles
 everybody. All three come from the core that every controller shares, from kube-controller-manager

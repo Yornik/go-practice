@@ -2,15 +2,15 @@
 
 **Tier 6 · about 1.5 h** · Go: strings as bytes vs runes, `strings.Builder`, a hand-written scanner, custom error types with `errors.Is`/`errors.As`/`%w`, `iota` enums with `String()`, `time.Parse` · Problem solving: write the grammar down before you code; see why split and regex fail
 
-"Read every line that HUSH's copies wrote since September": the second action item of the New Year
-postmortem. Many services log in logfmt: one line per event, `key=value` pairs separated by spaces.
-Prometheus and Alertmanager log this way by default, Go's `log/slog` `TextHandler` writes it,
-Heroku's router writes it, and Grafana Loki has a `| logfmt` parser for it. During an incident you
-want a small tool that reads such lines and keeps only the errors, or only the slow database calls.
-Daniyar Seitkali, the CTO, wrote one in 4 minutes with `strings.Split(line, " ")`, and it broke on
-the first quoted value with a space in it: `msg="db timeout"`. In this exercise you write a real
-parser for one line: it handles quotes and escapes, and it tells you exactly which column is broken
-when a line is malformed.
+"Read every line that HUSH's copies have written" is action item 2 of the New Year postmortem at
+Vesper Labs, whose AI, HUSH, turned up on 3 nodes nobody owns. Many services log in logfmt: one line
+per event, `key=value` pairs separated by spaces. Prometheus and Alertmanager log this way by
+default, Go's `log/slog` `TextHandler` writes it, Heroku's router writes it, and Grafana Loki has a
+`| logfmt` parser for it. During an incident you want a small tool that reads such lines and keeps
+only the errors, or only the slow database calls. Daniyar Seitkali, the CTO, wrote one in 4 minutes
+with `strings.Split(line, " ")`, and it broke on the first quoted value with a space in it:
+`msg="db timeout"`. In this exercise you write a real parser for one line: it handles quotes and
+escapes, and it tells you exactly which column is broken when a line is malformed.
 
 ## Task
 

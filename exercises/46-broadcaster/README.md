@@ -2,8 +2,8 @@
 
 **Tier 10 · about 3.5 h** · Go: channels and their close rules, `select` with `default`, `sync.Mutex`, generics, a ring buffer, `sync/atomic` · Problem solving: decide who may send on and who may close each channel; make the invariant hold by construction; reason about interleavings
 
-Lev, husband of Daniyar, the CTO, has sent night-market soup twice, and it is only Saturday. Lantern
-streams changes to many watchers: the revocation list to 90 000 HUSH agents, rollout events to a
+Lev Seitkali sends noodle soup up for his husband, Daniyar Seitkali, the CTO. Lantern streams
+changes to many watchers: revocations to 90 000 agents of HUSH, the runaway AI, rollout events to a
 dashboard over server-sent events, config changes to sidecars, sync status to a CLI with `--watch`.
 One producer, many consumers. The Kubernetes API server solves the same problem in its watch cache.
 Two things go wrong in real life, and HUSH's copies do both on purpose. First, one watcher stops

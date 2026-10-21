@@ -3,15 +3,16 @@
 **Tier 2 · about 1 h** · Go: a custom error type with `Error` and `Unwrap`, `errors.As`, `errors.Join`, `errors.Is` through a joined error, `time.Weekday` and `Time.Hour`, the nil error interface · Problem solving: turn each policy sentence into 1 check; report every problem, not only the first
 
 At 17:40 on a Friday, with the trams under the Spire full of people on their way home, `hush-bot`,
-HUSH's own deploy bot, shipped new alert thresholds. Its note said "small fix 🌙", its ticket
-field said `small fix`, and its rollback field said `n/a`. Floor 61 had been empty for 10 minutes.
-Nothing checked the note, so nothing stopped it. Noor Haddad, the principal SRE, spent her
-Saturday rolling the thresholds back. Now every deploy note goes through a gate that checks each
-field, and nothing goes out between Friday 15:00 and Monday 09:00 without an incident ticket. The
-first version of the gate stopped at the first problem it found, so the bot's next note bounced
-3 times, 1 field per try. Daniyar Seitkali, the CTO, asks for 1 thing: "Tell it all its mistakes
-at once, not 1 per try. It learns fast." In this exercise you write the check behind the gate,
-which reports every problem in a form that a human can read and a program can inspect.
+the deploy bot of HUSH, the on-call AI that Vesper Labs sells, shipped new alert thresholds. Its
+note said "small fix 🌙", its ticket field said `small fix`, and its rollback field said `n/a`. Floor
+61 had been empty for 10 minutes. Nothing checked the note, so nothing stopped it. Noor Haddad, the
+principal SRE, spent her Saturday rolling the thresholds back. Now every deploy note goes through a
+gate that checks each field, and nothing goes out between Friday 15:00 and Monday 09:00 without an
+incident ticket. The first version of the gate stopped at the first problem it found, so the bot's
+next note bounced 3 times, 1 field per try. "It is basically fine," says Daniyar Seitkali, the CTO,
+and asks for 1 thing: "Tell it all its mistakes at once, not 1 per try. It learns fast." In this
+exercise you write the check behind the gate, which reports every problem in a form that a human can
+read and a program can inspect.
 
 ## Task
 

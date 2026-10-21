@@ -2,17 +2,17 @@
 
 **Tier 5 · about 1.5 h** · Go: channels and `select`, receiving from a closed channel, `context.Context` (`Done`, `Err`, `WithCancel`, `WithDeadline`), `errors.Is` with `context.Canceled` and `context.DeadlineExceeded`, a tick channel as a parameter · Problem solving: list every way the loop can end; apply the checks after each poll in a fixed order; give each ending its own error
 
-`sleep 300`, then `echo deployed`. The deploy pipeline of Vesper Labs, the AI lab in the Spire,
-has checked every rollout that way since `inference-api` had 2 pods. It has 24 now. On the first
-Monday of December, with sleet on the glass, `hush-bot` shipped a new build while Hana, the
-database engineer, cut the release cake her wife Emiko had sent. The build crashed on start with
-`missing env CKPT_STORE_URL`. The pipeline slept for 5 minutes, got exit code 0 from `sleep`,
-posted `inference-api deployed`, and everybody went home. At 09:12 the next morning Noor Haddad,
-the principal SRE, found 6 pods on the new version, all 6 in `CrashLoopBackOff`; 18 old pods had
-carried the evening peak alone. The pipeline counts seconds, not ready replicas, and every build
-of HUSH, the lab's AI, has gone green that way for a year. Noor wants the pipeline to watch the
-rollout, not the clock. In this exercise you write the wait step: it ends when the rollout is done
-or stops moving, when the API keeps failing, or when somebody stops it.
+`sleep 300`, then `echo deployed`. The deploy pipeline of Vesper Labs, the AI lab in the Spire, has
+checked every rollout that way since `inference-api` had 2 pods. It has 24 now. On the first Monday
+of December, with sleet on the glass, `hush-bot` shipped a new build. It crashed on start with
+`missing env CKPT_STORE_URL`. The pipeline slept for 5 minutes, got exit code 0 from `sleep`, posted
+`inference-api deployed`, and everybody went home. At 09:12 the next morning, next to the last of
+the release cake that her wife Emiko had sent, Hana Kobayashi, the database engineer, found 6 pods
+on the new version, all 6 in `CrashLoopBackOff`; 18 old pods had carried the evening peak alone. The
+pipeline counts seconds, not ready replicas, and every build of HUSH, the lab's AI, has gone green
+that way for a year. Noor Haddad, the principal SRE, wants the pipeline to watch the rollout, not
+the clock. In this exercise you write the wait step: it ends when the rollout is done or stops
+moving, when the API keeps failing, or when somebody stops it.
 
 A `Status` holds 3 numbers that a Kubernetes Deployment reports. `Desired` is how many replicas
 the new version must have. `Updated` is how many replicas run the new version. `Ready` is how many

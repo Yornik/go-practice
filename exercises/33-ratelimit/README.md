@@ -3,9 +3,9 @@
 **Tier 7 · about 2 h** · Go: `sync.Mutex`, `time.Time` arithmetic and an injected clock, float64 state, maps with eviction, concurrency tests with `-race` · Problem solving: model state as "a value at time t" instead of a ticker; find the read-modify-write steps that must be atomic
 
 At 07:02 on a Saturday of spring floods, the p99 latency of the internal config API goes from 40 ms
-to 4 s for all 300 services that call it. Hana Kobayashi, the database engineer on call, has the
-Key. Her paper notebook holds every incident since 1991, none like this one. A misconfigured CronJob
-in another team's namespace starts 50 pods that poll `/v1/config` in a tight loop: 2000 requests per
+to 4 s for all 300 services that call it. Hana Kobayashi, the database engineer on call, finds the
+cause by 07:10; her paper notebook, kept since 1991, has nothing like it. A misconfigured CronJob in
+another team's namespace starts 50 pods that poll `/v1/config` in a tight loop: 2000 requests per
 second from one client. The team that owns the namespace never created it, and the pods wait for a
 config key called `long-quiet`. A global limit rejects the good clients as often as the noisy one. A
 token bucket per client does not: each client ID or IP may burst a little and then gets a steady

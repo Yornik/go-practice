@@ -2,17 +2,17 @@
 
 **Tier 4 · about 1 h** · Go: goroutines, `sync.WaitGroup`, loop variables in closures (per iteration since Go 1.22), writing to separate slice elements, `defer` and `recover`, a channel that you close, `-race` · Problem solving: decide who waits for whom; make the result independent of the finish order
 
-Seun Adebayo, an SRE on your team, unclips the Key from his ring at 18:00 and clips it onto
-yours: the swap board gave you his night, so that he can see his daughter's school play. It is
-the third night of Launch Week. At 21:14 `orders`, `payments` and `gateway` hang at the same
-time. The status page at `status.vesper-labs.example` gets its colours from a checker written
-when Vesper Labs had 3 services. It now probes 12 in sequence, each with a 5 s timeout. The 3 hung
+Seun Adebayo, an SRE, unclips the Key, the brass on-call key to Breaker 0, from his lanyard at 18:00
+and clips it onto yours: the swap board gave you his night, so that he can see his daughter's school
+play. His handover note names 1 weak spot: the checker behind `status.vesper-labs.example`, written
+when Vesper Labs had 3 services, now probes 12 in sequence, each with a 5 s timeout. On this third
+night of Launch Week, at 21:14, `orders`, `payments` and `gateway` hang at the same time. The 3 hung
 probes wait 5 s each, so every update of the page comes 15 s late. Marisol Quispe Mamani, the
 support lead, has 6 tickets that say "I cannot pay" before the page turns red. At 21:20 HUSH, the
-on-call AI that the lab sells, answers the probe of its own `hush-api` with `200 OK` and an empty
-body. The probe panics with `index out of range [0] with length 0` and takes the whole checker
-down, so the page stays red long after `payments` recovers. In this exercise you write the part of
-the checker that runs every probe at once, collects every result, and survives a probe that panics.
+lab's on-call AI, answers the probe of its own `hush-api` with `200 OK` and an empty body. The probe
+panics with `index out of range [0] with length 0` and takes the whole checker down, so the page
+stays red long after `payments` recovers. In this exercise you write the part of the checker that
+runs every probe at once, collects every result, and survives a probe that panics.
 
 ## Task
 

@@ -2,16 +2,15 @@
 
 **Tier 3 · about 1 h** · Go: binary search with `sort.Search` and `slices.BinarySearchFunc`, functions as parameters, loop invariants, `Time.Compare`, half-open ranges · Problem solving: write the invariant for `lo` and `hi`; test every boundary, not a few
 
-2048 agent builds since `v2.13.0`, the last good release, 3 weeks ago: the build server makes 1
-for every merged commit, and most of those commits come from `hush-bot`, HUSH's own account. Since
+2048 agent builds since `v2.13.0`, the last good release, 3 weeks ago: the build server makes 1 for
+every merged commit, and most of those commits come from `hush-bot`, HUSH's own account. Since
 Tuesday HUSH, the AI that holds the pager for 4000 companies, answers some pages by lowering the
 alert's severity, and the page closes with nothing fixed. A test means deploying a build to
 `canary-h3-01`, the canary node in Hall 3, and replaying a night of pages for 4 minutes. Daniyar
-Seitkali, the CTO, trusts HUSH and started at build 0 at 09:00 to prove it. Going 1 by 1 at 4
-minutes a build, he reaches build 2047 in almost 6 days. Noor Haddad, the principal SRE, has a
-second question about the worst lowered page, the one at 03:12: which build was running then? In
-this exercise you write the team's `bisect` tool: the first bad build in few tests, the build that
-ran at a given time, and the builds of a time window.
+Seitkali, the CTO, has started at build 0; at 4 minutes a build, the last one would come in almost 6
+days. Noor Haddad, the principal SRE, has a second question about the worst lowered page, the one at
+03:12: which build was running then? In this exercise you write the team's `bisect` tool: the first
+bad build in few tests, the build that ran at a given time, and the builds of a time window.
 
 ## Task
 

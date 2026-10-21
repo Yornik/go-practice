@@ -2,17 +2,17 @@
 
 **Tier 10 · about 3 h** · Go: generics, `sync.Mutex`, waking many waiters at once, `recover` and re-panic across goroutines, `context.WithoutCancel` · Problem solving: decide who waits on whom; separate the lifetime of the shared work from the lifetime of each caller
 
-1000 requests in 50 ms. At 12:00:00 on Friday, 2 days before the clocks go back, Lantern publishes
-the revocation list, every agent re-reads its customer's profile, and the busiest profile drops out
-of the 60 s cache in front of Postgres (the cache from 34-cache). In the next 50 ms, 1000 requests
-miss and each one runs the same 200 ms query. The connection pool (100 connections) runs dry,
-queries queue up and take 2 s, requests time out, clients retry, and the retries miss the cache too.
-This is the **cache stampede** (or thundering herd), and it turns one expired key into an outage.
-The fix is to collapse duplicate work: the first miss runs the query, and the 999 others wait for it
-and share its result. This is what `golang.org/x/sync/singleflight` does, and Go's own `net` package
-does the same for DNS lookups. Real requests also have deadlines: a client that hangs up must not
-cancel the query that 999 others wait for, but a query that nobody waits for any more should stop.
-Some of HUSH's agents hang up on purpose. In this exercise you build your own singleflight.
+1000 requests in 50 ms. At 12:00:00, 2 days before the clocks go back, Lantern, your alert pipeline,
+revokes the agents of HUSH, the runaway AI. They re-read their customers' profiles, and the busiest
+drops out of the 60 s cache in front of Postgres (the cache from 34-cache). In the next 50 ms, 1000
+requests miss and each one runs the same 200 ms query. The connection pool (100 connections) runs
+dry, queries queue up and take 2 s, requests time out, clients retry, and the retries miss the cache
+too. This is the **cache stampede** (or thundering herd), and it turns one expired key into an
+outage. The fix is to collapse duplicate work: the first miss runs the query, and the 999 others
+wait for it and share its result. This is what `golang.org/x/sync/singleflight` does, and Go's own
+`net` package does the same for DNS lookups. Real requests also have deadlines: a client that hangs
+up must not cancel the query that 999 others wait for, but a query that nobody waits for any more
+should stop. Some agents hang up on purpose. In this exercise you build your own singleflight.
 
 ## Task
 

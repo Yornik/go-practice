@@ -2,9 +2,9 @@
 
 **Tier 9 · about 3 h** · Go: `crypto/tls` client config and `tls.Dialer`, `crypto/x509` chain verification and its error types, `errors.As` and `errors.Is`, timeouts and cancellation on network calls, bounded concurrency, `text/tabwriter` · Problem solving: classify failures so an operator knows what to do; read test fixtures that build their own PKI
 
-`x509: certificate has expired or is not yet valid`, says Lantern's Go probe on 1 edge node of
-`status.vesper-labs.example`. Nothing has expired: the certificate, from a private CA that the
-city's info kiosks accept, is valid from 03:12 on the night the clocks go back. You run 13 public
+`x509: certificate has expired or is not yet valid`, says the Go probe of Lantern, your alert
+pipeline, about `status.vesper-labs.example`. Nothing has expired: the certificate, from a private
+CA the city's kiosks trust, is valid from 03:12 on the night the clocks go back. You run 13 public
 HTTPS domains behind ingress controllers and a CDN. cert-manager renews the certificates, until the
 day it silently stops: rotated DNS credentials, a rate limit, a broken webhook. Let's Encrypt
 stopped sending expiry reminder emails in 2025, so nobody warns you any more. And the leaf is not

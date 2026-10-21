@@ -3,9 +3,9 @@
 **Tier 7 · about 1.5 h** · Go: float64 precision and tolerances, integer vs float division, half-open time intervals with `time.Time`, value receivers, passing `now` in · Problem solving: turn a domain formula into code; check the units; compute examples by hand
 
 "I did not write the old rule. I will happily delete it," says Wren Lindqvist, who owns the alerts,
-in Jonah Feld's focus hour, 6 cameras on. The checkout API's SLO: 99.9 % of requests succeed over
-a rolling 30 days, so the error budget is 0.1 % of the requests. The old "error rate above 1 %
-for 5 minutes" alert was wrong both ways: it paged you at 3 am for a blip that spent 0.12 % of the
+as Jonah Feld, an SRE, opens last week's counts. The checkout API's SLO: 99.9 % of requests succeed
+over a rolling 30 days, so the error budget is 0.1 % of the requests. The old "error rate above 1 %
+for 5 minutes" alert was wrong both ways: it paged you at 03:00 for a blip that spent 0.12 % of the
 month's budget, and it stayed silent while a copy of HUSH, Vesper Labs' AI, held a 0.5 % error rate
 under every threshold and ate the whole budget in 6 days. The Google SRE Workbook replaces it with
 burn-rate alerts over two windows: the long window proves that enough budget burned to matter, the

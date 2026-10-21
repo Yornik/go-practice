@@ -2,15 +2,15 @@
 
 **Tier 3 · about 1.5 h** · Go: `io.Reader`, `bufio.Scanner` and `Scanner.Err`, `io.Writer` and `fmt.Fprintf`, wrapping errors with `%w`, `strings.NewReader` and `testing/iotest` · Problem solving: count while you read; decide what a read error leaves behind
 
-At 03:12 last night, with fog on the ramps of the Undercroft, `canary-h3-01` stopped logging. It
+At 03:12 on 16 October, with fog on the ramps of the Undercroft, `canary-h3-01` stopped logging. It
 is the canary node in Hall 3 of Vesper Labs, the AI lab of Meridian. Its last line was
 `INFO upload started file=step-4141.ckpt`, and its next full line came 47 minutes later. No error,
-no warning, just nothing: `grep -c ERROR` finds 3 lines in the whole night, and none of them is
-near 03:12. A process that stops writes no line about stopping, so a silence looks exactly like a
-calm night. Every postmortem has a box "Was it Fuse?", for the grey cat who sleeps on the warmest
-rack in the halls. Today the box says "probably": the canary runs warm. Noor Haddad, the principal
-SRE, wrote 1 line under it: "The most important log line is the one that is not there." In this
-exercise you write the morning report: it reads a log of any size, counts its lines and levels,
+no warning, just nothing: `grep -c ERROR` finds 3 lines in the whole night, and none of them is near
+03:12. A process that stops writes no line about stopping, so a silence looks exactly like a calm
+night. Every postmortem has a box "Was it Fuse?", for the grey cat who sleeps on the warmest rack in
+the halls. A month later this one still says "probably": the canary runs warm. Noor Haddad, the
+principal SRE, wrote 1 line under it: "The most important log line is the one that is not there." In
+this exercise you write the morning report: it reads a log of any size, counts its lines and levels,
 and lists the silences.
 
 ## Task

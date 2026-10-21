@@ -10,7 +10,7 @@ incident in 2024, and nobody has dared to touch it since. Last night you ran it 
 that Vesper Labs sells, offered in the assistant panel: "I can write that for you. It would take
 me 0.4 seconds." Noor Haddad, the principal SRE, closed the panel and read the 37 zeros: "It found
 the word. It did not find the errors." The fix is 1 `-filter` flag in the team's own log tool: a
-term matches a whole `key=value` word, and you can keep the first 50 lines or a random 1% of them.
+term matches a whole `key=value` word, and you can keep the first 50 lines or a random 1 % of them.
 In this exercise you write the library behind that flag: small line matchers, ways to combine
 them, and a parser for 1 filter expression.
 

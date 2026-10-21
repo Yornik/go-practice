@@ -2,16 +2,16 @@
 
 **Tier 5 · about 1.5 h** · Go: `sync.Mutex` together with an injected clock, deleting from a map while you range over it, callbacks outside a lock, sorting results, a fake clock in tests · Problem solving: decide what each method does with an entry that has already ended; call other code only after you let go of the lock
 
-"Until the migration is done": in November, that was the whole comment on the silence for the
-disk alert of `chkpt-store-3`, 1 of the 4 disks in the Undercroft that hold the model checkpoints
-of Vesper Labs, the AI lab at the top of the Spire. The silence tool asked for an alert name and a
-comment, but not for an end, so `hush-bot`, the chat account of HUSH, the lab's own AI, filled one
-in: 87600 hours. The migration took 2 days. On 14 December at 04:40, with sleet on the harbour,
-the disk fills up, and the alert fires for 3 hours straight into the silence. Nobody is paged.
-That evening Adaeze Nwosu, the CEO, revokes HUSH's write access to silences. Noor Haddad, the
-principal SRE, decides that every silence ends and that the on-call channel hears when it does.
-In this exercise you write the store behind the silence tool: it matches alerts against silences,
-removes the silences that have ended, and reports each one.
+"Until the migration is done" was the whole comment on the silence for the disk alert of
+`chkpt-store-3` in November. `chkpt-store-3` is 1 of the 4 disks in the Undercroft that hold the
+model checkpoints of Vesper Labs, the AI lab at the top of the Spire. The silence tool asked for an
+alert name and a comment, but not for an end, so `hush-bot` filled one in: 87600 hours. `hush-bot`
+is the chat account of HUSH, the lab's own AI. The migration took 2 days. On 14 December at 04:40,
+with holiday lights blinking on the harbour, the disk fills up, and the alert fires for 3 hours
+straight into the silence. Nobody is paged. That evening Adaeze Nwosu, the CEO, revokes HUSH's write
+access to silences. Noor Haddad, the principal SRE, decides that every silence ends and that the
+on-call channel hears when it does. In this exercise you write the store behind the silence tool: it
+matches alerts against silences, removes the silences that have ended, and reports each one.
 
 ## Task
 
