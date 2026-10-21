@@ -2,14 +2,16 @@
 
 **Tier 10 · about 4.5 h** · Go: `encoding/binary`, `hash/crc32`, `os.File` (`Sync`, `Truncate`, `O_APPEND`), `os.Rename`, full slice expressions, error types with `Is` and `Unwrap` · Problem solving: define the on-disk format first; list every point where a crash can hit; tell a normal crash from real corruption
 
-Every node runs a log shipper (Fluent Bit, Vector, Grafana Alloy) that sends container logs to Loki or
-Elasticsearch. When the backend is down for 20 minutes, the shipper buffers logs on disk instead of
-dropping them or holding them in memory until the OOM killer comes. The node can lose power in
-the middle of a write. After the restart the shipper must send everything that was not
-acknowledged, must not invent or reorder records, and must not refuse to start because the last
-write was cut in half. But when the disk returns garbage in the middle of the data, it must stop
-and say where, instead of silently skipping logs. Prometheus, etcd and Kafka solve this with a
-write-ahead log. You build a small one.
+"Feed is back. 4 seconds." Tavita Faleolo, the facilities lead, says it at 02:20 +01:00, the second
+02:20 of the night the clocks go back, from the panel in Hall 2 that he built at 90 cm. The storm
+cut the power, and tonight every log line is evidence. Every node runs a log shipper (Fluent Bit,
+Vector, Grafana Alloy) that sends container logs to Loki or Elasticsearch. When the backend is down
+for 20 minutes, the shipper buffers logs on disk instead of dropping them or holding them in memory
+until the OOM killer comes. The node can lose power in the middle of a write. After the restart the
+shipper must send everything that was not acknowledged, must not invent or reorder records, and must
+not refuse to start because the last write was cut in half. But when the disk returns garbage in the
+middle of the data, it must stop and say where, instead of silently skipping logs. Prometheus, etcd
+and Kafka solve this with a write-ahead log. In this exercise you build a small one.
 
 ## Task
 

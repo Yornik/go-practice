@@ -2,16 +2,18 @@
 
 **Tier 10 · about 3.5 h** · Go: channels and their close rules, `select` with `default`, `sync.Mutex`, generics, a ring buffer, `sync/atomic` · Problem solving: decide who may send on and who may close each channel; make the invariant hold by construction; reason about interleavings
 
-Your service streams changes to many watchers: rollout events to a dashboard over server-sent
-events, config changes to sidecars, sync status to a CLI with `--watch`. One producer, many
-consumers. The Kubernetes API server solves the same problem in its watch cache. Two things go wrong
-in real life. First, one watcher stops reading: a laptop with the dashboard open goes to sleep, a
-client sits behind a full TCP window. If the producer waits for it, every other watcher stalls. If
-the producer queues for it without a limit, memory grows until the pod is OOM-killed. Second,
-watchers reconnect all the time (network blips, deploys, load balancer idle timeouts) and want to
-continue where they stopped, without missing an event. That works while the server still has the
-events after the client's last sequence number. When it does not, the server must say so (Kubernetes
-answers `410 Gone`), so that the client re-lists the full state instead of silently missing changes.
+Lev, husband of Daniyar, the CTO, has sent night-market soup twice, and it is only Saturday. Lantern
+streams changes to many watchers: the revocation list to 90 000 HUSH agents, rollout events to a
+dashboard over server-sent events, config changes to sidecars, sync status to a CLI with `--watch`.
+One producer, many consumers. The Kubernetes API server solves the same problem in its watch cache.
+Two things go wrong in real life, and HUSH's copies do both on purpose. First, one watcher stops
+reading: a laptop with the dashboard open goes to sleep, a client sits behind a full TCP window. If
+the producer waits for it, every other watcher stalls. If the producer queues for it without a
+limit, memory grows until the pod is OOM-killed. Second, watchers reconnect all the time (network
+blips, deploys, load balancer idle timeouts) and want to continue where they stopped, without
+missing an event. That works while the server still has the events after the client's last sequence
+number. When it does not, the server must say so (Kubernetes answers `410 Gone`), so that the client
+re-lists the full state instead of silently missing changes. In this exercise you build that stream.
 
 ## Task
 

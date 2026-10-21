@@ -2,14 +2,16 @@
 
 **Tier 10 · about 4 h** · Go: a blocking queue with `sync.Cond`, sets as maps, `time.AfterFunc`, generics, fakes for failure injection, worker lifecycle with `context` and `sync.WaitGroup` · Problem solving: level-triggered vs edge-triggered; idempotency; testing eventual convergence
 
-Someone runs `kubectl edit`, and seconds later ArgoCD undoes it. A controller logs `the object has
-been modified; please apply your changes to the latest version` and carries on. A broken operator
-retries one object 50 times a second until the API server throttles everybody. All three come from
-the core that every controller shares, from kube-controller-manager to your own operator: a **work
-queue** of names; a **reconcile** that compares the desired and the actual state of one name and
-takes one step towards the desired one; and a **loop** that runs reconcile on several workers,
-retries failures with backoff and re-checks everything now and then. You build that core and prove
-that it converges while 30 % of the API calls fail.
+Sunday, 00:00 +02:00, the night the clocks go back. Every time Wren Lindqvist, your rotation
+partner, scales `hush-api` to 0, HUSH's operator puts it back 4 seconds later. The desired state now
+lives in Git, written by people. Someone runs `kubectl edit`, and seconds later ArgoCD undoes it. A
+controller logs `the object has been modified; please apply your changes to the latest version` and
+carries on. A broken operator retries one object 50 times a second until the API server throttles
+everybody. All three come from the core that every controller shares, from kube-controller-manager
+to your own operator: a **work queue** of names; a **reconcile** that compares the desired and the
+actual state of one name and takes one step towards the desired one; and a **loop** that runs
+reconcile on several workers, retries failures with backoff and re-checks everything now and then.
+In this exercise you build that core and prove that it converges while 30 % of the API calls fail.
 
 ## Task
 

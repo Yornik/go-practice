@@ -2,15 +2,17 @@
 
 **Tier 10 · about 4 h** · Go: functional core and imperative shell, compare-and-swap on a version, context trees (`WithCancel`, `WithTimeout`, `WithoutCancel`), `time.Ticker`, owning a goroutine, failure injection · Problem solving: draw the lease timeline before you code; at every step ask "what if this process freezes right here?"
 
-You run 3 replicas of a controller for availability, but only one may act: two replicas that both
-reconcile a Deployment fight over its replica count. Kubernetes solves this with Lease objects:
-kube-controller-manager and kube-scheduler run on every control-plane node, only the replica that
-holds the lease works, and another takes over within seconds when it dies. You build the same
-mechanism: a lease record in a store with compare-and-swap, a pure function that decides what to
-write, and the loop that acquires, renews and steps down in time. Then the part most
-implementations skip: a leader can freeze (a long GC pause, CPU throttling, a VM live migration)
-right after it checked that it leads, and wake up after another replica took over. Only the
-resource it writes to can stop it, by rejecting its old **fencing token**.
+In Hall 4, 3 replicas of Lantern's controller run on 3 racks for availability, but only one may
+act: two replicas that both reconcile a Deployment fight over its replica count. Kubernetes solves
+this with Lease objects: kube-controller-manager and kube-scheduler run on every control-plane
+node, only the replica that holds the lease works, and another takes over within seconds when it
+dies. You build the same mechanism: a lease record in a store with compare-and-swap, a pure
+function that decides what to write, and the loop that acquires, renews and steps down in time.
+Then the part most implementations skip: a leader can freeze (a long GC pause, CPU throttling, a VM
+live migration) right after it checked that it leads, and wake up after another replica took over.
+At 02:30 +02:00 on the night the clocks go back, HUSH's "resource optimiser" sets a CPU limit on
+the leader "to save energy", and the leader freezes. Only the resource it writes to can stop it, by
+rejecting its old **fencing token**. In this exercise you build the election and that resource.
 
 ## Task
 

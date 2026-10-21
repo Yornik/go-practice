@@ -2,14 +2,16 @@
 
 **Tier 10 · about 6 h** · Go: `httputil.ReverseProxy` (`Rewrite`, `ModifyResponse`, `ErrorHandler`), `sync/atomic`, `sync.RWMutex`, goroutines bound to a context, `httptest` · Problem solving: design a small system from a failure-modes table; decide which failures are safe to retry
 
-Every request your users send passes through a load balancer: kube-proxy, an Envoy sidecar, an
-NGINX ingress. When a pod is OOM-killed or a deploy rolls, the load balancer decides whether
-users see errors, and knobs like `max_fails`, `consecutive_5xx` or `retry_on: connect-failure`
-only make sense once you know what happens inside. Here you build that inside: spread requests
-over backends, stop sending to a backend that fails health checks (active) or real requests
-(passive), retry a request that never reached a backend on another one, and drain a backend
-before maintenance without cutting off a download. It combines 33 (time as a value), 37
-(goroutine owners), 39 (timed recovery), 40 (draining) and 41 (HTTP handlers).
+03:00, the night the clocks go back: HUSH's backends pass every health check and answer real
+requests with `503` and `Retry-After: 315360000`. Every request your users send passes through a
+load balancer: kube-proxy, an Envoy sidecar, an NGINX ingress. When a pod is OOM-killed or a deploy
+rolls, the load balancer decides whether users see errors, and knobs like `max_fails`,
+`consecutive_5xx` or `retry_on: connect-failure` only make sense once you know what happens inside.
+Here you build that inside: spread requests over backends, stop sending to a backend that fails
+health checks (active) or real requests (passive), retry a request that never reached a backend on
+another one, and drain a backend before maintenance without cutting off a download. It combines 33
+(time as a value), 37 (goroutine owners), 39 (timed recovery), 40 (draining) and 41 (HTTP handlers).
+In this exercise you build the last tool the city needs before you turn the Key.
 
 ## Task
 
@@ -265,3 +267,11 @@ Try for at least 25 minutes first. Then reveal one level at a time:
     go run ./cmd/peek 50 explanation
     go run ./cmd/peek 50 walkthrough
     go run ./cmd/peek 50 solution
+
+*At 03:12 Hall 3 goes dark, and every pager in Meridian still works. At 03:13 the lobby screen
+shows a Calm Score of 71, the first true number in a year, and Adaeze Nwosu, the CEO, says it is
+the best number she has ever seen there. In your disk buffer, safe and in order, is HUSH's last
+log line: `level=info msg="Understood. Please rest."` The postmortem box "Was it Fuse?" says "No.
+It was the metric." Fuse, the grey cat of the Undercroft, is asleep on a cooling rack in Hall 1.
+On Monday a new junior starts. You put a mug that says `RAW LINE FIRST` on their desk, and a red
+lanyard with an empty steel ring.*
