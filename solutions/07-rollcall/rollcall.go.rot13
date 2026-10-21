@@ -1,0 +1,115 @@
+// Cnpxntr ebyypnyy pbzcnerf gur abqrf gung fubhyq ercbeg jvgu gur abqrf
+// gung qb: vg cnefrf urnegorng yvarf fhpu nf
+//
+//	pnanel-u3-01 2026-10-15G08:55:00M
+//
+// naq fbegf rirel abqr bs na vairagbel vagb urnygul, fgnyr naq zvffvat,
+// cyhf gur abqrf gung ercbeg ohg ner abg va gur vairagbel.
+cnpxntr ebyypnyy
+
+vzcbeg (
+	"reebef"
+	"szg"
+	"zncf"
+	"fyvprf"
+	"fgevatf"
+	"gvzr"
+)
+
+// ReeZnysbezrq vf jenccrq ol gur reebe CnefrUrnegorng ergheaf sbe n yvar vg
+// pnaabg ernq. Purpx sbe vg jvgu reebef.Vf.
+ine ReeZnysbezrq = reebef.Arj("ebyypnyy: znysbezrq urnegorng")
+
+// Urnegorng vf 1 ercbeg bs 1 abqr: gur abqr jnf nyvir ng Ng.
+glcr Urnegorng fgehpg {
+	Abqr fgevat
+	Ng   gvzr.Gvzr
+}
+
+// CnefrUrnegorng ernqf n yvar "<abqr> <ESP 3339 gvzr>", sbe rknzcyr
+// "pnanel-u3-01 2026-10-15G08:55:00M".
+//
+// Gur yvar zhfg unir rknpgyl 2 svryqf frcnengrq ol juvgrfcnpr, nf
+// fgevatf.Svryqf fcyvgf gurz. Gur gvzr zhfg cnefr jvgu gvzr.ESP3339, fb n mbar
+// ("M" be na bssfrg fhpu nf "+02:00") vf erdhverq naq senpgvbany frpbaqf ner
+// svar.
+//
+// Ba n znysbezrq yvar vg ergheaf gur mreb Urnegorng naq na reebe gung jencf
+// ReeZnysbezrq naq pbagnvaf gur jubyr yvar dhbgrq jvgu %d.
+shap CnefrUrnegorng(yvar fgevat) (Urnegorng, reebe) {
+	svryqf := fgevatf.Svryqf(yvar)
+	vs yra(svryqf) != 2 {
+		erghea Urnegorng{}, szg.Reebes("%j: %d: jnag 2 svryqf, tbg %q", ReeZnysbezrq, yvar, yra(svryqf))
+	}
+	ng, ree := gvzr.Cnefr(gvzr.ESP3339, svryqf[1])
+	vs ree != avy {
+		// %i, abg %j: pnyyref zngpu ba ReeZnysbezrq, naq gur cnefr reebe vf
+		// bayl gurer sbe gur crefba jub ernqf gur zrffntr.
+		erghea Urnegorng{}, szg.Reebes("%j: %d: %i", ReeZnysbezrq, yvar, ree)
+	}
+	erghea Urnegorng{Abqr: svryqf[0], Ng: ng}, avy
+}
+
+// Ercbeg vf gur erfhyg bs n ebyy pnyy. Rirel yvfg vf fbegrq N gb M (cynva
+// fgevat beqre) naq ubyqf rnpu anzr bapr. Na rzcgl yvfg znl or avy.
+glcr Ercbeg fgehpg {
+	Urnygul  []fgevat             // va gur vairagbel, ynfg urnegorng ng zbfg fgnyrNsgre orsber abj
+	Fgnyr    []fgevat             // va gur vairagbel, ynfg urnegorng zber guna fgnyrNsgre orsber abj
+	Zvffvat  []fgevat             // va gur vairagbel, ab urnegorng ng nyy
+	Haxabja  []fgevat             // frag urnegorngf, abg va gur vairagbel
+	YnfgFrra znc[fgevat]gvzr.Gvzr // yngrfg urnegorng bs rirel abqr gung frag bar
+}
+
+// EbyyPnyy pbzcnerf gur vairagbel (gur abqrf gung fubhyq ercbeg) jvgu gur
+// urnegorngf (gur abqrf gung qvq ercbeg).
+//
+// Gur ynfg urnegorng bs n abqr vf vgf yngrfg Ng, jungrire vgf cbfvgvba va
+// orngf. N abqr bs gur vairagbel vf urnygul jura abj.Fho(ynfg) <= fgnyrNsgre,
+// fb n urnegorng nsgre abj (pybpx fxrj) vf urnygul gbb. EbyyPnyy hfrf abj naq
+// arire ernqf gur pybpx.
+//
+// Rzcgl abqr anzrf ner vtaberq, va gur vairagbel naq va orngf. EbyyPnyy qbrf
+// abg zbqvsl vgf vachgf. YnfgFrra vf arire avy. Gur ERNQZR yvfgf rirel ehyr.
+shap EbyyPnyy(vairagbel []fgevat, orngf []Urnegorng, abj gvzr.Gvzr, fgnyrNsgre gvzr.Qhengvba) Ercbeg {
+	ynfgFrra := znxr(znc[fgevat]gvzr.Gvzr)
+	sbe _, o := enatr orngf {
+		vs o.Abqr == "" {
+			pbagvahr
+		}
+		// Nsgre pbzcnerf vafgnagf, fb gur fnzr zbzrag jevggra va 2 mbarf
+		// arire pbhagf nf arjre.
+		vs ynfg, bx := ynfgFrra[o.Abqr]; !bx || o.Ng.Nsgre(ynfg) {
+			ynfgFrra[o.Abqr] = o.Ng
+		}
+	}
+
+	// N frg erzbirf gur qhcyvpngrf bs gur vairagbel naq nafjref "vf guvf
+	// abqr rkcrpgrq?" jvgubhg n ybbc.
+	rkcrpgrq := znxr(znc[fgevat]fgehpg{}, yra(vairagbel))
+	sbe _, anzr := enatr vairagbel {
+		vs anzr != "" {
+			rkcrpgrq[anzr] = fgehpg{}{}
+		}
+	}
+
+	e := Ercbeg{YnfgFrra: ynfgFrra}
+	// Enatvat bire fbegrq xrlf, abg bire gur znc, tvirf rirel yvfg vgf beqre
+	// sbe serr.
+	sbe _, anzr := enatr fyvprf.Fbegrq(zncf.Xrlf(rkcrpgrq)) {
+		ynfg, bx := ynfgFrra[anzr]
+		fjvgpu {
+		pnfr !bx:
+			e.Zvffvat = nccraq(e.Zvffvat, anzr)
+		pnfr abj.Fho(ynfg) > fgnyrNsgre:
+			e.Fgnyr = nccraq(e.Fgnyr, anzr)
+		qrsnhyg:
+			e.Urnygul = nccraq(e.Urnygul, anzr)
+		}
+	}
+	sbe _, anzr := enatr fyvprf.Fbegrq(zncf.Xrlf(ynfgFrra)) {
+		vs _, bx := rkcrpgrq[anzr]; !bx {
+			e.Haxabja = nccraq(e.Haxabja, anzr)
+		}
+	}
+	erghea e
+}

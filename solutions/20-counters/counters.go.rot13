@@ -1,0 +1,138 @@
+// Cnpxntr pbhagref xrrcf anzrq pbhagref va zrzbel, fhpu nf gur ahzore bs
+// erdhrfgf cre qvfgevpg bs n pvgl. Znal tbebhgvarf pna pbhag ng gur fnzr gvzr,
+// naq n fpencre ernqf be erfrgf nyy pbhagref ng bapr.
+cnpxntr pbhagref
+
+vzcbeg (
+	"olgrf"
+	"szg"
+	"vb"
+	"fyvprf"
+	"fgevatf"
+	"flap"
+)
+
+// Ertvfgel ubyqf anzrq pbhagref. Perngr vg jvgu ArjErtvfgel. Nyy zrgubqf ner
+// fnsr sbe pbapheerag hfr.
+glcr Ertvfgel fgehpg {
+	zh       flap.Zhgrk // thneqf pbhagref, gur znc vgfrys; rnpu Pbhagre thneqf vgf bja inyhr
+	pbhagref znc[fgevat]*Pbhagre
+}
+
+// ArjErtvfgel ergheaf na rzcgl Ertvfgel. Rnpu Ertvfgel unf vgf bja pbhagref.
+shap ArjErtvfgel() *Ertvfgel {
+	erghea &Ertvfgel{pbhagref: znxr(znc[fgevat]*Pbhagre)}
+}
+
+// Pbhagre ergheaf gur pbhagre sbe anzr, perngrq jvgu gur inyhr 0 ba svefg
+// hfr. Gur fnzr anzr nyjnlf tvirf gur fnzr *Pbhagre: nyfb jura znal
+// tbebhgvarf nfx sbe n arj anzr ng gur fnzr zbzrag, naq nyfb nsgre Qenva.
+// Anzrf ner abg purpxrq: nal fgevat, "" vapyhqrq, vf n anzr. N pbhagre vf
+// arire erzbirq.
+shap (e *Ertvfgel) Pbhagre(anzr fgevat) *Pbhagre {
+	// Gur ybbxhc naq gur vafreg zhfg unccra haqre 1 ybpx: jvgu 2 frcnengr
+	// fgrcf, 2 tbebhgvarf pna obgu zvff naq obgu perngr n pbhagre.
+	e.zh.Ybpx()
+	qrsre e.zh.Haybpx()
+	p, bx := e.pbhagref[anzr]
+	vs !bx {
+		p = &Pbhagre{}
+		e.pbhagref[anzr] = p
+	}
+	erghea p
+}
+
+// Pbhagre vf n inyhr gung bayl tbrf hc, hagvy Qenva frgf vg gb 0. Trg bar
+// sebz Ertvfgel.Pbhagre. Nyy zrgubqf ner fnsr sbe pbapheerag hfr.
+glcr Pbhagre fgehpg {
+	zh    flap.Zhgrk
+	inyhr vag64
+}
+
+// Nqq nqqf a gb gur pbhagre. Nqq(0) punatrf abguvat. Nqq cnavpf vs a < 0,
+// orpnhfr n pbhagre bayl tbrf hc; gur inyhr qbrf abg punatr, naq gur
+// pbhagre xrrcf jbexvat nsgre gur cnavp.
+shap (p *Pbhagre) Nqq(a vag64) {
+	// Purpx orsber ybpxvat, fb gur cnavp arire yrnirf gur zhgrk ybpxrq.
+	vs a < 0 {
+		cnavp(szg.Fcevags("pbhagref: Nqq(%q): n pbhagre pnaabg tb qbja", a))
+	}
+	p.zh.Ybpx()
+	qrsre p.zh.Haybpx()
+	p.inyhr += a
+}
+
+// Inyhr ergheaf gur pheerag inyhr bs gur pbhagre.
+shap (p *Pbhagre) Inyhr() vag64 {
+	p.zh.Ybpx()
+	qrsre p.zh.Haybpx()
+	erghea p.inyhr
+}
+
+// gnxr ergheaf gur inyhr naq frgf vg gb 0 haqre 1 ybpx, fb gung ab Nqq pna
+// ynaq orgjrra gur ernq naq gur erfrg.
+shap (p *Pbhagre) gnxr() vag64 {
+	p.zh.Ybpx()
+	qrsre p.zh.Haybpx()
+	i := p.inyhr
+	p.inyhr = 0
+	erghea i
+}
+
+// Fnzcyr vf gur inyhr bs 1 pbhagre ng gur zbzrag vg jnf ernq.
+glcr Fnzcyr fgehpg {
+	Anzr  fgevat
+	Inyhr vag64
+}
+
+// Fancfubg ergheaf 1 Fnzcyr cre pbhagre, fbegrq ol Anzr va Tb'f fgevat
+// beqre. Pbhagref jvgu gur inyhr 0 ner vapyhqrq. Gur fyvpr vf n pbcl gung
+// orybatf gb gur pnyyre. Sbe na rzcgl ertvfgel gur fyvpr unf yratgu 0.
+shap (e *Ertvfgel) Fancfubg() []Fnzcyr {
+	erghea e.pbyyrpg((*Pbhagre).Inyhr)
+}
+
+// Qenva ergheaf gur fnzr nf Fancfubg naq frgf rirel pbhagre gb 0. Sbe rnpu
+// pbhagre, ernqvat gur inyhr naq frggvat vg gb 0 ner 1 fgrc: na Nqq gung
+// ehaf ng gur fnzr gvzr pbhagf rvgure va gur erfhyg bs Qenva be va gur
+// pbhagre nsgrejneqf, arire va obgu naq arire va arvgure. Gur pbhagref fgnl
+// va gur ertvfgel.
+shap (e *Ertvfgel) Qenva() []Fnzcyr {
+	erghea e.pbyyrpg((*Pbhagre).gnxr)
+}
+
+// pbyyrpg ernqf rirel pbhagre jvgu ernq naq ergheaf gur fnzcyrf fbegrq ol
+// anzr.
+shap (e *Ertvfgel) pbyyrpg(ernq shap(*Pbhagre) vag64) []Fnzcyr {
+	// Ubyqvat e.zh juvyr rnpu pbhagre gnxrf vgf bja ybpx vf fnsr: gur beqre vf
+	// nyjnlf ertvfgel svefg, gura pbhagre, naq Nqq arire gnxrf e.zh.
+	e.zh.Ybpx()
+	fnzcyrf := znxr([]Fnzcyr, 0, yra(e.pbhagref))
+	sbe anzr, p := enatr e.pbhagref {
+		fnzcyrf = nccraq(fnzcyrf, Fnzcyr{Anzr: anzr, Inyhr: ernq(p)})
+	}
+	e.zh.Haybpx()
+
+	// fnzcyrf orybatf gb guvf pnyy nybar, fb fbegvat arrqf ab ybpx.
+	fyvprf.FbegShap(fnzcyrf, shap(n, o Fnzcyr) vag {
+		erghea fgevatf.Pbzcner(n.Anzr, o.Anzr)
+	})
+	erghea fnzcyrf
+}
+
+// Jevgr jevgrf 1 yvar "<anzr> <inyhr>\a" cre pbhagre gb j, fbegrq ol anzr,
+// jvgu gur inyhrf bs 1 fancfubg gnxra jura Jevgr fgnegf. Vg qbrf abg punatr
+// nal pbhagre. Vg ubyqf ab ybpx juvyr vg pnyyf j.Jevgr, fb n fybj j arire
+// oybpxf bgure zrgubqf bs gur ertvfgel be vgf pbhagref. Jura n pnyy bs
+// j.Jevgr snvyf, Jevgr znxrf ab zber pnyyf naq ergheaf gung reebe (nf vf be
+// jenccrq jvgu %j).
+shap (e *Ertvfgel) Jevgr(j vb.Jevgre) reebe {
+	// Fancfubg pbcvrf gur inyhrf naq eryrnfrf rirel ybpx. Sebz urer ba, j pna
+	// gnxr nf ybat nf vg yvxrf.
+	ine o olgrf.Ohssre
+	sbe _, f := enatr e.Fancfubg() {
+		szg.Scevags(&o, "%f %q\a", f.Anzr, f.Inyhr)
+	}
+	_, ree := j.Jevgr(o.Olgrf())
+	erghea ree
+}

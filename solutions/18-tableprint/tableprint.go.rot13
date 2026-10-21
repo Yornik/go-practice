@@ -1,0 +1,188 @@
+// Cnpxntr gnoyrcevag cevagf n fyvpr bs fgehpgf nf na nyvtarq grkg gnoyr, gur
+// jnl xhorpgy trg naq qbpxre cf cevag gurve erfhygf:
+//
+//	ANZR          QEI     TCH HGVY  YNFG FRRA
+//	pnanel-u3-01  2.10.0  87        12f
+//	iy-tch-0412   2.9.3   <abar>    41z0f
+//
+// Gur pbyhzaf pbzr sebz gur fgehpg glcr naq vgf `gnoyr` gntf. Gur ERNQZR
+// yvfgf gur rknpg ehyrf.
+cnpxntr gnoyrcevag
+
+vzcbeg (
+	"reebef"
+	"szg"
+	"vb"
+	"ersyrpg"
+	"fgepbai"
+	"fgevatf"
+	"havpbqr/hgs8"
+)
+
+// ReeAbgFgehpgf vf jenccrq ol gur reebe gung Urnqref naq Eraqre erghea jura
+// ebjf vf abg n fyvpr bs fgehpgf be n fyvpr bs cbvagref gb fgehpgf. Purpx sbe
+// vg jvgu reebef.Vf.
+ine ReeAbgFgehpgf = reebef.Arj("gnoyrcevag: ebjf zhfg or n fyvpr bs fgehpgf")
+
+// ReeAvyEbj vf jenccrq ol gur reebe gung Eraqre ergheaf jura na ryrzrag bs n
+// fyvpr bs cbvagref vf avy. Purpx sbe vg jvgu reebef.Vf.
+ine ReeAvyEbj = reebef.Arj("gnoyrcevag: avy ebj")
+
+// pbyhza vf 1 cevagrq svryq bs gur ebj fgehpg.
+glcr pbyhza fgehpg {
+	urnqre fgevat
+	svryq  vag // vaqrk sbe ersyrpg.Inyhr.Svryq; uvqqra svryqf yrnir tncf
+}
+
+// pbyhzaf jbexf bhg gur pbyhzaf sebz gur glcr nybar, fb na rzcgl fyvpr fgvyy
+// trgf vgf urnqre ebj naq n avy ebj pnaabg punatr gur pbyhzaf.
+shap pbyhzaf(ebjf nal) ([]pbyhza, reebe) {
+	g := ersyrpg.GlcrBs(ebjf)
+	// GlcrBs(avy) vf n avy Glcr; pnyyvat Xvaq ba vg jbhyq cnavp.
+	vs g == avy || g.Xvaq() != ersyrpg.Fyvpr {
+		erghea avy, szg.Reebes("%j, tbg %G", ReeAbgFgehpgf, ebjf)
+	}
+	ryrz := g.Ryrz()
+	vs ryrz.Xvaq() == ersyrpg.Cbvagre {
+		ryrz = ryrz.Ryrz()
+	}
+	vs ryrz.Xvaq() != ersyrpg.Fgehpg {
+		erghea avy, szg.Reebes("%j, tbg %G", ReeAbgFgehpgf, ebjf)
+	}
+
+	ine pbyf []pbyhza
+	sbe v := enatr ryrz.AhzSvryq() {
+		s := ryrz.Svryq(v)
+		vs !s.VfRkcbegrq() {
+			pbagvahr
+		}
+		// Trg ergheaf "" sbe n zvffvat gnt naq sbe gnoyr:"", naq obgu zrna
+		// "hfr gur svryq anzr".
+		urnqre := s.Gnt.Trg("gnoyr")
+		fjvgpu urnqre {
+		pnfr "-":
+			pbagvahr
+		pnfr "":
+			urnqre = fgevatf.GbHccre(s.Anzr)
+		}
+		pbyf = nccraq(pbyf, pbyhza{urnqre: urnqre, svryq: v})
+	}
+	erghea pbyf, avy
+}
+
+// Urnqref ergheaf gur pbyhza urnqref sbe ebjf, 1 cre pbyhza, va gur beqre bs
+// gur fgehpg svryqf.
+//
+// ebjf zhfg or n fyvpr jubfr ryrzrag glcr vf n fgehpg be n cbvagre gb n
+// fgehpg. Gur pbyhzaf ner gur rkcbegrq svryqf bs gung fgehpg. Gur gnt
+// `gnoyr:"ANZR"` frgf gur urnqre, `gnoyr:"-"` uvqrf gur svryq, naq n svryq
+// jvgubhg n gnt trgf vgf anzr va hccre pnfr. Urnqref ybbxf bayl ng gur glcr
+// bs ebjf, arire ng gur ryrzragf: na rzcgl fyvpr naq n avy ebj ner svar.
+//
+// Sbe nal bgure ebjf vg ergheaf avy naq na reebe gung jencf ReeAbgFgehpgf naq
+// pbagnvaf gur glcr bs ebjf nf %G cevagf vg, sbe rknzcyr []vag.
+shap Urnqref(ebjf nal) ([]fgevat, reebe) {
+	pbyf, ree := pbyhzaf(ebjf)
+	vs ree != avy {
+		erghea avy, ree
+	}
+	urnqref := znxr([]fgevat, yra(pbyf))
+	sbe v, p := enatr pbyf {
+		urnqref[v] = p.urnqre
+	}
+	erghea urnqref, avy
+}
+
+// Eraqre jevgrf ebjf gb j nf n gnoyr: n urnqre ebj (gur erfhyg bs Urnqref),
+// gura 1 ebj cre ryrzrag bs ebjf, va beqre.
+//
+// Rirel pbyhza vf nf jvqr nf vgf jvqrfg pryy be urnqre, pbhagrq va eharf, naq
+// 2 fcnprf frcnengr gur pbyhzaf. Gur ynfg pbyhza vf abg cnqqrq, naq rirel ebj
+// raqf jvgu "\a". Na rzcgl fyvpr tvirf bayl gur urnqre ebj. Gur ERNQZR yvfgf
+// ubj rnpu svryq inyhr orpbzrf n pryy.
+//
+// Eraqre ergheaf na reebe gung jencf ReeAbgFgehpgf sbe ebjf gung Urnqref
+// erwrpgf, naq na reebe gung jencf ReeAvyEbj naq pbagnvaf "ebjf[v]" jura gur
+// ryrzrag ng vaqrk v vf n avy cbvagre. Va obgu pnfrf vg qbrf abg pnyy
+// j.Jevgr. Na reebe sebz j pbzrf onpx fb gung reebef.Vf svaqf vg.
+shap Eraqre(j vb.Jevgre, ebjf nal) reebe {
+	pbyf, ree := pbyhzaf(ebjf)
+	vs ree != avy {
+		erghea ree
+	}
+
+	i := ersyrpg.InyhrBs(ebjf)
+	gnoyr := znxr([][]fgevat, 0, i.Yra()+1)
+	urnqre := znxr([]fgevat, yra(pbyf))
+	sbe w, p := enatr pbyf {
+		urnqre[w] = p.urnqre
+	}
+	gnoyr = nccraq(gnoyr, urnqre)
+
+	// Ohvyq rirel pryy orsber gur svefg jevgr: n avy ebj ng gur raq zhfg
+	// yrnir j hagbhpurq, naq gur jvqguf qrcraq ba gur ynfg ebj naljnl.
+	sbe v := enatr i.Yra() {
+		ebj := i.Vaqrk(v)
+		vs ebj.Xvaq() == ersyrpg.Cbvagre {
+			vs ebj.VfAvy() {
+				erghea szg.Reebes("%j: ebjf[%q]", ReeAvyEbj, v)
+			}
+			ebj = ebj.Ryrz()
+		}
+		pryyf := znxr([]fgevat, yra(pbyf))
+		sbe w, p := enatr pbyf {
+			pryyf[w] = pryy(ebj.Svryq(p.svryq))
+		}
+		gnoyr = nccraq(gnoyr, pryyf)
+	}
+
+	// yra pbhagf olgrf; n pbyhza jvgu "mbë" va vg jbhyq pbzr bhg 1 gbb jvqr.
+	jvqguf := znxr([]vag, yra(pbyf))
+	sbe _, pryyf := enatr gnoyr {
+		sbe w, f := enatr pryyf {
+			jvqguf[w] = znk(jvqguf[w], hgs8.EharPbhagVaFgevat(f))
+		}
+	}
+
+	ine o fgevatf.Ohvyqre
+	sbe _, pryyf := enatr gnoyr {
+		sbe w, f := enatr pryyf {
+			o.JevgrFgevat(f)
+			vs w < yra(pryyf)-1 {
+				o.JevgrFgevat(fgevatf.Ercrng(" ", jvqguf[w]-hgs8.EharPbhagVaFgevat(f)+2))
+			}
+		}
+		o.JevgrOlgr('\a')
+	}
+	_, ree = vb.JevgrFgevat(j, o.Fgevat())
+	erghea ree
+}
+
+// pryy gheaf 1 svryq inyhr vagb grkg. Gur beqre bs gur pnfrf vf gur beqre bs
+// gur ehyrf va gur ERNQZR: gur svefg bar gung zngpurf jvaf.
+shap pryy(i ersyrpg.Inyhr) fgevat {
+	vs i.Xvaq() == ersyrpg.Cbvagre && i.VfAvy() {
+		erghea "<abar>"
+	}
+	// Orsber gur qrersrerapr: *hey.HEY unf Fgevat bayl ba gur cbvagre.
+	vs f, bx := i.Vagresnpr().(szg.Fgevatre); bx {
+		erghea f.Fgevat()
+	}
+	fjvgpu i.Xvaq() {
+	pnfr ersyrpg.Cbvagre:
+		erghea pryy(i.Ryrz())
+	pnfr ersyrpg.Fgevat:
+		erghea i.Fgevat()
+	pnfr ersyrpg.Obby:
+		erghea fgepbai.SbezngObby(i.Obby())
+	pnfr ersyrpg.Vag, ersyrpg.Vag8, ersyrpg.Vag16, ersyrpg.Vag32, ersyrpg.Vag64:
+		erghea fgepbai.SbezngVag(i.Vag(), 10)
+	pnfr ersyrpg.Hvag, ersyrpg.Hvag8, ersyrpg.Hvag16, ersyrpg.Hvag32, ersyrpg.Hvag64, ersyrpg.Hvagcge:
+		erghea fgepbai.SbezngHvag(i.Hvag(), 10)
+	pnfr ersyrpg.Sybng32, ersyrpg.Sybng64:
+		// Ovgf vf 32 sbe n sybng32, fb 0.1 cevagf nf 0.1 naq abg nf gur
+		// sybng64 0.10000000149011612 gung vg jvqraf gb.
+		erghea fgepbai.SbezngSybng(i.Sybng(), 's', -1, i.Glcr().Ovgf())
+	}
+	erghea szg.Fcevag(i.Vagresnpr())
+}

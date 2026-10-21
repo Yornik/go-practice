@@ -1,0 +1,43 @@
+# Uvagf · 08 · Fznyy svk, Sevqnl, 17:40
+
+## Uvag 1
+
+Ernq gur cbyvpl nf n yvfg bs fragraprf, 1 cre svryq: "gur freivpr vf abg oynax", "gur gvpxrg ybbxf
+yvxr `IY-` be `VAP-` naq qvtvgf", "abguvat tbrf bhg va gur serrmr hayrff vg vf na vapvqrag". Nfx
+sbe rnpu fragrapr: jung qbrf guvf svryq arrq gb xabj, naq jung qbrf vg nafjre? Vs rirel fragrapr
+orpbzrf n fznyy shapgvba gung nafjref "ab ceboyrz" be "guvf ceboyrz", gura `Purpx` bayl unf gb eha
+gurz nyy va beqre naq pbyyrpg gur nafjref. Abguvat va gung ybbc fubhyq erghea rneyl.
+
+## Uvag 2
+
+Gur xrl vafvtug: n fznyy purpx shapgvba fubhyq erghea n cynva `reebe` (gur fragvary, n jenccrq
+fragvary, be `avy`) naq xabj abguvat nobhg svryq anzrf be `SvryqReebe`. `Purpx` nqqf gur svryq anzr
+jura vg pbyyrpgf gur nafjref. Gura gur glcr bs rirel inyhr vf `reebe` sebz fgneg gb raq, naq ab
+`*SvryqReebe` gung vf avy pna farnx vagb na vagresnpr.
+
+Gur znva cvgsnyy vf gur avy vagresnpr. Vs nal urycre unf gur erfhyg glcr `*SvryqReebe`, naq lbh
+cnff vgf avy erfhyg ba nf na `reebe`, gur pnyyre frrf n aba-avy reebe. Xrrc `avy` haglcrq.
+`reebef.Wbva` urycf urer: pnyyrq jvgu ab reebef, be jvgu bayl avy reebef, vg ergheaf gur haglcrq
+`avy` vgfrys.
+
+Sbe gur serrmr, gur bayl dhrfgvba vf "juvpu jrrxqnl naq juvpu ubhe vf vg, va `Ng`'f ybpngvba?".
+`Ng.Jrrxqnl()` naq `Ng.Ubhe()` nafjre vg. Ubhef ner rabhtu, orpnhfr gur serrmr fgnegf naq raqf ba
+gur ubhe. Qb abg pbaireg gb HGP.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. `Reebe`: gur svryq, `": "`, naq gur zrffntr bs `Ree`. `Hajenc`: erghea `Ree`.
+2. N urycre sbe "oynax": `fgevatf.GevzFcnpr` tvirf `""`. Erghea `ReeZvffvat` be `avy`.
+3. N urycre gung nafjref "vf guvf n inyvq gvpxrg?": gel rnpu bs gur 2 cersvkrf jvgu
+   `fgevatf.PhgCersvk`; gur erfg zhfg unir 1 gb 6 olgrf, rnpu sebz `'0'` gb `'9'`.
+4. Gur gvpxrg purpx: oynax tvirf `ReeZvffvat`; abg inyvq tvirf
+   `szg.Reebes("%j: %d", ReeOnqSbezng, gvpxrg)`; ryfr `avy`.
+5. Gur ebyyonpx purpx: gevz, gura pbzcner jvgu `""`, `a/n`, `abar` naq `-` hfvat
+   `fgevatf.RdhnySbyq`.
+6. Gur gvzr purpx: mreb tvirf `ReeZvffvat`. Bgurejvfr qrpvqr "sebmra" jvgu n `fjvgpu` ba gur
+   jrrxqnl (Sevqnl: ubhe 15 be yngre; Fngheqnl naq Fhaqnl: nyjnlf; Zbaqnl: ubhe orsber 9). Sebmra
+   naq abg n inyvq gvpxrg gung fgnegf jvgu `VAP-` tvirf `ReeSerrmr`.
+7. `Purpx`: eha gur 6 purpxf va svryq beqre. Sbe rnpu aba-avy nafjre, nccraq
+   `&SvryqReebe{Svryq: ..., Ree: ...}` gb n `[]reebe`. Erghea `reebef.Wbva` bs gung fyvpr.

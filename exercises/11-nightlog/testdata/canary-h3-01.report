@@ -1,0 +1,6 @@
+lines:     627
+malformed: 3
+first:     2026-10-16T00:00:01Z
+last:      2026-10-16T06:59:58Z
+levels:    DEBUG=6 ERROR=3 INFO=607 WARN=6
+gap:       2026-10-16T03:12:09Z to 2026-10-16T03:59:41Z (47m32s)

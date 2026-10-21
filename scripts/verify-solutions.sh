@@ -9,7 +9,7 @@
 #
 # Usage: scripts/verify-solutions.sh [exercise ...]
 #   scripts/verify-solutions.sh                  # all exercises
-#   scripts/verify-solutions.sh 07-retry         # one exercise
+#   scripts/verify-solutions.sh 32-retry         # one exercise
 set -euo pipefail
 
 root=$(cd "$(dirname "$0")/.." && pwd)

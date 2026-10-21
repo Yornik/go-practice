@@ -1,0 +1,46 @@
+# Uvagf · 03 · Jnf vg Shfr? Pbhag gur cntrf
+
+## Uvag 1
+
+Fgneg sebz gur gnoyr lbh arrq, abg sebz gur vachg. Jung vf 1 ebj bs gur erfhyg, naq jung znxrf
+2 ebjf qvssrerag? Gung guvat vf gur xrl lbh tebhc ol. Sbe `Enax` vg vf gur nyreg; sbe
+`PbhagCnvef` vg vf gur nyreg naq gur fbhepr gbtrgure. Gura nfx, cre pbyhza: vf vg n pbhag (n
+ahzore gung tbrf hc ol 1), be n pbyyrpgvba bs qvfgvapg guvatf (jurer n frpbaq pbcl zhfg abg pbhag
+gjvpr)? Tb unf 1 gbby gung qbrf obgu wbof, qrcraqvat ba gur inyhr glcr lbh tvir vg.
+
+Sbe `CnefrCntr`, jevgr qbja 10 gvzrf ba cncre orsber lbh jevgr pbqr: 5 tbbq barf naq 5 gung ner
+nyzbfg tbbq (`3:12`, `24:00`, `12:60`, `+1:00`, `12:+5`). Gura ernq gur qbpf bs `fgepbai.Ngbv`
+naq purpx juvpu bs lbhe onq gvzrf vg npprcgf.
+
+## Uvag 2
+
+Gur xrl vafvtug: n znc tvirf lbh vgf xrlf va n enaqbz beqre, ba checbfr, naq vg punatrf sebz eha gb
+eha. Fb ohvyq gur pbhagf va zncf, gura pbcl gurz vagb n fyvpr naq fbeg gung fyvpr ng gur raq. Gur
+fbeg zhfg qrpvqr rirel gvr, qbja gb n xrl gung vf havdhr cre ebj (gur nyreg anzr), be 2 ehaf tvir
+2 qvssrerag gnoyrf. Gur fnzr ubyqf sbe `Fbheprf`: pbyyrpg gurz va n frg (n znc jubfr xrlf ner gur
+fbheprf), naq fbeg gur xrlf jura lbh ohvyq gur erfhyg.
+
+Gur znva cvgsnyy va `CnefrCntr`: `fgepbai.Ngbv` npprcgf n fvta, fb `+1:00` naq `12:+5` ybbx yvxr
+svar ahzoref gb vg. Purpx gung rirel olgr vf n qvtvg orsber lbh pbaireg.
+
+N fznyyre cvgsnyy va `Enax`: jvgu `znc[fgevat]NyregPbhag`, `z[nyreg].Cntrf++` qbrf abg pbzcvyr.
+Xrrc n cbvagre va gur znc, be pbcl gur fgehpg bhg, punatr vg naq fgber vg onpx.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. `CnefrCntr`: fcyvg jvgu `fgevatf.Svryqf`. Abg 4 svryqf: erghea gur mreb `Cntr` naq na reebe
+   jvgu gur yvar va `%d`. Purpx gur gvzr: yratgu 5, n `:` ng vaqrk 2, qvtvgf ng gur 4 bgure
+   vaqrkrf. Pbaireg gur 2 unyirf jvgu `fgepbai.Ngbv` naq purpx gur enatrf 0–23 naq 0–59. Ohvyq gur
+   `Cntr` sebz gur 4 svryqf.
+2. `Enax`, gur pbhagf: 1 znc sebz gur nyreg gb n fznyy fgehpg (be n cbvagre gb bar) jvgu gur cntr
+   pbhag, gur avtug pbhag naq n `znc[fgevat]obby` bs fbheprf. Ybbc bire gur cntrf bapr. Avtug vf
+   `ubhe >= 22 || ubhe < 7`.
+3. `Enax`, gur erfhyg: znxr n fyvpr, ybbc bire gur znc, naq nccraq 1 `NyregPbhag` cre nyreg. Vgf
+   `Fbheprf` vf gur fbegrq xrlf bs gur fbhepr frg: `fyvprf.Fbegrq(zncf.Xrlf(frg))`.
+4. `Enax`, gur beqre: `fyvprf.FbegShap` jvgu n pbzcner shapgvba znqr bs `pzc.Be` naq 3
+   `pzc.Pbzcner` pnyyf. Sbe "zbfg svefg", cnff `o` orsber `n`. Fbeg gur arj fyvpr, arire gur
+   vachg.
+5. `PbhagCnvef`: `znxr` gur znc svefg, fb gung vg vf arire avy, gura
+   `z[Cnve{...}]++` sbe rirel cntr.

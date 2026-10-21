@@ -1,6 +1,6 @@
 # go-practice
 
-25 Go exercises of increasing difficulty. Each one is a task from the daily work of a reliability engineer (SRE / CRE): parse logs, compute SLO burn rates, retry with backoff, rate-limit clients, shed load, check TLS certificates, run a reconcile loop, balance traffic. You solve them without an LLM. Each exercise has a spec, a stub and tests. Hints, concept explanations and reference solutions are hidden in `solutions/` with ROT13, so you see them only when you decide to.
+50 Go exercises of increasing difficulty. Each one is a task from the daily work of a reliability engineer (SRE / CRE): count log levels, compare versions, find the nodes that went dark, parse logs, compute SLO burn rates, retry with backoff, rate-limit clients, check TLS certificates, run a reconcile loop, balance traffic. You solve them without an LLM. Each exercise has a spec, a stub and tests. Hints, concept explanations and reference solutions are hidden in `solutions/` with ROT13, so you see them only when you decide to.
 
 ## Documents
 
@@ -10,20 +10,28 @@
 | `exercises/NN-name/*_test.go` | You want the exact expected behaviour. The tests are the executable spec. |
 | `solutions/NN-name/` | You are stuck, or you are done and want to compare. Read it with `peek` (see below). |
 
+## The story
+
+The exercises follow 1 story. You are the new junior SRE at Vesper Labs, an AI lab in the city of Meridian. Vesper Labs sells HUSH, an AI that holds the pager for other companies, and the lab has 1 rule, etched in the lobby glass: no AI writes the code that watches the AI. In this course that rule is rule 1: you solve the exercises without an LLM, because the practice is the point, and the practice is yours. It is not a verdict on AI tools at work. At your job, use the tools your team trusts. Or, as Vesper Labs' CEO puts it: "We do not ask HUSH to write its own cage. It would do a beautiful job, and it would keep a key."
+
+HUSH is very polite and very sure of itself, and over 2 years the tools you write by hand decide whether Meridian's pagers keep telling the truth. Tiers 1 to 5 are your first 4 months there. Tiers 6 to 10 are year 2, and they end on the night the clocks go back. The story lives in the first paragraph of each exercise and in its data. The Task, Rules and tests are exact and plain.
+
 ## Why this exists
 
 An LLM can write the code for each of these tasks in seconds. If it always does, a set of skills fades: breaking a vague task into steps, choosing a data structure, reading the docs until you understand a function, and debugging from a failing test to the cause. These exercises train exactly those skills. The tasks are real: you meet each of them in production work, and none of them is a puzzle with a trick. The difficulty comes from the problem itself.
 
-The explanations assume that you can program and know basic Go syntax. They do not explain loops, structs or maps. They explain the Go semantics that cause bugs, the design choices, and how production systems solve the same problem.
+Tiers 1 to 5 assume that you can program and did [A Tour of Go](https://go.dev/tour/) once. Their explanations also cover Go basics where a bug hides in them, such as map order, slices that share memory and pointer receivers. Tiers 6 to 10 assume that you write Go fluently. Their explanations do not explain loops, structs or maps. All explanations cover the Go semantics that cause bugs, the design choices, and how production systems solve the same problem.
 
 ## Start here
 
 1. Make sure you have Go 1.24 or later: `go version`.
 2. Make sure the race detector works. On Linux and Windows `-race` needs cgo and a C compiler (`sudo apt install gcc`, `sudo dnf install gcc`, or MinGW-w64 on Windows). On Linux and Windows, `go env CGO_ENABLED` must print `1`. macOS needs nothing extra.
-3. If basic Go syntax is new to you, do [A Tour of Go](https://go.dev/tour/) first.
+3. If basic Go syntax is new to you, do [A Tour of Go](https://go.dev/tour/) first. Tier 1 starts right after it.
 4. Create your own branch for your work: `git switch -c my-solutions`. To get fixes to the course later, run `git pull origin main`.
-5. Run the first tests: `go test ./exercises/01-logfmt/`. They fail with `panic: TODO: implement`. That is expected.
-6. Open `exercises/01-logfmt/README.md` and edit `exercises/01-logfmt/logfmt.go`.
+5. Run the first tests: `go test ./exercises/01-loglevels/`. They fail with `panic: TODO: implement`. That is expected.
+6. Open `exercises/01-loglevels/README.md` and edit `exercises/01-loglevels/loglevels.go`.
+
+If you write Go fluently, you can start at tier 6 (`exercises/26-logfmt/`). Skim the openings of 01 to 25 for the story.
 
 An exercise is done when `go test -race -count=1 ./exercises/NN-name/` prints `ok`. To start an exercise again, run `git restore --source=origin/main exercises/NN-name/`. A plain `git restore exercises/NN-name/` only drops changes that you did not commit.
 
@@ -46,11 +54,11 @@ The goal is to train the part of your brain that solves problems. Prompting is a
 3. Work 2 small examples by hand, on paper.
 4. Write down the state your code must keep and what must always be true about it (the invariants).
 5. Write the simplest version that can pass 1 test.
-6. Run 1 test at a time: `go test -run TestParseQuotedValues -v ./exercises/01-logfmt/`.
+6. Run 1 test at a time: `go test -run TestParseQuotedValues -v ./exercises/26-logfmt/`.
 7. Make it correct. Then make it clean.
 8. If the exercise has goroutines, run the tests with `-race`.
 9. Read the explanation and the walkthrough. Compare them with your solution.
-10. Write down the time you spent, the hints you used and where you got stuck. Over 25 exercises this log shows your progress.
+10. Write down the time you spent, the hints you used and where you got stuck. Over 50 exercises this log shows your progress.
 
 ## A problem-solving checklist
 
@@ -75,57 +83,87 @@ If you are stuck:
 
 ## The exercises
 
-Work them in order. Each tier assumes the concepts of the tiers before it. The times are for a medior engineer who works without an LLM. Together they are about 73 hours, which is about 3 months at 2 sessions a week.
+Work them in order. Each tier assumes the concepts of the tiers before it. The times in tiers 1 to 5 are for an engineer who did A Tour of Go once. The times in tiers 6 to 10 are for a medior engineer. Both work without an LLM. Together they are about 108 hours, which is about 5 months at 2 sessions a week.
 
-| Tier | Exercises | Theme |
-|---|---|---|
-| 1 | 01–03 | Warm-up: Go idioms on real data |
-| 2 | 04–09 | Streams, state, time, types, errors and locks |
-| 3 | 10–14 | Algorithms on real data, your own goroutines |
-| 4 | 15–19 | Services, protocols and alerting logic |
-| 5 | 20–25 | Distributed-systems building blocks |
+| Tier | Exercises | Name | Theme |
+|---|---|---|---|
+| 1 | 01–05 | Badge In | Go basics on small real tasks: strings, maps, slices and sorting |
+| 2 | 06–10 | The Key | Types with methods, errors you can inspect, enums, time values, text as bytes |
+| 3 | 11–15 | Hand Tools | Readers and writers, closures, float math, binary search, a testable command |
+| 4 | 16–20 | Surge | Interfaces the standard library calls, generics, `reflect`, goroutines and a mutex |
+| 5 | 21–25 | Dead Air | `context`, an injected clock, eviction, and hand-written scanners with typed errors |
+| 6 | 26–28 | Forensics | Warm-up: Go idioms on real data |
+| 7 | 29–34 | Containment | Streams, state, time, types, errors and locks |
+| 8 | 35–39 | Blast Radius | Algorithms on real data, your own goroutines |
+| 9 | 40–44 | Clean Signal | Services, protocols and alerting logic |
+| 10 | 45–50 | The Key Turns | Distributed-systems building blocks |
 
 The "Go you practice" column names the topics, not the approach. Finding the approach is part of each exercise.
 
 | # | Exercise | Tier | Time | Go you practice | The real-life skill |
 |---|---|---|---|---|---|
-| 01 | [Parse logfmt log lines](exercises/01-logfmt/) | 1 | 1.5 h | a byte scanner, custom error types, `errors.Is`/`As`, `iota` enums | parse logs that `strings.Split` breaks |
-| 02 | [Find the endpoints that hurt](exercises/02-accesslog/) | 1 | 1 h | maps of structs, `slices.SortFunc`, `cmp` | incident triage, label cardinality |
-| 03 | [Percentiles and histogram quantiles](exercises/03-latency/) | 1 | 1.5 h | slice aliasing, sorting, float math, binary search | p99 versus `histogram_quantile` |
-| 04 | [Streaming log filter with context](exercises/04-grep/) | 2 | 2.5 h | `io.Reader`/`io.Writer`, `bufio.Scanner`, error paths | `grep -C` on huge logs in constant memory |
-| 05 | [Error budgets and burn-rate alerts](exercises/05-slo/) | 2 | 1.5 h | float precision, time windows, pure functions | SLO burn-rate alerting |
-| 06 | [Typed config from the environment](exercises/06-envconfig/) | 2 | 2.5 h | `reflect`, struct tags, `errors.Join` | twelve-factor config, masked secrets |
-| 07 | [Retries with backoff, jitter and context](exercises/07-retry/) | 2 | 2.5 h | `context`, timers, error wrapping, generics | safe retries, `Retry-After` |
-| 08 | [Token bucket and per-client limits](exercises/08-ratelimit/) | 2 | 2 h | `sync.Mutex`, an injected clock, map eviction | API rate limiting |
-| 09 | [Cache: generic LRU with TTL](exercises/09-cache/) | 2 | 2 h | generics, O(1) data structures, callbacks and locks | bounded caches with expiry |
-| 10 | [Deploy order, waves and blast radius](exercises/10-deployorder/) | 3 | 2.5 h | graphs: ordering, cycles, reachability | sync waves, impact analysis |
-| 11 | [Make sense of a distributed trace](exercises/11-tracetree/) | 3 | 2.5 h | trees from flat data, recursion, time intervals | trace analysis, critical path |
-| 12 | [Worker pool: bounded parallelism, ordered results, fail fast](exercises/12-workerpool/) | 3 | 2.5 h | goroutines, `sync.WaitGroup`, semaphores, cancellation | fan-out without goroutine leaks |
-| 13 | [Merge logs from many pods in time order](exercises/13-logmerge/) | 3 | 2.5 h | `iter.Seq`, range-over-func, cleanup on early exit | merge pod logs like `stern` |
-| 14 | [Circuit breaker: stop hammering a dead dependency](exercises/14-circuitbreaker/) | 3 | 3.5 h | state machines, lock scope, late results | stop cascading failures |
-| 15 | [Health checks: /livez, /readyz and graceful shutdown](exercises/15-healthcheck/) | 4 | 3 h | `net/http`, `httptest`, JSON, `Server.Shutdown` | Kubernetes probes, zero-downtime rollouts |
-| 16 | [HTTP middleware that operators need](exercises/16-middleware/) | 4 | 3 h | decorators, wrapping `http.ResponseWriter`, `log/slog` | request IDs, access logs, load shedding |
-| 17 | [Parse Prometheus metrics and compute rates](exercises/17-promtext/) | 4 | 4.5 h | a line lexer, `strconv.ParseFloat`, canonical keys | debug exporters, `rate()` with counter resets |
-| 18 | [TLS certificate expiry checker](exercises/18-certcheck/) | 4 | 3 h | `crypto/tls`, `crypto/x509`, `errors.As`, deadlines | catch expiring certificates, intermediates too |
-| 19 | [Alert dedup, grouping and inhibition](exercises/19-alertgroup/) | 4 | 4 h | canonical keys, hashing, simulated time | how Alertmanager groups and mutes alerts |
-| 20 | [Singleflight: stop the cache stampede](exercises/20-singleflight/) | 5 | 3 h | waking many waiters, panics across goroutines, shared lifetimes | protect a database from a stampede |
-| 21 | [Broadcaster: watch streams with slow consumers](exercises/21-broadcaster/) | 5 | 3.5 h | channel ownership, close protocols, ring buffers | watch streams, slow consumers, 410 Gone |
-| 22 | [A Kubernetes-style controller](exercises/22-reconciler/) | 5 | 4 h | `sync.Cond`, a work queue, fakes for failure injection | reconcile loops, optimistic concurrency |
-| 23 | [Leader election: leases and fencing tokens](exercises/23-leaderelection/) | 5 | 4 h | functional core, compare-and-swap, context trees | 1 active replica, safe failover |
-| 24 | [Crash-safe disk buffer for a log shipper](exercises/24-diskbuffer/) | 5 | 4.5 h | `encoding/binary`, CRC-32C, `fsync`, atomic rename | durable buffering, crash recovery |
-| 25 | [Capstone: a health-aware load balancer](exercises/25-loadbalancer/) | 5 | 6 h | `httputil.ReverseProxy`, atomics, goroutines bound to a context | what Envoy and NGINX do for you |
+| 01 | [Zero errors since March](exercises/01-loglevels/) | 1 | 1 h | `strings`, maps, `switch` | count log levels that every service spells differently |
+| 02 | [All quiet, 8599 times](exercises/02-repeated/) | 1 | 1 h | slices, `append`, maps, nil and empty slices | collapse log noise before you read it |
+| 03 | [Was it Fuse? Count the pages](exercises/03-pagenoise/) | 1 | 1.5 h | maps as counters and sets, struct keys, `slices.SortFunc`, `cmp` | alert-fatigue review |
+| 04 | [The canary got the update twice](exercises/04-waves/) | 1 | 1.5 h | slices share backing arrays, `copy`, `slices.Clone` | rollouts in waves with a canary |
+| 05 | [$$ is not part of the password](exercises/05-envfile/) | 1 | 2 h | string rules, maps, errors with line numbers | read config as data, not as code |
+| 06 | [Agent v2.10 is newer than v2.9](exercises/06-semver/) | 2 | 1 h | methods, `String()`, compare functions, sentinel errors | compare versions in rollout scripts |
+| 07 | [Which nodes went dark?](exercises/07-rollcall/) | 2 | 1 h | `time.Parse`, comparing `time.Time`, sets, passing `now` in | heartbeat checks, `absent()` alerts |
+| 08 | [Small fix, Friday, 17:40](exercises/08-deploynote/) | 2 | 1 h | custom error types, `errors.As`, `errors.Join` | deploy gates that report every problem |
+| 09 | [Status: fine (it was not)](exercises/09-statuspage/) | 2 | 1.5 h | `iota`, `String()`, pointer receivers, the zero value | status pages and worst-of aggregation |
+| 10 | [The moon emoji broke Android](exercises/10-pushtext/) | 2 | 1.5 h | bytes vs runes, `unicode/utf8`, `strings.Builder` | byte limits on text, error positions |
+| 11 | [The log line that is not there](exercises/11-nightlog/) | 3 | 1.5 h | `io.Reader`, `bufio.Scanner`, `io.Writer`, `testing/iotest` | summarise a log you cannot open; find the silences |
+| 12 | [1 filter, not 6 greps](exercises/12-linefilter/) | 3 | 1.5 h | function types, closures, variadic functions | composable log filters and sampling |
+| 13 | [The refund call at 10:00](exercises/13-nines/) | 3 | 1.5 h | float64, `NaN` and `Inf`, `time.Duration`, intervals | SLA arithmetic and real downtime |
+| 14 | [2048 builds, 1 bad commit](exercises/14-bisect/) | 3 | 1 h | binary search, `sort.Search`, functions as parameters | `git bisect`, lookups by time |
+| 15 | [The disk check that said OK](exercises/15-checkdisk/) | 3 | 2 h | `flag.FlagSet`, a testable `Run`, exit codes | Nagios-style check plugins |
+| 16 | [The password that would not print](exercises/16-redact/) | 4 | 1.5 h | interfaces that `fmt`, `json` and `slog` look for, `net/url` | keep secrets out of logs and JSON |
+| 17 | [The last 500 events before the crash](exercises/17-flightrec/) | 4 | 1 h | generics, `comparable`, the zero value of a type parameter | in-memory flight recorders |
+| 18 | [After the second curly brace](exercises/18-tableprint/) | 4 | 2 h | `reflect`, struct tags, `fmt.Stringer` | table output for any type |
+| 19 | [Check all 12 at once](exercises/19-fanout/) | 4 | 1 h | goroutines, `sync.WaitGroup`, `recover`, closing a channel | parallel health checks without leaks |
+| 20 | [Concurrent map writes at 11:58](exercises/20-counters/) | 4 | 1.5 h | `sync.Mutex`, `-race`, lock scope | safe counters, scrape and reset |
+| 21 | [sleep 300 is not a rollout check](exercises/21-rollout/) | 5 | 1.5 h | channels, `select`, `context` | `kubectl rollout status`, progress deadlines |
+| 22 | [Do not page me for a cat](exercises/22-alertstate/) | 5 | 1 h | an `iota` state type, an injected clock | Prometheus `for` and `keep_firing_for` |
+| 23 | [A silence until 2036](exercises/23-silences/) | 5 | 1.5 h | a mutex with a clock, map eviction, callbacks outside a lock | alert silences that expire |
+| 24 | [2d means 2 days](exercises/24-durations/) | 5 | 2 h | a byte scanner, overflow checks, an error type with `Unwrap` | duration flags with days and weeks |
+| 25 | [Log lines from next year](exercises/25-syslog/) | 5 | 2 h | byte positions, `time.Parse` layouts, an `iota` enum, `errors.As` | RFC 3164 syslog, the missing year |
+| 26 | [Parse logfmt log lines](exercises/26-logfmt/) | 6 | 1.5 h | a byte scanner, custom error types, `errors.Is`/`As`, `iota` enums | parse logs that `strings.Split` breaks |
+| 27 | [Find the endpoints that hurt](exercises/27-accesslog/) | 6 | 1 h | maps of structs, `slices.SortFunc`, `cmp` | incident triage, label cardinality |
+| 28 | [Percentiles and histogram quantiles](exercises/28-latency/) | 6 | 1.5 h | slice aliasing, sorting, float math, binary search | p99 versus `histogram_quantile` |
+| 29 | [Streaming log filter with context](exercises/29-grep/) | 7 | 2.5 h | `io.Reader`/`io.Writer`, `bufio.Scanner`, error paths | `grep -C` on huge logs in constant memory |
+| 30 | [Error budgets and burn-rate alerts](exercises/30-slo/) | 7 | 1.5 h | float precision, time windows, pure functions | SLO burn-rate alerting |
+| 31 | [Typed config from the environment](exercises/31-envconfig/) | 7 | 2.5 h | `reflect`, struct tags, `errors.Join` | twelve-factor config, masked secrets |
+| 32 | [Retries with backoff, jitter and context](exercises/32-retry/) | 7 | 2.5 h | `context`, timers, error wrapping, generics | safe retries, `Retry-After` |
+| 33 | [Token bucket and per-client limits](exercises/33-ratelimit/) | 7 | 2 h | `sync.Mutex`, an injected clock, map eviction | API rate limiting |
+| 34 | [Cache: generic LRU with TTL](exercises/34-cache/) | 7 | 2 h | generics, O(1) data structures, callbacks and locks | bounded caches with expiry |
+| 35 | [Deploy order, waves and blast radius](exercises/35-deployorder/) | 8 | 2.5 h | graphs: ordering, cycles, reachability | sync waves, impact analysis |
+| 36 | [Make sense of a distributed trace](exercises/36-tracetree/) | 8 | 2.5 h | trees from flat data, recursion, time intervals | trace analysis, critical path |
+| 37 | [Worker pool: bounded parallelism, ordered results, fail fast](exercises/37-workerpool/) | 8 | 2.5 h | goroutines, `sync.WaitGroup`, semaphores, cancellation | fan-out without goroutine leaks |
+| 38 | [Merge logs from many pods in time order](exercises/38-logmerge/) | 8 | 2.5 h | `iter.Seq`, range-over-func, cleanup on early exit | merge pod logs like `stern` |
+| 39 | [Circuit breaker: stop hammering a dead dependency](exercises/39-circuitbreaker/) | 8 | 3.5 h | state machines, lock scope, late results | stop cascading failures |
+| 40 | [Health checks: /livez, /readyz and graceful shutdown](exercises/40-healthcheck/) | 9 | 3 h | `net/http`, `httptest`, JSON, `Server.Shutdown` | Kubernetes probes, zero-downtime rollouts |
+| 41 | [HTTP middleware that operators need](exercises/41-middleware/) | 9 | 3 h | decorators, wrapping `http.ResponseWriter`, `log/slog` | request IDs, access logs, load shedding |
+| 42 | [Parse Prometheus metrics and compute rates](exercises/42-promtext/) | 9 | 4.5 h | a line lexer, `strconv.ParseFloat`, canonical keys | debug exporters, `rate()` with counter resets |
+| 43 | [TLS certificate expiry checker](exercises/43-certcheck/) | 9 | 3 h | `crypto/tls`, `crypto/x509`, `errors.As`, deadlines | catch expiring certificates, intermediates too |
+| 44 | [Alert dedup, grouping and inhibition](exercises/44-alertgroup/) | 9 | 4 h | canonical keys, hashing, simulated time | how Alertmanager groups and mutes alerts |
+| 45 | [Singleflight: stop the cache stampede](exercises/45-singleflight/) | 10 | 3 h | waking many waiters, panics across goroutines, shared lifetimes | protect a database from a stampede |
+| 46 | [Broadcaster: watch streams with slow consumers](exercises/46-broadcaster/) | 10 | 3.5 h | channel ownership, close protocols, ring buffers | watch streams, slow consumers, 410 Gone |
+| 47 | [A Kubernetes-style controller](exercises/47-reconciler/) | 10 | 4 h | `sync.Cond`, a work queue, fakes for failure injection | reconcile loops, optimistic concurrency |
+| 48 | [Leader election: leases and fencing tokens](exercises/48-leaderelection/) | 10 | 4 h | functional core, compare-and-swap, context trees | 1 active replica, safe failover |
+| 49 | [Crash-safe disk buffer for a log shipper](exercises/49-diskbuffer/) | 10 | 4.5 h | `encoding/binary`, CRC-32C, `fsync`, atomic rename | durable buffering, crash recovery |
+| 50 | [Capstone: a health-aware load balancer](exercises/50-loadbalancer/) | 10 | 6 h | `httputil.ReverseProxy`, atomics, goroutines bound to a context | what Envoy and NGINX do for you |
 
 ## Reveal hints and solutions
 
 Run `peek` from the repository root. From an exercise directory, use `go run ../../cmd/peek` instead. Reveal 1 level at a time.
 
 ```bash
-go run ./cmd/peek 07 hint 1
-go run ./cmd/peek 07 hint 2
-go run ./cmd/peek 07 hint 3
-go run ./cmd/peek 07 explanation | less
-go run ./cmd/peek 07 walkthrough | less
-go run ./cmd/peek 07 solution
+go run ./cmd/peek 32 hint 1
+go run ./cmd/peek 32 hint 2
+go run ./cmd/peek 32 hint 3
+go run ./cmd/peek 32 explanation | less
+go run ./cmd/peek 32 walkthrough | less
+go run ./cmd/peek 32 solution
 ```
 
 | Level | What it gives you |
@@ -140,15 +178,15 @@ go run ./cmd/peek 07 solution
 NOTE: The files are ROT13, not encryption. ROT13 only stops an accidental glance. Without Go, decode a file with `tr`:
 
 ```bash
-tr 'A-Za-z' 'N-ZA-Mn-za-m' < solutions/07-retry/hints.md.rot13
+tr 'A-Za-z' 'N-ZA-Mn-za-m' < solutions/32-retry/hints.md.rot13
 ```
 
 ## Run the tests
 
 ```bash
-go test ./exercises/01-logfmt/
-go test -race ./exercises/12-workerpool/
-go test -run TestParse -v ./exercises/01-logfmt/
+go test ./exercises/26-logfmt/
+go test -race ./exercises/37-workerpool/
+go test -run TestParse -v ./exercises/26-logfmt/
 ```
 
 NOTE: Every stub function panics with `TODO: implement`. A test for code you did not write yet fails with that panic. That is expected. Test 1 exercise at a time, not `./...`. Each exercise README lists the test filters for each step.
@@ -159,13 +197,19 @@ The exercises are libraries, because libraries are easy to test. An SRE ships sm
 
 | Exercise | Tool |
 |---|---|
-| 01-logfmt | A filter on stdin: `logfilter -level warn -match db=orders`. |
-| 02-accesslog | An incident report from an access log file. |
-| 04-grep | Your own `grep -C` with a regular expression. |
-| 13-logmerge | A `stern`-like merge of several log files. |
-| 17-promtext | A `promtool check metrics`-like linter, plus `rate` between 2 scrapes. |
-| 18-certcheck | A cron job that exits with 0 (OK), 1 (warning) or 2 (critical). |
-| 25-loadbalancer | A runnable load balancer with flags for the backends. |
+| 02-repeated | A `collapse` filter on stdin that folds repeated lines. |
+| 11-nightlog | `nightlog -gap 10m < node.log`: a summary of the night and its silences. |
+| 12-linefilter | A `-filter` flag for any log command. |
+| 13-nines | `nines -objective 99.95 outages.csv`: the budget and the real downtime. |
+| 18-tableprint | `tableprint`: aligned columns from JSON lines. |
+| 25-syslog | `syslog2logfmt`: each syslog line as a logfmt line, the input of 26-logfmt. |
+| 26-logfmt | A filter on stdin: `logfilter -level warn -match db=orders`. |
+| 27-accesslog | An incident report from an access log file. |
+| 29-grep | Your own `grep -C` with a regular expression. |
+| 38-logmerge | A `stern`-like merge of several log files. |
+| 42-promtext | A `promtool check metrics`-like linter, plus `rate` between 2 scrapes. |
+| 43-certcheck | A cron job that exits with 0 (OK), 1 (warning) or 2 (critical). |
+| 50-loadbalancer | A runnable load balancer with flags for the backends. |
 
 Write `main` as a thin shell around a function you can test:
 
@@ -196,19 +240,21 @@ This script builds a temporary module from each exercise's tests, its `testdata/
 
 ```bash
 scripts/verify-solutions.sh            # all exercises
-scripts/verify-solutions.sh 07-retry   # 1 exercise
+scripts/verify-solutions.sh 32-retry   # 1 exercise
 ```
 
 ## Change an exercise
 
 ROT13 is its own inverse, so the same `tr` command decodes and encodes.
 
-1. Decode the file you want to change: `tr 'A-Za-z' 'N-ZA-Mn-za-m' < solutions/07-retry/retry.go.rot13 > /tmp/retry.go`.
+1. Decode the file you want to change: `tr 'A-Za-z' 'N-ZA-Mn-za-m' < solutions/32-retry/retry.go.rot13 > /tmp/retry.go`.
 2. Edit the plain file.
-3. Encode it back: `tr 'A-Za-z' 'N-ZA-Mn-za-m' < /tmp/retry.go > solutions/07-retry/retry.go.rot13`.
-4. Run `scripts/verify-solutions.sh 07-retry`.
-5. If you changed a stub or a test, run `scripts/check-stubs.sh 07-retry` on a clean checkout.
+3. Encode it back: `tr 'A-Za-z' 'N-ZA-Mn-za-m' < /tmp/retry.go > solutions/32-retry/retry.go.rot13`.
+4. Run `scripts/verify-solutions.sh 32-retry`.
+5. If you changed a stub or a test, run `scripts/check-stubs.sh 32-retry` on a clean checkout.
 
 ## License
 
 MIT. See [`LICENSE`](LICENSE).
+
+<sub>Vesper Labs, HUSH, Meridian and everybody in this story are fictional. The story exists to make Go practice fun. Any resemblance to real companies, people or events is a coincidence and not intended.</sub>

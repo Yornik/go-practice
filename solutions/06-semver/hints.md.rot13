@@ -1,0 +1,44 @@
+# Uvagf · 06 · Ntrag i2.10 vf arjre guna i2.9
+
+## Uvag 1
+
+Gur oht va gur eryrnfr fpevcg vf gung vg pbzcnerf grkg. Nfx: jung ner gur cnegf bs n irefvba, naq
+jung glcr qbrf rnpu cneg unir? Bapr n gnt vf n fgehpg jvgu 3 `vag` svryqf naq n fgevat, gur beqre
+vf n fubeg yvfg bs ehyrf lbh pna jevgr qbja orsber nal pbqr: juvpu svryq qrpvqrf svefg, jung
+unccraf ba n gvr, naq jung n eryrnfr vf jbegu ntnvafg n cer-eryrnfr. Qb `Cnefr` gur fnzr jnl:
+jevgr gur tenzzne `[i]ZNWBE.ZVABE.CNGPU[-CER]` ba cncre naq znex jurer rnpu cneg fgnegf naq raqf.
+
+## Uvag 2
+
+Gur xrl vafvtug sbe `Cnefr`: ab ahzore znl pbagnva n `-`, fb gur svefg `-` va gur fgevat nyjnlf
+fgnegf gur cer-eryrnfr. Phg gurer, naq gur erfg fcyvgf pyrnayl ba `.`.
+
+Gur znva cvgsnyy: `fgepbai.Ngbv` nafjref "pna V pbzchgr jvgu guvf?", abg "vf guvf gur sbezng V
+jnag?". Vg npprcgf `+1`, `-1` naq `007`, naq vg snvyf ba na rzcgl fgevat naq ba ahzoref gung qb abg
+svg va na `vag`. Purpx gur olgrf lbhefrys svefg (bayl `0` gb `9`, ab yrnqvat mreb), gura yrg
+`Ngbv` pngpu gur biresybj.
+
+Sbe `Pbzcner`, n eryrnfr unf `Cer == ""`, naq gur rzcgl fgevat vf gur *fznyyrfg* fgevat. Fb cynva
+fgevat beqre ba `Cer` chgf rirel eryrnfr orsber vgf cer-eryrnfrf, juvpu vf gur jebat jnl ebhaq.
+Unaqyr "bar fvqr vf n eryrnfr" orsber lbh pbzcner gur fgevatf.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. `Cnefr`: qebc na bcgvbany yrnqvat `i` (`fgevatf.PhgCersvk`). Phg gur erfg ng gur svefg `-`
+   (`fgevatf.Phg`). Vs gurer jnf n `-`, purpx gung gur cer-eryrnfr vf abg rzcgl naq unf bayl gur
+   nyybjrq olgrf.
+2. Fcyvg gur cneg orsber gur `-` ba `.`. Nalguvat bgure guna 3 cnegf vf na reebe.
+3. Sbe rnpu cneg: aba-rzcgl, qvtvgf bayl, ab yrnqvat mreb hayrff vg vf rknpgyl `0`, gura
+   `fgepbai.Ngbv`.
+4. Ohvyq rirel reebe jvgu `szg.Reebes`, `%j` sbe `ReeVainyvq` naq `%d` sbe gur vachg. Erghea gur
+   mreb `Irefvba` jvgu vg.
+5. `Fgevat`: `szg.Fcevags` sbe gur 3 ahzoref jvgu n `i` va sebag, gura `-` naq `Cer` bayl jura
+   `Cer` vf abg rzcgl.
+6. `Pbzcner`: pbzcner `Znwbe`, `Zvabe` naq `Cngpu` jvgu `pzc.Pbzcner` naq erghea gur svefg
+   aba-mreb erfhyg (`pzc.Be` qbrf rknpgyl gung). Ba n gvr: rdhny `Cer` tvirf 0; n eryrnfr orngf n
+   cer-eryrnfr; bgurejvfr pbzcner gur 2 `Cer` fgevatf.
+7. `Yngrfg`: ybbc bire gur gntf, fxvc reebef naq cer-eryrnfrf, naq xrrc gur orfg irefvba fb sne.
+   Lbh arrq gb xabj jurgure lbh unir frra n eryrnfr ng nyy: gur mreb `Irefvba` vf n inyvq eryrnfr
+   (`i0.0.0`), fb vg pnaabg zrna "abguvat lrg". Qb abg fbeg gur vachg.

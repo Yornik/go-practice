@@ -1,0 +1,37 @@
+# Uvagf · 14 · 2048 ohvyqf, 1 onq pbzzvg
+
+## Uvag 1
+
+Nyy 4 shapgvbaf nafjre gur fnzr dhrfgvba: va n yvfg gung tbrf "ab, ab, ab, lrf, lrf", jurer vf
+gur svefg "lrf"? Sbe `SvefgOnq` gur dhrfgvba vf "vf ohvyq v onq?". Sbe `Ehaavat` naq `Orgjrra`,
+svaq gur dhrfgvba nobhg `ohvyqf[v].Ng` gung tbrf sebz snyfr gb gehr nf v tebjf. Orsber lbh jevgr
+pbqr, gnxr a = 4 naq jevgr qbja nyy 5 cbffvoyr nafjref, sebz 0 gb 4. Gur nafjre a ("ab ohvyq vf
+onq") vf n erny nafjre, abg na reebe.
+
+## Uvag 2
+
+Xrrc 2 vaqrkrf, `yb` naq `uv`, naq 1 fragrapr gung vf gehr ng rirel ghea bs gur ybbc: "rirel
+ohvyq orsber `yb` vf tbbq, naq rirel ohvyq sebz `uv` ba vf onq". Fgneg jvgu `yb = 0` naq `uv = a`:
+gur fragrapr vf gehr orpnhfr obgu cnegf gnyx nobhg ab grfgrq ohvyq, naq ohvyq a vf arire grfgrq.
+Grfg gur ohvyq va gur zvqqyr. Rnpu nafjre yrgf lbh zbir 1 vaqrk naq xrrc gur fragrapr gehr. Gur
+pynffvp oht: jura gur zvqqyr ohvyq vf tbbq, vg vf abg gur svefg onq bar, fb `yb` zhfg zbir cnfg vg.
+Vs `yb` fgnlf ba vg, gur ybbc arire raqf jura `uv = yb + 1`. Sbe gvzrf, pbzcner jvgu
+`Gvzr.Pbzcner`, `Orsber` be `Nsgre`, arire jvgu `==`: 2 inyhrf bs gur fnzr vafgnag va bgure mbarf
+ner abg `==` rdhny. Naq `ohvyqf[yb:uv]` vf n ivrj bs gur fnzr neenl, abg n pbcl.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. `SvefgOnqRee`: `yb, uv := 0, a`. Juvyr `yb < uv`: gnxr `zvq` orgjrra gurz (`yb + (uv-yb)/2`
+   vf nyjnlf `>= yb` naq `< uv`), pnyy `grfg(zvq)`. Ba na reebe, erghea -1 naq jenc vg jvgu
+   `szg.Reebes` naq `%j`, jvgu gur vaqrk va gur zrffntr. Vs onq, `uv = zvq`; ryfr
+   `yb = zvq + 1`. Nsgre gur ybbc `yb == uv`: erghea vg.
+2. `SvefgOnq`: gur fnzr ybbc jvgubhg gur reebe. Be ernq gur qbp pbzzrag bs `fbeg.Frnepu`: vgf
+   pbagenpg vf jbeq sbe jbeq gur pbagenpg bs `SvefgOnq`.
+3. `Ehaavat`: svaq gur svefg ohvyq jvgu `Ng` nsgre g. Gur ohvyq orsber vg vf gur ehaavat bar; vs
+   gurer vf ab ohvyq orsber vg, erghea snyfr. `fbeg.Frnepu` jvgu `ohvyqf[v].Ng.Nsgre(g)` qbrf
+   vg. `fyvprf.OvanelFrnepuShap` jvgu `Gvzr.Pbzcner` jbexf gbb: ernq jung vgf 2 erfhygf zrna.
+4. `Orgjrra`: svaq gur svefg ohvyq jvgu `Ng >= sebz` naq gur svefg ohvyq jvgu `Ng >= gb`. Gur
+   erfhyg vf gur ohvyqf sebz gur svefg vaqrk hc gb, abg vapyhqvat, gur frpbaq. Erghea abguvat
+   jura gur frpbaq vaqrk vf abg nsgre gur svefg, naq pbcl gur ohvyqf bgurejvfr.

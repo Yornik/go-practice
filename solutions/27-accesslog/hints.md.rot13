@@ -1,0 +1,41 @@
+# Uvagf · 27 · Svaq gur raqcbvagf gung uheg
+
+## Uvag 1
+
+Qb abg gel gb qb rirelguvat va bar ybbc obql. Gurer ner guerr wbof jvgu n pyrne unaq-bire:
+**cnefr** bar yvar vagb n srj glcrq inyhrf (be na reebe), **nttertngr** gur inyvq barf vagb bar
+ohpxrg cre tebhc, **enax** gur ohpxrgf. Nfx sbe rnpu wbo: jung tbrf va, jung pbzrf bhg? Sbe
+`AbeznyvmrCngu`, jevgr 6 vachg → bhgchg cnvef ba cncre svefg (jvgu `?`, `//`, n genvyvat `/`, n
+ahzore, n HHVQ, `i1`) naq ybbx sbe gur bar ehyr gung pbiref nyy gur fynfu pnfrf ng bapr.
+
+## Uvag 2
+
+N tebhc vf "zrgubq cyhf ebhgr", naq n Tb fgehpg jvgu gjb fgevat svryqf vf n cresrpgyl tbbq znc xrl.
+Gur inyhr vf gur gevpxl cneg: jvgu `znc[X]EbhgrFgngf`, `z[x].Erdhrfgf++` qbrf abg pbzcvyr, orpnhfr
+n fgehpg vafvqr n znc vf abg nqqerffnoyr. Rvgure fgber `*EbhgrFgngf` (perngr vg gur svefg gvzr lbh
+frr gur xrl) be pbcl gur fgehpg bhg, punatr vg, naq fgber vg onpx. Znc vgrengvba beqre vf enaqbz,
+fb gur enaxvat zhfg qrpvqr rirel gvr, qbja gb gur ynfg svryq, be gjb ehaf tvir gjb qvssrerag
+ercbegf. Sbe `:vq`, purpx gur punenpgref, abg "qbrf `fgepbai.Ngbv` fhpprrq": Ngbv npprcgf `-1` naq
+erwrpgf n 25-qvtvg VQ. Hfr gur fyvpr vaqrk sbe yvar ahzoref, naq bayl fxvc oynax yvarf nsgre lbh
+unir gung vaqrk.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. `AbeznyvmrCngu`: phg ng gur svefg `?` (`fgevatf.Phg`). Fcyvg gur erfg ba `/`. Sbe rirel
+   aba-rzcgl frtzrag, jevgr `/` naq gura `:vq`, `:hhvq` be gur frtzrag vgfrys. Vs lbh jebgr
+   abguvat, erghea `/`. N HHVQ purpx: yratgu 36, `-` ng vaqrkrf 8, 13, 18 naq 23, n urk qvtvg
+   rireljurer ryfr.
+2. N cnefr urycre gnxrf gur svryqf bs bar yvar naq ergheaf n fznyy fgehpg (zrgubq, cngu, fgnghf,
+   qhengvba) be na reebe. Purpx va guvf beqre: 5 svryqf, `gvzr.Cnefr(gvzr.ESP3339, ...)`, fgnghf
+   jvgu `Ngbv` naq gur enatr 100–599, qhengvba jvgu `Ngbv` naq `>= 0`.
+3. `Nanylmr`: znxr gur `OlPynff` znc naq n `znc[ebhgrXrl]*EbhgrFgngf`. Ybbc jvgu gur vaqrk. Fcyvg
+   jvgu `fgevatf.Svryqf`; mreb svryqf zrnaf fxvc. Ba n cnefr reebe, nccraq n `YvarReebe` jvgu
+   `vaqrk+1` naq `pbagvahr`, orsber lbh gbhpu nal pbhagre. Bgurejvfr ohzc `Gbgny`, gur pynff
+   (`fgnghf/100`), naq gur ebhgr'f pbhagref naq znk.
+4. Nsgre gur ybbc, pbcl gur znc inyhrf vagb n fyvpr naq pbzchgr `ReebeEngr` sbe rnpu, jvgu
+   `sybng64` ba obgu fvqrf bs gur qvivfvba.
+5. `fyvprf.FbegShap` jvgu n pbzcnevfba ohvyg sebz `pzc.Be` bs sbhe `pzc.Pbzcner` pnyyf. Sbe "zbfg
+   svefg", fjnc gur nethzragf: `pzc.Pbzcner(o.K, n.K)`.
+6. Bayl nsgre fbegvat: vs `gbc > 0` naq gurer ner zber ebhgrf, xrrc gur svefg `gbc`.

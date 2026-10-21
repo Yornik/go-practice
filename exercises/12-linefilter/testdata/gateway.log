@@ -1,0 +1,25 @@
+2026-11-12T03:10:00Z level=info svc=gateway host=vl-gpu-0412 msg=stored path=/v1/infer ms=180
+2026-11-12T03:10:02Z level=info svc=gateway msg=stats gateway_requests=212 errors=0 retries=0
+2026-11-12T03:10:03Z level=error svc=gateway host=vl-gpu-0412 msg=timeout path=/v1/infer ms=30000
+2026-11-12T03:10:05Z level=error svc=gateway host=canary-h3-01 msg="ecc corrected" path=/v1/infer ms=95
+2026-11-12T03:10:05Z level=info svc=gateway path=/healthz ms=1
+2026-11-12T03:10:06Z level=error svc=hushd host=chkpt-store-2 msg="model timeout" model=hush-4.2
+2026-11-12T03:10:08Z level=warn svc=gateway host=vl-gpu-0448 msg=slow path=/v1/infer ms=4200
+2026-11-12T03:10:10Z level=error svc=gateway host=vl-gpu-0469 msg="disk full" store=chkpt-store-3 path=/v1/infer ms=12
+2026-11-12T03:10:12Z level=info svc=gateway msg=stats gateway_requests=198 errors=0 retries=2
+2026-11-12T03:10:15Z level=error svc=gateway path=/healthz msg="store unreachable" store=chkpt-store-3 ms=3
+2026-11-12T03:10:20Z level=error svc=gateway host=vl-gpu-0412 msg=timeout path=/v1/infer ms=30000
+2026-11-12T03:10:21Z level=error svc=gateway host=canary-h3-01 msg="ecc corrected" path=/v1/infer ms=91
+2026-11-12T03:10:22Z level=debug svc=gateway host=vl-gpu-0473 msg="retry after error" attempt=2
+2026-11-12T03:10:24Z level=error svc=gateway host=vl-gpu-0473 msg="checksum mismatch" path=/v1/infer ms=640
+2026-11-12T03:10:25Z level=info svc=gateway path=/healthz ms=1
+2026-11-12T03:10:27Z level=warn svc=gateway host=vl-gpu-0077 msg=slow path=/v1/infer ms=5100
+2026-11-12T03:10:30Z level=error svc=gateway host=vl-gpu-0077 msg=timeout path=/v1/infer ms=30000
+2026-11-12T03:10:32Z level=info svc=gateway msg=stats gateway_requests=187 errors=4 retries=9
+2026-11-12T03:10:33Z level=error svc=checkout msg="payment declined" order=58213
+2026-11-12T03:10:35Z level=error svc=gateway host=vl-gpu-0469 msg="disk full" store=chkpt-store-3 path=/v1/infer ms=10
+2026-11-12T03:10:36Z level=error svc=gateway host=canary-h3-01 msg="ecc corrected" path=/v1/infer ms=88
+2026-11-12T03:10:40Z level=error svc=gateway host=vl-gpu-0485 msg="body too large" path=/v1/infer ms=2
+2026-11-12T03:10:41Z level=warn svc=gateway host=canary-h3-01 msg=slow path=/v1/infer ms=4000
+2026-11-12T03:10:42Z level=info svc=gateway msg=stats gateway_requests=176 errors=6 retries=11
+2026-11-12T03:10:45Z level=error svc=gateway host=vl-gpu-0412 msg=timeout path=/v1/infer ms=30000

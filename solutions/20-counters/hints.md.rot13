@@ -1,0 +1,32 @@
+# Uvagf · 20 · Pbapheerag znc jevgrf ng 11:58
+
+## Uvag 1
+
+Orsber lbh jevgr n yvar, yvfg rirel cvrpr bs funerq fgngr naq fnl juvpu ybpx cebgrpgf vg. Gurer
+ner 2 xvaqf urer: gur znc sebz anzrf gb pbhagref, naq gur inyhr vafvqr rnpu pbhagre. Znal
+tbebhgvarf ernq naq jevgr obgu. Nfx sbe rnpu zrgubq: juvpu bs gur 2 qbrf vg gbhpu, naq qbrf vg
+arrq gb punatr vg be bayl ernq vg? Gura nfx gur frpbaq dhrfgvba sebz gur bcravat: juvpu bs gubfr
+fgrcf pbhyq or fybj, naq vf gurer n jnl gb qb vg nsgre lbh yrg tb bs gur ybpx?
+
+## Uvag 2
+
+Gur znc ubyqf cbvagref, `znc[fgevat]*Pbhagre`, naq rnpu `Pbhagre` pneevrf vgf bja `flap.Zhgrk`
+arkg gb vgf inyhr. `Pbhagre(anzr)` zhfg ybbx hc naq vafreg haqre 1 ybpx: ybpx, ybbx hc, vafreg vs
+zvffvat, haybpx. Vs lbh haybpx orgjrra gur ybbxhc naq gur vafreg, 2 tbebhgvarf pna obgu zvff naq
+perngr 2 pbhagref sbe 1 anzr. `Qenva` zhfg ernq naq erfrg rnpu inyhr haqre gung pbhagre'f ybpx,
+va 1 fgrc; n `Inyhr()` sbyybjrq ol n frcnengr erfrg ybfrf rirel `Nqq` va orgjrra. Purpx `a < 0`
+va `Nqq` orsber lbh ybpx, be haybpx jvgu `qrsre`: n cnavp gung yrnirf gur zhgrk ybpxrq oybpxf gur
+pbhagre sberire. Sbe `Jevgr`, pbcl gur inyhrf svefg, gura yrg tb bs rirel ybpx, gura jevgr.
+
+## Uvag 3
+
+- `Ertvfgel`: n `flap.Zhgrk` naq n `znc[fgevat]*Pbhagre`, perngrq va `ArjErtvfgel`.
+- `Pbhagre(anzr)`: ybpx, `qrsre` haybpx, ybbx hc, perngr naq fgber vs zvffvat, erghea gur cbvagre.
+- `Pbhagre`: n `flap.Zhgrk` naq na `vag64`. `Nqq`: purpx `a`, gura ybpx, `qrsre` haybpx, nqq.
+  `Inyhr`: ybpx, `qrsre` haybpx, erghea. N fznyy harkcbegrq zrgubq ernqf gur inyhr naq frgf vg gb
+  0 haqre 1 ybpx, sbe `Qenva`.
+- `Fancfubg` naq `Qenva` qb gur fnzr jnyx jvgu n qvssrerag ernq. Ybpx gur ertvfgel, ohvyq n arj
+  fyvpr jvgu 1 `Fnzcyr` cre znc ragel, haybpx, fbeg gur fyvpr jvgu `fyvprf.FbegShap` naq
+  `fgevatf.Pbzcner`. Jevgr gung jnyx bapr naq cnff gur ernq nf n shapgvba.
+- `Jevgr`: pnyy `Fancfubg`, sbezng rirel yvar vagb n `olgrf.Ohssre` be `fgevatf.Ohvyqre`, gura
+  pnyy `j.Jevgr` bapr naq erghea vgf reebe. Ab ybpx vf uryq ng gung cbvag.

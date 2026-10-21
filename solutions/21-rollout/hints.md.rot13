@@ -1,0 +1,47 @@
+# Uvagf · 21 · fyrrc 300 vf abg n ebyybhg purpx
+
+## Uvag 1
+
+Qb abg fgneg jvgu gur ybbc. Fgneg jvgu gur gnoyr "Ubj Jnvg raqf" va gur ERNQZR: 6 raqvatf. Sbe
+rnpu bar, nfx 2 dhrfgvbaf. Jura pna vg unccra: evtug nsgre n cbyy, be juvyr Jnvg jnvgf sbe gur
+arkg gvpx? Naq jung qbrf Jnvg unir gb erzrzore gb qrgrpg vg? Gur nafjref fcyvg gur ybbc obql
+vagb 2 cnegf: bar cneg ernpgf gb gur erfhyg bs n cbyy, gur bgure cneg jnvgf hagvy "fbzrguvat"
+unccraf. Gurer ner rknpgyl 2 guvatf gung pna unccra juvyr Jnvg jnvgf. Juvpu Tb fgngrzrag jnvgf
+sbe juvpurire bs 2 punaaryf vf ernql svefg?
+
+## Uvag 2
+
+Gur bayl cynpr jurer Jnvg oybpxf vf n `fryrpg` jvgu 2 pnfrf: `<-pgk.Qbar()` naq n erprvir sebz
+`Gvpxf`. Rirelguvat ryfr vf cynva obbxxrrcvat va ybpny inevnoyrf bs 1 tbebhgvar: ab zhgrk, ab
+rkgen tbebhgvar. 4 gencf fvg nebhaq gung `fryrpg`:
+
+- Jura obgu pnfrf ner ernql, `fryrpg` cvpxf bar ng enaqbz. Erprvivat n gvpx qbrf abg cebir gung
+  `pgk` vf fgvyy yvir, fb purpx `pgk.Ree()` orsber rirel cbyy, ng gur gbc bs gur ybbc.
+- N erprvir sebz n pybfrq punaary arire oybpxf: vg ergheaf gur mreb `gvzr.Gvzr` ng bapr. Jvgubhg
+  gur `i, bx := <-pu` sbez lbh trg n ybbc gung cbyyf nf snfg nf gur PCH nyybjf.
+- Cebterff pbzcnerf jvgu gur **uvturfg** inyhrf frra fb sne, abg jvgu gur cerivbhf cbyy. Xrrc 2
+  znkvzn, abg gur cerivbhf fgnghf, be n penfu ybbc gung syncf `Ernql` orgjrra 0 naq 1 pbhagf nf
+  cebterff sberire.
+- N snvyrq cbyy tvirf lbh n `Fgnghf` gbb. Qb abg yrg vg gbhpu gur znkvzn, gur "qbar" purpx be gur
+  fgnghf lbh erghea.
+
+## Uvag 3
+
+Na bhgyvar, gbc gb obggbz:
+
+1. Purpx gur bcgvbaf. Ba n ceboyrz, erghea gur mreb `Fgnghf` naq `szg.Reebes` jvgu `%j` naq
+   `ReeVainyvq`.
+2. Qrpyner gur fgngr: gur ynfg tbbq fgnghf, gur uvturfg `Hcqngrq`, gur uvturfg `Ernql`, n synt
+   "fbzr cbyy fhpprrqrq", gur snvyrq cbyyf va n ebj naq gur cbyyf va n ebj jvgubhg cebterff.
+3. Ybbc sberire:
+   1. Vs `pgk.Ree()` vf abg avy, erghea gur ynfg tbbq fgnghf naq gung reebe, jenccrq.
+   2. Pnyy `Cbyy(pgk)`. Ba na reebe, pbhag gur snvyher. Ba fhpprff, erfrg gur snvyherf, qrpvqr
+      "cebterff" (gur svefg fhpprff, be n inyhr nobir vgf znkvzhz), gura hcqngr gur znkvzn naq
+      gur ynfg tbbq fgnghf.
+   3. Cebterff erfrgf gur "jvgubhg cebterff" pbhag; nalguvat ryfr nqqf 1 gb vg.
+   4. Gur 3 purpxf, va gur beqre bs gur ERNQZR: snvyherf nobir `ZnkReebef` (jenc gur cbyy'f
+      reebe), qbar (bayl sbe n fhpprffshy cbyy), fgnyy (bayl jura `FgnyyGvpxf > 0`).
+   5. `fryrpg` ba `pgk.Qbar()` naq gur gvpx. `pgk` qbar: erghea vgf reebe, jenccrq. N erprvir
+      jvgu `bx == snyfr`: erghea `ReeFgbccrq`. N gvpx: tb ebhaq gur ybbc.
+4. Eha gur fgrcf va beqre. Gur grfgf bs fgrcf 2 naq 3 cevag gur fpevcg bs cbyyf: ercynl n
+   snvyvat bar ba cncre jvgu gur 3 pbhagref arkg gb vg.

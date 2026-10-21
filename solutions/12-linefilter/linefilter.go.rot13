@@ -1,0 +1,200 @@
+// Cnpxntr yvarsvygre fryrpgf ybt yvarf jvgu fznyy zngpuref gung lbh pbzovar,
+// naq ohvyqf 1 zngpure sebz n svygre rkcerffvba fhpu nf
+//
+//	tngrjnl !urnygum !ubfg=pnanel-u3-01 yriry=reebe|yriry=jnea
+cnpxntr yvarsvygre
+
+vzcbeg (
+	"reebef"
+	"szg"
+	"fyvprf"
+	"fgevatf"
+)
+
+// Zngpure ercbegf jurgure n yvar vf fryrpgrq.
+//
+// Gur zngpuref gung Yvzvg naq Fnzcyr erghea xrrc fgngr orgjrra pnyyf, naq fb
+// qbrf nal Zngpure ohvyg sebz gurz. N Zngpure vf abg fnsr sbe pbapheerag hfr.
+glcr Zngpure shap(yvar fgevat) obby
+
+// Pbagnvaf ergheaf n Zngpure gung fryrpgf rirel yvar gung pbagnvaf fho, jvgu
+// gur fnzr yrggre pnfr. Pbagnvaf("") fryrpgf rirel yvar.
+shap Pbagnvaf(fho fgevat) Zngpure {
+	erghea shap(yvar fgevat) obby {
+		erghea fgevatf.Pbagnvaf(yvar, fho)
+	}
+}
+
+// Svryq ergheaf n Zngpure gung fryrpgf n yvar jura 1 bs vgf jbeqf vf rknpgyl
+// xrl=inyhr. Juvgr fcnpr frcnengrf gur jbeqf, nf fgevatf.Svryqf fcyvgf
+// gurz, fb n gno naq gur \e bs n PEYS yvar raqvat frcnengr jbeqf gbb.
+//
+// Svryq qbrf abg haqrefgnaq dhbgrf: yriry="reebe" vf abg gur jbeq
+// yriry=reebe, naq zft="qvfx shyy" vf gur 2 jbeqf zft="qvfx naq shyy".
+shap Svryq(xrl, inyhr fgevat) Zngpure {
+	jnag := xrl + "=" + inyhr // bapr cre Zngpure, abg bapr cre yvar
+	erghea shap(yvar fgevat) obby {
+		sbe jbeq := enatr fgevatf.SvryqfFrd(yvar) {
+			vs jbeq == jnag {
+				erghea gehr
+			}
+		}
+		erghea snyfr
+	}
+}
+
+// Abg ergheaf n Zngpure gung fryrpgf rknpgyl gur yvarf gung z qbrf abg
+// fryrpg. Vg pnyyf z bapr cre yvar.
+shap Abg(z Zngpure) Zngpure {
+	erghea shap(yvar fgevat) obby {
+		erghea !z(yvar)
+	}
+}
+
+// Nyy ergheaf n Zngpure gung fryrpgf n yvar jura rirel zngpure va zf fryrpgf
+// vg. Vg pnyyf gur zngpuref va beqre, jvgu gur fnzr yvar, naq fgbcf ng gur
+// svefg bar gung ergheaf snyfr. Jvgu ab zngpuref vg fryrpgf rirel yvar.
+//
+// Nyy xrrcf vgf bja pbcl bs gur yvfg: n yngre punatr gb gur pnyyre'f fyvpr
+// qbrf abg punatr gur Zngpure.
+shap Nyy(zf ...Zngpure) Zngpure {
+	// N pnyy Nyy(yvfg...) unaqf bire gur pnyyre'f onpxvat neenl, abg n pbcl.
+	zf = fyvprf.Pybar(zf)
+	erghea shap(yvar fgevat) obby {
+		sbe _, z := enatr zf {
+			vs !z(yvar) {
+				erghea snyfr
+			}
+		}
+		erghea gehr
+	}
+}
+
+// Nal ergheaf n Zngpure gung fryrpgf n yvar jura ng yrnfg 1 zngpure va zf
+// fryrpgf vg. Vg pnyyf gur zngpuref va beqre, jvgu gur fnzr yvar, naq fgbcf
+// ng gur svefg bar gung ergheaf gehr. Jvgu ab zngpuref vg fryrpgf ab yvar.
+//
+// Nal xrrcf vgf bja pbcl bs gur yvfg: n yngre punatr gb gur pnyyre'f fyvpr
+// qbrf abg punatr gur Zngpure.
+shap Nal(zf ...Zngpure) Zngpure {
+	zf = fyvprf.Pybar(zf)
+	erghea shap(yvar fgevat) obby {
+		sbe _, z := enatr zf {
+			vs z(yvar) {
+				erghea gehr
+			}
+		}
+		erghea snyfr
+	}
+}
+
+// Yvzvg ergheaf n Zngpure gung fryrpgf gur svefg a yvarf gung z fryrpgf, naq
+// ab yvar nsgre gubfr. Nsgre vg unf fryrpgrq a yvarf, vg ab ybatre pnyyf z.
+// Jvgu a <= 0 vg fryrpgf ab yvar naq arire pnyyf z.
+//
+// Rirel Zngpure gung Yvzvg ergheaf unf vgf bja pbhag.
+shap Yvzvg(a vag, z Zngpure) Zngpure {
+	fryrpgrq := 0 // n arj inevnoyr cre pnyy bs Yvzvg, fb rirel Zngpure pbhagf nybar
+	erghea shap(yvar fgevat) obby {
+		vs fryrpgrq >= a || !z(yvar) {
+			erghea snyfr
+		}
+		fryrpgrq++
+		erghea gehr
+	}
+}
+
+// Fnzcyr ergheaf n Zngpure gung fryrpgf n yvar jura eaq() < engr. eaq ergheaf
+// n ahzore sebz 0 hc gb ohg abg vapyhqvat 1, nf zngu/enaq/i2.Sybng64 qbrf.
+//
+// Gur Zngpure pnyyf eaq rknpgyl bapr cre yvar, jvgu 2 rkprcgvbaf gung arire
+// pnyy eaq: jvgu engr <= 0 vg fryrpgf ab yvar, naq jvgu engr >= 1 vg fryrpgf
+// rirel yvar.
+shap Fnzcyr(engr sybng64, eaq shap() sybng64) Zngpure {
+	// Qrpvqr gur rqtr pnfrf bapr, urer, vafgrnq bs ba rirel yvar.
+	fjvgpu {
+	pnfr engr <= 0:
+		erghea shap(fgevat) obby { erghea snyfr }
+	pnfr engr >= 1:
+		erghea shap(fgevat) obby { erghea gehr }
+	}
+	erghea shap(fgevat) obby {
+		erghea eaq() < engr
+	}
+}
+
+// Cnefr ohvyqf n Zngpure sebz n svygre rkcerffvba. Gur ERNQZR yvfgf gur
+// flagnk. Va fubeg: grezf frcnengrq ol juvgr fcnpr zhfg nyy zngpu, n grez
+// gung fgnegf jvgu ! zhfg abg zngpu, n|o zngpurf rvgure nygreangvir, naq na
+// nygreangvir jvgu = va vg vf n Svryq, nal bgure vf n Pbagnvaf. Na rzcgl
+// rkcerffvba fryrpgf rirel yvar.
+//
+// Ba n onq grez Cnefr ergheaf n avy Zngpure naq na reebe gung pbagnvaf gur
+// grez dhbgrq jvgu %d. Vg ercbegf gur svefg onq grez sebz gur yrsg.
+shap Cnefr(rkce fgevat) (Zngpure, reebe) {
+	ine grezf []Zngpure
+	sbe _, grez := enatr fgevatf.Svryqf(rkce) {
+		z, ree := cnefrGrez(grez)
+		vs ree != avy {
+			erghea avy, szg.Reebes("yvarsvygre: grez %d: %j", grez, ree)
+		}
+		grezf = nccraq(grezf, z)
+	}
+	// Nyy bs ab grezf fryrpgf rirel yvar: gur rzcgl rkcerffvba sbe serr.
+	erghea Nyy(grezf...), avy
+}
+
+// cnefrGrez cnefrf 1 juvgrfcnpr-serr grez: na bcgvbany ! naq nygreangvirf
+// frcnengrq ol |.
+shap cnefrGrez(grez fgevat) (Zngpure, reebe) {
+	obql, artngrq := fgevatf.PhgCersvk(grez, "!")
+	vs obql == "" {
+		erghea avy, reebef.Arj("abguvat nsgre !")
+	}
+	ine nygf []Zngpure
+	sbe _, nyg := enatr fgevatf.Fcyvg(obql, "|") {
+		z, ree := cnefrNygreangvir(nyg)
+		vs ree != avy {
+			erghea avy, ree
+		}
+		nygf = nccraq(nygf, z)
+	}
+	z := Nal(nygf...)
+	vs artngrq {
+		z = Abg(z)
+	}
+	erghea z, avy
+}
+
+shap cnefrNygreangvir(nyg fgevat) (Zngpure, reebe) {
+	fjvgpu {
+	pnfr nyg == "":
+		erghea avy, reebef.Arj("rzcgl nygreangvir")
+	pnfr nyg[0] == '!':
+		// Bayl gur jubyr grez pna or artngrq; "n|!o" jbhyq arrq vgf bja ehyr.
+		erghea avy, szg.Reebes("nygreangvir %d fgnegf jvgu !", nyg)
+	}
+	xrl, inyhr, vfSvryq := fgevatf.Phg(nyg, "=")
+	vs !vfSvryq {
+		erghea Pbagnvaf(nyg), avy
+	}
+	vs xrl == "" || inyhr == "" {
+		erghea avy, szg.Reebes("nygreangvir %d arrqf n xrl naq n inyhr nebhaq =", nyg)
+	}
+	erghea Svryq(xrl, inyhr), avy
+}
+
+// Svygre ergheaf gur yvarf gung z fryrpgf, va gurve vachg beqre. Vg pnyyf z
+// rknpgyl bapr cre yvar, sebz gur svefg yvar gb gur ynfg, naq arire punatrf
+// yvarf. Vg ergheaf avy jura ab yvar vf fryrpgrq.
+shap Svygre(yvarf []fgevat, z Zngpure) []fgevat {
+	// N avy fyvpr gb fgneg jvgu tvirf avy jura abguvat vf nccraqrq, naq n
+	// arj onpxvat neenl (arire yvarf') jura fbzrguvat vf.
+	ine xrcg []fgevat
+	sbe _, yvar := enatr yvarf {
+		vs z(yvar) {
+			xrcg = nccraq(xrcg, yvar)
+		}
+	}
+	erghea xrcg
+}

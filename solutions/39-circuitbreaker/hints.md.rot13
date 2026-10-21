@@ -1,0 +1,51 @@
+# Uvagf · 39 · Pvephvg oernxre: fgbc unzzrevat n qrnq qrcraqrapl
+
+## Uvag 1
+
+Qenj gur fgngr qvntenz ba cncre svefg: 3 fgngrf, 4 neebjf. Arkg gb rnpu neebj, jevgr jung
+gevttref vg naq jung zhfg unccra jura lbh gnxr vg (erfrg gur pbhagf, erzrzore jura gur oernxre
+bcrarq). Gura ybbx ng Rkrphgr nf guerr cunfrf: qrpvqr jurgure sa znl eha, eha sa, erpbeq gur
+erfhyg. Bayl gur svefg naq gur ynfg gbhpu funerq fgngr, fb bayl gurl arrq gur ybpx; sa ehaf
+jvgubhg vg. Gvzr arrqf ab gvzre: fgber jura gur oernxre bcrarq, naq pbzcner jvgu `Abj()` jurarire
+fbzrbar ybbxf ng gur fgngr, yvxr gur ynml ersvyy va 33-engryvzvg.
+
+## Uvag 2
+
+Orgjrra "qrpvqr" naq "erpbeq" nalguvat pna unccra: bgure pnyyf pna bcra gur oernxre, gur gvzrbhg
+pna cnff, n cebor pna pybfr vg ntnva. Fb "erpbeq" zhfg svaq bhg jurgure gur jbeyq va juvpu vgf
+pnyy jnf nqzvggrq fgvyy rkvfgf. Tvir rirel fgngr punatr n ahzore: n trarengvba pbhagre gung tbrf
+hc ba rirel punatr. Nqzvffvba ergheaf gur pheerag trarengvba; erpbeqvat vtaberf n erfhyg jubfr
+trarengvba vf abg gur pheerag bar. Znxr bar fznyy shapgvba gur bayl cynpr gung punatrf gur fgngr:
+vg ohzcf gur trarengvba, erfrgf gur pbhagf, fgnzcf gur bcra gvzr naq dhrhrf gur ercbeg sbe
+BaFgngrPunatr. Sbe gur cebor yvzvg lbh arrq gur ahzore bs ceborf fgvyy ehaavat; jvgu pbhagf gung
+erfrg ba rirel punatr, gung vf `Erdhrfgf - Fhpprffrf - Snvyherf`. Sbe cnavpf: erpbeq gur erfhyg
+va n qrsreerq pnyy, fb vg ehaf ubjrire sa raqf, naq yrg n cnavp pbhag nf n snvyher. Sbe
+BaFgngrPunatr, sbyybj gur pnfr jurer gur pnyyonpx vgfrys pnyyf Fgngr nsgre gur bcra gvzrbhg unf
+cnffrq: va n qrfvta jurer gung pnyy jnvgf sbe gur ercbeg va cebterff, vg jnvgf sbe vgfrys.
+
+## Uvag 3
+
+- Svryqf: gur frggvatf (ernq-bayl nsgre Arj), n zhgrk, gur fgngr, gur trarengvba, gur pbhagf, gur
+  gvzr gur oernxre bcrarq, n dhrhr bs `(sebz, gb)` punatrf abg lrg ercbegrq, naq n synt gung fnlf
+  jurgure fbzr tbebhgvar vf ercbegvat evtug abj.
+- Arj: purpx gur 4 ahzoref, pbyyrpg gur ceboyrzf (`reebef.Wbva` vf unaql) naq svyy va gur
+  qrsnhygf sbe avy VfSnvyher naq Abj.
+- N urycre "rkcver", pnyyrq jvgu gur ybpx uryq: vs Bcra naq `Abj() - bcrarqNg >= BcraGvzrbhg`,
+  punatr gb UnysBcra.
+- nqzvg: ybpx; rkcver; Bcra: erghea ReeBcra; UnysBcra jvgu ehaavat ceborf `>= UnysBcraZnkPnyyf`:
+  erghea ReeGbbZnalPnyyf; bgurejvfr `Erdhrfgf++` naq erghea gur trarengvba. Nyy bs vg haqre bar
+  ybpx, fb purpxvat n fybg naq gnxvat vg ner bar fgrc.
+- Rkrphgr: nqzvg, erghea vgf reebe vs nal. Frg `fhpprff := snyfr`, gura qrsre n shapgvba gung
+  erpbeqf `(trarengvba, fhpprff)`; vg ernqf `fhpprff` jura vg ehaf, abg jura lbh jevgr gur
+  `qrsre`. Pnyy sa, pbzchgr fhpprff sebz vgf reebe (avy vf n fhpprff, bgurejvfr nfx VfSnvyher),
+  erghea sa'f reebe.
+- erpbeq: ybpx; qvssrerag trarengvba: erghea. Fhpprff: hcqngr gur pbhagf; va UnysBcra, rabhtu
+  fhpprffrf va n ebj: Pybfrq. Snvyher: hcqngr gur pbhagf; va UnysBcra, be va Pybfrq jvgu rabhtu
+  snvyherf va n ebj: Bcra.
+- Fgngr: ybpx, rkcver, erghea gur fgngr. Pbhagf: ybpx, erghea n pbcl.
+- Ercbegf: vafgrnq bs n cynva Haybpx, rirel zrgubq gung znl unir punatrq gur fgngr pnyyf na
+  "haybpx naq ercbeg" urycre. Vs gur dhrhr vf rzcgl be nabgure tbebhgvar vf nyernql ercbegvat:
+  whfg haybpx. Bgurejvfr frg gur synt, gura ybbc: gnxr gur svefg punatr bss gur dhrhr, haybpx,
+  pnyy BaFgngrPunatr, ybpx ntnva; jura gur dhrhr vf rzcgl, pyrne gur synt naq haybpx. N tbebhgvar
+  gung svaqf gur synt frg yrnirf vgf punatr va gur dhrhr, naq gur ercbegre qryviref vg arkg, va
+  beqre. Gung vapyhqrf gur pnyyonpx vgfrys jura vg pnyyf Fgngr be Rkrphgr, fb vg pnaabg qrnqybpx.

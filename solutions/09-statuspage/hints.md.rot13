@@ -1,0 +1,46 @@
+# Uvagf · 09 · Nyy flfgrzf bcrengvbany (gurl jrer abg)
+
+## Uvag 1
+
+Gurer ner 2 beqref va guvf rkrepvfr, naq bayl 1 bs gurz vf jevggra va gur pbqr. Gur `vbgn` yvfg
+tvirf rnpu fgnghf n ahzore; gur frirevgl gnoyr tvirf rnpu fgnghf n enax. Nfx: jurer va zl pbqr
+qbrf gur enax yvir? Vs vg yvirf abjurer, `Birenyy` jvyy pbzcner gur ahzoref, naq gura `Haxabja`
+(0) vf gur zvyqrfg fgnghf bs nyy: gur Fhaqnl oht ntnva, 1 yriry hc. Jevgr gur frirevgl beqre qbja
+bapr, nf qngn, naq yrg `Birenyy` naq `Onaare` obgu ernq vg.
+
+Sbe `Cntr`, nfx jung 1 pbzcbarag arrqf: n anzr naq n fgnghf. Juvpu Tb glcr svaqf n fgnghf ol anzr?
+
+## Uvag 2
+
+Gur xrl vafvtug: n znc sebz anzr gb `Fgnghf` qbrf nyzbfg rirelguvat sbe serr. N ercrngrq anzr va
+`ArjCntr` orpbzrf 1 xrl. N ybbxhc bs n zvffvat anzr tvirf gur mreb inyhr, juvpu vf `Haxabja`, fb
+`Trg` vf 2 yvarf. N avy znc pna or ernq (`yra`, ybbxhc, `enatr`) jvgubhg n cnavp, fb gur mreb
+`Cntr` jbexf nf ybat nf `Frg` arire jevgrf gb n anzr gung vf abg gurer, naq vg arire qbrf.
+
+Gur znva cvgsnyy va `Onaare`: enatvat bire n znc tvirf gur xrlf va n enaqbz beqre, naq Tb punatrf
+gung beqre ba checbfr sebz 1 ybbc gb gur arkg, rira jvguva 1 eha. Pbyyrpg gur anzrf svefg, gura
+fbeg gurz. Gur tebhcf arrq na beqre gbb, naq gung vf gur frirevgl beqre sebz uvag 1, ernq sebz gur
+zbfg frirer raq.
+
+N fznyyre cvgsnyy va `Fgevat`: `szg.Fcevags("Fgnghf(%i)", f)` vafvqr `Fgevat` pnyyf `Fgevat`
+ntnva, jvgubhg raq. Pbaireg gb `vag` svefg.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. `Fgevat`: n `fjvgpu` jvgu 1 `pnfr` cre pbafgnag, naq `Fgnghf(A)` nsgre vg sbe rirelguvat ryfr.
+2. `CnefrFgnghf`: pbzcner gur vachg jvgu rnpu pbafgnag'f `Fgevat()` hfvat `fgevatf.RdhnySbyq`.
+   Gura purpx gur 2 nyvnfrf. Bgurejvfr erghea `Haxabja` naq `szg.Reebes` jvgu `%j` naq `%d`.
+3. N cnpxntr-yriry fyvpr bs gur 6 fgnghfrf sebz yrnfg gb zbfg frirer. Gur enax bs n fgnghf vf
+   vgf vaqrk va gung fyvpr (`fyvprf.Vaqrk`). N znc sebz `Fgnghf` gb vgf onaare ynory.
+4. `Cntr` unf 1 svryq: `znc[fgevat]Fgnghf`. `ArjCntr` znxrf gur znc naq fgberf `Haxabja` sbe
+   rirel anzr.
+5. `Frg`: ybbx gur anzr hc jvgu gur pbzzn-bx sbez; vs vg vf nofrag, erghea gur pbzcbarag reebe.
+   Gura purpx gung gur fgnghf vf orgjrra `Haxabja` naq `ZnwbeBhgntr`. Bayl gura jevgr.
+6. `Birenyy`: na rzcgl cntr tvirf `Haxabja`. Bgurejvfr fgneg sebz `Bcrengvbany` naq xrrc gur
+   fgnghf jvgu gur uvturfg enax.
+7. `Onaare`: na rzcgl cntr tvirf `Fgnghf haxabja`. Tebhc gur anzrf ol fgnghf va n
+   `znc[Fgnghf][]fgevat`. Jnyx gur frirevgl fyvpr sebz gur zbfg frirer raq, fxvc `Bcrengvbany`
+   naq fgnghfrf jvgubhg anzrf, fbeg rnpu tebhc naq wbva vg. Ab tebhcf zrnaf
+   `Nyy flfgrzf bcrengvbany`; bgurejvfr wbva gur tebhcf jvgu `; `.

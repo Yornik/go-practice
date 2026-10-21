@@ -1,0 +1,40 @@
+# Uvagf · 04 · Gur pnanel tbg gur hcqngr gjvpr
+
+## Uvag 1
+
+Sbe rirel fyvpr gung lbh erghea, nfx 1 dhrfgvba orsber lbh jevgr gur ybbc: juvpu neenl vf oruvaq
+vg? N fyvpr vf n fznyy inyhr bs 3 cnegf: n cbvagre vagb na neenl, n yratgu naq n pncnpvgl.
+`anzrf[v:w]` znxrf n arj fyvpr inyhr, ohg abg n arj neenl. Qenj `anzrf` nf 10 obkrf va n ebj naq
+qenj gur jnirf nf jvaqbjf bire gubfr obkrf. Gura nfx jung `nccraq` ba gur svefg jvaqbj jevgrf, naq
+jurer. Nfx gur fnzr dhrfgvba nobhg `Beqre`: jung qbrf n fbeg shapgvba qb gb gur fyvpr lbh cnff
+gb vg?
+
+## Uvag 2
+
+Gur bayl jnl gb tvir n erfhyg vgf bja neenl vf gb nyybpngr n arj bar. `fyvprf.Pybar`, `znxr`
+sbyybjrq ol `pbcl`, naq `nccraq` bagb n fyvpr jvgu ab pncnpvgl nyy qb gung. Rirelguvat ryfr
+funerf. Gur znva cvgsnyy vf gur shyy fyvpr rkcerffvba `anzrf[v:w:w]`: vg pncf gur pncnpvgl, fb na
+`nccraq` gb gung jnir zhfg nyybpngr naq pnaabg ernpu gur arkg jnir. Ohg gur jnir fgvyy cbvagf vagb
+`anzrf`, fb `jnir[0] = "k"` punatrf gur pnyyre'f fyvpr. N grfg gung bayl pbzcnerf erfhygf jvgu n
+"jnag" pnaabg frr nal bs guvf. Jevgr 1 gung nccraqf gb n erfhyg naq gura ybbxf ng gur vachg.
+
+Sbe `Beqre`, fcyvg n anzr bapr vagb vgf cersvk naq vgf eha bs qvtvgf: jnyx onpx sebz gur raq juvyr
+gur olgr vf n qvtvg. Gura pbzcner gur cersvkrf, gura gur ahzoref, gura gur jubyr anzrf. Gur ynfg
+fgrc znxrf gur beqre gbgny, fb gur erfhyg arire qrcraqf ba gur vachg beqre.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. `Beqre`: pybar `anzrf`, gura fbeg gur pybar jvgu `fyvprf.FbegShap` naq lbhe pbzcner shapgvba.
+2. Gur pbzcner shapgvba: fcyvg obgu anzrf vagb cersvk naq qvtvgf. Ghea gur qvtvgf vagb n ahzore
+   jvgu `fgepbai.Ngbv`, naq tvir n anzr jvgubhg qvtvgf n ahzore orybj rirel erny ahzore. Punva gur
+   3 pbzcnevfbaf (cersvk, ahzore, jubyr anzr) jvgu `pzc.Be` naq `pzc.Pbzcner`.
+3. `Jvgubhg`: znxr na rzcgl fyvpr jvgu n pncnpvgl bs `yra(anzrf)`. Ybbc bire `anzrf` naq nccraq
+   rirel anzr gung `fxvc` qbrf abg pbagnva.
+4. `Jnirf`: purpx `pnanel`, gura `fvmr`, naq erghea `avy` naq na reebe ohvyg jvgu `%q`. Xrrc n
+   fyvpr `erfg` gung fgnegf nf `anzrf`. Vs `zva(pnanel, yra(erfg))` vf zber guna 0, nqq n pybar bs
+   gung znal anzrf nf gur svefg jnir naq zbir `erfg` sbejneq. Gura, juvyr `erfg` vf abg rzcgl, gnxr
+   `zva(fvmr, yra(erfg))` anzrf, nqq n pybar bs gurz, naq zbir `erfg` sbejneq.
+5. Orsber lbh eha gur grfgf bs fgrc 3, jevgr 5 yvarf va n fpengpu grfg: znxr gur jnirf, nccraq gb
+   jnir 0, cevag jnir 1. Vs jnir 1 punatrq, gur jnirf funer na neenl.

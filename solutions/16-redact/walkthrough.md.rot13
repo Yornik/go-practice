@@ -1,0 +1,214 @@
+# 16 · Gur cnffjbeq gung jbhyq abg cevag — jnyxguebhtu bs gur ersrerapr fbyhgvba
+
+## Fgehpgher
+
+Bar svyr, `erqnpg.tb`, va 2 cnegf:
+
+1. **`Frperg`**: gur tvira pbafgnag naq glcr, 4 zrgubqf gung rnpu nafjre 1 cevagre, `Erirny`, naq
+   n oybpx bs pbzcvyr-gvzr purpxf.
+2. **`ErqnpgHEY`**: cnefr, purpx obgu reebef, uvqr gur cnffjbeq, uvqr gur frperg dhrel inyhrf,
+   naq qrpvqr orgjrra gur vachg naq gur erjevggra HEY. N fznyy urycre, `uvqrFrpergCnenzf`, qbrf
+   gur dhrel cneg.
+
+## Gur pbzcvyr-gvzr purpxf
+
+```tb
+ine (
+	_ szg.Fgevatre           = Frperg("")
+	_ szg.TbFgevatre         = Frperg("")
+	_ rapbqvat.GrkgZnefunyre = Frperg("")
+	_ fybt.YbtInyhre         = Frperg("")
+)
+```
+
+Rnpu yvar nffvtaf n `Frperg` gb n inevnoyr bs na vagresnpr glcr naq guebjf vg njnl. Abguvat ehaf
+ng eha gvzr, ohg gur pbzcvyre zhfg cebir gung `Frperg` unf rirel zrgubq bs rnpu vagresnpr, jvgu
+gur rknpg fvtangher. Zvffcryy `TbFgevat`, tvir `ZnefunyGrkg` gur jebat erghea glcr, be fjvgpu n
+zrgubq gb n cbvagre erprvire, naq gur ohvyq snvyf jvgu n zrffntr gung anzrf gur zvffvat zrgubq.
+Jvgubhg guvf oybpx gur fnzr zvfgnxr pbzcvyrf naq gur frperg cevagf.
+
+Gur purpxf hfr `Frperg("")`, n inyhr, ba checbfr. `*Frperg` jbhyq nyfb cnff jvgu cbvagre
+erprviref, naq gung vf rknpgyl gur pnfr gung yrnxf vafvqr n fgehpg inyhr.
+
+Gur oybpx nyfb qbphzragf gur qrfvta: n ernqre frrf ng gur gbc bs gur svyr juvpu 4 vagresnprf gur
+glcr rkvfgf gb fngvfsl.
+
+## Gur 4 zrgubqf
+
+```tb
+shap (f Frperg) Fgevat() fgevat {
+	erghea Erqnpgrq
+}
+```
+
+`szg` pnyyf `Fgevat` sbe `%i`, `%+i`, `%f`, `%d`, `%k`, `%K` naq gur `Cevag` shapgvbaf, naq
+gura sbezngf gur erfhyg jvgu gur ireo. Fb 1 zrgubq pbiref 6 ireof, naq `%d` naq `%k` pbzr bhg
+evtug jvgubhg nal fcrpvny pnfr. Vg vtaberf `f`: gur bhgchg zhfg abg qrcraq ba gur inyhr, abg
+rira ba jurgure vg vf rzcgl, be gur bhgchg gryyf na nggnpxre jurgure n frperg vf frg naq ubj ybat
+vg vf.
+
+```tb
+shap (f Frperg) TbFgevat() fgevat {
+	erghea Erqnpgrq
+}
+```
+
+`%#i` nfxf sbe Tb flagnk naq purpxf `TbFgevatre` vafgrnq bs `Fgevatre`. Ergheavat
+`erqnpg.Frperg("[ERQNPGRQ]")` jbhyq or zber "Tb flagnk"; gur ERNQZR nfxf sbe rknpgyl `[ERQNPGRQ]`
+fb gung rirel ireo tvirf gur fnzr znexre, naq n ybt frnepu sbe `[ERQNPGRQ]` svaqf rirel cynpr n
+frperg jnf uvqqra.
+
+```tb
+shap (f Frperg) ZnefunyGrkg() ([]olgr, reebe) {
+	erghea []olgr(Erqnpgrq), avy
+}
+```
+
+`wfba.Znefuny` dhbgrf gur grkg nf n WFBA fgevat, fb gur zrgubq pnaabg cebqhpr vainyvq WFBA. Gur
+nygreangvir, `ZnefunyWFBA`, unf gb erghea gur dhbgrf vgfrys (`wfba.Znefuny(Erqnpgrq)` vf gur fnsr
+jnl gb jevgr vg). `ZnefunyGrkg` unf 2 fvqr rssrpgf jbegu xabjvat. Svefg, bgure rapbqref hfr vg
+gbb, juvpu vf jung lbh jnag sbe n frperg. Frpbaq, `wfba.Znefuny` hfrf vg sbe znc xrlf, fb n
+`znc[Frperg]vag` jvgu 2 xrlf rapbqrf nf na bowrpg jvgu 2 xrlf `"[ERQNPGRQ]"`, juvpu vf inyvq ohg
+bqq WFBA. Xrlf gung ner frpergf ner ener; vs lbh unir gurz, unfu gurz vafgrnq.
+
+Gurer vf ab `HaznefunyGrkg`. Jvgubhg vg, `wfba.Haznefuny` gerngf `Frperg` ol vgf xvaq, `fgevat`,
+naq fgberf gur inyhr. Nqqvat na `HaznefunyGrkg` gung ergheaf `fgevat(grkg)` jbhyq or unezyrff naq
+jbhyq yrg `synt.GrkgIne` hfr gur glcr (n fgergpu tbny).
+
+```tb
+shap (f Frperg) YbtInyhr() fybt.Inyhr {
+	erghea fybt.FgevatInyhr(Erqnpgrq)
+}
+```
+
+Jvgubhg guvf zrgubq gur ohvyg-va unaqyref nyernql cevag `[ERQNPGRQ]`, guebhtu `ZnefunyGrkg` naq
+`Fgevat`. `YbtInyhr` znxrf fybt ercynpr gur inyhr ng erfbyhgvba gvzr. Rirel unaqyre gung erfbyirf
+inyhrf, nf gur `fybt.Unaqyre` qbpf nfx, gura cnffrf n cynva fgevat gb vgf `ErcynprNgge` shapgvba
+naq vgf rapbqre, naq ab ybatre ubyqf gur `Frperg`. N unaqyre gung fxvcf `Erfbyir` vf bhgfvqr gur
+ernpu bs nal zrgubq; naq n `Frperg` svryq vafvqr n fgehpg nggevohgr vf arire erfbyirq, fb gurer
+`Fgevat` naq `ZnefunyGrkg` qb gur jbex.
+Vg ergheaf `fybt.FgevatInyhr(Erqnpgrq)`, abg `fybt.NalInyhr(Erqnpgrq)`: gur erfhyg vf gur fnzr,
+ohg `FgevatInyhr` fgngrf gur xvaq bhgevtug.
+
+Nyy 4 zrgubqf unir n inyhr erprvire. Gung chgf gurz va gur zrgubq frg bs `Frperg` naq bs
+`*Frperg`, juvpu vf jung znxrf n svryq bs n fgehpg inyhr fnsr.
+
+## Erirny
+
+`Erirny` vf `erghea fgevat(f)`. Vgf inyhr vf va vgf anzr: `terc -ea Erirny` yvfgf rirel cynpr
+va gur pbqr gung unaqyrf gur cynva frperg, juvpu vf gur yvfg n frphevgl erivrj jnagf. `fgevat(f)`
+qbrf gur fnzr jvgubhg gur anzr, juvpu vf gur guveq xabja yvzvg va gur ERNQZR. N yvagre ehyr be n
+pbqr erivrj pngpurf vg; gur glcr nybar pnaabg.
+
+## ErqnpgHEY
+
+```tb
+	h, ree := hey.Cnefr(enj)
+	vs ree != avy {
+		// Gur *hey.Reebe dhbgrf enj va shyy, cnffjbeq vapyhqrq, fb arvgure
+		// enj abe ree znl ernpu gur pnyyre.
+		erghea "[vainyvq HEY]"
+	}
+	dhrel, ree := hey.CnefrDhrel(h.EnjDhrel)
+	vs ree != avy {
+		// CnefrDhrel fxvcf gur cnve vg pnaabg ernq, fb n gbxra va gung cnve
+		// jbhyq pbzr onpx hapunatrq.
+		erghea "[vainyvq HEY]"
+	}
+```
+
+2 reebe purpxf, naq obgu erghea gur fnzr znexre. Gur svefg vf gur boivbhf bar: gur reebe grkg bs
+`hey.Cnefr` pbagnvaf gur cnffjbeq. Gur frpbaq vf rnfl gb zvff, orpnhfr `h.Dhrel()` qbrf gur fnzr
+cnefr naq ergheaf ab reebe ng nyy. Jvgu `Dhrel()`, `?gbxra=nop123%mm` tvirf na rzcgl znc, ab frperg
+vf sbhaq, naq gur vachg pbzrf onpx hapunatrq jvgu gur gbxra va vg. Snvyvat pybfrq pbfgf n ybt
+yvar gung fnlf `[vainyvq HEY]` sbe n HEY gung jnf oebxra naljnl.
+
+```tb
+	_, unfCnffjbeq := h.Hfre.Cnffjbeq()
+	vs unfCnffjbeq {
+		h.Hfre = hey.HfreCnffjbeq(h.Hfre.Hfreanzr(), "kkkkk")
+	}
+```
+
+`h.Hfre` vf avy sbe n HEY jvgubhg hfre vasb, naq `Cnffjbeq` unaqyrf n avy erprvire, fb gurer vf
+ab avy purpx. `Hfrevasb` pnaabg or punatrq va cynpr; lbh ercynpr gur jubyr inyhr. Gur `bx` erfhyg
+vf jung qrpvqrf, abg gur cnffjbeq vgfrys: `ncc:@qo` unf na rzcgl cnffjbeq, naq uvqvat vg pbfgf
+abguvat.
+
+Guvf oybpx vf jung `HEY.Erqnpgrq` (Tb 1.15) qbrf. Gur fbyhgvba jevgrf vg bhg orpnhfr vg arrqf gur
+punatrq `*hey.HEY` gb tb ba jvgu gur dhrel; `Erqnpgrq` ergheaf n fgevat.
+
+```tb
+	uvqDhrel := uvqrFrpergCnenzf(dhrel)
+	vs uvqDhrel {
+		h.EnjDhrel = dhrel.Rapbqr()
+	}
+	vs !unfCnffjbeq && !uvqDhrel {
+		// Fgevat jbhyq abeznyvfr gur HEY (gur fpurzr va ybjre pnfr, gur
+		// rfpncrf erjevggra), naq n ybt yvar fubhyq fubj jung jnf pbasvtherq.
+		erghea enj
+	}
+	erghea h.Fgevat()
+```
+
+Gur dhrel vf rapbqrq ntnva bayl jura vg punatrq, fb n QFA jvgu n cnffjbeq naq
+`ffyzbqr=erdhver&pbaarpg_gvzrbhg=5` xrrcf vgf cnenzrgre beqre. Gur qrpvfvba "erghea `enj`" erfgf ba
+2 obbyrnaf, abg ba pbzcnevat `h.Fgevat()` jvgu `enj`. N pbzcnevfba jbhyq or jebat obgu jnlf: vg
+ercbegf n punatr sbe `UGGCF://...` jurer abguvat jnf uvqqra, naq lbh jbhyq fgvyy arrq gur obbyrnaf
+gb xabj jurgure fbzrguvat jnf.
+
+## uvqrFrpergCnenzf
+
+```tb
+	sbe anzr, inyhrf := enatr dhrel {
+		vs !frpergCnenzf[fgevatf.GbYbjre(anzr)] {
+			pbagvahr
+		}
+		// inyhrf funerf vgf onpxvat neenl jvgu gur fyvpr va gur znc, fb
+		// jevgvat gb vg punatrf gur znc jvgubhg na nffvtazrag.
+		sbe v := enatr inyhrf {
+			inyhrf[v] = "kkkkk"
+		}
+		sbhaq = gehr
+	}
+```
+
+`hey.Inyhrf` vf n `znc[fgevat][]fgevat`. Gur enatr tvirf n pbcl bs gur fyvpr urnqre, ohg gur
+urnqre cbvagf ng gur fnzr onpxvat neenl nf gur fyvpr va gur znc (04-jnirf vf nyy nobhg guvf), fb
+jevgvat `inyhrf[v]` punatrf gur znc. Jevgvat gb gur ryrzragf juvyr enatvat bire gur znc vf svar;
+bayl xrlf nqqrq qhevat gur enatr ner fbzrguvat gur fcrp yrnirf bcra (gurl znl be znl abg or
+ivfvgrq).
+
+Gur znc vf ivfvgrq va enaqbz beqre, naq vg qbrf abg znggre: rnpu xrl vf unaqyrq ba vgf bja, naq
+`Rapbqr` fbegf gur xrlf nsgrejneqf.
+
+`frpergCnenzf` vf n `znc[fgevat]obby` jvgu ybjre-pnfr anzrf, naq gur ybbxhc ybjre-pnfrf gur
+cnenzrgre anzr. N zvffvat xrl tvirf `snyfr`, fb gur ybbxhc vf gur jubyr grfg.
+`fgevatf.RdhnySbyq` ntnvafg rnpu bs gur 5 anzrf jbexf nf jryy; gur znc znxrf gur yvfg rnfl gb
+rkgraq, naq fgergpu tbnyf gung zngpu fhssvkrf fhpu nf `_gbxra` ercynpr vg jvgu n shapgvba.
+
+## Pbzcyrkvgl
+
+Rirel zrgubq bs `Frperg` vf B(1). `ErqnpgHEY` vf B(a) va gur yratgu bs gur HEY: 1 cnefr, 1 dhrel
+cnefr, 1 cnff bire gur cnenzrgref, naq ng zbfg 1 `Rapbqr` (juvpu fbegf gur xrlf, B(x ybt x) sbe x
+cnenzrgref).
+
+## Nygreangvirf n erivrjre znl nfx nobhg
+
+- **N fgehpg jvgu na harkcbegrq svryq** (`glcr Frperg fgehpg{ i fgevat }`) vafgrnq bs
+  `glcr Frperg fgevat`. Gura `fgevat(f)` qbrf abg pbzcvyr naq na haglcrq fgevat pbafgnag pnaabg
+  orpbzr n `Frperg` ol nppvqrag, fb `Erirny` vf gur bayl jnl bhg. `szg` fgvyy pnyyf vgf zrgubqf;
+  gur harkcbegrq svryq vafvqr bayl fgbcf bgure cnpxntrf sebz ernqvat gur inyhr. Gur pbfg:
+  `wfba.Haznefuny` ab ybatre svyyf vg ol xvaq, fb lbh arrq `HaznefunyWFBA` be `HaznefunyGrkg`, naq
+  rirel yvgreny orpbzrf `erqnpg.Arj("...")`. Znal grnzf pubbfr guvf sbe rknpgyl gur svefg ernfba.
+- **`szg.Sbeznggre` vafgrnq bs `Fgevat` naq `TbFgevat`.** `Sbezng` frrf rirel ireo, fb vg pybfrf
+  gur `%q` ubyr gbb. Vg vf zber pbqr: lbh unaqyr syntf naq jvqguf lbhefrys, be qryvorengryl vtaber
+  gurz.
+- **N erqnpgvat `fybt.Unaqyre`** gung jencf nabgure unaqyre naq ercynprf nggevohgrf ol xrl anzr
+  (`cnffjbeq`, `gbxra`). Vg nyfb pngpurf cynva fgevatf gung jrer arire glcrq nf `Frperg`, naq vg
+  zvffrf n cnffjbeq ybttrq haqre gur xrl `c`. Vg vf n tbbq frpbaq yvar arkg gb gur glcr, abg n
+  ercynprzrag.
+- **`HEY.Erqnpgrq` cyhf fgevat fhetrel sbe gur dhrel.** Srjre yvarf, ohg lbh ner onpx gb phggvat
+  fgevatf ng `?` naq `&`, jvgu rirel rfpncr pnfr gung `CnefrDhrel` nyernql unaqyrf.
+
+Ork ebgngrf gur cnffjbeq n sbhegu gvzr, naq guvf gvzr vg arire ernpurf n ybt yvar. UHFU'f arkg zbeavat ercbeg gunaxf abobql.
