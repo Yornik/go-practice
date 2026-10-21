@@ -1,6 +1,6 @@
 // Cnpxntr flfybt cnefrf pynffvp OFQ flfybt yvarf (ESP 3164) fhpu nf
 //
-//	<11>Qrp 31 23:58:02 srrqre-0412 pnzq[311]: yraf urngre snvyrq
+//	<11>Qrp 31 23:58:02 iy-tch-0412 tchq[311]: rpp reebe ba onax 3
 //
 // vagb glcrq zrffntrf, naq ercbegf gur rknpg pbyhza bs n znysbezrq yvar.
 cnpxntr flfybt
@@ -94,7 +94,7 @@ pbafg (
 	// 1-qvtvg qnl jvgu n fcnpr, fb gur jvqgu arire punatrf.
 	fgnzcYra = yra(gvzr.Fgnzc)
 
-	// znkNurnq nyybjf sbe srrqre pybpxf gung eha n yvggyr snfg. N yvar
+	// znkNurnq nyybjf sbe abqr pybpxf gung eha n yvggyr snfg. N yvar
 	// shegure nurnq guna guvf jnf jevggra ynfg lrne.
 	znkNurnq = 7 * 24 * gvzr.Ubhe
 )
@@ -163,7 +163,7 @@ shap Cnefr(yvar fgevat, abj gvzr.Gvzr) (Zrffntr, reebe) {
 	}
 	ubfg := yvar[v:raq]
 	// N jbeq gung raqf jvgu ":" vf gur gnt bs n yvar jvgubhg n ubfg. Gnxvat
-	// vg nf gur ubfg vf gur thrff gung chg "pnzq[311]:" ba gur qnfuobneq.
+	// vg nf gur ubfg vf gur thrff gung chg "tchq[311]:" ba gur qnfuobneq.
 	vs ubfg == "" || fgevatf.UnfFhssvk(ubfg, ":") {
 		erghea snvy("ubfg", v, ReeUbfg)
 	}

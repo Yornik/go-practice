@@ -95,7 +95,7 @@ func TestParseErrorUnwrap(t *testing.T) {
 	}
 
 	// A caller adds context with %w; the *ParseError stays reachable.
-	wrapped := fmt.Errorf("feeders.log line 3: %w", &syslog.ParseError{Field: "host", Col: 21, Err: syslog.ErrHost})
+	wrapped := fmt.Errorf("undercroft.log line 3: %w", &syslog.ParseError{Field: "host", Col: 21, Err: syslog.ErrHost})
 	var got *syslog.ParseError
 	if !errors.As(wrapped, &got) {
 		t.Fatalf("errors.As(%q, *ParseError) = false, want true", wrapped)

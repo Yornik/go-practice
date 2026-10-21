@@ -1,0 +1,20 @@
+2026-12-31T23:58:02+01:00 facility=1 severity=err host=vl-gpu-0412 app=gpud pid=311 text="ecc error on bank 3"
+2026-12-31T23:59:58+01:00 facility=1 severity=info host=vl-gpu-0412 app=coold pid=207 text="coolant level 12%"
+error field=host col=21
+2027-01-01T00:00:01+01:00 facility=1 severity=warning host=vl-gpu-0448 app=netd pid=96 text="sfp0 rx -8.2 dBm"
+2027-01-01T00:00:03+01:00 facility=3 severity=info host=chkpt-store-2 app=systemd pid=1 text="Started ckpt-gc.service."
+2027-01-01T00:01:17+01:00 facility=16 severity=info host=canary-h3-01 app=fand pid=412 text="fan2 at 41% for 41 s"
+2027-01-01T00:02:00+01:00 facility=1 severity=info host=vl-gpu-0031 app=coold pid=207 text="coolant level 3%: refill soon"
+2027-01-01T00:02:44+01:00 facility=0 severity=err host=vl-gpu-0412 app=kernel pid=0 text="usb 1-1: device descriptor read/64, error -71"
+2027-01-01T00:03:10+01:00 facility=1 severity=err host=vl-gpu-0462 app=gpud pid=318 text="batch drop [42 of 300]"
+2026-12-31T23:00:00+01:00 facility=1 severity=notice host=192.0.2.17 app=uploader pid=0 text=""
+2026-03-14T09:30:00+01:00 facility=1 severity=warning host=vl-gpu-0427 app=ntpd pid=88 text="clock not synchronised"
+error field=tag col=42
+2027-01-01T00:04:00+01:00 facility=23 severity=info host=vl-gpu-0412 app=updated pid=55 text="checking for driver"
+error field=priority col=2
+error field=timestamp col=5
+error field=timestamp col=20
+error field=priority col=1
+error field=timestamp col=17
+2027-01-01T00:04:59+01:00 facility=1 severity=info host=vl-gpu-0099 app=coold pid=0 text="refill done"
+2026-12-31T23:59:30+01:00 facility=1 severity=err host=vl-gpu-0412 app=gpud pid=311 text="ecc error on bank 3 again"

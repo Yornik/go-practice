@@ -25,7 +25,7 @@ var tick0 = time.Date(2026, 12, 7, 17, 0, 0, 0, time.UTC)
 var (
 	errRefused = errors.New("dial tcp 10.0.0.1:6443: connection refused")
 	errTimeout = errors.New("the server was unable to return a response in the time allotted")
-	errDenied  = errors.New("deployments.apps \"photo-api\" is forbidden")
+	errDenied  = errors.New("deployments.apps \"inference-api\" is forbidden")
 )
 
 var errNotScripted = errors.New("poller: Poll was called more often than the test expects")

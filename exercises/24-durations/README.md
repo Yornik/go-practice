@@ -1,17 +1,17 @@
-# 24 · Silence it for 2 days, not 2 seconds
+# 24 · 2d means 2 days
 
-**Tier 5 · about 1.5 h** · Go: scanning a string byte by byte, `strings.Builder`, integer overflow checks with `math.MaxInt64`, a custom error type with `Unwrap`, `errors.As` and `errors.Is`, `time.Duration`, a fuzz test · Problem solving: read the grammar in EBNF before you code; walk the input 1 byte at a time and always know your column
+**Tier 5 · about 2 h** · Go: scanning a string byte by byte, `strings.Builder`, integer overflow checks with `math.MaxInt64`, a custom error type with `Unwrap`, `errors.As` and `errors.Is`, `time.Duration`, a fuzz test · Problem solving: read the grammar in EBNF before you code; walk the input 1 byte at a time and always know your column
 
-In December the `orders` database at Peckish, the bird-feeder company, moved to new disks. The
-work would take 2 days, so Ines Okafor, the senior SRE, silenced the disk alerts first, as her
-runbook says: `silence.sh disk 2d`. The script handed `2d` to Go's `time.ParseDuration`, which
-knows hours, minutes and seconds but not days. It wrote `time: unknown unit "d" in duration "2d"`
-to a log file that nobody reads. Then it dropped the unit it did not know, read `2` as seconds and
-created a silence of 2 seconds. The silence ended before Ines had closed her laptop. Between 03:12
-and 05:00 the alerts that she had silenced paged her 41 times. Prometheus and Alertmanager accept
-`15d` and `2w`, so the team's scripts should too. A bad duration must stop the script with an
-error that says where the input is wrong. In this exercise you write the parser that `silence.sh`
-should have used, and the formatter that writes a duration back.
+`time: unknown unit "d" in duration "2d"`. The silence script printed that line once, to a log that
+nobody reads. Noor Haddad, the principal SRE, had run `silence.sh disk 2d` before the 2-day
+maintenance of the `orders` database. Go's `time.ParseDuration` knows hours, minutes and seconds but
+not days, and the script fell back to a silence of 0 seconds. Between 03:12 and 05:00, in 1 of the
+longest nights of the year, the alerts that Noor had silenced paged her 41 times. At 03:40 HUSH, the
+AI that Vesper Labs sells to hold other companies' pagers, sent her a direct message: "Shall I hold
+the pager tonight? Please rest." She did not answer it. Prometheus and Alertmanager accept `15d` and
+`2w`, so the team's scripts should too. A bad duration must stop the script with an error that says
+where the input is wrong. In this exercise you write the parser that `silence.sh` should have used,
+and the formatter that writes a duration back.
 
 ## Task
 
@@ -157,6 +157,7 @@ Format(90 * time.Minute)          → "1h30m"
 Format(219 * time.Hour)           → "1w2d3h"
 Format(1500 * time.Microsecond)   → "1ms"
 Format(-36 * time.Hour)           → "-1d12h"
+Format(87600 * time.Hour)         → "521w3d"
 Format(0)                         → "0s"
 ```
 

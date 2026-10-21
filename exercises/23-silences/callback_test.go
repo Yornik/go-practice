@@ -17,10 +17,10 @@ const heldLock = "onExpire was called while Expire held its lock"
 
 func TestExpireCallbackArgumentsAndOrder(t *testing.T) {
 	h := newHarness(t)
-	c := sil("c", "disk_full", "photo-store-3", 2*time.Hour)
-	b := sil("b", "", "photo-store-2", time.Hour)
+	c := sil("c", "disk_full", "chkpt-store-3", 2*time.Hour)
+	b := sil("b", "", "chkpt-store-2", time.Hour)
 	a := sil("a", "disk_full", "", time.Hour)
-	z := sil("z", "high_latency", "photo-store-1", 5*time.Hour)
+	z := sil("z", "high_latency", "chkpt-store-1", 5*time.Hour)
 	h.mustAdd(c, b, a, z)
 
 	h.wantExpire()
@@ -45,7 +45,7 @@ func TestExpireCallbackNil(t *testing.T) {
 	if s == nil {
 		t.Fatal("New(clock.Now, nil) = nil, want a store")
 	}
-	disk2 := sil("disk-2", "disk_full", "photo-store-2", time.Hour)
+	disk2 := sil("disk-2", "disk_full", "chkpt-store-2", time.Hour)
 	var err error
 	within(t, "Add", lockHang, func() { err = s.Add(disk2) })
 	if err != nil {
@@ -83,7 +83,7 @@ func TestExpireCallbackCanExtend(t *testing.T) {
 	if s == nil {
 		t.Fatal("New(clock.Now, onExpire) = nil, want a store")
 	}
-	disk2 := sil("disk-2", "disk_full", "photo-store-2", time.Hour)
+	disk2 := sil("disk-2", "disk_full", "chkpt-store-2", time.Hour)
 	var err error
 	within(t, "Add", lockHang, func() { err = s.Add(disk2) })
 	if err != nil {
@@ -105,19 +105,19 @@ func TestExpireCallbackCanExtend(t *testing.T) {
 	}
 	mu.Unlock()
 
-	extended := sil("disk-2", "disk_full", "photo-store-2", 2*time.Hour)
+	extended := sil("disk-2", "disk_full", "chkpt-store-2", 2*time.Hour)
 	var (
 		match silences.Silence
 		ok    bool
 		n     int
 	)
 	within(t, "Match and Len after the extension", lockHang, func() {
-		match, ok = s.Match("disk_full", "photo-store-2")
+		match, ok = s.Match("disk_full", "chkpt-store-2")
 		n = s.Len()
 	})
 	if !ok || !same(match, extended) {
 		t.Errorf("at t0+1h, after onExpire extended disk-2: Match(%q, %q) = %s, %v; want %s, true",
-			"disk_full", "photo-store-2", show(match), ok, show(extended))
+			"disk_full", "chkpt-store-2", show(match), ok, show(extended))
 	}
 	if n != 1 {
 		t.Errorf("at t0+1h, after onExpire extended disk-2: Len() = %d, want 1", n)
@@ -131,7 +131,7 @@ func TestExpireCallbackSeesFinishedChange(t *testing.T) {
 		id     string
 		length int    // Len() inside onExpire
 		again  int    // len(Expire()) inside onExpire
-		match  string // ID that Match("disk_full", "photo-store-1") returned inside onExpire
+		match  string // ID that Match("disk_full", "chkpt-store-1") returned inside onExpire
 	}
 	clock := newClock()
 	var (
@@ -141,7 +141,7 @@ func TestExpireCallbackSeesFinishedChange(t *testing.T) {
 	)
 	onExpire := func(ended silences.Silence) {
 		x := seen{id: ended.ID, length: s.Len(), again: len(s.Expire())}
-		if m, ok := s.Match("disk_full", "photo-store-1"); ok {
+		if m, ok := s.Match("disk_full", "chkpt-store-1"); ok {
 			x.match = m.ID
 		}
 		mu.Lock()
@@ -153,8 +153,8 @@ func TestExpireCallbackSeesFinishedChange(t *testing.T) {
 		t.Fatal("New(clock.Now, onExpire) = nil, want a store")
 	}
 	list := []silences.Silence{
-		sil("disk-1", "disk_full", "photo-store-1", time.Hour),
-		sil("disk-2", "disk_full", "photo-store-2", time.Hour),
+		sil("disk-1", "disk_full", "chkpt-store-1", time.Hour),
+		sil("disk-2", "disk_full", "chkpt-store-2", time.Hour),
 		sil("disks", "disk_full", "", 3*time.Hour),
 	}
 	within(t, "Add", lockHang, func() {
@@ -174,7 +174,7 @@ func TestExpireCallbackSeesFinishedChange(t *testing.T) {
 	mu.Lock()
 	defer mu.Unlock()
 	if fmt.Sprint(got) != fmt.Sprint(want) {
-		t.Errorf("at t0+2h: inside onExpire {ID Len() len(Expire()) Match(\"disk_full\", \"photo-store-1\").ID} = %v,\nwant %v",
+		t.Errorf("at t0+2h: inside onExpire {ID Len() len(Expire()) Match(\"disk_full\", \"chkpt-store-1\").ID} = %v,\nwant %v",
 			got, want)
 	}
 }
@@ -198,7 +198,7 @@ func TestExpireCallbackDoesNotBlockOthers(t *testing.T) {
 	if s == nil {
 		t.Fatal("New(clock.Now, onExpire) = nil, want a store")
 	}
-	disk2 := sil("disk-2", "disk_full", "photo-store-2", time.Hour)
+	disk2 := sil("disk-2", "disk_full", "chkpt-store-2", time.Hour)
 	within(t, "Add", lockHang, func() {
 		if err := s.Add(disk2); err != nil {
 			panic(fmt.Sprintf("Add(%s) = %v, want nil", show(disk2), err))
@@ -222,11 +222,11 @@ func TestExpireCallbackDoesNotBlockOthers(t *testing.T) {
 	// onExpire for disk-2 is blocked in another goroutine right now.
 	const busy = "a call waits for a lock that Expire holds while onExpire runs"
 	within(t, "Add while onExpire runs in another goroutine", busy, func() {
-		if err := s.Add(sil("disk-3", "disk_full", "photo-store-3", 2*time.Hour)); err != nil {
+		if err := s.Add(sil("disk-3", "disk_full", "chkpt-store-3", 2*time.Hour)); err != nil {
 			panic(fmt.Sprintf("Add = %v, want nil", err))
 		}
 	})
-	within(t, "Match while onExpire runs in another goroutine", busy, func() { s.Match("disk_full", "photo-store-3") })
+	within(t, "Match while onExpire runs in another goroutine", busy, func() { s.Match("disk_full", "chkpt-store-3") })
 	within(t, "Len while onExpire runs in another goroutine", busy, func() { s.Len() })
 	within(t, "Expire while onExpire runs in another goroutine", busy, func() { s.Expire() })
 
@@ -253,7 +253,7 @@ func TestExpireCallbackReadmeExample(t *testing.T) {
 	onExpire := func(ended silences.Silence) {
 		if ended.ID == "disk-2" && !extended {
 			extended = true
-			addErr = s.Add(sil("disk-2", "disk_full", "photo-store-2", 2*time.Hour))
+			addErr = s.Add(sil("disk-2", "disk_full", "chkpt-store-2", 2*time.Hour))
 		}
 	}
 	within(t, "New(clock.Now, onExpire)", lockHang, func() { s = silences.New(clock.Now, onExpire) })
@@ -262,23 +262,23 @@ func TestExpireCallbackReadmeExample(t *testing.T) {
 	}
 	h := &harness{t: t, clock: clock, rec: &recorder{}, s: s}
 
-	disk2 := sil("disk-2", "disk_full", "photo-store-2", time.Hour)
-	upgrade := sil("upgrade", "", "photo-store-2", 2*time.Hour)
+	disk2 := sil("disk-2", "disk_full", "chkpt-store-2", time.Hour)
+	upgrade := sil("upgrade", "", "chkpt-store-2", 2*time.Hour)
 	h.mustAdd(disk2, upgrade)
 	h.addInvalid(silences.Silence{ID: "until-done", Alert: "disk_full"})
-	h.wantMatch("disk_full", "photo-store-2", upgrade)
-	h.wantNoMatch("disk_full", "photo-store-1")
+	h.wantMatch("disk_full", "chkpt-store-2", upgrade)
+	h.wantNoMatch("disk_full", "chkpt-store-1")
 	h.clock.Advance(59 * time.Minute)
-	h.wantMatch("high_latency", "photo-store-2", upgrade)
+	h.wantMatch("high_latency", "chkpt-store-2", upgrade)
 	h.clock.Advance(time.Minute)
 	h.wantLen(2)
-	h.wantMatch("disk_full", "photo-store-2", upgrade)
+	h.wantMatch("disk_full", "chkpt-store-2", upgrade)
 	h.wantExpire(disk2)
 	if !extended || addErr != nil {
 		t.Fatalf("at t0+1h: onExpire called Add: %v, error %v; want true, nil", extended, addErr)
 	}
-	ext := sil("disk-2", "disk_full", "photo-store-2", 2*time.Hour)
-	h.wantMatch("disk_full", "photo-store-2", ext)
+	ext := sil("disk-2", "disk_full", "chkpt-store-2", 2*time.Hour)
+	h.wantMatch("disk_full", "chkpt-store-2", ext)
 	h.clock.Advance(30 * time.Minute)
 	h.wantExpire()
 	h.clock.Advance(30 * time.Minute)

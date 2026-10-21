@@ -1,17 +1,17 @@
-# 23 · Every silence ends
+# 23 · A silence until 2036
 
-**Tier 5 · about 1 h** · Go: `sync.Mutex` together with an injected clock, deleting from a map while you range over it, callbacks outside a lock, sorting results, a fake clock in tests · Problem solving: decide what each method does with an entry that has already ended; call other code only after you let go of the lock
+**Tier 5 · about 1.5 h** · Go: `sync.Mutex` together with an injected clock, deleting from a map while you range over it, callbacks outside a lock, sorting results, a fake clock in tests · Problem solving: decide what each method does with an entry that has already ended; call other code only after you let go of the lock
 
-`photo-store-2` is 1 of the 4 disks that hold every bird photo at Peckish, the bird-feeder company.
-On 14 December at 04:40 it filled up. The disk alert fired at 04:41 and kept firing for 3 hours,
-straight into a silence. No pager went off. The first alert anyone got was a ticket that Dot, the
-support lead, forwarded at 07:55: "no birds since 5am. is my feeder dead?" In November somebody had
-silenced the alert "until the migration is done". The silence tool asked for an alert name and a
-reason, but not for an end time, so the silence had none and muted the alert forever. The migration
-took 2 days. The silence lasted 5 weeks. Ines Okafor, the senior SRE, adds 2 lines to the runbook:
-every silence ends, and the on-call channel hears when it does. In this exercise you write the store
-behind the silence tool: it matches alerts against silences, removes the silences that have ended,
-and reports each one.
+"Until the migration is done": in November, that was the whole comment on the silence for the
+disk alert of `chkpt-store-3`, 1 of the 4 disks in the Undercroft that hold the model checkpoints
+of Vesper Labs, the AI lab at the top of the Spire. The silence tool asked for an alert name and a
+comment, but not for an end, so `hush-bot`, the chat account of HUSH, the lab's own AI, filled one
+in: 87600 hours. The migration took 2 days. On 14 December at 04:40, with sleet on the harbour,
+the disk fills up, and the alert fires for 3 hours straight into the silence. Nobody is paged.
+That evening Adaeze Nwosu, the CEO, revokes HUSH's write access to silences. Noor Haddad, the
+principal SRE, decides that every silence ends and that the on-call channel hears when it does.
+In this exercise you write the store behind the silence tool: it matches alerts against silences,
+removes the silences that have ended, and reports each one.
 
 ## Task
 
@@ -24,7 +24,7 @@ var ErrInvalid = errors.New("silences: invalid silence") // given
 type Silence struct {
 	ID     string    // unique in the store
 	Alert  string    // alert name; "" matches every alert
-	Target string    // feeder or host; "" matches every target
+	Target string    // node or host; "" matches every target
 	Until  time.Time // the silence is active while now < Until
 } // given
 
@@ -112,17 +112,17 @@ A store with a fake clock. Its `onExpire` extends `disk-2` once, to 06:00.
 
 ```text
 time   call                                    result
-04:00  Add(disk-2: "disk_full", "photo-store-2", Until 05:00)    nil
-04:00  Add(upgrade: "", "photo-store-2", Until 06:00)            nil
+04:00  Add(disk-2: "disk_full", "chkpt-store-2", Until 05:00)    nil
+04:00  Add(upgrade: "", "chkpt-store-2", Until 06:00)            nil
 04:00  Add(until-done: "disk_full", "", no Until)                error: wraps ErrInvalid, contains the ID as %q: "until-done"
-04:00  Match("disk_full", "photo-store-2")     upgrade, true      (06:00 is later than 05:00)
-04:00  Match("disk_full", "photo-store-1")     {}, false
-04:59  Match("high_latency", "photo-store-2")  upgrade, true      (Alert "" matches every alert)
+04:00  Match("disk_full", "chkpt-store-2")     upgrade, true      (06:00 is later than 05:00)
+04:00  Match("disk_full", "chkpt-store-1")     {}, false
+04:59  Match("high_latency", "chkpt-store-2")  upgrade, true      (Alert "" matches every alert)
 05:00  Len()                                   2                  (disk-2 has ended; Expire has not run)
-05:00  Match("disk_full", "photo-store-2")     upgrade, true      (disk-2 has ended)
+05:00  Match("disk_full", "chkpt-store-2")     upgrade, true      (disk-2 has ended)
 05:00  Expire()                                [disk-2]
-         onExpire(disk-2) calls Add(disk-2: "disk_full", "photo-store-2", Until 06:00)   nil
-05:00  Match("disk_full", "photo-store-2")     disk-2, true       (both end at 06:00; "disk-2" < "upgrade")
+         onExpire(disk-2) calls Add(disk-2: "disk_full", "chkpt-store-2", Until 06:00)   nil
+05:00  Match("disk_full", "chkpt-store-2")     disk-2, true       (both end at 06:00; "disk-2" < "upgrade")
 05:30  Expire()                                []
 06:00  Expire()                                [disk-2 upgrade]   (both end at 06:00: sorted by ID)
 06:00  Len()                                   0
@@ -171,7 +171,10 @@ does not cover. On Linux and Windows `-race` needs cgo and a C compiler.
   as in 21-rollout. Make sure the goroutine has ended when your stop function returns.
 - Match on labels instead of 2 fields: a silence holds `map[string]string` matchers, and an alert
   is a label set. 44-alertgroup works with label sets.
-- Make it a tool: `silence add disk_full photo-store-2 2d`. 24-durations parses the `2d`.
+- Cap the length: `hush-bot` once set a silence for 10 years. Give the store a maximum length,
+  and make `Add` reject a silence that ends more than that maximum after `now()`, with an error
+  that wraps `ErrInvalid`.
+- Make it a tool: `silence add disk_full chkpt-store-2 2d`. 24-durations parses the `2d`.
 
 ## Stuck?
 

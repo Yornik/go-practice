@@ -1,6 +1,6 @@
 // Package syslog parses classic BSD syslog lines (RFC 3164) such as
 //
-//	<11>Dec 31 23:58:02 feeder-0412 camd[311]: lens heater failed
+//	<11>Dec 31 23:58:02 vl-gpu-0412 gpud[311]: ecc error on bank 3
 //
 // into typed messages, and reports the exact column of a malformed line.
 package syslog

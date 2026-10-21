@@ -1,17 +1,18 @@
-# 21 · Wait for the rollout, not for 5 minutes
+# 21 · sleep 300 is not a rollout check
 
 **Tier 5 · about 1.5 h** · Go: channels and `select`, receiving from a closed channel, `context.Context` (`Done`, `Err`, `WithCancel`, `WithDeadline`), `errors.Is` with `context.Canceled` and `context.DeadlineExceeded`, a tick channel as a parameter · Problem solving: list every way the loop can end; apply the checks after each poll in a fixed order; give each ending its own error
 
-The deploy pipeline at Peckish, the bird-feeder company, ends with 2 lines:
-`kubectl apply -f photo-api.yaml` and `sleep 300`. When `photo-api` had 2 pods, a rollout took 40
-seconds and 5 minutes was generous. It has 24 pods now. On the first Monday of December, at 17:03,
-the new version crashed on start with `missing env PHOTO_BUCKET`. The pipeline slept for 5 minutes
-and got exit code 0 from `sleep`, which has never failed a deploy. It posted `photo-api deployed`
-in the chat, and everybody went home. 18 old pods carried the evening peak alone. Ines, the senior
-SRE, found it the next morning at 09:12: 6 pods on the new version, all 6 in `CrashLoopBackOff`,
-and a status that had not changed in 16 hours. "The pipeline watched the clock," she said. "It
-should watch the rollout." In this exercise you write the wait step of the pipeline: it ends when
-the rollout is done or stops moving, when the API keeps failing, or when somebody stops it.
+`sleep 300`, then `echo deployed`. The deploy pipeline of Vesper Labs, the AI lab in the Spire,
+has checked every rollout that way since `inference-api` had 2 pods. It has 24 now. On the first
+Monday of December, with sleet on the glass, `hush-bot` shipped a new build while Hana, the
+database engineer, cut the release cake her wife Emiko had sent. The build crashed on start with
+`missing env CKPT_STORE_URL`. The pipeline slept for 5 minutes, got exit code 0 from `sleep`,
+posted `inference-api deployed`, and everybody went home. At 09:12 the next morning Noor Haddad,
+the principal SRE, found 6 pods on the new version, all 6 in `CrashLoopBackOff`; 18 old pods had
+carried the evening peak alone. The pipeline counts seconds, not ready replicas, and every build
+of HUSH, the lab's AI, has gone green that way for a year. Noor wants the pipeline to watch the
+rollout, not the clock. In this exercise you write the wait step: it ends when the rollout is done
+or stops moving, when the API keeps failing, or when somebody stops it.
 
 A `Status` holds 3 numbers that a Kubernetes Deployment reports. `Desired` is how many replicas
 the new version must have. `Updated` is how many replicas run the new version. `Ready` is how many
@@ -193,11 +194,11 @@ scenario 20 times.
 
 ## Stretch goals
 
-- Make it a command: `rolloutwait -deployment photo-api -timeout 10m`. Read the status with
+- Make it a command: `rolloutwait -deployment inference-api -timeout 10m`. Read the status with
   `exec.Command("kubectl", "get", "deployment", ...)` and `-o json`. Use `context.WithTimeout`
   for `-timeout` and `signal.NotifyContext` for Ctrl-C. Exit with 1 on any error.
 - Log every change: an `OnPoll func(Status, error)` option that the pipeline uses to print
-  `photo-api: 12 of 24 updated, 6 ready`, once per change, not once per tick.
+  `inference-api: 12 of 24 updated, 6 ready`, once per change, not once per tick.
 - Measure the stall in time instead of in ticks, as `progressDeadlineSeconds` does: pass a clock
   in, as in 22-alertstate.
 - Read which other fields `kubectl rollout status` checks: `.status.observedGeneration`,

@@ -95,8 +95,8 @@ func TestConcurrentEverySilenceEndsOnce(t *testing.T) {
 		expirers   = 2
 		expireEach = 150
 	)
-	alerts := []string{"disk_full", "feeder_offline", "high_latency", ""}
-	targets := []string{"photo-store-1", "photo-store-2", "photo-store-3", "photo-store-4", "feeder-0412", ""}
+	alerts := []string{"disk_full", "node_offline", "high_latency", ""}
+	targets := []string{"chkpt-store-1", "chkpt-store-2", "chkpt-store-3", "chkpt-store-4", "vl-gpu-0412", ""}
 
 	clock := newClock()
 	var (

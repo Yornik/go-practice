@@ -1,4 +1,4 @@
-# 25 · Ernq gur srrqref' flfybt — jnyxguebhtu bs gur ersrerapr fbyhgvba
+# 25 · Ybt yvarf sebz arkg lrne — jnyxguebhtu bs gur ersrerapr fbyhgvba
 
 Gur fbyhgvba vf 1 svyr, `flfybt.tb`. Gur tvira cnegf (gur pbafgnagf, `Zrffntr`, gur fragvaryf naq
 gur `CnefrReebe` svryqf) fgnl nf gurl ner. Jung vf arj vf `Fgevat`, gur 2 reebe zrgubqf, `Cnefr`,
@@ -156,7 +156,7 @@ gur erynl va gur fgbel jnf zvffvat.
 ```
 
 Gur ncc anzr vf "rirelguvat hc gb n olgr gung raqf vg", fb `/hfe/fova/peba`, `cbfgsvk/fzgcq` naq
-`frrq-yriry.q` arrq ab ehyr bs gurve bja. ESP 3164 fnlf gur gnt vf nycunahzrevp naq ng zbfg 32
+`pbbynag-yriry.q` arrq ab ehyr bs gurve bja. ESP 3164 fnlf gur gnt vf nycunahzrevp naq ng zbfg 32
 punenpgref; erny qnrzbaf vtaber gung, naq n fgevpg purpx jbhyq erwrpg unys bs n erny ybt.
 
 ```tb
@@ -229,3 +229,5 @@ gur ernfba sbe gur ahzore 7, juvpu n oner `7 * 24 * gvzr.Ubhe` va gur `vs` jbhyq
 nyybpngvbaf bayl ba gur reebe cngu. `gvzr.Cnefr` vf gur zbfg rkcrafvir pnyy. Sbe n erynl gung erprvirf
 100 000 yvarf cre frpbaq guvf vf svar; vs vg vf abg, n unaq-jevggra gvzrfgnzc cnefre gung vaqrkrf
 gur 15 olgrf qverpgyl vf gur arkg fgrc, zrnfherq jvgu n orapuznex svefg.
+
+Lbhe cnefre ergheaf `zvffvat ubfg` sbe 4113 yvarf vafgrnq bs thrffvat. Gur erynl tbg gurz sebz 203.0.113.51, .52 naq .53: `iy-tch-0501` gb `iy-tch-0503`, gur 3 abqrf sebz Bpgbore'f ebyy pnyy gung Gnivgn, gur snpvyvgvrf yrnq, arire sbhaq va gur Haqrepebsg. Gurve svefg yvar vf sebz 16 Bpgbore ng 03:12, gur zvahgr `pnanel-u3-01` jrag dhvrg sbe 47 zvahgrf. Gurve pbasvt unf 1 yvar gung znggref: `cyna: ybat-dhvrg`. Gur ybool fgvyy fnlf 99.2.

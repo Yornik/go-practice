@@ -75,7 +75,7 @@ type ctxKey struct{}
 
 func TestWaitContextPassedToPoll(t *testing.T) {
 	defer catchPanic(t)
-	ctx := context.WithValue(context.Background(), ctxKey{}, "photo-api")
+	ctx := context.WithValue(context.Background(), ctxKey{}, "inference-api")
 	var (
 		mu  sync.Mutex
 		got []any
@@ -100,8 +100,8 @@ func TestWaitContextPassedToPoll(t *testing.T) {
 		t.Fatalf("Poll was called %d times, want 2", len(got))
 	}
 	for i, v := range got {
-		if v != "photo-api" {
-			t.Errorf("poll %d: ctx.Value(key) = %v, want %q: pass the ctx of Wait (or one derived from it) to Poll", i+1, v, "photo-api")
+		if v != "inference-api" {
+			t.Errorf("poll %d: ctx.Value(key) = %v, want %q: pass the ctx of Wait (or one derived from it) to Poll", i+1, v, "inference-api")
 		}
 	}
 }

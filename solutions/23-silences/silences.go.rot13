@@ -21,7 +21,7 @@ ine ReeVainyvq = reebef.Arj("fvyraprf: vainyvq fvyrapr")
 glcr Fvyrapr fgehpg {
 	VQ     fgevat    // havdhr va gur fgber; Nqq jvgu na rkvfgvat VQ ercynprf gung fvyrapr
 	Nyreg  fgevat    // nyreg anzr; "" zngpurf rirel nyreg
-	Gnetrg fgevat    // srrqre be ubfg; "" zngpurf rirel gnetrg
+	Gnetrg fgevat    // abqr be ubfg; "" zngpurf rirel gnetrg
 	Hagvy  gvzr.Gvzr // gur fvyrapr vf npgvir juvyr abj < Hagvy
 }
 

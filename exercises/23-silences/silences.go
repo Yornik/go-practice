@@ -17,7 +17,7 @@ var ErrInvalid = errors.New("silences: invalid silence")
 type Silence struct {
 	ID     string    // unique in the store; Add with an existing ID replaces that silence
 	Alert  string    // alert name; "" matches every alert
-	Target string    // feeder or host; "" matches every target
+	Target string    // node or host; "" matches every target
 	Until  time.Time // the silence is active while now < Until
 }
 

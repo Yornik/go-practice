@@ -71,22 +71,22 @@ func render(m syslog.Message, err error) string {
 		m.Time.Format(time.RFC3339), m.Facility, m.Severity, m.Host, m.App, m.PID, m.Text)
 }
 
-// TestParseRealFeedersLog parses the log of the New Year incident.
-// testdata/feeders.golden holds the result of each line, in the format of
+// TestParseRealUndercroftLog parses the log of the New Year incident.
+// testdata/undercroft.golden holds the result of each line, in the format of
 // render above. The log was read at 00:05 on 1 January 2027, in CET.
-func TestParseRealFeedersLog(t *testing.T) {
+func TestParseRealUndercroftLog(t *testing.T) {
 	readAt := time.Date(2027, 1, 1, 0, 5, 0, 0, time.FixedZone("CET", 1*60*60))
 
-	lines := readLines(t, "testdata/feeders.log")
-	golden := readLines(t, "testdata/feeders.golden")
+	lines := readLines(t, "testdata/undercroft.log")
+	golden := readLines(t, "testdata/undercroft.golden")
 	if len(lines) != len(golden) {
-		t.Fatalf("testdata/feeders.log has %d lines and testdata/feeders.golden has %d; want the same number",
+		t.Fatalf("testdata/undercroft.log has %d lines and testdata/undercroft.golden has %d; want the same number",
 			len(lines), len(golden))
 	}
 	for i, line := range lines {
 		got := render(syslog.Parse(line, readAt))
 		if got != golden[i] {
-			t.Errorf("feeders.log line %d: Parse(%q)\n got  %s\n want %s", i+1, line, got, golden[i])
+			t.Errorf("undercroft.log line %d: Parse(%q)\n got  %s\n want %s", i+1, line, got, golden[i])
 		}
 	}
 }
@@ -113,9 +113,9 @@ func FuzzParse(f *testing.F) {
 	seeds := []string{
 		``, `<`, `<13`, `<13>`, `<1234>`, `<192>`, `<a>`,
 		`<13>Oct 16 03:12`, `<13>Okt 16 03:12:44 h a: x`, `<13>Oct 16 03:12:44.250 h a: x`,
-		`<11>Dec 31 23:58:02`, `<11>Dec 31 23:58:02 camd[311]: lens heater failed`,
-		`<11>Dec 31 23:58:02 feeder-0412 camd[311]: lens heater failed`,
-		`<13>Oct  1 03:12:44 feeder-0412 camd:`, `<13>Oct 16 03:12:44 h a[`, `<13>Oct 16 03:12:44 h a[1`,
+		`<11>Dec 31 23:58:02`, `<11>Dec 31 23:58:02 gpud[311]: ecc error on bank 3`,
+		`<11>Dec 31 23:58:02 vl-gpu-0412 gpud[311]: ecc error on bank 3`,
+		`<13>Oct  1 03:12:44 vl-gpu-0412 gpud:`, `<13>Oct 16 03:12:44 h a[`, `<13>Oct 16 03:12:44 h a[1`,
 		`<13>Oct 16 03:12:44 h a[12a]: x`, `<13>Oct 16 03:12:44 h a[99999999999999999999]: x`,
 		`<13>Feb  5 17:32:18 10.0.0.99 Use the BFG!`, `<13>Feb 29 12:00:00 h a: leap`,
 	}
@@ -169,8 +169,8 @@ func FuzzParse(f *testing.F) {
 func ExampleParse() {
 	now := time.Date(2027, 1, 1, 0, 5, 0, 0, time.FixedZone("CET", 1*60*60))
 	lines := []string{
-		"<11>Dec 31 23:58:02 feeder-0412 camd[311]: lens heater failed",
-		"<11>Dec 31 23:58:02 camd[311]: lens heater failed",
+		"<11>Dec 31 23:58:02 vl-gpu-0412 gpud[311]: ecc error on bank 3",
+		"<11>Dec 31 23:58:02 hushd[311]: checkpoint copied to 203.0.113.51",
 	}
 	for _, line := range lines {
 		msg, err := syslog.Parse(line, now)
@@ -184,8 +184,8 @@ func ExampleParse() {
 		fmt.Println(msg.Time.Format(time.RFC3339), msg.Severity, msg.Host, msg.App, msg.PID, msg.Text)
 	}
 	// Output:
-	// 2026-12-31T23:58:02+01:00 err feeder-0412 camd 311 lens heater failed
+	// 2026-12-31T23:58:02+01:00 err vl-gpu-0412 gpud 311 ecc error on bank 3
 	// syslog: column 21: host: missing host
-	// <11>Dec 31 23:58:02 camd[311]: lens heater failed
+	// <11>Dec 31 23:58:02 hushd[311]: checkpoint copied to 203.0.113.51
 	//                     ^
 }

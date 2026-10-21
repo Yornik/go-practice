@@ -1,17 +1,17 @@
-# 25 · Read the feeders' syslog
+# 25 · Log lines from next year
 
-**Tier 5 · about 1.5 h** · Go: indexing and slicing a string by byte, `strings.IndexByte`, `time.Parse` with a layout and `time.Date`, an `iota` enum with `String()`, a custom error type with `Unwrap`, `errors.Is`/`errors.As`, `%w` with 2 errors · Problem solving: follow a format spec field by field; decide what a missing year means
+**Tier 5 · about 2 h** · Go: indexing and slicing a string by byte, `strings.IndexByte`, `time.Parse` with a layout and `time.Date`, an `iota` enum with `String()`, a custom error type with `Unwrap`, `errors.Is`/`errors.As`, `%w` with 2 errors · Problem solving: follow a format spec field by field; decide what a missing year means
 
-On 1 January at 00:05 the fleet dashboard at Peckish, the bird-feeder company, showed 30 000
-error lines from the future. The feeders send classic syslog to a relay, and a classic syslog
-timestamp has no year: `<11>Dec 31 23:58:02 feeder-0412 camd[311]: lens heater failed`. The relay
-filled in the current year. So every line from New Year's Eve landed on 31 December 2027, 364 days
-ahead, and the error graph for next New Year's Eve was already red. The relay had a second
-surprise. For a line without a host name, it took the tag as the host. The fleet list now has a
-feeder called `camd[311]:`, with more errors than any real feeder. Ines Okafor, the senior SRE,
-opened the postmortem with "Step 0: breathe". It has 1 action item, with your name on it. In this
-exercise you parse 1 syslog line field by field, choose the right year, and report exactly which
-column of a broken line is wrong.
+On 1 January at 00:05, with the fireworks over the harbour still going, the Undercroft dashboard
+showed 30 000 error lines from the future. The GPU nodes send their logs as classic syslog, and a
+classic syslog timestamp has no year:
+`<11>Dec 31 23:58:02 vl-gpu-0412 gpud[311]: ecc error on bank 3`. The relay added the current year,
+so every line from New Year's Eve landed 364 days ahead. The relay had a second surprise: for a
+line without a host name it took the tag as the host, and the dashboard now lists a node called
+`hushd[311]:`. It is not in the inventory, and none of its lines has ever carried a host name.
+Noor, the principal SRE, opened the postmortem with "Raw line first" and gave you its first
+action item. In this exercise you parse 1 syslog line field by field, choose the right year, and
+report exactly which column of a broken line is wrong.
 
 ## Task
 
@@ -64,7 +64,7 @@ order of the steps in "Run the tests".
 
 ```text
 <PRI>Mmm dd hh:mm:ss HOST TAG: TEXT
-<11>Dec 31 23:58:02 feeder-0412 camd[311]: lens heater failed
+<11>Dec 31 23:58:02 vl-gpu-0412 gpud[311]: ecc error on bank 3
 ```
 
 | Part | Rule |
@@ -124,22 +124,22 @@ order of the steps in "Run the tests".
 | `timestamp` | fewer than 15 bytes after `>` | the end | `<13>Oct 16 03:12` (17), `<13>` (5) |
 | `timestamp` | `time.Parse` rejects the 15 bytes | the first byte of the timestamp | `<13>Okt 16...` (5), `<13>Oct 1 03:12:44 ...` (5) |
 | `timestamp` | the byte after the 15 bytes is not a space | that byte | `<13>Oct 16 03:12:44.250 ...` (20) |
-| `host` | no host after the timestamp | the end, or the byte where the host should start | `<11>Dec 31 23:58:02` (20), `<11>Dec 31 23:58:02  feeder-0412...` (21) |
-| `host` | the word after the timestamp ends with `:` | the first byte of that word | `<11>Dec 31 23:58:02 camd[311]: lens...` (21) |
-| `tag` | no tag after the host, or no app name | the end, or the byte where the app name should start | `... feeder-0412` (32), `... feeder-0412 [311]: ok` (33) |
-| `tag` | no `:` after the app name or the `]` | that byte, or the end | `... feeder-0412 camd lens` (37), `... feeder-0412 camd[311] ok` (42) |
-| `tag` | after `[`, not 1 or more digits and then `]` | that byte, or the end | `... feeder-0412 camd[12a]: ok` (40), `... feeder-0412 camd[]: ok` (38), `... feeder-0412 camd[311: ok` (41) |
-| `tag` | a PID too large for an `int` | the first digit | `... feeder-0412 camd[99999999999999999999]: ok` (38) |
+| `host` | no host after the timestamp | the end, or the byte where the host should start | `<11>Dec 31 23:58:02` (20), `<11>Dec 31 23:58:02  vl-gpu-0412...` (21) |
+| `host` | the word after the timestamp ends with `:` | the first byte of that word | `<11>Dec 31 23:58:02 gpud[311]: ecc...` (21) |
+| `tag` | no tag after the host, or no app name | the end, or the byte where the app name should start | `... vl-gpu-0412` (32), `... vl-gpu-0412 [311]: ok` (33) |
+| `tag` | no `:` after the app name or the `]` | that byte, or the end | `... vl-gpu-0412 gpud ecc` (37), `... vl-gpu-0412 gpud[311] ok` (42) |
+| `tag` | after `[`, not 1 or more digits and then `]` | that byte, or the end | `... vl-gpu-0412 gpud[12a]: ok` (40), `... vl-gpu-0412 gpud[]: ok` (38), `... vl-gpu-0412 gpud[311: ok` (41) |
+| `tag` | a PID too large for an `int` | the first digit | `... vl-gpu-0412 gpud[99999999999999999999]: ok` (38) |
 
-In the `tag` rows, `...` stands for `<11>Dec 31 23:58:02`: the host `feeder-0412` is columns 21
+In the `tag` rows, `...` stands for `<11>Dec 31 23:58:02`: the host `vl-gpu-0412` is columns 21
 to 31, and the tag starts at column 33.
 
 ### Real lines and FuzzParse
 
 - `TestParseRealRFC3164` uses the 5 example lines of RFC 3164, section 5.4 (see Examples).
-- `TestParseRealFeedersLog` parses `testdata/feeders.log`, read at 00:05 on 1 January 2027 in
-  `+01:00`, and compares each result with `testdata/feeders.golden`, in the format of `render` in
-  `real_test.go`.
+- `TestParseRealUndercroftLog` parses `testdata/undercroft.log`, read at 00:05 on 1 January 2027
+  in `+01:00`, and compares each result with `testdata/undercroft.golden`, in the format of
+  `render` in `real_test.go`.
 - `FuzzParse` checks for any input that `Parse` does not panic. On error, `Parse` returns the zero
   `Message` and a `*ParseError`. Its `Col` is 1 to `len(line)+1`, its `Field` is 1 of the 4 names,
   and `errors.Is` finds that field's sentinel. On success, `Facility` is 0 to 23, `Severity` 0 to
@@ -151,18 +151,18 @@ to 31, and the tag starts at column 33.
 ```text
 now = 2027-01-01 00:05:00 +01:00
 
-Parse("<11>Dec 31 23:58:02 feeder-0412 camd[311]: lens heater failed", now)
+Parse("<11>Dec 31 23:58:02 vl-gpu-0412 gpud[311]: ecc error on bank 3", now)
   → Message{Facility: 1, Severity: Error, Time: 2026-12-31 23:58:02 +01:00,
-            Host: "feeder-0412", App: "camd", PID: 311, Text: "lens heater failed"}, nil
+            Host: "vl-gpu-0412", App: "gpud", PID: 311, Text: "ecc error on bank 3"}, nil
 
-Parse("<14>Jan  1 00:02:00 feeder-0031 seedd: seed level 3%: refill soon", now)
+Parse("<14>Jan  1 00:02:00 vl-gpu-0031 coold: coolant level 3%: refill soon", now)
   → Message{Facility: 1, Severity: Info, Time: 2027-01-01 00:02:00 +01:00,
-            Host: "feeder-0031", App: "seedd", PID: 0, Text: "seed level 3%: refill soon"}, nil
+            Host: "vl-gpu-0031", App: "coold", PID: 0, Text: "coolant level 3%: refill soon"}, nil
 
-Parse("<11>Dec 31 23:58:02 camd[311]: lens heater failed", now)
+Parse("<11>Dec 31 23:58:02 hushd[311]: checkpoint copied to 203.0.113.51", now)
   → Message{}, "syslog: column 21: host: missing host"
 
-Parse("<13>Okt 16 03:12:44 feeder-0412 camd: ok", now)
+Parse("<13>Okt 16 03:12:44 vl-gpu-0412 gpud: ok", now)
   → Message{}, `syslog: column 5: timestamp: bad timestamp: parsing time "Okt 16 03:12:44" ...`
 ```
 
@@ -181,7 +181,7 @@ The RFC 3164 examples. Only the first has every part, so the other 4 are errors:
 
 ```text
 syslog: column 21: host: missing host
-<11>Dec 31 23:58:02 camd[311]: lens heater failed
+<11>Dec 31 23:58:02 hushd[311]: checkpoint copied to 203.0.113.51
                     ^
 ```
 
@@ -221,11 +221,11 @@ tests want the zero `Message`. Step 6 checks every field. `ExampleParse` runs on
 ## Stretch goals
 
 - Make it a tool: `syslog2logfmt` reads syslog lines on stdin and writes each one as a logfmt
-  line: `ts=2026-12-31T23:58:02+01:00 level=err host=feeder-0412 app=camd pid=311 msg="lens heater
-  failed"`. Its output is the input of 26-logfmt.
-- Accept RFC 5424 lines too: `<11>1 2026-12-31T23:58:02.413+01:00 feeder-0412 camd 311 - - lens
-  heater failed`. The `1` after `>` is the version; this format has a year and a zone.
-- Handle a feeder clock that runs a little fast at New Year: `Jan  1 00:00:30` read at
+  line: `ts=2026-12-31T23:58:02+01:00 level=err host=vl-gpu-0412 app=gpud pid=311 msg="ecc error
+  on bank 3"`. Its output is the input of 26-logfmt.
+- Accept RFC 5424 lines too: `<11>1 2026-12-31T23:58:02.413+01:00 vl-gpu-0412 gpud 311 - - ecc
+  error on bank 3`. The `1` after `>` is the version; this format has a year and a zone.
+- Handle a node clock that runs a little fast at New Year: `Jan  1 00:00:30` read at
   `Dec 31 23:59:50` belongs to next year.
 - Listen for real with `net.ListenPacket("udp", ":5140")`, 1 line per packet, and count the lines
   per host and severity.

@@ -1,0 +1,20 @@
+<11>Dec 31 23:58:02 vl-gpu-0412 gpud[311]: ecc error on bank 3
+<14>Dec 31 23:59:58 vl-gpu-0412 coold[207]: coolant level 12%
+<11>Dec 31 23:58:02 hushd[311]: checkpoint copied to 203.0.113.51
+<12>Jan  1 00:00:01 vl-gpu-0448 netd[96]: sfp0 rx -8.2 dBm
+<30>Jan  1 00:00:03 chkpt-store-2 systemd[1]: Started ckpt-gc.service.
+<134>Jan  1 00:01:17 canary-h3-01 fand[412]: fan2 at 41% for 41 s
+<14>Jan  1 00:02:00 vl-gpu-0031 coold[207]: coolant level 3%: refill soon
+<3>Jan  1 00:02:44 vl-gpu-0412 kernel: usb 1-1: device descriptor read/64, error -71
+<11>Jan 01 00:03:10 vl-gpu-0462 gpud[318]: batch drop [42 of 300]
+<13>Dec 31 23:00:00 192.0.2.17 uploader:
+<12>Mar 14 09:30:00 vl-gpu-0427 ntpd[88]: clock not synchronised
+<11>Dec 31 23:58:02 vl-gpu-0412 gpud[311] ecc error on bank 3
+<190>Jan  1 00:04:00 vl-gpu-0412 updated[55]: checking for driver
+<192>Jan  1 00:04:01 vl-gpu-0412 updated[55]: checking for driver
+<11>Dec 32 23:58:02 vl-gpu-0412 gpud[311]: ecc error on bank 3
+<11>Dec 31 23:58:02.413 vl-gpu-0412 gpud[311]: ecc error on bank 3
+Dec 31 23:58:02 vl-gpu-0412 gpud[311]: ecc error on bank 3
+<11>Dec 31 23:58
+<14>Jan  1 00:04:59 vl-gpu-0099 coold: refill done
+<11>Dec 31 23:59:30 vl-gpu-0412 gpud[311]: ecc error on bank 3 again

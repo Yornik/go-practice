@@ -1,17 +1,18 @@
-# 22 · Do not page me for a squirrel
+# 22 · Do not page me for a cat
 
 **Tier 5 · about 1 h** · Go: an `iota` state type with `String()`, a struct that owns its state behind methods, an injected clock (`func() time.Time`), `time.Duration` comparisons, `switch` on a state · Problem solving: find the exact evaluation at which each state changes; test 1 second before and at every boundary
 
-On 3 December you carry the Owl, the ceramic owl that marks who is on call at Peckish, the
-bird-feeder company. At 23:00 the motion-anomaly alert for `hq-window-01`, the demo feeder outside
-the office window, pages you. At 23:01 it resolves. At 23:10 it pages again. The cause is Kevin,
-the squirrel who lives in the tree next to the feeder: he visits for 40 seconds every 10 minutes,
-all night. The monitoring stack evaluates the rule every 30 seconds. The rule fires on 1 true
-evaluation and resolves on the next false one. By 07:00 you have 48 pages and 48 all-clears. The
-postmortem template has a box "Was it Kevin?", and for once the logs say yes, 48 times. Ines
-Okafor, the senior SRE, reads the alert history over coffee: "An alert must be true for a while
-before it wakes a human, and quiet for a while before it says all clear." In this exercise you
-track the state of 1 alert rule: it waits before it fires, and it waits before it resolves.
+In Hall 3, 40 metres under the sleet, Fuse, the grey cat who lives in the Undercroft, sleeps on the
+warm top of `canary-h3-01`. On the night of 10 December the cat climbs down every 10 minutes and
+sits in front of the node's air intake for 40 seconds, all night. The monitoring stack evaluates
+its airflow alert every 30 seconds. The rule fires on 1 true evaluation and resolves on the next
+false one. By 07:00 you have 48 pages and 48 all-clears. The postmortem template has a box "Was it
+Fuse?", and for once the logs say yes, 48 times. HUSH, the on-call AI that Vesper Labs sells, has
+already proposed a fix: delete the alert. Wren Lindqvist, the SRE who owns the alert rules, has
+headphones on, which at the lab means "write to me", and replies in the channel: "An alert must be
+true for a while before it wakes a human, and quiet for a while before it says all clear." In this
+exercise you track the state of 1 alert rule: it waits before it fires, and it waits before it
+resolves.
 
 ## Task
 
@@ -43,7 +44,7 @@ func (a *Alert) History() []Transition                 // every change, oldest f
 ```
 
 The monitoring system calls `Eval` once per evaluation interval. `active` is the result of the
-alert condition at that moment, for example "the motion rate is above 5 per minute".
+alert condition at that moment, for example "the airflow at the intake is below 40 %".
 
 ## Rules
 
@@ -177,10 +178,10 @@ first evaluation) and the call, for example
   notifier can still send "resolved" after a restart. Prometheus does this for every alert.
 - Survive a restart: write `ActiveAt` and the state to a file, and restore them in `New`, so a
   restart does not reset the `For` timer of an alert that was about to fire.
-- Make it a tool: `alertreplay -for 2m -keep-firing-for 5m motion.csv` reads `time,value` lines,
+- Make it a tool: `alertreplay -for 2m -keep-firing-for 5m airflow.csv` reads `time,value` lines,
   applies a threshold, and prints every transition. Tune `for` on last week's data before you
   change the real rule.
-- Many alerts from 1 rule: 1 `Alert` per feeder, created on the first true evaluation and
+- Many alerts from 1 rule: 1 `Alert` per GPU node, created on the first true evaluation and
   dropped when it is Inactive again. 44-alertgroup groups such alerts into notifications.
 
 ## Stuck?

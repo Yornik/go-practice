@@ -14,30 +14,30 @@ func TestAddValid(t *testing.T) {
 	h := newHarness(t)
 	h.wantLen(0)
 	h.mustAdd(
-		sil("disk-2", "disk_full", "photo-store-2", time.Hour), // alert and target
+		sil("disk-2", "disk_full", "chkpt-store-2", time.Hour), // alert and target
 		sil("disks", "disk_full", "", 2*time.Hour),             // every target
-		sil("feeder-0412", "", "feeder-0412", time.Minute),     // every alert
-		sil("short", "disk_full", "photo-store-1", time.Nanosecond),
+		sil("node-0412", "", "vl-gpu-0412", time.Minute),       // every alert
+		sil("short", "disk_full", "chkpt-store-1", time.Nanosecond),
 	)
 	h.wantLen(4)
 }
 
 func TestAddReplacesSameID(t *testing.T) {
 	h := newHarness(t)
-	h.mustAdd(sil("disk-2", "disk_full", "photo-store-2", time.Hour))
-	h.mustAdd(sil("disk-2", "disk_full", "photo-store-2", 2*time.Hour))
+	h.mustAdd(sil("disk-2", "disk_full", "chkpt-store-2", time.Hour))
+	h.mustAdd(sil("disk-2", "disk_full", "chkpt-store-2", 2*time.Hour))
 	h.wantLen(1)
-	h.mustAdd(sil("disk-2", "feeder_offline", "", 30*time.Minute))
+	h.mustAdd(sil("disk-2", "node_offline", "", 30*time.Minute))
 	h.wantLen(1)
-	h.mustAdd(sil("disk-3", "disk_full", "photo-store-3", time.Hour))
+	h.mustAdd(sil("disk-3", "disk_full", "chkpt-store-3", time.Hour))
 	h.wantLen(2)
 }
 
 func TestAddReplacesEndedSilence(t *testing.T) {
 	h := newHarness(t)
-	h.mustAdd(sil("disk-2", "disk_full", "photo-store-2", time.Hour))
+	h.mustAdd(sil("disk-2", "disk_full", "chkpt-store-2", time.Hour))
 	h.clock.Advance(2 * time.Hour) // disk-2 has ended; Expire has not run
-	h.mustAdd(sil("disk-2", "disk_full", "photo-store-2", 3*time.Hour))
+	h.mustAdd(sil("disk-2", "disk_full", "chkpt-store-2", 3*time.Hour))
 	h.wantLen(1)
 }
 
@@ -46,11 +46,11 @@ func TestAddInvalid(t *testing.T) {
 		name string
 		sil  silences.Silence
 	}{
-		{"empty ID", sil("", "disk_full", "photo-store-2", time.Hour)},
+		{"empty ID", sil("", "disk_full", "chkpt-store-2", time.Hour)},
 		{"empty Alert and Target", sil("everything", "", "", time.Hour)},
-		{"Until equals now", sil("disk-2", "disk_full", "photo-store-2", 0)},
-		{"Until before now", sil("disk-2", "disk_full", "photo-store-2", -time.Minute)},
-		{"Until is the zero time", silences.Silence{ID: "until-migration-done", Alert: "disk_full", Target: "photo-store-2"}},
+		{"Until equals now", sil("disk-2", "disk_full", "chkpt-store-2", 0)},
+		{"Until before now", sil("disk-2", "disk_full", "chkpt-store-2", -time.Minute)},
+		{"Until is the zero time", silences.Silence{ID: "until-migration-done", Alert: "disk_full", Target: "chkpt-store-2"}},
 		{"all 3 problems", sil("", "", "", -time.Hour)},
 	}
 	for _, tc := range cases {
@@ -64,9 +64,9 @@ func TestAddInvalid(t *testing.T) {
 
 func TestAddInvalidLeavesStoreUnchanged(t *testing.T) {
 	h := newHarness(t)
-	h.mustAdd(sil("disk-2", "disk_full", "photo-store-2", time.Hour))
+	h.mustAdd(sil("disk-2", "disk_full", "chkpt-store-2", time.Hour))
 	h.clock.Advance(30 * time.Minute)
-	h.addInvalid(sil("disk-2", "disk_full", "photo-store-2", 10*time.Minute)) // ends before now
+	h.addInvalid(sil("disk-2", "disk_full", "chkpt-store-2", 10*time.Minute)) // ends before now
 	h.addInvalid(sil("disk-2", "", "", 2*time.Hour))
 	h.wantLen(1)
 }

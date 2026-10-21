@@ -83,13 +83,13 @@ func TestParsePriority(t *testing.T) {
 		facility int
 		severity syslog.Severity
 	}{
-		{"<0>Oct 16 03:12:44 feeder-0412 kernel: boot", 0, syslog.Emergency},
-		{"<7>Oct 16 03:12:44 feeder-0412 kernel: boot", 0, syslog.Debug},
-		{"<11>Oct 16 03:12:44 feeder-0412 camd[311]: lens heater failed", 1, syslog.Error},
-		{"<13>Oct 16 03:12:44 feeder-0412 camd: ok", 1, syslog.Notice},
-		{"<34>Oct 16 03:12:44 photo-store-2 su: auth failed", 4, syslog.Critical},
-		{"<134>Oct 16 03:12:44 hq-window-01 motiond[412]: motion", 16, syslog.Info},
-		{"<191>Oct 16 03:12:44 feeder-0412 updated: checking", 23, syslog.Debug},
+		{"<0>Oct 16 03:12:44 vl-gpu-0412 kernel: boot", 0, syslog.Emergency},
+		{"<7>Oct 16 03:12:44 vl-gpu-0412 kernel: boot", 0, syslog.Debug},
+		{"<11>Oct 16 03:12:44 vl-gpu-0412 gpud[311]: ecc error on bank 3", 1, syslog.Error},
+		{"<13>Oct 16 03:12:44 vl-gpu-0412 gpud: ok", 1, syslog.Notice},
+		{"<34>Oct 16 03:12:44 chkpt-store-2 su: auth failed", 4, syslog.Critical},
+		{"<134>Oct 16 03:12:44 canary-h3-01 fand[412]: fan2", 16, syslog.Info},
+		{"<191>Oct 16 03:12:44 vl-gpu-0412 updated: checking", 23, syslog.Debug},
 	}
 	for _, tc := range tests {
 		t.Run(tc.line[:strings.IndexByte(tc.line, '>')+1], func(t *testing.T) {
@@ -105,19 +105,19 @@ func TestParsePriority(t *testing.T) {
 func TestParsePriorityErrors(t *testing.T) {
 	runErrorCases(t, []errorCase{
 		{"empty line", ``, "priority", 1, false},
-		{"no <", `13>Oct 16 03:12:44 feeder-0412 camd: ok`, "priority", 1, false},
-		{"space before <", ` <13>Oct 16 03:12:44 feeder-0412 camd: ok`, "priority", 1, false},
-		{"no digits", `<>Oct 16 03:12:44 feeder-0412 camd: ok`, "priority", 2, false},
-		{"a letter", `<a>Oct 16 03:12:44 feeder-0412 camd: ok`, "priority", 2, false},
-		{"a sign", `<-1>Oct 16 03:12:44 feeder-0412 camd: ok`, "priority", 2, false},
+		{"no <", `13>Oct 16 03:12:44 vl-gpu-0412 gpud: ok`, "priority", 1, false},
+		{"space before <", ` <13>Oct 16 03:12:44 vl-gpu-0412 gpud: ok`, "priority", 1, false},
+		{"no digits", `<>Oct 16 03:12:44 vl-gpu-0412 gpud: ok`, "priority", 2, false},
+		{"a letter", `<a>Oct 16 03:12:44 vl-gpu-0412 gpud: ok`, "priority", 2, false},
+		{"a sign", `<-1>Oct 16 03:12:44 vl-gpu-0412 gpud: ok`, "priority", 2, false},
 		{"line ends after <", `<`, "priority", 2, false},
 		// After 3 digits a > must follow, so the 4th digit is the problem.
-		{"4 digits", `<1234>Oct 16 03:12:44 feeder-0412 camd: ok`, "priority", 5, false},
-		{"no > after the digits", `<13Oct 16 03:12:44 feeder-0412 camd: ok`, "priority", 4, false},
+		{"4 digits", `<1234>Oct 16 03:12:44 vl-gpu-0412 gpud: ok`, "priority", 5, false},
+		{"no > after the digits", `<13Oct 16 03:12:44 vl-gpu-0412 gpud: ok`, "priority", 4, false},
 		{"line ends after the digits", `<13`, "priority", 4, false},
 		// Above 191: the column of the first digit.
-		{"192", `<192>Oct 16 03:12:44 feeder-0412 camd: ok`, "priority", 2, false},
-		{"999", `<999>Oct 16 03:12:44 feeder-0412 camd: ok`, "priority", 2, false},
+		{"192", `<192>Oct 16 03:12:44 vl-gpu-0412 gpud: ok`, "priority", 2, false},
+		{"999", `<999>Oct 16 03:12:44 vl-gpu-0412 gpud: ok`, "priority", 2, false},
 	})
 }
 
@@ -130,11 +130,11 @@ func TestParseTimestamp(t *testing.T) {
 		day   int
 		clock [3]int // hour, minute, second
 	}{
-		{"<13>Oct  1 03:12:44 feeder-0412 camd: ok", time.October, 1, [3]int{3, 12, 44}},
-		{"<13>Oct 01 03:12:44 feeder-0412 camd: ok", time.October, 1, [3]int{3, 12, 44}},
-		{"<13>Oct 16 23:59:59 feeder-0412 camd: ok", time.October, 16, [3]int{23, 59, 59}},
-		{"<13>Sep 30 00:00:00 feeder-0412 camd: ok", time.September, 30, [3]int{0, 0, 0}},
-		{"<13>Feb  5 17:32:18 feeder-0412 camd: ok", time.February, 5, [3]int{17, 32, 18}},
+		{"<13>Oct  1 03:12:44 vl-gpu-0412 gpud: ok", time.October, 1, [3]int{3, 12, 44}},
+		{"<13>Oct 01 03:12:44 vl-gpu-0412 gpud: ok", time.October, 1, [3]int{3, 12, 44}},
+		{"<13>Oct 16 23:59:59 vl-gpu-0412 gpud: ok", time.October, 16, [3]int{23, 59, 59}},
+		{"<13>Sep 30 00:00:00 vl-gpu-0412 gpud: ok", time.September, 30, [3]int{0, 0, 0}},
+		{"<13>Feb  5 17:32:18 vl-gpu-0412 gpud: ok", time.February, 5, [3]int{17, 32, 18}},
 	}
 	for _, tc := range tests {
 		t.Run(tc.line[4:19], func(t *testing.T) {
@@ -152,17 +152,17 @@ func TestParseTimestampErrors(t *testing.T) {
 	runErrorCases(t, []errorCase{
 		// time.Parse rejects the 15 bytes: the column of the first byte of
 		// the timestamp, and the error wraps the *time.ParseError.
-		{"unknown month", `<13>Okt 16 03:12:44 feeder-0412 camd: ok`, "timestamp", 5, true},
-		{"day 32", `<13>Oct 32 03:12:44 feeder-0412 camd: ok`, "timestamp", 5, true},
-		{"hour 24", `<13>Oct 16 24:00:00 feeder-0412 camd: ok`, "timestamp", 5, true},
-		{"1-digit day without the padding space", `<13>Oct 1 03:12:44 feeder-0412 camd: ok`, "timestamp", 5, true},
-		{"RFC 3339 timestamp", `<13>2026-10-16T03:12:44Z feeder-0412 camd: ok`, "timestamp", 5, true},
+		{"unknown month", `<13>Okt 16 03:12:44 vl-gpu-0412 gpud: ok`, "timestamp", 5, true},
+		{"day 32", `<13>Oct 32 03:12:44 vl-gpu-0412 gpud: ok`, "timestamp", 5, true},
+		{"hour 24", `<13>Oct 16 24:00:00 vl-gpu-0412 gpud: ok`, "timestamp", 5, true},
+		{"1-digit day without the padding space", `<13>Oct 1 03:12:44 vl-gpu-0412 gpud: ok`, "timestamp", 5, true},
+		{"RFC 3339 timestamp", `<13>2026-10-16T03:12:44Z vl-gpu-0412 gpud: ok`, "timestamp", 5, true},
 		{"RFC 3164 example 4", `<0>1990 Oct 22 10:52:01 TZ-6 scapegoat.dmz.example.org 10.1.2.3 sched[0]: That's All Folks!`, "timestamp", 4, true},
 		// Fewer than 15 bytes left: the end of the line.
 		{"line ends inside the timestamp", `<13>Oct 16 03:12`, "timestamp", 17, false},
 		{"line ends after the priority", `<13>`, "timestamp", 5, false},
 		// More than 15 bytes: the first byte after the 15.
-		{"fractional seconds", `<13>Oct 16 03:12:44.250 feeder-0412 camd: ok`, "timestamp", 20, false},
+		{"fractional seconds", `<13>Oct 16 03:12:44.250 vl-gpu-0412 gpud: ok`, "timestamp", 20, false},
 	})
 }
 
@@ -196,7 +196,7 @@ func TestParseYear(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			line := "<13>" + tc.stamp + " feeder-0412 camd: ok"
+			line := "<13>" + tc.stamp + " vl-gpu-0412 gpud: ok"
 			got := mustParse(t, line, tc.now)
 			if !got.Time.Equal(tc.want) {
 				t.Errorf("Parse(%q, %v).Time = %v, want %v", line, tc.now, got.Time, tc.want)
@@ -223,22 +223,22 @@ func TestParseHostTag(t *testing.T) {
 		pid  int
 		text string
 	}{
-		{"with a PID", ts + "photo-store-2 systemd[1]: Started backup.", "photo-store-2", "systemd", 1, "Started backup."},
-		{"without a PID", ts + "feeder-0412 camd: lens heater failed", "feeder-0412", "camd", 0, "lens heater failed"},
-		{"PID 0", ts + "feeder-0412 sched[0]: tick", "feeder-0412", "sched", 0, "tick"},
-		{"empty text", ts + "feeder-0412 camd:", "feeder-0412", "camd", 0, ""},
-		{"empty text after the space", ts + "feeder-0412 camd[311]: ", "feeder-0412", "camd", 311, ""},
-		{"no space after the colon", ts + "feeder-0412 camd:ok", "feeder-0412", "camd", 0, "ok"},
-		{"only 1 space is skipped", ts + "feeder-0412 camd:  indented", "feeder-0412", "camd", 0, " indented"},
+		{"with a PID", ts + "chkpt-store-2 systemd[1]: Started backup.", "chkpt-store-2", "systemd", 1, "Started backup."},
+		{"without a PID", ts + "vl-gpu-0412 gpud: ecc error on bank 3", "vl-gpu-0412", "gpud", 0, "ecc error on bank 3"},
+		{"PID 0", ts + "vl-gpu-0412 sched[0]: tick", "vl-gpu-0412", "sched", 0, "tick"},
+		{"empty text", ts + "vl-gpu-0412 gpud:", "vl-gpu-0412", "gpud", 0, ""},
+		{"empty text after the space", ts + "vl-gpu-0412 gpud[311]: ", "vl-gpu-0412", "gpud", 311, ""},
+		{"no space after the colon", ts + "vl-gpu-0412 gpud:ok", "vl-gpu-0412", "gpud", 0, "ok"},
+		{"only 1 space is skipped", ts + "vl-gpu-0412 gpud:  indented", "vl-gpu-0412", "gpud", 0, " indented"},
 		{
-			"text with colons and brackets", ts + "hq-window-01 sshd[2213]: pam_unix(sshd:session): opened for [ines]: ok",
-			"hq-window-01", "sshd", 2213, "pam_unix(sshd:session): opened for [ines]: ok",
+			"text with colons and brackets", ts + "canary-h3-01 sshd[2213]: pam_unix(sshd:session): opened for [noor]: ok",
+			"canary-h3-01", "sshd", 2213, "pam_unix(sshd:session): opened for [noor]: ok",
 		},
-		{"app name with a dot", ts + "feeder-0412 seed-level.d: low", "feeder-0412", "seed-level.d", 0, "low"},
-		{"app name with slashes", ts + "photo-store-2 /usr/sbin/cron[812]: (root) CMD (gc)", "photo-store-2", "/usr/sbin/cron", 812, "(root) CMD (gc)"},
+		{"app name with a dot", ts + "vl-gpu-0412 coolant-level.d: low", "vl-gpu-0412", "coolant-level.d", 0, "low"},
+		{"app name with slashes", ts + "chkpt-store-2 /usr/sbin/cron[812]: (root) CMD (gc)", "chkpt-store-2", "/usr/sbin/cron", 812, "(root) CMD (gc)"},
 		{"postfix style", ts + "mail-1 postfix/smtpd[4242]: connect from unknown[192.0.2.10]", "mail-1", "postfix/smtpd", 4242, "connect from unknown[192.0.2.10]"},
-		{"IPv4 address as host", ts + "192.0.2.44 camd: ok", "192.0.2.44", "camd", 0, "ok"},
-		{"host with a domain", ts + "hq-window-01.peckish.example camd: ok", "hq-window-01.peckish.example", "camd", 0, "ok"},
+		{"IPv4 address as host", ts + "192.0.2.44 gpud: ok", "192.0.2.44", "gpud", 0, "ok"},
+		{"host with a domain", ts + "canary-h3-01.vesper-labs.example gpud: ok", "canary-h3-01.vesper-labs.example", "gpud", 0, "ok"},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
@@ -256,26 +256,26 @@ func TestParseHostTagErrors(t *testing.T) {
 	const ts = "<11>Dec 31 23:58:02"
 	runErrorCases(t, []errorCase{
 		// A word that ends with ":" is a tag: the host is missing.
-		{"tag where the host should be", ts + " camd[311]: lens heater failed", "host", 21, false},
-		{"tag without PID where the host should be", ts + " camd: lens heater failed", "host", 21, false},
+		{"tag where the host should be", ts + " gpud[311]: ecc error on bank 3", "host", 21, false},
+		{"tag without PID where the host should be", ts + " gpud: ecc error on bank 3", "host", 21, false},
 		{"line ends after the timestamp", ts, "host", 20, false},
 		{"line ends after the space", ts + " ", "host", 21, false},
-		{"2 spaces before the host", ts + "  feeder-0412 camd: ok", "host", 21, false},
+		{"2 spaces before the host", ts + "  vl-gpu-0412 gpud: ok", "host", 21, false},
 
-		// feeder-0412 is columns 21 to 31, so the tag starts at column 33.
-		{"line ends after the host", ts + " feeder-0412", "tag", 32, false},
-		{"line ends after the space after the host", ts + " feeder-0412 ", "tag", 33, false},
-		{"2 spaces before the tag", ts + " feeder-0412  camd: ok", "tag", 33, false},
-		{"tag starts with [", ts + " feeder-0412 [311]: ok", "tag", 33, false},
-		{"tag starts with :", ts + " feeder-0412 : ok", "tag", 33, false},
-		{"no colon: space after the app name", ts + " feeder-0412 camd lens heater failed", "tag", 37, false},
-		{"no colon: line ends after the app name", ts + " feeder-0412 camd", "tag", 37, false},
-		{"[ without ]", ts + " feeder-0412 camd[311: ok", "tag", 41, false},
-		{"line ends inside [pid]", ts + " feeder-0412 camd[311", "tag", 41, false},
-		{"letter in the PID", ts + " feeder-0412 camd[12a]: ok", "tag", 40, false},
-		{"empty PID", ts + " feeder-0412 camd[]: ok", "tag", 38, false},
-		{"PID too large for an int", ts + " feeder-0412 camd[99999999999999999999]: ok", "tag", 38, false},
-		{"no colon after ]", ts + " feeder-0412 camd[311] ok", "tag", 42, false},
-		{"line ends after ]", ts + " feeder-0412 camd[311]", "tag", 42, false},
+		// vl-gpu-0412 is columns 21 to 31, so the tag starts at column 33.
+		{"line ends after the host", ts + " vl-gpu-0412", "tag", 32, false},
+		{"line ends after the space after the host", ts + " vl-gpu-0412 ", "tag", 33, false},
+		{"2 spaces before the tag", ts + " vl-gpu-0412  gpud: ok", "tag", 33, false},
+		{"tag starts with [", ts + " vl-gpu-0412 [311]: ok", "tag", 33, false},
+		{"tag starts with :", ts + " vl-gpu-0412 : ok", "tag", 33, false},
+		{"no colon: space after the app name", ts + " vl-gpu-0412 gpud ecc error on bank 3", "tag", 37, false},
+		{"no colon: line ends after the app name", ts + " vl-gpu-0412 gpud", "tag", 37, false},
+		{"[ without ]", ts + " vl-gpu-0412 gpud[311: ok", "tag", 41, false},
+		{"line ends inside [pid]", ts + " vl-gpu-0412 gpud[311", "tag", 41, false},
+		{"letter in the PID", ts + " vl-gpu-0412 gpud[12a]: ok", "tag", 40, false},
+		{"empty PID", ts + " vl-gpu-0412 gpud[]: ok", "tag", 38, false},
+		{"PID too large for an int", ts + " vl-gpu-0412 gpud[99999999999999999999]: ok", "tag", 38, false},
+		{"no colon after ]", ts + " vl-gpu-0412 gpud[311] ok", "tag", 42, false},
+		{"line ends after ]", ts + " vl-gpu-0412 gpud[311]", "tag", 42, false},
 	})
 }
