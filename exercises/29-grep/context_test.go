@@ -13,6 +13,7 @@ import (
 // ---- Step 3: context lines and separators ----
 
 func TestContext(t *testing.T) {
+	requireFilter(t)
 	// In every case Match is contains("ERROR").
 	cases := []struct {
 		name          string
@@ -147,6 +148,7 @@ func TestContext(t *testing.T) {
 // read in all the ways of the readers list. The inputs have empty lines,
 // lines of a few KiB and a missing final "\n" now and then.
 func TestContextRandom(t *testing.T) {
+	requireFilter(t)
 	rng := rand.New(rand.NewPCG(4, 2)) // fixed seed: the same inputs every run
 	for i := range 300 {
 		input := randomInput(rng)
@@ -163,6 +165,7 @@ func TestContextRandom(t *testing.T) {
 // invents. Plain go test runs only the seeds below; run
 // go test -fuzz=FuzzContext to search for more.
 func FuzzContext(f *testing.F) {
+	requireFilter(f)
 	f.Add("a\nERROR 1\nb\nc\nd\nERROR 2\ne", uint8(1), uint8(1))
 	f.Add("ERROR\n\n\nERROR\n", uint8(0), uint8(2))
 	f.Add("\n", uint8(3), uint8(0))

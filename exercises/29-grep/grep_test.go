@@ -16,6 +16,7 @@ import (
 // ---- Step 2: lines and stats, no context ----
 
 func TestLinesSplitAndStats(t *testing.T) {
+	requireFilter(t)
 	cases := []struct {
 		name    string
 		input   string
@@ -63,6 +64,7 @@ func TestLinesSplitAndStats(t *testing.T) {
 }
 
 func TestLinesMatchCalledOncePerLine(t *testing.T) {
+	requireFilter(t)
 	input := "first\n\n  spaced  \nERROR x\nlast"
 	want := []string{"first", "", "  spaced  ", "ERROR x", "last"}
 	for _, rd := range readers {
@@ -90,6 +92,7 @@ func TestLinesMatchCalledOncePerLine(t *testing.T) {
 // ---- Step 4: long lines ----
 
 func TestLongLineOver64KiB(t *testing.T) {
+	requireFilter(t)
 	// bufio.Scanner gives up on lines over 64 KiB unless you tell it otherwise.
 	long := "ERROR body=" + strings.Repeat("x", 100<<10)
 	input := text("before", long, "after")
@@ -125,6 +128,7 @@ func TestLongLineOver64KiB(t *testing.T) {
 }
 
 func TestLongLineLimit(t *testing.T) {
+	requireFilter(t)
 	cases := []struct {
 		name    string
 		input   string
@@ -165,6 +169,7 @@ func TestLongLineLimit(t *testing.T) {
 }
 
 func TestLongLineDefaultLimit(t *testing.T) {
+	requireFilter(t)
 	limit := strings.Repeat("x", grep.DefaultMaxLineBytes)
 
 	t.Run("exactly 1 MiB is fine", func(t *testing.T) {
@@ -215,6 +220,7 @@ func TestLongLineStopsEarly(t *testing.T) {
 // ---- Step 5: errors ----
 
 func TestErrInvalidOptions(t *testing.T) {
+	requireFilter(t)
 	cases := []struct {
 		name string
 		opt  grep.Options
@@ -242,6 +248,7 @@ func TestErrInvalidOptions(t *testing.T) {
 }
 
 func TestErrRead(t *testing.T) {
+	requireFilter(t)
 	errDisk := errors.New("read /var/log/app.log: input/output error")
 	input := text("a", "ERROR 1", "b", "c")
 	sources := []struct {
