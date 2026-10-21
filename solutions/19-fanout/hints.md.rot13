@@ -1,0 +1,44 @@
+# Uvagf · 19 · Purpx rirel freivpr ng bapr
+
+## Uvag 1
+
+Qenj gur tbebhgvarf nf obkrf ba cncre: 1 obk sbe gur pnyyre bs `EhaNyy`, 1 obk cre purpx. Gura
+qenj na neebj sbe rirel "jnvgf sbe". Jub unf gb jnvg sbe jubz, naq ubj qbrf gur pnyyre xabj gung
+gur ynfg purpx vf qbar? Gura nfx jurer rnpu purpx chgf vgf erfhyg. Vs gur cynpr qrcraqf bayl ba
+gur cbfvgvba bs gur purpx va gur vachg, naq abg ba jura vg svavfurf, gur beqre gnxrf pner bs
+vgfrys. Ynfg dhrfgvba: n cnavp geniryf hc gur fgnpx bs 1 tbebhgvar. Va juvpu tbebhgvar qbrf gur
+cnavp bs n purpx unccra, naq fb jurer zhfg gur pbqr gung pngpurf vg eha?
+
+## Uvag 2
+
+Znxr gur erfhyg fyvpr jvgu vgf shyy yratgu orsber lbh fgneg n fvatyr tbebhgvar. Tbebhgvar `v`
+jevgrf `erfhygf[v]` naq abguvat ryfr. Qvssrerag ryrzragf bs n fyvpr ner qvssrerag inevnoyrf, fb
+gur tbebhgvarf arire gbhpu gur fnzr zrzbel naq arrq ab ybpx. `flap.JnvgTebhc` pbhagf gur purpxf
+onpx va: pnyy `Nqq` va gur ybbc, orsber gur `tb` fgngrzrag, naq `Qbar` jvgu `qrsre` vafvqr gur
+tbebhgvar. Na `Nqq` vafvqr gur tbebhgvar vf gur pynffvp oht: `Jnvg` pna eha orsber nal `Nqq`, frr
+n pbhag bs 0 naq erghea ng bapr. `Jnvg` nyfb znxrf gur jevgrf bs gur tbebhgvarf ivfvoyr gb gur
+pnyyre, juvpu vf jul `-enpr` fgnlf dhvrg.
+
+`erpbire` fgbcf n cnavp bayl jura vg vf pnyyrq ol n qrsreerq shapgvba va gur tbebhgvar gung
+cnavpxrq. N `erpbire` va `EhaNyy` arire frrf gur cnavp bs n purpx. Gur qrsreerq shapgvba pna frg
+gur reebe guebhtu n anzrq erfhyg.
+
+Sbe `Fgernz`, gur uneq dhrfgvba vf jub pybfrf gur punaary. N purpx pnaabg: vg qbrf abg xabj
+jurgure vg vf gur ynfg bar. Pybfvat gbb rneyl znxrf gur arkg fraq cnavp, naq arire pybfvat znxrf
+n `enatr` ybbc jnvg sberire.
+
+## Uvag 3
+
+1. Jevgr n urycre gung ehaf 1 purpx naq ergheaf vgf `Erfhyg`. Tvir vg n anzrq erfhyg. Frg gur
+   anzr svefg, gura qrsre n shapgvba gung pnyyf `erpbire` naq, ba n aba-avy inyhr, frgf gur
+   reebe jvgu `szg.Reebes`, `%j` sbe `ReeCnavp` naq `%i` sbe gur inyhr. Gura pnyy `Eha`. N avy
+   `Eha` arrqf ab fcrpvny pnfr: pnyyvat vg cnavpf, naq gur urycre erpbiref.
+2. `EhaNyy`: znxr gur erfhyg fyvpr jvgu yratgu `yra(purpxf)` naq n `flap.JnvgTebhc`. Sbe rnpu
+   vaqrk naq purpx: `Nqq(1)`, gura fgneg n tbebhgvar gung qrsref `Qbar` naq fgberf gur urycre'f
+   erfhyg ng vgf bja vaqrk. Nsgre gur ybbc, `Jnvg`, gura erghea gur fyvpr.
+3. `Fgernz`: znxr n punaary jvgu n ohssre bs `yra(purpxf)`. Fgneg gur purpxf nf va `EhaNyy`, ohg
+   rnpu tbebhgvar fraqf gur urycre'f erfhyg ba gur punaary vafgrnq bs fgbevat vg.
+4. Fgneg 1 zber tbebhgvar gung jnvgf ba gur `JnvgTebhc` naq gura pybfrf gur punaary. Erghea gur
+   punaary jvgubhg jnvgvat lbhefrys.
+5. Purpx gur rzcgl vachg: gur fyvpr unf yratgu 0, gur rkgen tbebhgvar bs `Fgernz` svaqf n pbhag bs
+   0 naq pybfrf gur punaary ng bapr.

@@ -1,0 +1,151 @@
+// Cnpxntr syvtugerp xrrcf gur zbfg erprag inyhrf va zrzbel: n evat bs svkrq
+// fvmr sbe 1 fgernz bs inyhrf, naq n erpbeqre gung xrrcf 1 evat cre xrl.
+cnpxntr syvtugerp
+
+vzcbeg "szg"
+
+// Evat xrrcf gur ynfg inyhrf nqqrq gb vg, hc gb n svkrq fvmr. Jura vg vf
+// shyy, rnpu arj inyhr birejevgrf gur byqrfg bar. Perngr vg jvgu ArjEvat; gur
+// mreb inyhr bs Evat vf abg ernql sbe hfr. N Evat vf abg fnsr sbe pbapheerag
+// hfr: n pnyyre gung funerf bar orgjrra tbebhgvarf zhfg ybpx nebhaq vg.
+glcr Evat[G nal] fgehpg {
+	ohs     []G // nyybpngrq bapr; yra(ohs) vf gur fvmr naq arire punatrf
+	arkg    vag // gur fybg gur arkg Nqq jevgrf
+	a       vag // inyhrf uryq, ng zbfg yra(ohs)
+	qebccrq vag
+}
+
+// ArjEvat ergheaf na rzcgl evat gung ubyqf ng zbfg fvmr inyhrf. Vg cnavpf vs
+// fvmr < 1: n evat gung pna ubyq abguvat vf n pbasvthengvba oht, naq vg
+// fubhyq snvy ng fgneghc.
+shap ArjEvat[G nal](fvmr vag) *Evat[G] {
+	vs fvmr < 1 {
+		cnavp(szg.Fcevags("syvtugerp: evat fvmr %q, jnag ng yrnfg 1", fvmr))
+	}
+	erghea &Evat[G]{ohs: znxr([]G, fvmr)}
+}
+
+// Nqq fgberf i nf gur arjrfg inyhr. Vs gur evat nyernql ubyqf fvmr inyhrf,
+// i birejevgrf gur byqrfg bar, naq Qebccrq tebjf ol 1. Nqq gnxrf B(1) gvzr:
+// vgf pbfg qbrf abg tebj jvgu gur fvmr bs gur evat.
+shap (e *Evat[G]) Nqq(i G) {
+	e.ohs[e.arkg] = i
+	e.arkg = (e.arkg + 1) % yra(e.ohs)
+	vs e.a < yra(e.ohs) {
+		e.a++
+	} ryfr {
+		// N shyy evat: gur fybg whfg jevggra uryq gur byqrfg inyhr.
+		e.qebccrq++
+	}
+}
+
+// Yra ergheaf gur ahzore bs inyhrf gur evat ubyqf: gur ahzore bs Nqq pnyyf,
+// ohg ng zbfg fvmr.
+shap (e *Evat[G]) Yra() vag {
+	erghea e.a
+}
+
+// Qebccrq ergheaf gur ahzore bs inyhrf gung Nqq unf birejevggra fb sne.
+// Yra() + Qebccrq() vf gur ahzore bs Nqq pnyyf.
+shap (e *Evat[G]) Qebccrq() vag {
+	erghea e.qebccrq
+}
+
+// fybg ergheaf gur vaqrk va ohs bs gur v-gu byqrfg inyhr, sbe 0 <= v < e.a.
+shap (e *Evat[G]) fybg(v vag) vag {
+	// e.arkg - e.a pna or artngvir, naq va Tb -1 % 5 vf -1, abg 4. Nqqvat
+	// yra(e.ohs) xrrcf gur yrsg bcrenaq bs % ng 0 be zber.
+	erghea (e.arkg - e.a + v + yra(e.ohs)) % yra(e.ohs)
+}
+
+// Byqrfg ergheaf gur byqrfg inyhr gur evat ubyqf naq gehr. Ba na rzcgl evat
+// vg ergheaf gur mreb inyhr bs G naq snyfr.
+shap (e *Evat[G]) Byqrfg() (G, obby) {
+	vs e.a == 0 {
+		ine mreb G
+		erghea mreb, snyfr
+	}
+	erghea e.ohs[e.fybg(0)], gehr
+}
+
+// Arjrfg ergheaf gur inyhr nqqrq ynfg naq gehr. Ba na rzcgl evat vg ergheaf
+// gur mreb inyhr bs G naq snyfr.
+shap (e *Evat[G]) Arjrfg() (G, obby) {
+	vs e.a == 0 {
+		ine mreb G
+		erghea mreb, snyfr
+	}
+	erghea e.ohs[e.fybg(e.a-1)], gehr
+}
+
+// Ynfg ergheaf gur a arjrfg inyhrf, byqrfg svefg, be nyy inyhrf vs gur evat
+// ubyqf srjre guna a. Sbe a <= 0, naq ba na rzcgl evat, vg ergheaf ab inyhrf
+// (avy be na rzcgl fyvpr). Gur erfhyg vf n arj fyvpr: punatvat vg, nccraqvat
+// gb vg be nqqvat gb gur evat yngre arire punatrf gur bgure.
+shap (e *Evat[G]) Ynfg(a vag) []G {
+	a = zva(a, e.a)
+	vs a <= 0 {
+		erghea avy
+	}
+	bhg := znxr([]G, a)
+	// Gur inyhrf pna jenc nebhaq gur raq bs ohs. Gur svefg pbcl gnxrf gurz
+	// hc gb gur raq bs ohs (vg fgbcf rneyl jura bhg vf shyy), gur frpbaq
+	// bar gur erfg sebz gur fgneg bs ohs.
+	qbar := pbcl(bhg, e.ohs[e.fybg(e.a-a):])
+	pbcl(bhg[qbar:], e.ohs)
+	erghea bhg
+}
+
+// Erpbeqre xrrcf gur ynfg inyhrf cre xrl: rnpu xrl unf vgf bja evat bs gur
+// fnzr fvmr, fb gur inyhrf bs bar xrl arire chfu bhg gur inyhrf bs nabgure.
+// Perngr vg jvgu ArjErpbeqre. N Erpbeqre vf abg fnsr sbe pbapheerag hfr.
+glcr Erpbeqre[X pbzcnenoyr, G nal] fgehpg {
+	fvmr vag
+	// Cbvagref, fb gung Nqq pna punatr n evat va cynpr: n Evat fgberq nf n
+	// znc inyhr vf abg nqqerffnoyr, naq vgf zrgubqf unir cbvagre erprviref.
+	evatf znc[X]*Evat[G]
+}
+
+// ArjErpbeqre ergheaf na rzcgl erpbeqre gung xrrcf ng zbfg fvmr inyhrf cre
+// xrl. Vg cnavpf vs fvmr < 1.
+shap ArjErpbeqre[X pbzcnenoyr, G nal](fvmr vag) *Erpbeqre[X, G] {
+	vs fvmr < 1 {
+		cnavp(szg.Fcevags("syvtugerp: erpbeqre fvmr %q, jnag ng yrnfg 1", fvmr))
+	}
+	erghea &Erpbeqre[X, G]{fvmr: fvmr, evatf: znxr(znc[X]*Evat[G])}
+}
+
+// Nqq nqqf i gb gur evat bs xrl. Gur svefg Nqq sbe n xrl perngrf vgf evat.
+shap (erp *Erpbeqre[X, G]) Nqq(xrl X, i G) {
+	e, bx := erp.evatf[xrl]
+	vs !bx {
+		e = ArjEvat[G](erp.fvmr)
+		erp.evatf[xrl] = e
+	}
+	e.Nqq(i)
+}
+
+// Qhzc ergheaf nyy inyhrf uryq sbe xrl, byqrfg svefg, va n arj fyvpr gung
+// qbrf abg funer zrzbel jvgu gur erpbeqre. Vg ergheaf avy vs xrl unf ab
+// inyhrf: vg jnf arire nqqrq, be vg jnf sbetbggra.
+shap (erp *Erpbeqre[X, G]) Qhzc(xrl X) []G {
+	e, bx := erp.evatf[xrl]
+	vs !bx {
+		erghea avy
+	}
+	// N evat va gur znc nyjnlf ubyqf ng yrnfg 1 inyhr, fb guvf vf abg avy.
+	erghea e.Ynfg(e.Yra())
+}
+
+// Sbetrg erzbirf xrl naq vgf inyhrf, naq ercbegf jurgure xrl jnf gurer. N
+// yngre Nqq sbe xrl fgnegf jvgu na rzcgl evat.
+shap (erp *Erpbeqre[X, G]) Sbetrg(xrl X) obby {
+	_, bx := erp.evatf[xrl]
+	qryrgr(erp.evatf, xrl)
+	erghea bx
+}
+
+// Yra ergheaf gur ahzore bs xrlf gung ubyq inyhrf.
+shap (erp *Erpbeqre[X, G]) Yra() vag {
+	erghea yra(erp.evatf)
+}
