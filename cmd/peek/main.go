@@ -9,7 +9,7 @@
 //	go run ./cmd/peek <exercise> walkthrough
 //	go run ./cmd/peek <exercise> solution
 //
-// <exercise> is the number ("7" or "07") or the directory name ("07-retry").
+// <exercise> is the number ("7" or "07") or the directory name ("32-retry").
 // Run it from the repository root. From an exercise directory, use
 // "go run ../../cmd/peek ..."; peek finds solutions/ from any directory
 // inside the repository.
@@ -95,7 +95,7 @@ func run(args []string, out io.Writer) error {
 	}
 }
 
-// findExercise maps "7", "07" or "07-retry" to <repo>/solutions/07-retry.
+// findExercise maps "7", "07" or "32-retry" to <repo>/solutions/32-retry.
 func findExercise(arg string) (string, error) {
 	root, err := repoRoot()
 	if err != nil {

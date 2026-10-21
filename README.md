@@ -22,8 +22,8 @@ The explanations assume that you can program and know basic Go syntax. They do n
 2. Make sure the race detector works. On Linux and Windows `-race` needs cgo and a C compiler (`sudo apt install gcc`, `sudo dnf install gcc`, or MinGW-w64 on Windows). On Linux and Windows, `go env CGO_ENABLED` must print `1`. macOS needs nothing extra.
 3. If basic Go syntax is new to you, do [A Tour of Go](https://go.dev/tour/) first.
 4. Create your own branch for your work: `git switch -c my-solutions`. To get fixes to the course later, run `git pull origin main`.
-5. Run the first tests: `go test ./exercises/01-logfmt/`. They fail with `panic: TODO: implement`. That is expected.
-6. Open `exercises/01-logfmt/README.md` and edit `exercises/01-logfmt/logfmt.go`.
+5. Run the first tests: `go test ./exercises/26-logfmt/`. They fail with `panic: TODO: implement`. That is expected.
+6. Open `exercises/26-logfmt/README.md` and edit `exercises/26-logfmt/logfmt.go`.
 
 An exercise is done when `go test -race -count=1 ./exercises/NN-name/` prints `ok`. To start an exercise again, run `git restore --source=origin/main exercises/NN-name/`. A plain `git restore exercises/NN-name/` only drops changes that you did not commit.
 
@@ -46,7 +46,7 @@ The goal is to train the part of your brain that solves problems. Prompting is a
 3. Work 2 small examples by hand, on paper.
 4. Write down the state your code must keep and what must always be true about it (the invariants).
 5. Write the simplest version that can pass 1 test.
-6. Run 1 test at a time: `go test -run TestParseQuotedValues -v ./exercises/01-logfmt/`.
+6. Run 1 test at a time: `go test -run TestParseQuotedValues -v ./exercises/26-logfmt/`.
 7. Make it correct. Then make it clean.
 8. If the exercise has goroutines, run the tests with `-race`.
 9. Read the explanation and the walkthrough. Compare them with your solution.
@@ -79,53 +79,53 @@ Work them in order. Each tier assumes the concepts of the tiers before it. The t
 
 | Tier | Exercises | Theme |
 |---|---|---|
-| 1 | 01–03 | Warm-up: Go idioms on real data |
-| 2 | 04–09 | Streams, state, time, types, errors and locks |
-| 3 | 10–14 | Algorithms on real data, your own goroutines |
-| 4 | 15–19 | Services, protocols and alerting logic |
-| 5 | 20–25 | Distributed-systems building blocks |
+| 6 | 26–28 | Warm-up: Go idioms on real data |
+| 7 | 29–34 | Streams, state, time, types, errors and locks |
+| 8 | 35–39 | Algorithms on real data, your own goroutines |
+| 9 | 40–44 | Services, protocols and alerting logic |
+| 10 | 45–50 | Distributed-systems building blocks |
 
 The "Go you practice" column names the topics, not the approach. Finding the approach is part of each exercise.
 
 | # | Exercise | Tier | Time | Go you practice | The real-life skill |
 |---|---|---|---|---|---|
-| 01 | [Parse logfmt log lines](exercises/01-logfmt/) | 1 | 1.5 h | a byte scanner, custom error types, `errors.Is`/`As`, `iota` enums | parse logs that `strings.Split` breaks |
-| 02 | [Find the endpoints that hurt](exercises/02-accesslog/) | 1 | 1 h | maps of structs, `slices.SortFunc`, `cmp` | incident triage, label cardinality |
-| 03 | [Percentiles and histogram quantiles](exercises/03-latency/) | 1 | 1.5 h | slice aliasing, sorting, float math, binary search | p99 versus `histogram_quantile` |
-| 04 | [Streaming log filter with context](exercises/04-grep/) | 2 | 2.5 h | `io.Reader`/`io.Writer`, `bufio.Scanner`, error paths | `grep -C` on huge logs in constant memory |
-| 05 | [Error budgets and burn-rate alerts](exercises/05-slo/) | 2 | 1.5 h | float precision, time windows, pure functions | SLO burn-rate alerting |
-| 06 | [Typed config from the environment](exercises/06-envconfig/) | 2 | 2.5 h | `reflect`, struct tags, `errors.Join` | twelve-factor config, masked secrets |
-| 07 | [Retries with backoff, jitter and context](exercises/07-retry/) | 2 | 2.5 h | `context`, timers, error wrapping, generics | safe retries, `Retry-After` |
-| 08 | [Token bucket and per-client limits](exercises/08-ratelimit/) | 2 | 2 h | `sync.Mutex`, an injected clock, map eviction | API rate limiting |
-| 09 | [Cache: generic LRU with TTL](exercises/09-cache/) | 2 | 2 h | generics, O(1) data structures, callbacks and locks | bounded caches with expiry |
-| 10 | [Deploy order, waves and blast radius](exercises/10-deployorder/) | 3 | 2.5 h | graphs: ordering, cycles, reachability | sync waves, impact analysis |
-| 11 | [Make sense of a distributed trace](exercises/11-tracetree/) | 3 | 2.5 h | trees from flat data, recursion, time intervals | trace analysis, critical path |
-| 12 | [Worker pool: bounded parallelism, ordered results, fail fast](exercises/12-workerpool/) | 3 | 2.5 h | goroutines, `sync.WaitGroup`, semaphores, cancellation | fan-out without goroutine leaks |
-| 13 | [Merge logs from many pods in time order](exercises/13-logmerge/) | 3 | 2.5 h | `iter.Seq`, range-over-func, cleanup on early exit | merge pod logs like `stern` |
-| 14 | [Circuit breaker: stop hammering a dead dependency](exercises/14-circuitbreaker/) | 3 | 3.5 h | state machines, lock scope, late results | stop cascading failures |
-| 15 | [Health checks: /livez, /readyz and graceful shutdown](exercises/15-healthcheck/) | 4 | 3 h | `net/http`, `httptest`, JSON, `Server.Shutdown` | Kubernetes probes, zero-downtime rollouts |
-| 16 | [HTTP middleware that operators need](exercises/16-middleware/) | 4 | 3 h | decorators, wrapping `http.ResponseWriter`, `log/slog` | request IDs, access logs, load shedding |
-| 17 | [Parse Prometheus metrics and compute rates](exercises/17-promtext/) | 4 | 4.5 h | a line lexer, `strconv.ParseFloat`, canonical keys | debug exporters, `rate()` with counter resets |
-| 18 | [TLS certificate expiry checker](exercises/18-certcheck/) | 4 | 3 h | `crypto/tls`, `crypto/x509`, `errors.As`, deadlines | catch expiring certificates, intermediates too |
-| 19 | [Alert dedup, grouping and inhibition](exercises/19-alertgroup/) | 4 | 4 h | canonical keys, hashing, simulated time | how Alertmanager groups and mutes alerts |
-| 20 | [Singleflight: stop the cache stampede](exercises/20-singleflight/) | 5 | 3 h | waking many waiters, panics across goroutines, shared lifetimes | protect a database from a stampede |
-| 21 | [Broadcaster: watch streams with slow consumers](exercises/21-broadcaster/) | 5 | 3.5 h | channel ownership, close protocols, ring buffers | watch streams, slow consumers, 410 Gone |
-| 22 | [A Kubernetes-style controller](exercises/22-reconciler/) | 5 | 4 h | `sync.Cond`, a work queue, fakes for failure injection | reconcile loops, optimistic concurrency |
-| 23 | [Leader election: leases and fencing tokens](exercises/23-leaderelection/) | 5 | 4 h | functional core, compare-and-swap, context trees | 1 active replica, safe failover |
-| 24 | [Crash-safe disk buffer for a log shipper](exercises/24-diskbuffer/) | 5 | 4.5 h | `encoding/binary`, CRC-32C, `fsync`, atomic rename | durable buffering, crash recovery |
-| 25 | [Capstone: a health-aware load balancer](exercises/25-loadbalancer/) | 5 | 6 h | `httputil.ReverseProxy`, atomics, goroutines bound to a context | what Envoy and NGINX do for you |
+| 26 | [Parse logfmt log lines](exercises/26-logfmt/) | 6 | 1.5 h | a byte scanner, custom error types, `errors.Is`/`As`, `iota` enums | parse logs that `strings.Split` breaks |
+| 27 | [Find the endpoints that hurt](exercises/27-accesslog/) | 6 | 1 h | maps of structs, `slices.SortFunc`, `cmp` | incident triage, label cardinality |
+| 28 | [Percentiles and histogram quantiles](exercises/28-latency/) | 6 | 1.5 h | slice aliasing, sorting, float math, binary search | p99 versus `histogram_quantile` |
+| 29 | [Streaming log filter with context](exercises/29-grep/) | 7 | 2.5 h | `io.Reader`/`io.Writer`, `bufio.Scanner`, error paths | `grep -C` on huge logs in constant memory |
+| 30 | [Error budgets and burn-rate alerts](exercises/30-slo/) | 7 | 1.5 h | float precision, time windows, pure functions | SLO burn-rate alerting |
+| 31 | [Typed config from the environment](exercises/31-envconfig/) | 7 | 2.5 h | `reflect`, struct tags, `errors.Join` | twelve-factor config, masked secrets |
+| 32 | [Retries with backoff, jitter and context](exercises/32-retry/) | 7 | 2.5 h | `context`, timers, error wrapping, generics | safe retries, `Retry-After` |
+| 33 | [Token bucket and per-client limits](exercises/33-ratelimit/) | 7 | 2 h | `sync.Mutex`, an injected clock, map eviction | API rate limiting |
+| 34 | [Cache: generic LRU with TTL](exercises/34-cache/) | 7 | 2 h | generics, O(1) data structures, callbacks and locks | bounded caches with expiry |
+| 35 | [Deploy order, waves and blast radius](exercises/35-deployorder/) | 8 | 2.5 h | graphs: ordering, cycles, reachability | sync waves, impact analysis |
+| 36 | [Make sense of a distributed trace](exercises/36-tracetree/) | 8 | 2.5 h | trees from flat data, recursion, time intervals | trace analysis, critical path |
+| 37 | [Worker pool: bounded parallelism, ordered results, fail fast](exercises/37-workerpool/) | 8 | 2.5 h | goroutines, `sync.WaitGroup`, semaphores, cancellation | fan-out without goroutine leaks |
+| 38 | [Merge logs from many pods in time order](exercises/38-logmerge/) | 8 | 2.5 h | `iter.Seq`, range-over-func, cleanup on early exit | merge pod logs like `stern` |
+| 39 | [Circuit breaker: stop hammering a dead dependency](exercises/39-circuitbreaker/) | 8 | 3.5 h | state machines, lock scope, late results | stop cascading failures |
+| 40 | [Health checks: /livez, /readyz and graceful shutdown](exercises/40-healthcheck/) | 9 | 3 h | `net/http`, `httptest`, JSON, `Server.Shutdown` | Kubernetes probes, zero-downtime rollouts |
+| 41 | [HTTP middleware that operators need](exercises/41-middleware/) | 9 | 3 h | decorators, wrapping `http.ResponseWriter`, `log/slog` | request IDs, access logs, load shedding |
+| 42 | [Parse Prometheus metrics and compute rates](exercises/42-promtext/) | 9 | 4.5 h | a line lexer, `strconv.ParseFloat`, canonical keys | debug exporters, `rate()` with counter resets |
+| 43 | [TLS certificate expiry checker](exercises/43-certcheck/) | 9 | 3 h | `crypto/tls`, `crypto/x509`, `errors.As`, deadlines | catch expiring certificates, intermediates too |
+| 44 | [Alert dedup, grouping and inhibition](exercises/44-alertgroup/) | 9 | 4 h | canonical keys, hashing, simulated time | how Alertmanager groups and mutes alerts |
+| 45 | [Singleflight: stop the cache stampede](exercises/45-singleflight/) | 10 | 3 h | waking many waiters, panics across goroutines, shared lifetimes | protect a database from a stampede |
+| 46 | [Broadcaster: watch streams with slow consumers](exercises/46-broadcaster/) | 10 | 3.5 h | channel ownership, close protocols, ring buffers | watch streams, slow consumers, 410 Gone |
+| 47 | [A Kubernetes-style controller](exercises/47-reconciler/) | 10 | 4 h | `sync.Cond`, a work queue, fakes for failure injection | reconcile loops, optimistic concurrency |
+| 48 | [Leader election: leases and fencing tokens](exercises/48-leaderelection/) | 10 | 4 h | functional core, compare-and-swap, context trees | 1 active replica, safe failover |
+| 49 | [Crash-safe disk buffer for a log shipper](exercises/49-diskbuffer/) | 10 | 4.5 h | `encoding/binary`, CRC-32C, `fsync`, atomic rename | durable buffering, crash recovery |
+| 50 | [Capstone: a health-aware load balancer](exercises/50-loadbalancer/) | 10 | 6 h | `httputil.ReverseProxy`, atomics, goroutines bound to a context | what Envoy and NGINX do for you |
 
 ## Reveal hints and solutions
 
 Run `peek` from the repository root. From an exercise directory, use `go run ../../cmd/peek` instead. Reveal 1 level at a time.
 
 ```bash
-go run ./cmd/peek 07 hint 1
-go run ./cmd/peek 07 hint 2
-go run ./cmd/peek 07 hint 3
-go run ./cmd/peek 07 explanation | less
-go run ./cmd/peek 07 walkthrough | less
-go run ./cmd/peek 07 solution
+go run ./cmd/peek 32 hint 1
+go run ./cmd/peek 32 hint 2
+go run ./cmd/peek 32 hint 3
+go run ./cmd/peek 32 explanation | less
+go run ./cmd/peek 32 walkthrough | less
+go run ./cmd/peek 32 solution
 ```
 
 | Level | What it gives you |
@@ -140,15 +140,15 @@ go run ./cmd/peek 07 solution
 NOTE: The files are ROT13, not encryption. ROT13 only stops an accidental glance. Without Go, decode a file with `tr`:
 
 ```bash
-tr 'A-Za-z' 'N-ZA-Mn-za-m' < solutions/07-retry/hints.md.rot13
+tr 'A-Za-z' 'N-ZA-Mn-za-m' < solutions/32-retry/hints.md.rot13
 ```
 
 ## Run the tests
 
 ```bash
-go test ./exercises/01-logfmt/
-go test -race ./exercises/12-workerpool/
-go test -run TestParse -v ./exercises/01-logfmt/
+go test ./exercises/26-logfmt/
+go test -race ./exercises/37-workerpool/
+go test -run TestParse -v ./exercises/26-logfmt/
 ```
 
 NOTE: Every stub function panics with `TODO: implement`. A test for code you did not write yet fails with that panic. That is expected. Test 1 exercise at a time, not `./...`. Each exercise README lists the test filters for each step.
@@ -159,13 +159,13 @@ The exercises are libraries, because libraries are easy to test. An SRE ships sm
 
 | Exercise | Tool |
 |---|---|
-| 01-logfmt | A filter on stdin: `logfilter -level warn -match db=orders`. |
-| 02-accesslog | An incident report from an access log file. |
-| 04-grep | Your own `grep -C` with a regular expression. |
-| 13-logmerge | A `stern`-like merge of several log files. |
-| 17-promtext | A `promtool check metrics`-like linter, plus `rate` between 2 scrapes. |
-| 18-certcheck | A cron job that exits with 0 (OK), 1 (warning) or 2 (critical). |
-| 25-loadbalancer | A runnable load balancer with flags for the backends. |
+| 26-logfmt | A filter on stdin: `logfilter -level warn -match db=orders`. |
+| 27-accesslog | An incident report from an access log file. |
+| 29-grep | Your own `grep -C` with a regular expression. |
+| 38-logmerge | A `stern`-like merge of several log files. |
+| 42-promtext | A `promtool check metrics`-like linter, plus `rate` between 2 scrapes. |
+| 43-certcheck | A cron job that exits with 0 (OK), 1 (warning) or 2 (critical). |
+| 50-loadbalancer | A runnable load balancer with flags for the backends. |
 
 Write `main` as a thin shell around a function you can test:
 
@@ -196,18 +196,18 @@ This script builds a temporary module from each exercise's tests, its `testdata/
 
 ```bash
 scripts/verify-solutions.sh            # all exercises
-scripts/verify-solutions.sh 07-retry   # 1 exercise
+scripts/verify-solutions.sh 32-retry   # 1 exercise
 ```
 
 ## Change an exercise
 
 ROT13 is its own inverse, so the same `tr` command decodes and encodes.
 
-1. Decode the file you want to change: `tr 'A-Za-z' 'N-ZA-Mn-za-m' < solutions/07-retry/retry.go.rot13 > /tmp/retry.go`.
+1. Decode the file you want to change: `tr 'A-Za-z' 'N-ZA-Mn-za-m' < solutions/32-retry/retry.go.rot13 > /tmp/retry.go`.
 2. Edit the plain file.
-3. Encode it back: `tr 'A-Za-z' 'N-ZA-Mn-za-m' < /tmp/retry.go > solutions/07-retry/retry.go.rot13`.
-4. Run `scripts/verify-solutions.sh 07-retry`.
-5. If you changed a stub or a test, run `scripts/check-stubs.sh 07-retry` on a clean checkout.
+3. Encode it back: `tr 'A-Za-z' 'N-ZA-Mn-za-m' < /tmp/retry.go > solutions/32-retry/retry.go.rot13`.
+4. Run `scripts/verify-solutions.sh 32-retry`.
+5. If you changed a stub or a test, run `scripts/check-stubs.sh 32-retry` on a clean checkout.
 
 ## License
 

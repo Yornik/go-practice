@@ -16,12 +16,12 @@ gofmt -l .
 go test ./cmd/...                              # tests of the peek tool
 scripts/verify-solutions.sh [NN-name ...]      # each reference solution passes its tests under -race
 scripts/check-stubs.sh [NN-name ...]           # each test fails fast (< 60 s) against the stub
-go run ./cmd/peek 07 hint 1                    # decode 1 hidden part: hint 1|2|3, explanation, walkthrough, solution
+go run ./cmd/peek 32 hint 1                    # decode 1 hidden part: hint 1|2|3, explanation, walkthrough, solution
 ```
 
 CI (`.github/workflows/ci.yml`) runs gofmt, go vet, `go test ./cmd/...`, `check-stubs.sh` and `verify-solutions.sh`.
 
-Do not run `go test ./...` or `go test ./exercises/...`: every stub panics with `TODO: implement`, so those tests fail by design. Test 1 exercise at a time. Each exercise README lists `-run` filters per step, for example `go test -race -run TestParseQuotedValues -v ./exercises/01-logfmt/`.
+Do not run `go test ./...` or `go test ./exercises/...`: every stub panics with `TODO: implement`, so those tests fail by design. Test 1 exercise at a time. Each exercise README lists `-run` filters per step, for example `go test -race -run TestParseQuotedValues -v ./exercises/26-logfmt/`.
 
 `check-stubs.sh` must run on a checkout where the stubs are not implemented. On an implemented exercise it reports the passing tests as errors.
 
@@ -32,7 +32,7 @@ Do not run `go test ./...` or `go test ./exercises/...`: every stub panics with 
 | Part | Path | Notes |
 |---|---|---|
 | Spec | `exercises/NN-slug/README.md` | Scenario, API, Rules, Examples, Run the tests (per-step `-run` filters), Docs you can use, Stretch goals, Stuck?. Line 3 is the tier and time line. |
-| Stub and tests | `exercises/NN-slug/*.go`, `*_test.go`, `testdata/` | Package name is the slug without dashes (`01-logfmt` is `logfmt`). Every function body is `panic("TODO: implement")`. Tests are black-box (`package logfmt_test`) and import the package with an explicit alias. |
+| Stub and tests | `exercises/NN-slug/*.go`, `*_test.go`, `testdata/` | Package name is the slug without dashes (`26-logfmt` is `logfmt`). Every function body is `panic("TODO: implement")`. Tests are black-box (`package logfmt_test`) and import the package with an explicit alias. |
 | Hidden material | `solutions/NN-slug/*.rot13` | `hints.md`, `explanation.md`, `walkthrough.md` and the reference solution. All ROT13. |
 
 How the pieces depend on each other:
@@ -53,8 +53,8 @@ How the pieces depend on each other:
 ROT13 is its own inverse:
 
 ```bash
-tr 'A-Za-z' 'N-ZA-Mn-za-m' < solutions/07-retry/retry.go.rot13 > /tmp/retry.go   # decode
-tr 'A-Za-z' 'N-ZA-Mn-za-m' < /tmp/retry.go > solutions/07-retry/retry.go.rot13   # encode
+tr 'A-Za-z' 'N-ZA-Mn-za-m' < solutions/32-retry/retry.go.rot13 > /tmp/retry.go   # decode
+tr 'A-Za-z' 'N-ZA-Mn-za-m' < /tmp/retry.go > solutions/32-retry/retry.go.rot13   # encode
 ```
 
 Never commit a plaintext hint, explanation or solution. `.staging/` and `.blind/` are gitignored work areas for plaintext. After any change, run `verify-solutions.sh` for that exercise. If you changed a stub or a test, also run `check-stubs.sh` for it. If you changed a walkthrough or the solution, check that the code quoted in the walkthrough still matches the solution.
