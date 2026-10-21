@@ -1,0 +1,20 @@
+<11>Dec 31 23:58:02 feeder-0412 camd[311]: lens heater failed
+<14>Dec 31 23:59:58 feeder-0412 seedd[207]: seed level 12%
+<11>Dec 31 23:58:02 camd[311]: lens heater failed
+<12>Jan  1 00:00:01 feeder-1187 netd[96]: wifi rssi -82 dBm
+<30>Jan  1 00:00:03 photo-store-2 systemd[1]: Started photo-gc.service.
+<134>Jan  1 00:01:17 hq-window-01 motiond[412]: motion in zone 2 for 41 s
+<14>Jan  1 00:02:00 feeder-0031 seedd[207]: seed level 3%: refill soon
+<3>Jan  1 00:02:44 feeder-0412 kernel: usb 1-1: device descriptor read/64, error -71
+<11>Jan 01 00:03:10 feeder-2210 camd[318]: frame drop [42 of 300]
+<13>Dec 31 23:00:00 192.0.2.17 uploader:
+<12>Mar 14 09:30:00 feeder-0777 ntpd[88]: clock not synchronised
+<11>Dec 31 23:58:02 feeder-0412 camd[311] lens heater failed
+<190>Jan  1 00:04:00 feeder-0412 updated[55]: checking for firmware
+<192>Jan  1 00:04:01 feeder-0412 updated[55]: checking for firmware
+<11>Dec 32 23:58:02 feeder-0412 camd[311]: lens heater failed
+<11>Dec 31 23:58:02.413 feeder-0412 camd[311]: lens heater failed
+Dec 31 23:58:02 feeder-0412 camd[311]: lens heater failed
+<11>Dec 31 23:58
+<14>Jan  1 00:04:59 feeder-0099 seedd: refill done
+<11>Dec 31 23:59:30 feeder-0412 camd[311]: lens heater failed again
