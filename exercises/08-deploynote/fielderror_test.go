@@ -35,7 +35,7 @@ func TestFieldErrorMessage(t *testing.T) {
 }
 
 func TestFieldErrorUnwrap(t *testing.T) {
-	inner := fmt.Errorf("%w: %q", deploynote.ErrBadFormat, "PECK123")
+	inner := fmt.Errorf("%w: %q", deploynote.ErrBadFormat, "VL123")
 	for _, err := range []error{deploynote.ErrMissing, deploynote.ErrFreeze, inner} {
 		fe := &deploynote.FieldError{Field: "Ticket", Err: err}
 		if got := fe.Unwrap(); got != err {
@@ -52,7 +52,7 @@ func TestFieldErrorIs(t *testing.T) {
 	}{
 		{"Err is ErrMissing", deploynote.ErrMissing, deploynote.ErrMissing},
 		{"Err is ErrFreeze", deploynote.ErrFreeze, deploynote.ErrFreeze},
-		{"Err wraps ErrBadFormat", fmt.Errorf("%w: %q", deploynote.ErrBadFormat, "PECK123"), deploynote.ErrBadFormat},
+		{"Err wraps ErrBadFormat", fmt.Errorf("%w: %q", deploynote.ErrBadFormat, "VL123"), deploynote.ErrBadFormat},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
@@ -71,7 +71,7 @@ func TestFieldErrorAs(t *testing.T) {
 	fe := &deploynote.FieldError{Field: "Rollback", Err: deploynote.ErrMissing}
 	// A caller may wrap the FieldError again; errors.Is and errors.As still
 	// find what is inside.
-	wrapped := fmt.Errorf("deploy of species-labeller refused: %w", fe)
+	wrapped := fmt.Errorf("deploy of alert-rules refused: %w", fe)
 
 	if !errors.Is(wrapped, deploynote.ErrMissing) {
 		t.Errorf("errors.Is(fmt.Errorf(\"...: %%w\", fe), ErrMissing) = false, want true")
@@ -83,7 +83,7 @@ func TestFieldErrorAs(t *testing.T) {
 	if got != fe {
 		t.Errorf("errors.As found %+v, want the same *FieldError %+v", got, fe)
 	}
-	if want := "deploy of species-labeller refused: Rollback: missing"; wrapped.Error() != want {
+	if want := "deploy of alert-rules refused: Rollback: missing"; wrapped.Error() != want {
 		t.Errorf("wrapped.Error() = %q, want %q", wrapped.Error(), want)
 	}
 }

@@ -12,7 +12,7 @@ import (
 type Note struct {
 	Service  string
 	Version  string
-	Ticket   string // "PECK-123", or "INC-45" for an incident fix
+	Ticket   string // "VL-123", or "INC-45" for an incident fix
 	Author   string
 	Rollback string    // how to undo the deploy
 	At       time.Time // planned time, in the team's zone
@@ -24,7 +24,7 @@ var (
 	// ErrMissing: a required field is empty or only whitespace, a Rollback
 	// says "n/a", "none" or "-", or At is the zero time.
 	ErrMissing = errors.New("missing")
-	// ErrBadFormat: Ticket is not "PECK-" or "INC-" followed by 1 to 6
+	// ErrBadFormat: Ticket is not "VL-" or "INC-" followed by 1 to 6
 	// ASCII digits.
 	ErrBadFormat = errors.New("bad format")
 	// ErrFreeze: At falls in the change freeze, from Friday 15:00 to Monday

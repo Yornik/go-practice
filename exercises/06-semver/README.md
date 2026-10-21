@@ -1,16 +1,18 @@
-# 06 · Firmware v2.10 is newer than v2.9
+# 06 · Agent v2.10 is newer than v2.9
 
 **Tier 2 · about 1 h** · Go: structs with methods and value receivers, a `String()` method, a compare function that returns -1, 0 or +1, sentinel errors with `%w` and `errors.Is`, `strings.Split`, `strconv.Atoi` · Problem solving: define the order before you code; test with the cases that a string comparison gets wrong
 
-It is October, and you carry the Owl for the first time: the ceramic owl on the desk of whoever
-is on call at Peckish. At 07:40 Dot, who leads support, has 212 new tickets. Ticket 212 reads
-"my feeder says EVERY bird is a pigeon. even the robin!". The nightly release script picks the
-newest firmware with `git tag | sort | tail -1`, a line copied from a blog post in 2022. `sort`
+At 07:40, in your first week on the rotation, with the Key clipped to the steel ring on your
+lanyard, Marisol Quispe Mamani, the support lead, has 212 new tickets. Ticket 212 reads "your AI
+wrote a poem about my outage. it was a good poem. the outage was not." Vesper Labs ships HUSH,
+its on-call AI, as an agent in each customer's cluster, and the nightly release script picks the
+newest agent with `git tag | sort | tail -1`, a line copied from a blog post in 2022. `sort`
 compares text, 1 character at a time, and `9` comes after `1`. So at 02:00 the script decided
-that `v2.9.3` is newer than `v2.10.0`. It "upgraded" 14 000 feeders to `v2.9.3`, the old firmware
-that calls every bird a pigeon. Ines, the senior SRE, rolls the fleet forward and asks for a
-script that knows that 10 is more than 9. In this exercise you write the version type behind that
-script, and the function that picks the newest release.
+that `v2.9.3` is newer than `v2.10.0` and "upgraded" 14 000 customer agents to `v2.9.3`, the old
+build that ends every incident summary with a haiku. The tag list also holds
+`v2.11.0-selfupdate`, a pre-release that nobody on the team remembers pushing. You roll the
+agents forward and want a script that knows that 10 is more than 9. In this exercise you write
+the version type behind that script, and the function that picks the newest release.
 
 ## Task
 
@@ -120,8 +122,8 @@ Latest(["v2.9.3", "v2.10.0", "v2.11.0-rc.1", "latest"]) → v2.10.0, nil
 Latest(["v2.11.0-rc.1", "latest"])                      → Version{}, error (wraps ErrNoRelease)
 ```
 
-`testdata/tags.txt` holds the 40 tags of the firmware repository on the night of the incident, in
-the order `git tag` prints them. `sort | tail -1` gives `v2.9.3`. `Latest` gives `v2.10.0`.
+`testdata/tags.txt` holds the 40 tags of the agent repository on the night of the incident, in the
+order `git tag` prints them. `sort | tail -1` gives `v2.9.3`. `Latest` gives `v2.10.0`.
 
 ## Run the tests
 
@@ -159,9 +161,10 @@ all 3 steps work.
   from plain string order.
 - Accept build metadata (`v2.10.0+build.5`), keep it in a new field, and ignore it in `Compare`,
   as SemVer says.
-- Write the command that replaces the line from the blog post: `git tag | latest-tag` prints the
-  newest release and exits with status 1 when there is none. Then try `sort -V` (GNU sort's
-  version sort) on `testdata/tags.txt`: which tag does it put last, and why is that still wrong?
+- Write the command that replaces the line from the blog post before the script runs again at
+  02:00: `git tag | latest-tag` prints the newest release and exits with status 1 when there is
+  none. Then try `sort -V` (GNU sort's version sort) on `testdata/tags.txt`: which tag does it put
+  last, and why is that still wrong?
 
 ## Stuck?
 

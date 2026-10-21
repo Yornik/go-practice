@@ -51,7 +51,7 @@ func TestCheckFieldsMessage(t *testing.T) {
 		{"Rollback n/a", func(n *deploynote.Note) { n.Rollback = "n/a" }, "Rollback: missing"},
 		{"At zero", func(n *deploynote.Note) { n.At = time.Time{} }, "At: missing"},
 		{"Ticket bad format", func(n *deploynote.Note) { n.Ticket = "small fix" }, `Ticket: bad format: "small fix"`},
-		{"Ticket with a space", func(n *deploynote.Note) { n.Ticket = " PECK-12" }, `Ticket: bad format: " PECK-12"`},
+		{"Ticket with a space", func(n *deploynote.Note) { n.Ticket = " VL-12" }, `Ticket: bad format: " VL-12"`},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
@@ -77,9 +77,9 @@ func TestCheckFieldsRollback(t *testing.T) {
 		})
 	}
 	for _, v := range []string{
-		"helm rollback species-labeller 41",
+		"helm rollback alert-rules 41",
 		"redeploy v1.4.2",
-		"set flag squirrel_filter=off",
+		"set flag new_thresholds=off",
 		"x",
 	} {
 		t.Run(fmt.Sprintf("valid %q", v), func(t *testing.T) {
@@ -91,7 +91,7 @@ func TestCheckFieldsRollback(t *testing.T) {
 }
 
 func TestCheckFieldsTicket(t *testing.T) {
-	for _, v := range []string{"PECK-1", "PECK-412", "PECK-000123", "PECK-999999", "INC-45", "INC-0", "INC-123456"} {
+	for _, v := range []string{"VL-1", "VL-412", "VL-000123", "VL-999999", "INC-45", "INC-0", "INC-123456"} {
 		t.Run(fmt.Sprintf("valid %q", v), func(t *testing.T) {
 			n := validNote()
 			n.Ticket = v
@@ -100,22 +100,22 @@ func TestCheckFieldsTicket(t *testing.T) {
 	}
 	bad := []string{
 		"small fix",
-		"PECK-",        // no digits
-		"PECK-1234567", // 7 digits
-		"PECK123",      // no dash
-		"PECK--12",     // 2 dashes
-		"PECK-12a",     // a letter after the digits
-		"PECK-+12",     // a sign is not a digit
-		"PECK-١٢",      // Arabic-Indic digits are not ASCII digits
-		"peck-12",      // lowercase prefix
-		"Peck-12",
+		"VL-",        // no digits
+		"VL-1234567", // 7 digits
+		"VL123",      // no dash
+		"VL--12",     // 2 dashes
+		"VL-12a",     // a letter after the digits
+		"VL-+12",     // a sign is not a digit
+		"VL-١٢",      // Arabic-Indic digits are not ASCII digits
+		"vl-12",      // lowercase prefix
+		"Vl-12",
 		"inc-45",
 		"INC45",
 		"JIRA-12",
-		" PECK-12", // spaces count: the ticket is checked as written
-		"PECK-12 ",
-		"PECK-12 PECK-13",
-		"https://jira.peckish.example/browse/PECK-12",
+		" VL-12", // spaces count: the ticket is checked as written
+		"VL-12 ",
+		"VL-12 VL-13",
+		"https://jira.vesper-labs.example/browse/VL-12",
 	}
 	for _, v := range bad {
 		t.Run(fmt.Sprintf("bad %q", v), func(t *testing.T) {

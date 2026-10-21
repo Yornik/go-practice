@@ -15,12 +15,12 @@ import (
 // 09:00 UTC.
 var now = time.Date(2026, 10, 15, 9, 0, 0, 0, time.UTC)
 
-// cest is the offset of the relay in Amsterdam in October: +02:00.
+// cest is the offset of 1 of the 3 relays in October: +02:00.
 var cest = time.FixedZone("CEST", 2*60*60)
 
 // hb is a short way to write a heartbeat.
-func hb(feeder string, at time.Time) rollcall.Heartbeat {
-	return rollcall.Heartbeat{Feeder: feeder, At: at}
+func hb(node string, at time.Time) rollcall.Heartbeat {
+	return rollcall.Heartbeat{Node: node, At: at}
 }
 
 // rollCallCase is 1 call of RollCall and the report it must return.
@@ -53,7 +53,7 @@ func describeCall(inventory []string, beats []rollcall.Heartbeat, now time.Time,
 func formatBeats(beats []rollcall.Heartbeat) string {
 	parts := make([]string, len(beats))
 	for i, b := range beats {
-		parts[i] = fmt.Sprintf("{%q %s}", b.Feeder, b.At.Format(time.RFC3339Nano))
+		parts[i] = fmt.Sprintf("{%q %s}", b.Node, b.At.Format(time.RFC3339Nano))
 	}
 	return "[" + strings.Join(parts, " ") + "]"
 }

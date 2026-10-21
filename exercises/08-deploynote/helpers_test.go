@@ -26,11 +26,11 @@ var tuesday10 = day(10, 10, 0, 0, 0, cet)
 // validNote returns a note without problems. Tests change 1 or more fields.
 func validNote() deploynote.Note {
 	return deploynote.Note{
-		Service:  "species-labeller",
+		Service:  "alert-rules",
 		Version:  "v1.5.0",
-		Ticket:   "PECK-412",
-		Author:   "bram",
-		Rollback: "helm rollback species-labeller 41",
+		Ticket:   "VL-412",
+		Author:   "Wren Lindqvist",
+		Rollback: "helm rollback alert-rules 41",
 		At:       tuesday10,
 	}
 }

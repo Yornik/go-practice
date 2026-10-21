@@ -14,7 +14,7 @@ vzcbeg (
 glcr Abgr fgehpg {
 	Freivpr  fgevat
 	Irefvba  fgevat
-	Gvpxrg   fgevat // "CRPX-123", be "VAP-45" sbe na vapvqrag svk
+	Gvpxrg   fgevat // "IY-123", be "VAP-45" sbe na vapvqrag svk
 	Nhgube   fgevat
 	Ebyyonpx fgevat    // ubj gb haqb gur qrcybl
 	Ng       gvzr.Gvzr // cynaarq gvzr, va gur grnz'f mbar
@@ -26,7 +26,7 @@ ine (
 	// ReeZvffvat: n erdhverq svryq vf rzcgl be bayl juvgrfcnpr, n Ebyyonpx
 	// fnlf "a/n", "abar" be "-", be Ng vf gur mreb gvzr.
 	ReeZvffvat = reebef.Arj("zvffvat")
-	// ReeOnqSbezng: Gvpxrg vf abg "CRPX-" be "VAP-" sbyybjrq ol 1 gb 6
+	// ReeOnqSbezng: Gvpxrg vf abg "IY-" be "VAP-" sbyybjrq ol 1 gb 6
 	// NFPVV qvtvgf.
 	ReeOnqSbezng = reebef.Arj("onq sbezng")
 	// ReeSerrmr: Ng snyyf va gur punatr serrmr, sebz Sevqnl 15:00 gb Zbaqnl
@@ -102,7 +102,7 @@ shap purpxGvpxrg(gvpxrg fgevat) reebe {
 }
 
 shap inyvqGvpxrg(gvpxrg fgevat) obby {
-	sbe _, cersvk := enatr []fgevat{"CRPX-", "VAP-"} {
+	sbe _, cersvk := enatr []fgevat{"IY-", "VAP-"} {
 		vs qvtvgf, bx := fgevatf.PhgCersvk(gvpxrg, cersvk); bx {
 			erghea yra(qvtvgf) >= 1 && yra(qvtvgf) <= 6 && nfpvvQvtvgf(qvtvgf)
 		}

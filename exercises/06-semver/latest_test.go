@@ -22,7 +22,7 @@ func readTags(t *testing.T, path string) []string {
 	return strings.Fields(string(data))
 }
 
-// TestLatestIncidentTags uses the 40 tags of the firmware repository on the
+// TestLatestIncidentTags uses the 40 tags of the agent repository on the
 // night of the incident. A plain string sort puts v2.9.3 last.
 func TestLatestIncidentTags(t *testing.T) {
 	tags := readTags(t, "testdata/tags.txt")

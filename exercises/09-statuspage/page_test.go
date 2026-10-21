@@ -64,29 +64,29 @@ func checkGet(t *testing.T, p *statuspage.Page, name string, want statuspage.Sta
 }
 
 func TestPageSetGet(t *testing.T) {
-	p := statuspage.NewPage("API", "Checkout", "Photo uploads")
+	p := statuspage.NewPage("API", "Checkout", "Inference API")
 
 	// Every component starts Unknown.
 	checkGet(t, p, "API", statuspage.Unknown, true)
 	checkGet(t, p, "Checkout", statuspage.Unknown, true)
-	checkGet(t, p, "Photo uploads", statuspage.Unknown, true)
+	checkGet(t, p, "Inference API", statuspage.Unknown, true)
 
 	// A name that is not on the page.
 	checkGet(t, p, "Payments", statuspage.Unknown, false)
 	checkGet(t, p, "", statuspage.Unknown, false)
 
-	if err := p.Set("Photo uploads", statuspage.MajorOutage); err != nil {
-		t.Fatalf("Set(%q, MajorOutage) = %v, want nil", "Photo uploads", err)
+	if err := p.Set("Inference API", statuspage.MajorOutage); err != nil {
+		t.Fatalf("Set(%q, MajorOutage) = %v, want nil", "Inference API", err)
 	}
-	checkGet(t, p, "Photo uploads", statuspage.MajorOutage, true)
+	checkGet(t, p, "Inference API", statuspage.MajorOutage, true)
 	checkGet(t, p, "API", statuspage.Unknown, true)
 	checkGet(t, p, "Checkout", statuspage.Unknown, true)
 
 	// The last Set wins.
-	if err := p.Set("Photo uploads", statuspage.Operational); err != nil {
-		t.Fatalf("Set(%q, Operational) = %v, want nil", "Photo uploads", err)
+	if err := p.Set("Inference API", statuspage.Operational); err != nil {
+		t.Fatalf("Set(%q, Operational) = %v, want nil", "Inference API", err)
 	}
-	checkGet(t, p, "Photo uploads", statuspage.Operational, true)
+	checkGet(t, p, "Inference API", statuspage.Operational, true)
 
 	// Every constant is a valid status, Unknown included.
 	for _, s := range all {
@@ -207,7 +207,7 @@ func TestPageOverallWorstWins(t *testing.T) {
 		},
 		{
 			"1 unknown among operational",
-			[]comp{{"API", statuspage.Operational}, {"Photo uploads", statuspage.Unknown}, {"Push", statuspage.Operational}},
+			[]comp{{"API", statuspage.Operational}, {"Inference API", statuspage.Unknown}, {"Push", statuspage.Operational}},
 			statuspage.Unknown,
 		},
 		{
@@ -217,12 +217,12 @@ func TestPageOverallWorstWins(t *testing.T) {
 		},
 		{
 			"unknown is more severe than maintenance",
-			[]comp{{"Checkout", statuspage.Maintenance}, {"Photo uploads", statuspage.Unknown}},
+			[]comp{{"Checkout", statuspage.Maintenance}, {"Inference API", statuspage.Unknown}},
 			statuspage.Unknown,
 		},
 		{
 			"degraded is more severe than unknown",
-			[]comp{{"Photo uploads", statuspage.Unknown}, {"Push", statuspage.Degraded}},
+			[]comp{{"Inference API", statuspage.Unknown}, {"Push", statuspage.Degraded}},
 			statuspage.Degraded,
 		},
 		{
@@ -235,10 +235,10 @@ func TestPageOverallWorstWins(t *testing.T) {
 			[]comp{
 				{"API", statuspage.PartialOutage},
 				{"Checkout", statuspage.Maintenance},
-				{"Photo uploads", statuspage.MajorOutage},
+				{"Inference API", statuspage.MajorOutage},
 				{"Push", statuspage.Degraded},
-				{"Species labeller", statuspage.Unknown},
-				{"Web shop", statuspage.Operational},
+				{"Training cluster", statuspage.Unknown},
+				{"Console", statuspage.Operational},
 			},
 			statuspage.MajorOutage,
 		},
@@ -281,15 +281,15 @@ func TestPageOverallSeverityOrder(t *testing.T) {
 }
 
 func TestPageOverallFollowsUpdates(t *testing.T) {
-	p := build(t, comp{"API", statuspage.Operational}, comp{"Photo uploads", statuspage.Operational})
+	p := build(t, comp{"API", statuspage.Operational}, comp{"Inference API", statuspage.Operational})
 	steps := []struct {
 		name   string
 		status statuspage.Status
 		want   statuspage.Status
 	}{
-		{"Photo uploads", statuspage.MajorOutage, statuspage.MajorOutage},
+		{"Inference API", statuspage.MajorOutage, statuspage.MajorOutage},
 		{"API", statuspage.Degraded, statuspage.MajorOutage},
-		{"Photo uploads", statuspage.Operational, statuspage.Degraded},
+		{"Inference API", statuspage.Operational, statuspage.Degraded},
 		{"API", statuspage.Operational, statuspage.Operational},
 	}
 	for _, st := range steps {

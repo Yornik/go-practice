@@ -18,7 +18,7 @@ func TestCheckAllFields(t *testing.T) {
 	}{
 		{
 			"every field bad",
-			deploynote.Note{Service: "", Version: " ", Ticket: "PECK123", Author: "\t", Rollback: "n/a", At: saturday},
+			deploynote.Note{Service: "", Version: " ", Ticket: "VL123", Author: "\t", Rollback: "n/a", At: saturday},
 			[]problem{
 				{"Service", deploynote.ErrMissing},
 				{"Version", deploynote.ErrMissing},
@@ -42,7 +42,7 @@ func TestCheckAllFields(t *testing.T) {
 		},
 		{
 			"the note of the incident",
-			deploynote.Note{Service: "species-labeller", Version: "v1.5.0", Ticket: "small fix", Author: "bram", At: day(6, 17, 40, 0, 0, cet)},
+			deploynote.Note{Service: "alert-rules", Version: "v1.5.0", Ticket: "small fix", Author: "hush-bot", Rollback: "n/a", At: day(6, 17, 40, 0, 0, cet)},
 			[]problem{
 				{"Ticket", deploynote.ErrBadFormat},
 				{"Rollback", deploynote.ErrMissing},
@@ -51,7 +51,7 @@ func TestCheckAllFields(t *testing.T) {
 		},
 		{
 			"Author and Rollback",
-			deploynote.Note{Service: "push", Version: "v3.0.1", Ticket: "PECK-77", Rollback: "none", At: tuesday10},
+			deploynote.Note{Service: "notify", Version: "v3.0.1", Ticket: "VL-77", Rollback: "none", At: tuesday10},
 			[]problem{
 				{"Author", deploynote.ErrMissing},
 				{"Rollback", deploynote.ErrMissing},
@@ -59,7 +59,7 @@ func TestCheckAllFields(t *testing.T) {
 		},
 		{
 			"Service and At",
-			deploynote.Note{Version: "v3.0.1", Ticket: "PECK-77", Author: "ines", Rollback: "redeploy v3.0.0"},
+			deploynote.Note{Version: "v3.0.1", Ticket: "VL-77", Author: "Seun Adebayo", Rollback: "redeploy v3.0.0"},
 			[]problem{
 				{"Service", deploynote.ErrMissing},
 				{"At", deploynote.ErrMissing},
@@ -74,7 +74,7 @@ func TestCheckAllFields(t *testing.T) {
 }
 
 func TestCheckAllMessage(t *testing.T) {
-	n := deploynote.Note{Service: "species-labeller", Version: "v1.5.0", Ticket: "small fix", Author: "bram", At: day(6, 17, 40, 0, 0, cet)}
+	n := deploynote.Note{Service: "alert-rules", Version: "v1.5.0", Ticket: "small fix", Author: "hush-bot", Rollback: "n/a", At: day(6, 17, 40, 0, 0, cet)}
 	err := deploynote.Check(n)
 	if err == nil {
 		t.Fatalf("%s\n = nil, want 3 problems", describe(n))
@@ -91,7 +91,7 @@ func TestCheckAllMessage(t *testing.T) {
 }
 
 func TestCheckAllAs(t *testing.T) {
-	n := deploynote.Note{Service: "push", Version: "", Ticket: "PECK-77", Author: "", Rollback: "-", At: tuesday10}
+	n := deploynote.Note{Service: "notify", Version: "", Ticket: "VL-77", Author: "", Rollback: "-", At: tuesday10}
 	err := deploynote.Check(n)
 	if err == nil {
 		t.Fatalf("%s\n = nil, want 3 problems", describe(n))
@@ -120,9 +120,9 @@ func TestCheckAllAs(t *testing.T) {
 func TestCheckAllNil(t *testing.T) {
 	notes := []deploynote.Note{
 		validNote(),
-		{Service: "push", Version: "v3.0.1", Ticket: "INC-45", Author: "ines", Rollback: "redeploy v3.0.0", At: day(7, 3, 12, 0, 0, cet)},
-		{Service: "checkout", Version: "2026.11.06", Ticket: "PECK-9", Author: "dot", Rollback: "x", At: day(6, 14, 59, 59, 0, cet)},
-		{Service: "orders", Version: "v1", Ticket: "PECK-1", Author: "b", Rollback: "redeploy", At: day(9, 9, 0, 0, 0, time.UTC)},
+		{Service: "notify", Version: "v3.0.1", Ticket: "INC-45", Author: "Wren Lindqvist", Rollback: "redeploy v3.0.0", At: day(7, 3, 12, 0, 0, cet)},
+		{Service: "checkout", Version: "2026.11.06", Ticket: "VL-9", Author: "Seun Adebayo", Rollback: "x", At: day(6, 14, 59, 59, 0, cet)},
+		{Service: "orders", Version: "v1", Ticket: "VL-1", Author: "b", Rollback: "redeploy", At: day(9, 9, 0, 0, 0, time.UTC)},
 	}
 	for _, n := range notes {
 		err := deploynote.Check(n)

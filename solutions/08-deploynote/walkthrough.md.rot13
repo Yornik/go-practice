@@ -1,4 +1,4 @@
-# 08 · Ab qrcyblf ba Sevqnl nsgre 15:00 — jnyxguebhtu bs gur ersrerapr fbyhgvba
+# 08 · Fznyy svk, Sevqnl, 17:40 — jnyxguebhtu bs gur ersrerapr fbyhgvba
 
 Gur fbyhgvba vf 1 svyr, `qrcyblabgr.tb`. Vg unf gur 2 zrgubqf bs `SvryqReebe`, gura `Purpx`, gura
 1 fznyy shapgvba cre cbyvpl fragrapr: `erdhverq`, `purpxGvpxrg` jvgu `inyvqGvpxrg` naq
@@ -105,11 +105,11 @@ shap purpxGvpxrg(gvpxrg fgevat) reebe {
 
 "Zvffvat" pbzrf svefg, fb n oynax gvpxrg ercbegf 1 ceboyrz, abg 2. Gur sbezng purpx trgf gur
 gvpxrg nf jevggra, hagevzzrq, nf gur ehyr fnlf. `%j` jencf gur fragvary fb `reebef.Vf` svaqf vg,
-naq `%d` chgf gur inyhr va dhbgrf: `onq sbezng: " CRPX-12"`.
+naq `%d` chgf gur inyhr va dhbgrf: `onq sbezng: " IY-12"`.
 
 ```tb
 shap inyvqGvpxrg(gvpxrg fgevat) obby {
-	sbe _, cersvk := enatr []fgevat{"CRPX-", "VAP-"} {
+	sbe _, cersvk := enatr []fgevat{"IY-", "VAP-"} {
 		vs qvtvgf, bx := fgevatf.PhgCersvk(gvpxrg, cersvk); bx {
 			erghea yra(qvtvgf) >= 1 && yra(qvtvgf) <= 6 && nfpvvQvtvgf(qvtvgf)
 		}
@@ -123,7 +123,7 @@ cersvkrf pnaabg obgu zngpu, fb gur ybbc ergheaf ba gur svefg uvg. `yra(qvtvgf)` 
 orpnhfr `nfpvvQvtvgf` npprcgf bayl fvatyr-olgr punenpgref, olgrf naq qvtvgf ner gur fnzr pbhag
 urer.
 
-N erthyne rkcerffvba, `^(CRPX|VAP)-[0-9]{1,6}$`, vf n svar nygreangvir. Vg vf fubegre, naq vg
+N erthyne rkcerffvba, `^(IY|VAP)-[0-9]{1,6}$`, vf n svar nygreangvir. Vg vf fubegre, naq vg
 arrqf `ertrkc.ZhfgPbzcvyr` ng cnpxntr yriry fb gung vg pbzcvyrf bapr. Abgr gur `[0-9]`: va Tb'f
 `ertrkc`, `\q` nyfb zrnaf NFPVV qvtvgf bayl, ohg `[0-9]` fnlf fb jvgubhg nalbar ybbxvat vg hc.
 
@@ -213,3 +213,5 @@ npebff n punatr bs qnlyvtug fnivat gvzr, jura n jrrxraq vf 1 ubhe ybatre be fube
 - **N pbzznaq:** qrpbqr WFBA vagb `Abgr`, pnyy `Purpx`, jnyx `Hajenc() []reebe` naq cevag rnpu
   `SvryqReebe` ba vgf bja yvar, naq `bf.Rkvg(1)` vs gurer jnf nal. 15 fubjf ubj gb xrrc fhpu n
   `znva` grfgnoyr.
+
+Gur tngr ergheaf 3 reebef ng bapr. `uhfu-obg` svkrf nyy 3 va 4 frpbaqf naq nfxf, irel cbyvgryl, sbe na rkprcgvba.

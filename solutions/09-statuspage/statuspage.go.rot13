@@ -71,7 +71,7 @@ shap (f Fgnghf) inyvq() obby {
 //
 // Sbe nal bgure vachg vg ergheaf Haxabja naq na reebe gung jencf
 // ReeHaxabjaFgnghf naq pbagnvaf gur vachg dhbgrq jvgu %d, sbe rknzcyr:
-// fgnghfcntr: haxabja fgnghf "bx".
+// fgnghfcntr: haxabja fgnghf "svar".
 shap CnefrFgnghf(f fgevat) (Fgnghf, reebe) {
 	// Nfxvat Fgevat xrrcf gur jbeqf va 1 cynpr.
 	sbe fg := Haxabja; fg <= ZnwbeBhgntr; fg++ {
@@ -174,7 +174,7 @@ shap (c *Cntr) Birenyy() Fgnghf {
 //   - bgurejvfr 1 tebhc cre fgnghf gung n pbzcbarag unf, rkprcg Bcrengvbany,
 //     zbfg frirer svefg, wbvarq jvgu "; ". N tebhc vf gur ynory bs gur
 //     fgnghf, ": " naq vgf pbzcbaragf sebz N gb M wbvarq jvgu ", ", sbe
-//     rknzcyr "Znwbe bhgntr: Cubgb hcybnqf; Fgnghf haxabja: NCV, Purpxbhg".
+//     rknzcyr "Znwbe bhgntr: Vasrerapr NCV; Fgnghf haxabja: NCV, Purpxbhg".
 shap (c *Cntr) Onaare() fgevat {
 	vs yra(c.pbzcbaragf) == 0 {
 		erghea ynoryf[Haxabja]

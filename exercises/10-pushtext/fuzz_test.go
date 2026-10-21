@@ -26,17 +26,17 @@ func isCutOf(got, s string) bool {
 //
 // to let Go generate new inputs (stop it with Ctrl-C).
 func FuzzTruncate(f *testing.F) {
-	f.Add("A Wood Pigeon 🐦 is at your feeder", 17)
-	f.Add("A Wood Pigeon 🐦 is at your feeder", 21)
+	f.Add("HUSH resolved 3 incidents while you slept 🌙 Have a calm day.", 45)
+	f.Add("HUSH resolved 3 incidents while you slept 🌙 Have a calm day.", 49)
 	f.Add("", 0)
 	f.Add("abc", -1)
 	f.Add("olé olé", 3)
 	f.Add("olé olé", 6)
-	f.Add("🐦🐦", 5)
+	f.Add("🌙🌙", 5)
 	f.Add("Cafe\u0301 au lait", 5)
-	f.Add("seeds…", 4)
+	f.Add("ovens…", 4)
 	f.Add("\xff\x80abc", 2)
-	f.Add("ab\xf0\x9f\x90cd", 6)
+	f.Add("ab\xf0\x9f\x8ccd", 6)
 	f.Add("a\x00b\r\n", 3)
 
 	f.Fuzz(func(t *testing.T, s string, limit int) {
@@ -72,12 +72,12 @@ func FuzzTruncate(f *testing.F) {
 }
 
 func ExampleTruncateBytes() {
-	s := "A Wood Pigeon 🐦 is at your feeder"
-	fmt.Println(pushtext.TruncateBytes(s, 21))
-	fmt.Println(pushtext.TruncateBytes(s, 20))
-	fmt.Println(pushtext.TruncateBytes(pushtext.Clean("Wood\x00 Pigeon \xf0\x9f\x90"), 100))
+	s := "HUSH resolved 3 incidents while you slept 🌙 Have a calm day."
+	fmt.Println(pushtext.TruncateBytes(s, 49))
+	fmt.Println(pushtext.TruncateBytes(s, 48))
+	fmt.Println(pushtext.TruncateBytes(pushtext.Clean("you\x00 slept \xf0\x9f\x8c"), 100))
 	// Output:
-	// A Wood Pigeon 🐦…
-	// A Wood Pigeon …
-	// Wood Pigeon �
+	// HUSH resolved 3 incidents while you slept 🌙…
+	// HUSH resolved 3 incidents while you slept …
+	// you slept �
 }

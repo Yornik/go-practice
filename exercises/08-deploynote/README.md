@@ -1,18 +1,17 @@
-# 08 · No deploys on Friday after 15:00
+# 08 · Small fix, Friday, 17:40
 
 **Tier 2 · about 1 h** · Go: a custom error type with `Error` and `Unwrap`, `errors.As`, `errors.Join`, `errors.Is` through a joined error, `time.Weekday` and `Time.Hour`, the nil error interface · Problem solving: turn each policy sentence into 1 check; report every problem, not only the first
 
-At 17:40 on a Friday, Bram de Wit, the CTO, deployed the new squirrel filter: no more pushes that
-say "A squirrel is eating your sunflower seeds". The filter dropped every push about a small grey
-animal, so it also silenced every pigeon and every collared dove in 40 000 gardens. The deploy
-note in the chat said `small fix`, with no ticket and no rollback plan. The deploy bot let it
-through, because the bot let every note through. Ines Okafor, the senior SRE, spent her Saturday
-working out how to undo it. Now the bot checks each note against a short policy, and nothing goes
-out between Friday 15:00 and Monday 09:00 without an incident ticket. The first version of that
-check stopped at the first problem it found, so Bram's next note bounced 4 times, 1 missing field
-per try. Bram asks for 1 thing: "Tell me all my mistakes at once, not one per try." In this
-exercise you write the check behind the bot, which reports every problem in a form that a human
-can read and a program can inspect.
+At 17:40 on a Friday, with the trams under the Spire full of people on their way home, `hush-bot`,
+HUSH's own deploy bot, shipped new alert thresholds. Its note said "small fix 🌙", its ticket
+field said `small fix`, and its rollback field said `n/a`. Floor 61 had been empty for 10 minutes.
+Nothing checked the note, so nothing stopped it. Noor Haddad, the principal SRE, spent her
+Saturday rolling the thresholds back. Now every deploy note goes through a gate that checks each
+field, and nothing goes out between Friday 15:00 and Monday 09:00 without an incident ticket. The
+first version of the gate stopped at the first problem it found, so the bot's next note bounced
+3 times, 1 field per try. Daniyar Seitkali, the CTO, asks for 1 thing: "Tell it all its mistakes
+at once, not 1 per try. It learns fast." In this exercise you write the check behind the gate,
+which reports every problem in a form that a human can read and a program can inspect.
 
 ## Task
 
@@ -23,7 +22,7 @@ are given. You write the 2 methods of `FieldError` and `Check`.
 type Note struct {
 	Service  string
 	Version  string
-	Ticket   string    // "PECK-123", or "INC-45" for an incident fix
+	Ticket   string    // "VL-123", or "INC-45" for an incident fix
 	Author   string
 	Rollback string    // how to undo the deploy
 	At       time.Time // planned time, in the team's zone
@@ -76,9 +75,9 @@ Each field reports **at most 1** problem. "Blank" means empty or only whitespace
 | `At` | the zero time (`At.IsZero()`) | `ErrMissing` |
 | `At` | in the freeze, and `Ticket` is not a valid `INC-` ticket | `ErrFreeze` |
 
-- A **valid ticket** is `PECK-` or `INC-` followed by 1 to 6 ASCII digits (`0` to `9`). Nothing
+- A **valid ticket** is `VL-` or `INC-` followed by 1 to 6 ASCII digits (`0` to `9`). Nothing
   else: the prefix is uppercase, there is no whitespace before or after it, and no other byte.
-  `Check` reads the ticket as written, so `" PECK-12"` is a bad format. `PECK-000123` is valid.
+  `Check` reads the ticket as written, so `" VL-12"` is a bad format. `VL-000123` is valid.
 - For a bad ticket `Err` is `fmt.Errorf("%w: %q", ErrBadFormat, ticket)`. Its message is
   `bad format: "small fix"`; `%q` makes a space around the ticket visible.
 - For the other problems `Err` is the sentinel itself: `ErrMissing` or `ErrFreeze`. So their
@@ -97,7 +96,7 @@ Each field reports **at most 1** problem. "Blank" means empty or only whitespace
 - The weekday and the hour are those of `At` **in its own location**, as `At.Weekday()` and
   `At.Hour()` return them. Friday 15:30 in CET (UTC+1) is frozen. The same instant written in UTC
   is Friday 14:30, and that is fine. The caller passes `At` in the team's zone.
-- A valid `INC-` ticket lifts the freeze: an incident fix may go out at any time. A `PECK-` ticket
+- A valid `INC-` ticket lifts the freeze: an incident fix may go out at any time. A `VL-` ticket
   does not. An invalid ticket does not either: `INC-` without digits, `inc-45` or a blank ticket
   gives a `Ticket` problem **and** an `At` problem.
 - A zero `At` is missing, whatever the ticket.
@@ -140,12 +139,13 @@ The tests compare the result with `nil` and print its type with `%T` when it is 
 ## Examples
 
 ```text
-Check(Note{Service: "species-labeller", Version: "v1.5.0", Ticket: "PECK-412", Author: "bram",
-           Rollback: "helm rollback species-labeller 41", At: Tuesday 10 November 2026 10:00 CET})
+Check(Note{Service: "alert-rules", Version: "v1.5.0", Ticket: "VL-412",
+           Author: "Wren Lindqvist", Rollback: "helm rollback alert-rules 41",
+           At: Tuesday 10 November 2026 10:00 CET})
   → nil
 
-Check(Note{Service: "species-labeller", Version: "v1.5.0", Ticket: "small fix", Author: "bram",
-           Rollback: "", At: Friday 6 November 2026 17:40 CET})
+Check(Note{Service: "alert-rules", Version: "v1.5.0", Ticket: "small fix",
+           Author: "hush-bot", Rollback: "n/a", At: Friday 6 November 2026 17:40 CET})
   → errors.Join(
       &FieldError{Field: "Ticket",   Err: fmt.Errorf("%w: %q", ErrBadFormat, "small fix")},
       &FieldError{Field: "Rollback", Err: ErrMissing},
@@ -175,11 +175,11 @@ Check(Note{})  → 6 problems, each ErrMissing, from Service to At
 
 | `Ticket` | Result |
 |---|---|
-| `PECK-1`, `PECK-412`, `PECK-999999`, `INC-0`, `INC-45` | valid |
+| `VL-1`, `VL-412`, `VL-999999`, `INC-0`, `INC-45` | valid |
 | `""`, `"   "` | `Ticket: missing` |
-| `PECK-`, `PECK-1234567`, `PECK123`, `PECK--12`, `PECK-12a`, `peck-12`, `INC45` | `Ticket: bad format: "<ticket>"` |
-| `PECK-+12` (a sign is not a digit), `PECK-١٢` (Arabic-Indic digits are not ASCII digits) | `Ticket: bad format: "<ticket>"` |
-| `" PECK-12"`, `"PECK-12 "` (whitespace counts) | `Ticket: bad format: "<ticket>"` |
+| `VL-`, `VL-1234567`, `VL123`, `VL--12`, `VL-12a`, `vl-12`, `INC45` | `Ticket: bad format: "<ticket>"` |
+| `VL-+12` (a sign is not a digit), `VL-١٢` (Arabic-Indic digits are not ASCII digits) | `Ticket: bad format: "<ticket>"` |
+| `" VL-12"`, `"VL-12 "` (whitespace counts) | `Ticket: bad format: "<ticket>"` |
 
 ## Run the tests
 
@@ -217,10 +217,13 @@ crashes until all 4 steps work.
 - Take the team's zone as a parameter: `Check(n Note, loc *time.Location) error` checks the freeze
   with `n.At.In(loc)`, so `Check` judges a note written in UTC by the clock in Amsterdam. Load the zone with
   `time.LoadLocation("Europe/Amsterdam")` and test the weekend in October when the clocks go back.
-- Add extra freeze windows from a list: the week of Black Friday, 24 December to 2 January. Each
-  window has a start, an end and a reason, and the error says which window blocked the deploy.
+  Meridian's clocks go back that weekend too, and that night has 1 hour that happens twice.
+- Add extra freeze windows from a list, for example Launch Week and 24 December to 2 January.
+  Each window has a start, an end and a reason, and the error says which window blocked the
+  deploy. Launch Week brings HUSH 5 to 40 000 companies, and nobody wants a small fix that week.
 - Write the bot's command: read a note as JSON from stdin, print 1 line per problem, and exit
   with status 1 when there is any. Walk the joined error to put each field name first.
+  `hush-bot` reads the reply too, so every line must make sense on its own.
 - Give the program more than a sentinel: add the bad value to a `BadFormatError` type with the
   value and the expected pattern, and find it with `errors.As`.
 

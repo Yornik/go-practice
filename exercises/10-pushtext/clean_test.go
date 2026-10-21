@@ -28,8 +28,8 @@ func runClean(t *testing.T, cases []cleanCase) {
 func TestCleanUnchanged(t *testing.T) {
 	runClean(t, []cleanCase{
 		{"empty", "", ""},
-		{"ASCII", "A great tit is eating your sunflower seeds.", "A great tit is eating your sunflower seeds."},
-		{"multi-byte runes", "olé 🐦 Café", "olé 🐦 Café"},
+		{"ASCII", "All 6 ovens are at 230 degrees.", "All 6 ovens are at 230 degrees."},
+		{"multi-byte runes", "olé 🌙 Café", "olé 🌙 Café"},
 		{"tab and newline are kept", "line 1\tok\nline 2", "line 1\tok\nline 2"},
 		{"combining mark", "Cafe\u0301", "Cafe\u0301"},
 		{"a valid U+FFFD is kept", "a�b", "a�b"},
@@ -45,7 +45,7 @@ func TestCleanInvalid(t *testing.T) {
 		{"only an invalid byte", "\xff", "�"},
 		{"a run of 3 invalid bytes is 1 U+FFFD", "a\xff\xfe\xfdb", "a�b"},
 		{"2 runs give 2 U+FFFD", "a\xffb\xffc", "a�b�c"},
-		{"an emoji cut after 3 of its 4 bytes", "ab\xf0\x9f\x90", "ab�"},
+		{"an emoji cut after 3 of its 4 bytes", "ab\xf0\x9f\x8c", "ab�"},
 		{"an emoji cut after 2 bytes, then text", "\xf0\x9fab", "�ab"},
 		{"lone continuation bytes", "\x80\x80\x80", "�"},
 		{"overlong encoding of /", "a\xc0\xafb", "a�b"},
@@ -75,11 +75,11 @@ func TestCleanMixed(t *testing.T) {
 		// ends the first run, so there are 2 runs, even though the NUL itself
 		// is removed.
 		{"a removed control character separates 2 runs", "\xff\x00\xff", "��"},
-		{"invalid bytes and control characters", "Wood\x00 Pigeon \xf0\x9f\x90\x1b", "Wood Pigeon �"},
+		{"invalid bytes and control characters", "you\x00 slept \xf0\x9f\x8c\x1b", "you slept �"},
 		{
 			"the push text cut at byte 178",
 			pushText[:178],
-			pushGarden + "\nA Wood Pigeon �",
+			pushCluster + "\nHUSH resolved 3 incidents while you slept �",
 		},
 	})
 }

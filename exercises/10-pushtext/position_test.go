@@ -51,8 +51,8 @@ func TestPositionLines(t *testing.T) {
 }
 
 func TestPositionMultiByte(t *testing.T) {
-	// é is bytes 0-1, \n is byte 2, 🐦 is bytes 3-6, x is byte 7.
-	runPosition(t, "é\n🐦x", []posCase{
+	// é is bytes 0-1, \n is byte 2, 🌙 is bytes 3-6, x is byte 7.
+	runPosition(t, "é\n🌙x", []posCase{
 		{0, 1, 1, true},
 		{2, 1, 2, true},
 		{3, 2, 1, true},
@@ -74,13 +74,13 @@ func TestPositionMultiByte(t *testing.T) {
 }
 
 func TestPositionInsideRune(t *testing.T) {
-	runPosition(t, "é\n🐦x", []posCase{
+	runPosition(t, "é\n🌙x", []posCase{
 		{1, 0, 0, false}, // the second byte of é
-		{4, 0, 0, false}, // bytes 2, 3 and 4 of 🐦
+		{4, 0, 0, false}, // bytes 2, 3 and 4 of 🌙
 		{5, 0, 0, false},
 		{6, 0, 0, false},
 	})
-	runPosition(t, "🐦", []posCase{
+	runPosition(t, "🌙", []posCase{
 		{3, 0, 0, false}, // the last byte of the last rune
 		{4, 1, 2, true},
 	})
@@ -113,15 +113,15 @@ func TestPositionOutOfRange(t *testing.T) {
 }
 
 func TestPositionPushText(t *testing.T) {
-	// Line 1 has 158 runes in 160 bytes (é and · are 2 bytes each), and
-	// the 🐦 on line 2 starts at byte 175.
+	// Line 1 has 124 runes in 132 bytes (é and · are 2 bytes each, – is
+	// 3), and the 🌙 on line 2 starts at byte 175.
 	runPosition(t, pushText, []posCase{
-		{160, 1, 159, true}, // the \n
-		{161, 2, 1, true},
-		{175, 2, 15, true},
+		{132, 1, 125, true}, // the \n
+		{133, 2, 1, true},
+		{175, 2, 43, true},
 		{176, 0, 0, false},
 		{177, 0, 0, false},
-		{179, 2, 16, true},
-		{len(pushText), 2, 34, true},
+		{179, 2, 44, true},
+		{len(pushText), 2, 61, true},
 	})
 }

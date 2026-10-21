@@ -45,7 +45,7 @@ func (s Status) String() string {
 //
 // For any other input it returns Unknown and an error that wraps
 // ErrUnknownStatus and contains the input quoted with %q, for example:
-// statuspage: unknown status "ok".
+// statuspage: unknown status "fine".
 func ParseStatus(s string) (Status, error) {
 	panic("TODO: implement")
 }
@@ -94,7 +94,7 @@ func (p *Page) Overall() Status {
 //   - otherwise 1 group per status that a component has, except Operational,
 //     most severe first, joined with "; ". A group is the label of the
 //     status, ": " and its components from A to Z joined with ", ", for
-//     example "Major outage: Photo uploads; Status unknown: API, Checkout".
+//     example "Major outage: Inference API; Status unknown: API, Checkout".
 func (p *Page) Banner() string {
 	panic("TODO: implement")
 }

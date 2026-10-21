@@ -1,4 +1,4 @@
-// Package semver parses firmware version tags such as "v2.10.0" and
+// Package semver parses version tags such as "v2.10.0" and
 // "v2.10.0-rc.1", compares them as numbers, and picks the newest release
 // from a list of tags.
 package semver

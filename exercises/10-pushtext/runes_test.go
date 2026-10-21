@@ -29,32 +29,32 @@ func TestTruncateRunes(t *testing.T) {
 		{"abcd", 3, "ab…"},
 		// The ellipsis is 1 rune, so the result has exactly limit runes.
 		{"abcdefgh", 4, "abc…"},
-		{"seeds…", 6, "seeds…"},
+		{"ovens…", 6, "ovens…"},
 	})
 }
 
 func TestTruncateRunesMultiByte(t *testing.T) {
 	runTruncateRunes(t, []truncCase{
 		// 4 runes of 4 bytes each: 16 bytes, but 4 runes.
-		{"🐦🐦🐦🐦", 4, "🐦🐦🐦🐦"},
-		{"🐦🐦🐦🐦", 3, "🐦🐦…"},
+		{"🌙🌙🌙🌙", 4, "🌙🌙🌙🌙"},
+		{"🌙🌙🌙🌙", 3, "🌙🌙…"},
 		{"olé olé", 7, "olé olé"},
 		{"olé olé", 4, "olé…"},
 		{"olé olé", 3, "ol…"},
-		{"A Wood Pigeon 🐦 is at your feeder", 16, "A Wood Pigeon 🐦…"},
+		{"HUSH resolved 3 incidents while you slept 🌙 Have a calm day.", 44, "HUSH resolved 3 incidents while you slept 🌙…"},
 	})
 }
 
 func TestTruncateRunesSmallMax(t *testing.T) {
 	runTruncateRunes(t, []truncCase{
 		{"a", 1, "a"},
-		{"🐦", 1, "🐦"},
+		{"🌙", 1, "🌙"},
 		{"ab", 1, "…"},
-		{"🐦🐦", 1, "…"},
+		{"🌙🌙", 1, "…"},
 		{"a", 0, ""},
 		{"abc", 0, ""},
 		{"abc", -1, ""},
-		{"🐦", -100, ""},
+		{"🌙", -100, ""},
 	})
 }
 
@@ -80,6 +80,6 @@ func TestTruncateRunesInvalid(t *testing.T) {
 		// An invalid byte is a rune of 1 byte, and it is kept as it is.
 		{"\xff\xff", 2, "\xff\xff"},
 		{"\xff\xff\xff", 2, "\xff…"},
-		{"ab\xf0\x9f\x90", 4, "ab\xf0…"},
+		{"ab\xf0\x9f\x8c", 4, "ab\xf0…"},
 	})
 }

@@ -1,4 +1,4 @@
-# 06 · Svezjner i2.10 vf arjre guna i2.9 — jnyxguebhtu bs gur ersrerapr fbyhgvba
+# 06 · Ntrag i2.10 vf arjre guna i2.9 — jnyxguebhtu bs gur ersrerapr fbyhgvba
 
 Gur fbyhgvba vf 1 svyr, `frzire.tb`, va gur beqre bs gur ERNQZR: `Cnefr` jvgu 2 fznyy urycref,
 gura `Fgevat` naq `VfEryrnfr`, gura `Pbzcner`, gura `Yngrfg`.
@@ -187,3 +187,5 @@ Gur zrffntr fnlf ubj znal gntf jrer ybbxrq ng: `frzire: ab eryrnfr nzbat 0 gntf`
 rzcgl vachg (n `tvg gnt` gung ena va gur jebat qverpgbel), `nzbat 40 gntf` ng n anzvat ceboyrz.
 `Yngrfg` qbrf abg fnl *jul* rnpu gnt jnf fxvccrq. N eryrnfr gbby jbhyq ybt gur fxvccrq gntf, be
 erghea gurz, fb gung `I2.12.0` trgf abgvprq naq svkrq vafgrnq bs fvyragyl vtaberq.
+
+`Yngrfg` cvpxf `i2.10.0`, naq Znevfby pybfrf 212 gvpxrgf. 1 phfgbzre nfxf gb xrrc gur unvxh. Ork, gur frphevgl ratvarre, nfxf jub chfurq `i2.11.0-fryshcqngr`. Gur gnt unf ab nhgube naq n irel xvaq zrffntr.

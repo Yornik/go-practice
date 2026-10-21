@@ -1,10 +1,10 @@
-// Cnpxntr ebyypnyy pbzcnerf gur srrqref gung fubhyq ercbeg jvgu gur srrqref
+// Cnpxntr ebyypnyy pbzcnerf gur abqrf gung fubhyq ercbeg jvgu gur abqrf
 // gung qb: vg cnefrf urnegorng yvarf fhpu nf
 //
-//	ud-jvaqbj-01 2026-10-15G08:55:00M
+//	pnanel-u3-01 2026-10-15G08:55:00M
 //
-// naq fbegf rirel srrqre bs na vairagbel vagb urnygul, fgnyr naq zvffvat,
-// cyhf gur srrqref gung ercbeg ohg ner abg va gur vairagbel.
+// naq fbegf rirel abqr bs na vairagbel vagb urnygul, fgnyr naq zvffvat,
+// cyhf gur abqrf gung ercbeg ohg ner abg va gur vairagbel.
 cnpxntr ebyypnyy
 
 vzcbeg (
@@ -20,14 +20,14 @@ vzcbeg (
 // pnaabg ernq. Purpx sbe vg jvgu reebef.Vf.
 ine ReeZnysbezrq = reebef.Arj("ebyypnyy: znysbezrq urnegorng")
 
-// Urnegorng vf 1 ercbeg bs 1 srrqre: gur srrqre jnf nyvir ng Ng.
+// Urnegorng vf 1 ercbeg bs 1 abqr: gur abqr jnf nyvir ng Ng.
 glcr Urnegorng fgehpg {
-	Srrqre fgevat
-	Ng     gvzr.Gvzr
+	Abqr fgevat
+	Ng   gvzr.Gvzr
 }
 
-// CnefrUrnegorng ernqf n yvar "<srrqre> <ESP 3339 gvzr>", sbe rknzcyr
-// "ud-jvaqbj-01 2026-10-15G08:55:00M".
+// CnefrUrnegorng ernqf n yvar "<abqr> <ESP 3339 gvzr>", sbe rknzcyr
+// "pnanel-u3-01 2026-10-15G08:55:00M".
 //
 // Gur yvar zhfg unir rknpgyl 2 svryqf frcnengrq ol juvgrfcnpr, nf
 // fgevatf.Svryqf fcyvgf gurz. Gur gvzr zhfg cnefr jvgu gvzr.ESP3339, fb n mbar
@@ -47,7 +47,7 @@ shap CnefrUrnegorng(yvar fgevat) (Urnegorng, reebe) {
 		// bayl gurer sbe gur crefba jub ernqf gur zrffntr.
 		erghea Urnegorng{}, szg.Reebes("%j: %d: %i", ReeZnysbezrq, yvar, ree)
 	}
-	erghea Urnegorng{Srrqre: svryqf[0], Ng: ng}, avy
+	erghea Urnegorng{Abqr: svryqf[0], Ng: ng}, avy
 }
 
 // Ercbeg vf gur erfhyg bs n ebyy pnyy. Rirel yvfg vf fbegrq N gb M (cynva
@@ -57,34 +57,34 @@ glcr Ercbeg fgehpg {
 	Fgnyr    []fgevat             // va gur vairagbel, ynfg urnegorng zber guna fgnyrNsgre orsber abj
 	Zvffvat  []fgevat             // va gur vairagbel, ab urnegorng ng nyy
 	Haxabja  []fgevat             // frag urnegorngf, abg va gur vairagbel
-	YnfgFrra znc[fgevat]gvzr.Gvzr // yngrfg urnegorng bs rirel srrqre gung frag bar
+	YnfgFrra znc[fgevat]gvzr.Gvzr // yngrfg urnegorng bs rirel abqr gung frag bar
 }
 
-// EbyyPnyy pbzcnerf gur vairagbel (gur srrqref gung fubhyq ercbeg) jvgu gur
-// urnegorngf (gur srrqref gung qvq ercbeg).
+// EbyyPnyy pbzcnerf gur vairagbel (gur abqrf gung fubhyq ercbeg) jvgu gur
+// urnegorngf (gur abqrf gung qvq ercbeg).
 //
-// Gur ynfg urnegorng bs n srrqre vf vgf yngrfg Ng, jungrire vgf cbfvgvba va
-// orngf. N srrqre bs gur vairagbel vf urnygul jura abj.Fho(ynfg) <= fgnyrNsgre,
+// Gur ynfg urnegorng bs n abqr vf vgf yngrfg Ng, jungrire vgf cbfvgvba va
+// orngf. N abqr bs gur vairagbel vf urnygul jura abj.Fho(ynfg) <= fgnyrNsgre,
 // fb n urnegorng nsgre abj (pybpx fxrj) vf urnygul gbb. EbyyPnyy hfrf abj naq
 // arire ernqf gur pybpx.
 //
-// Rzcgl srrqre anzrf ner vtaberq, va gur vairagbel naq va orngf. EbyyPnyy qbrf
+// Rzcgl abqr anzrf ner vtaberq, va gur vairagbel naq va orngf. EbyyPnyy qbrf
 // abg zbqvsl vgf vachgf. YnfgFrra vf arire avy. Gur ERNQZR yvfgf rirel ehyr.
 shap EbyyPnyy(vairagbel []fgevat, orngf []Urnegorng, abj gvzr.Gvzr, fgnyrNsgre gvzr.Qhengvba) Ercbeg {
 	ynfgFrra := znxr(znc[fgevat]gvzr.Gvzr)
 	sbe _, o := enatr orngf {
-		vs o.Srrqre == "" {
+		vs o.Abqr == "" {
 			pbagvahr
 		}
 		// Nsgre pbzcnerf vafgnagf, fb gur fnzr zbzrag jevggra va 2 mbarf
 		// arire pbhagf nf arjre.
-		vs ynfg, bx := ynfgFrra[o.Srrqre]; !bx || o.Ng.Nsgre(ynfg) {
-			ynfgFrra[o.Srrqre] = o.Ng
+		vs ynfg, bx := ynfgFrra[o.Abqr]; !bx || o.Ng.Nsgre(ynfg) {
+			ynfgFrra[o.Abqr] = o.Ng
 		}
 	}
 
 	// N frg erzbirf gur qhcyvpngrf bs gur vairagbel naq nafjref "vf guvf
-	// srrqre rkcrpgrq?" jvgubhg n ybbc.
+	// abqr rkcrpgrq?" jvgubhg n ybbc.
 	rkcrpgrq := znxr(znc[fgevat]fgehpg{}, yra(vairagbel))
 	sbe _, anzr := enatr vairagbel {
 		vs anzr != "" {

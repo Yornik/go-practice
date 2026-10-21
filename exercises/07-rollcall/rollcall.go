@@ -1,10 +1,10 @@
-// Package rollcall compares the feeders that should report with the feeders
+// Package rollcall compares the nodes that should report with the nodes
 // that do: it parses heartbeat lines such as
 //
-//	hq-window-01 2026-10-15T08:55:00Z
+//	canary-h3-01 2026-10-15T08:55:00Z
 //
-// and sorts every feeder of an inventory into healthy, stale and missing,
-// plus the feeders that report but are not in the inventory.
+// and sorts every node of an inventory into healthy, stale and missing,
+// plus the nodes that report but are not in the inventory.
 package rollcall
 
 import (
@@ -16,14 +16,14 @@ import (
 // cannot read. Check for it with errors.Is.
 var ErrMalformed = errors.New("rollcall: malformed heartbeat")
 
-// Heartbeat is 1 report of 1 feeder: the feeder was alive at At.
+// Heartbeat is 1 report of 1 node: the node was alive at At.
 type Heartbeat struct {
-	Feeder string
-	At     time.Time
+	Node string
+	At   time.Time
 }
 
-// ParseHeartbeat reads a line "<feeder> <RFC 3339 time>", for example
-// "hq-window-01 2026-10-15T08:55:00Z".
+// ParseHeartbeat reads a line "<node> <RFC 3339 time>", for example
+// "canary-h3-01 2026-10-15T08:55:00Z".
 //
 // The line must have exactly 2 fields separated by whitespace, as
 // strings.Fields splits them. The time must parse with time.RFC3339, so a zone
@@ -43,18 +43,18 @@ type Report struct {
 	Stale    []string             // in the inventory, last heartbeat more than staleAfter before now
 	Missing  []string             // in the inventory, no heartbeat at all
 	Unknown  []string             // sent heartbeats, not in the inventory
-	LastSeen map[string]time.Time // latest heartbeat of every feeder that sent one
+	LastSeen map[string]time.Time // latest heartbeat of every node that sent one
 }
 
-// RollCall compares the inventory (the feeders that should report) with the
-// heartbeats (the feeders that did report).
+// RollCall compares the inventory (the nodes that should report) with the
+// heartbeats (the nodes that did report).
 //
-// The last heartbeat of a feeder is its latest At, whatever its position in
-// beats. A feeder of the inventory is healthy when now.Sub(last) <= staleAfter,
+// The last heartbeat of a node is its latest At, whatever its position in
+// beats. A node of the inventory is healthy when now.Sub(last) <= staleAfter,
 // so a heartbeat after now (clock skew) is healthy too. RollCall uses now and
 // never reads the clock.
 //
-// Empty feeder names are ignored, in the inventory and in beats. RollCall does
+// Empty node names are ignored, in the inventory and in beats. RollCall does
 // not modify its inputs. LastSeen is never nil. The README lists every rule.
 func RollCall(inventory []string, beats []Heartbeat, now time.Time, staleAfter time.Duration) Report {
 	panic("TODO: implement")

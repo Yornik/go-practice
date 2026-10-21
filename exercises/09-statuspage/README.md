@@ -1,17 +1,17 @@
-# 09 · All systems operational (they were not)
+# 09 · Status: fine (it was not)
 
 **Tier 2 · about 1.5 h** · Go: `iota` constants, a `String()` method and `fmt.Stringer`, `switch`, pointer receivers that change a struct, the zero value of a type, `strings.EqualFold`, `strings.Join` · Problem solving: decide what the zero value means; derive the whole from its parts
 
-On Sunday from 09:10 to 12:10 no photo reached Peckish, and `status.peckish.io` said "All systems
-operational" the whole time. The status page had restarted at 09:00. From 09:10 the upload service
-reported its trouble 180 times, once a minute: `status=partial outage`, with a space. The page only
-knows `partial_outage`, so it skipped all 180 updates. "Photo uploads" kept the value it got at
-the restart: the zero value. The status type was an `iota` list, and its first constant, the one
-that is 0, was `Operational`. Dot, who leads support, answered 96 tickets like this one: "Your page
-says all systems operational. A robin has been on my feeder for 3 hours and the app shows 0
-photos." Ines Okafor, the senior SRE, wrote 1 line in the postmortem: "Unknown is not
-operational." In this exercise you write the status type and the page behind `status.peckish.io`,
-with its overall status and the banner that customers read.
+180 status updates in 3 hours, and the status page used none of them. On a wet Sunday morning
+in Meridian, inference requests failed from 09:10 to 12:10. All that time,
+`status.vesper-labs.example` said "All systems operational". The status page had restarted at
+09:00. From 09:10 `hush-bot`, the deploy bot that runs on HUSH's own account, sent an update for
+the inference API once a minute: `status=fine`. The page knows no `fine`, so it skipped all 180
+updates, and the component "Inference API" kept the value it got at the restart: the zero value.
+The status type was an `iota` list, and its first constant, the one that is 0, was `Operational`.
+Noor Haddad, the principal SRE, wrote 1 line in the postmortem: "Unknown is not operational." In
+this exercise you write the status type and the page behind `status.vesper-labs.example`, with
+its overall status and the banner that customers read.
 
 ## Task
 
@@ -81,13 +81,13 @@ Suggested order: `String` and `ParseStatus` first, then `NewPage`, `Set` and `Ge
 
 - `ParseStatus` accepts exactly the 6 words of `String()` and 2 aliases: `maintenance` means
   `Maintenance`, and `degraded` means `Degraded`.
-- It ignores letter case: `OPERATIONAL`, `Major_Outage` and `Degraded` are fine.
+- It ignores letter case: `OPERATIONAL`, `Major_Outage` and `Degraded` are accepted.
 - It accepts nothing else. It trims nothing, and it does not accept a space or a `-` in place of
-  the `_`. These are errors: `""`, `ok`, `down`, `operational ` (with a space), `partial outage`,
+  the `_`. These are errors: `""`, `fine`, `down`, `operational ` (with a space), `partial outage`,
   `partial-outage`, `under maintenance`, `major`, `Status(1)`, `1`.
 - On success the error is `nil`. On error `ParseStatus` returns `Unknown` and an error that wraps
   `ErrUnknownStatus` (`errors.Is` works) and contains the input formatted with `%q`, for example
-  `statuspage: unknown status "ok"`. The rest of the wording is yours.
+  `statuspage: unknown status "fine"`. The rest of the wording is yours.
 - Round trip: `ParseStatus(s.String())` returns `s` and `nil` for each of the 6 constants.
 
 ### NewPage, Set and Get
@@ -128,28 +128,28 @@ Suggested order: `String` and `ParseStatus` first, then `NewPage`, `Set` and `Ge
   comma and a space). The banner leaves out operational components.
 - `Banner` sorts the names in a group A to Z in plain string order (Go's `<` on strings, byte by
   byte). So upper case letters come before lower case ones (`Push` before `api`), and
-  `photo-store-10` comes before `photo-store-2`.
+  `chkpt-store-10` comes before `chkpt-store-2`.
 - The same page always gives the same banner.
 
 ## Examples
 
 ```text
-p := NewPage("Photo uploads", "API", "Checkout", "Push notifications")
+p := NewPage("Inference API", "API", "Checkout", "Push notifications")
 
 p.Get("API")       → Unknown, true
 p.Get("Payments")  → Unknown, false
 p.Overall()        → Unknown
-p.Banner()         → "Status unknown: API, Checkout, Photo uploads, Push notifications"
+p.Banner()         → "Status unknown: API, Checkout, Inference API, Push notifications"
 
 Set each of the 4 components to Operational:
 p.Overall()        → Operational
 p.Banner()         → "All systems operational"
 
-p.Set("Photo uploads", MajorOutage)      → nil
+p.Set("Inference API", MajorOutage)      → nil
 p.Set("Push notifications", Degraded)    → nil
 p.Set("Checkout", Maintenance)           → nil
 p.Overall()        → MajorOutage
-p.Banner()         → "Major outage: Photo uploads; Degraded performance: Push notifications; Under maintenance: Checkout"
+p.Banner()         → "Major outage: Inference API; Degraded performance: Push notifications; Under maintenance: Checkout"
 
 p.Set("Payments", Operational)  → error `statuspage: unknown component "Payments"` (wraps ErrUnknownComponent)
 p.Set("API", Status(42))        → error (wraps ErrUnknownStatus); "API" stays Operational
@@ -199,13 +199,14 @@ crashes until all 4 steps work.
 
 - Implement `encoding.TextUnmarshaler` (`UnmarshalText`) on `*Status`, so that `encoding/json`
   reads a status update such as `{"component": "API", "status": "major_outage"}` straight into a
-  struct. Add `MarshalText` for the way back. 31-envconfig uses `encoding.TextUnmarshaler` in full.
+  struct. Then a status update in JSON from any writer, `hush-bot` included, is checked. Add
+  `MarshalText` for the way back. 31-envconfig uses `encoding.TextUnmarshaler` in full.
 - Give each component the time of its last update, and show a component as `Unknown` when its
   last update is older than 15 minutes. Pass `now` in, as in 07.
 - Write the JSON that the Statuspage API returns from `/api/v2/summary.json`: the components with
   their status words, and a page status with an `indicator` (`none`, `minor`, `major`,
   `critical`). Decide which `indicator` a page with an `Unknown` component gets.
-- Serve the banner over HTTP with `net/http`, as a small page that the office screen can show.
+- Serve the banner over HTTP with `net/http`, as a small page that the screen on floor 61 can show.
 
 ## Stuck?
 

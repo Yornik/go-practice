@@ -49,7 +49,7 @@ func formatReport(r rollcall.Report) string {
 	return b.String()
 }
 
-// TestRollCallFleet runs a roll call over the whole fleet: 500 feeders in the
+// TestRollCallFleet runs a roll call over the whole fleet: 500 nodes in the
 // inventory (2 names appear twice) and 1434 heartbeat lines merged from 3
 // relays, in no particular order. 4 lines are malformed.
 func TestRollCallFleet(t *testing.T) {
@@ -104,16 +104,16 @@ func sizes(lines []string) string {
 
 // The example from the README.
 func ExampleRollCall() {
-	inventory := []string{"hq-window-01", "feeder-0217", "feeder-0412", "reserve-01", "reserve-02", "hq-window-01", ""}
+	inventory := []string{"canary-h3-01", "vl-gpu-0217", "vl-gpu-0412", "harbour-01", "harbour-02", "canary-h3-01", ""}
 	lines := []string{
-		"hq-window-01 2026-10-15T08:55:00Z",
-		"feeder-0412 2026-10-15T10:31:12+02:00",
-		"feeder-0217 2026-10-13T18:42:10+02:00",
-		"feeder-0412 2026-10-15T08:01:40Z",
-		"reserve-01 2026-10-15T08:30:00Z",
-		"feeder-0501 2026-10-15T08:58:03.5Z",
-		"hq-window-01 2026-10-15T09:01:30Z",
-		"feeder-0100 2026-10-15T08:51:00",
+		"canary-h3-01 2026-10-15T08:55:00Z",
+		"vl-gpu-0412 2026-10-15T10:31:12+02:00",
+		"vl-gpu-0217 2026-10-13T18:42:10+02:00",
+		"vl-gpu-0412 2026-10-15T08:01:40Z",
+		"harbour-01 2026-10-15T08:30:00Z",
+		"vl-gpu-0501 2026-10-15T08:58:03.5Z",
+		"canary-h3-01 2026-10-15T09:01:30Z",
+		"vl-gpu-0100 2026-10-15T08:51:00",
 	}
 	var beats []rollcall.Heartbeat
 	for _, line := range lines {
@@ -136,14 +136,14 @@ func ExampleRollCall() {
 		fmt.Println("last seen:", name, r.LastSeen[name].UTC().Format(time.RFC3339Nano))
 	}
 	// Output:
-	// skipped: feeder-0100 2026-10-15T08:51:00
-	// healthy: [feeder-0412 hq-window-01 reserve-01]
-	// stale:   [feeder-0217]
-	// missing: [reserve-02]
-	// unknown: [feeder-0501]
-	// last seen: feeder-0217 2026-10-13T16:42:10Z
-	// last seen: feeder-0412 2026-10-15T08:31:12Z
-	// last seen: feeder-0501 2026-10-15T08:58:03.5Z
-	// last seen: hq-window-01 2026-10-15T09:01:30Z
-	// last seen: reserve-01 2026-10-15T08:30:00Z
+	// skipped: vl-gpu-0100 2026-10-15T08:51:00
+	// healthy: [canary-h3-01 harbour-01 vl-gpu-0412]
+	// stale:   [vl-gpu-0217]
+	// missing: [harbour-02]
+	// unknown: [vl-gpu-0501]
+	// last seen: canary-h3-01 2026-10-15T09:01:30Z
+	// last seen: harbour-01 2026-10-15T08:30:00Z
+	// last seen: vl-gpu-0217 2026-10-13T16:42:10Z
+	// last seen: vl-gpu-0412 2026-10-15T08:31:12Z
+	// last seen: vl-gpu-0501 2026-10-15T08:58:03.5Z
 }

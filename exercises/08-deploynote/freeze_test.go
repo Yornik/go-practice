@@ -97,8 +97,8 @@ func TestCheckFreezeIncident(t *testing.T) {
 		{"INC lifts the freeze on Friday evening", "INC-1", friday, nil},
 		{"INC lifts the freeze on Monday morning", "INC-999999", monday, nil},
 		{"INC outside the freeze", "INC-45", tuesday10, nil},
-		{"PECK does not lift the freeze", "PECK-412", saturday, []problem{{"At", deploynote.ErrFreeze}}},
-		{"PECK on Friday evening", "PECK-412", friday, []problem{{"At", deploynote.ErrFreeze}}},
+		{"VL does not lift the freeze", "VL-412", saturday, []problem{{"At", deploynote.ErrFreeze}}},
+		{"VL on Friday evening", "VL-412", friday, []problem{{"At", deploynote.ErrFreeze}}},
 		// Only a valid INC- ticket lifts the freeze.
 		{"INC- without digits", "INC-", saturday, []problem{{"Ticket", deploynote.ErrBadFormat}, {"At", deploynote.ErrFreeze}}},
 		{"lowercase inc-45", "inc-45", saturday, []problem{{"Ticket", deploynote.ErrBadFormat}, {"At", deploynote.ErrFreeze}}},

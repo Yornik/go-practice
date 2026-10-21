@@ -17,10 +17,10 @@ func TestPageBannerEmpty(t *testing.T) {
 }
 
 func TestPageBannerNewPage(t *testing.T) {
-	p := statuspage.NewPage("Checkout", "API", "Photo uploads")
-	want := "Status unknown: API, Checkout, Photo uploads"
+	p := statuspage.NewPage("Checkout", "API", "Inference API")
+	want := "Status unknown: API, Checkout, Inference API"
 	if got := p.Banner(); got != want {
-		t.Errorf("NewPage(%q, %q, %q).Banner() = %q, want %q", "Checkout", "API", "Photo uploads", got, want)
+		t.Errorf("NewPage(%q, %q, %q).Banner() = %q, want %q", "Checkout", "API", "Inference API", got, want)
 	}
 }
 
@@ -53,11 +53,11 @@ func TestPageBannerCases(t *testing.T) {
 			[]comp{
 				{"API", statuspage.Operational},
 				{"Checkout", statuspage.Operational},
-				{"Photo uploads", statuspage.Unknown},
+				{"Inference API", statuspage.Unknown},
 				{"Push notifications", statuspage.Operational},
-				{"Species labeller", statuspage.Operational},
+				{"Training cluster", statuspage.Operational},
 			},
-			"Status unknown: Photo uploads",
+			"Status unknown: Inference API",
 		},
 		{
 			"under maintenance only",
@@ -67,15 +67,15 @@ func TestPageBannerCases(t *testing.T) {
 		{
 			"every status, most severe first, operational left out",
 			[]comp{
-				{"Web shop", statuspage.Operational},
+				{"Console", statuspage.Operational},
 				{"Checkout", statuspage.Maintenance},
-				{"Species labeller", statuspage.Unknown},
+				{"Training cluster", statuspage.Unknown},
 				{"Push notifications", statuspage.Degraded},
 				{"API", statuspage.PartialOutage},
-				{"Photo uploads", statuspage.MajorOutage},
+				{"Inference API", statuspage.MajorOutage},
 			},
-			"Major outage: Photo uploads; Partial outage: API; Degraded performance: Push notifications; " +
-				"Status unknown: Species labeller; Under maintenance: Checkout",
+			"Major outage: Inference API; Partial outage: API; Degraded performance: Push notifications; " +
+				"Status unknown: Training cluster; Under maintenance: Checkout",
 		},
 		{
 			"names in a group from A to Z",
@@ -83,30 +83,30 @@ func TestPageBannerCases(t *testing.T) {
 				{"Push notifications", statuspage.Degraded},
 				{"API", statuspage.Operational},
 				{"Checkout", statuspage.Degraded},
-				{"Photo uploads", statuspage.Degraded},
+				{"Inference API", statuspage.Degraded},
 			},
-			"Degraded performance: Checkout, Photo uploads, Push notifications",
+			"Degraded performance: Checkout, Inference API, Push notifications",
 		},
 		{
 			"names sort in plain string order",
 			[]comp{
-				{"photo-store-2", statuspage.PartialOutage},
-				{"photo-store-10", statuspage.PartialOutage},
+				{"chkpt-store-2", statuspage.PartialOutage},
+				{"chkpt-store-10", statuspage.PartialOutage},
 				{"Push", statuspage.PartialOutage},
 				{"api", statuspage.PartialOutage},
 			},
-			"Partial outage: Push, api, photo-store-10, photo-store-2",
+			"Partial outage: Push, api, chkpt-store-10, chkpt-store-2",
 		},
 		{
 			"several groups with several names",
 			[]comp{
-				{"photo-store-3", statuspage.MajorOutage},
-				{"photo-store-1", statuspage.MajorOutage},
-				{"photo-store-4", statuspage.Unknown},
-				{"photo-store-2", statuspage.Unknown},
+				{"chkpt-store-3", statuspage.MajorOutage},
+				{"chkpt-store-1", statuspage.MajorOutage},
+				{"chkpt-store-4", statuspage.Unknown},
+				{"chkpt-store-2", statuspage.Unknown},
 				{"API", statuspage.Operational},
 			},
-			"Major outage: photo-store-1, photo-store-3; Status unknown: photo-store-2, photo-store-4",
+			"Major outage: chkpt-store-1, chkpt-store-3; Status unknown: chkpt-store-2, chkpt-store-4",
 		},
 	}
 	for _, tc := range tests {
@@ -120,17 +120,17 @@ func TestPageBannerCases(t *testing.T) {
 }
 
 func TestPageBannerFollowsUpdates(t *testing.T) {
-	p := build(t, comp{"API", statuspage.Operational}, comp{"Photo uploads", statuspage.Operational})
+	p := build(t, comp{"API", statuspage.Operational}, comp{"Inference API", statuspage.Operational})
 	steps := []struct {
 		name   string
 		status statuspage.Status
 		want   string
 	}{
-		{"Photo uploads", statuspage.MajorOutage, "Major outage: Photo uploads"},
-		{"API", statuspage.MajorOutage, "Major outage: API, Photo uploads"},
-		{"API", statuspage.Operational, "Major outage: Photo uploads"},
-		{"Photo uploads", statuspage.Unknown, "Status unknown: Photo uploads"},
-		{"Photo uploads", statuspage.Operational, "All systems operational"},
+		{"Inference API", statuspage.MajorOutage, "Major outage: Inference API"},
+		{"API", statuspage.MajorOutage, "Major outage: API, Inference API"},
+		{"API", statuspage.Operational, "Major outage: Inference API"},
+		{"Inference API", statuspage.Unknown, "Status unknown: Inference API"},
+		{"Inference API", statuspage.Operational, "All systems operational"},
 	}
 	for _, st := range steps {
 		if err := p.Set(st.name, st.status); err != nil {
@@ -143,15 +143,15 @@ func TestPageBannerFollowsUpdates(t *testing.T) {
 }
 
 func ExamplePage() {
-	p := statuspage.NewPage("Photo uploads", "API", "Checkout", "Push notifications")
+	p := statuspage.NewPage("Inference API", "API", "Checkout", "Push notifications")
 	fmt.Println(p.Overall(), "|", p.Banner())
 
-	for _, name := range []string{"API", "Checkout", "Photo uploads", "Push notifications"} {
+	for _, name := range []string{"API", "Checkout", "Inference API", "Push notifications"} {
 		_ = p.Set(name, statuspage.Operational)
 	}
 	fmt.Println(p.Overall(), "|", p.Banner())
 
-	_ = p.Set("Photo uploads", statuspage.MajorOutage)
+	_ = p.Set("Inference API", statuspage.MajorOutage)
 	_ = p.Set("Push notifications", statuspage.Degraded)
 	_ = p.Set("Checkout", statuspage.Maintenance)
 	fmt.Println(p.Overall(), "|", p.Banner())
@@ -161,9 +161,9 @@ func ExamplePage() {
 	s, err := statuspage.ParseStatus("partial outage")
 	fmt.Println(s, "|", errors.Is(err, statuspage.ErrUnknownStatus))
 	// Output:
-	// unknown | Status unknown: API, Checkout, Photo uploads, Push notifications
+	// unknown | Status unknown: API, Checkout, Inference API, Push notifications
 	// operational | All systems operational
-	// major_outage | Major outage: Photo uploads; Degraded performance: Push notifications; Under maintenance: Checkout
+	// major_outage | Major outage: Inference API; Degraded performance: Push notifications; Under maintenance: Checkout
 	// true
 	// unknown | true
 }

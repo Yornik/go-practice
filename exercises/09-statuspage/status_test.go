@@ -97,7 +97,7 @@ func TestStatusParseErrors(t *testing.T) {
 		why string
 	}{
 		{"", "empty"},
-		{"ok", "not a status word"},
+		{"fine", "not a status word"},
 		{"down", "not a status word"},
 		{"operational ", "trailing space"},
 		{" operational", "leading space"},
