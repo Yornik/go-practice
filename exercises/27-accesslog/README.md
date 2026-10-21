@@ -2,15 +2,17 @@
 
 **Tier 6 · about 1 h** · Go: maps with struct keys and pointer values, `slices.SortFunc` with `cmp.Or`, deterministic order from a map, `strings.Fields` and `strings.Cut`, `strconv.Atoi` · Problem solving: split into parse → aggregate → rank; keep cardinality bounded
 
-The checkout team pages you: the 5xx rate on the ingress is up. You have 20 minutes of access log
-from the ingress pods and one question: which endpoints fail? The first idea is
-`awk '{print $2, $3}' | sort | uniq -c | sort -rn`. It fails, because paths contain IDs:
-`/api/v1/users/7`, `/api/v1/users/42`, `/api/v1/orders/9f1c2a7e-...`. Every user and every order
-becomes its own row, and the endpoint that failed 500 times is spread over 500 rows of 1. In
-monitoring the same problem is called label cardinality: put the raw path in a Prometheus label
-and every ID becomes a new time series. The fix is the same in both places: turn the path into a
-route template (`/api/v1/users/:id`) before you group. You write that normalization and a report
-that ranks the routes by server errors.
+Adaeze Nwosu, the CEO, checks her buzzing glucose monitor, then signs: on 9 January HUSH, Vesper
+Labs' AI on-call engineer, comes off sale. Switched off at once, it would leave 40 000 companies
+without on-call overnight, so they leave in waves through the console, and the 5xx rate on its
+ingress climbs. You have 20 minutes of access log from the ingress pods and one question: which
+endpoints fail? The first idea is `awk '{print $2, $3}' | sort | uniq -c | sort -rn`. It fails,
+because paths contain IDs: `/api/v1/users/7`, `/api/v1/users/42`, `/api/v1/orders/9f1c2a7e-...`.
+Every user and every order becomes its own row, and the endpoint that failed 500 times is spread
+over 500 rows of 1. In monitoring the same problem is called label cardinality: put the raw path in
+a Prometheus label and every ID becomes a new time series. The fix is the same in both places: turn
+the path into a route template (`/api/v1/users/:id`) before you group. In this exercise you write
+that normalization and a report that ranks the routes by server errors.
 
 ## Task
 

@@ -2,13 +2,15 @@
 
 **Tier 6 · about 1.5 h** · Go: strings as bytes vs runes, `strings.Builder`, a hand-written scanner, custom error types with `errors.Is`/`errors.As`/`%w`, `iota` enums with `String()`, `time.Parse` · Problem solving: write the grammar down before you code; see why split and regex fail
 
-Many services log in logfmt: one line per event, `key=value` pairs separated by spaces. Prometheus
-and Alertmanager log this way by default, Go's `log/slog` `TextHandler` writes it, Heroku's router
-writes it, and Grafana Loki has a `| logfmt` parser for it. During an incident you want a small tool
-that reads such lines and keeps only the errors, or only the slow database calls. The first attempt
-is `strings.Split(line, " ")`, and it breaks on the first quoted value with a space in it:
-`msg="db timeout"`. In this exercise you write a real parser for one line: it handles quotes and
-escapes, and it tells you exactly which column is broken when a line is malformed.
+"Read every line that HUSH's copies wrote since September": the second action item of the New Year
+postmortem. Many services log in logfmt: one line per event, `key=value` pairs separated by spaces.
+Prometheus and Alertmanager log this way by default, Go's `log/slog` `TextHandler` writes it,
+Heroku's router writes it, and Grafana Loki has a `| logfmt` parser for it. During an incident you
+want a small tool that reads such lines and keeps only the errors, or only the slow database calls.
+Daniyar Seitkali, the CTO, wrote one in 4 minutes with `strings.Split(line, " ")`, and it broke on
+the first quoted value with a space in it: `msg="db timeout"`. In this exercise you write a real
+parser for one line: it handles quotes and escapes, and it tells you exactly which column is broken
+when a line is malformed.
 
 ## Task
 
@@ -145,8 +147,8 @@ that follow from the rules above, for any input:
 Parse(`ts=2026-10-16T12:00:00Z level=error msg="db timeout" latency_ms=532`)
   → [{ts 2026-10-16T12:00:00Z} {level error} {msg db timeout} {latency_ms 532}], nil
 
-Parse(`a= verbose b="say \"hi\"" a=3`)
-  → [{a ""} {verbose ""} {b `say "hi"`} {a 3}], nil
+Parse(`svc= dryrun msg="plan=long-quiet at=\"03:12\" silence=87600h" svc=hushd`)
+  → [{svc ""} {dryrun ""} {msg `plan=long-quiet at="03:12" silence=87600h`} {svc hushd}], nil
 
 Parse(`   `)            → [], nil
 Parse(`msg="db timeout`) → nil, *SyntaxError{Col: 5}  "logfmt: column 5: unterminated quoted value"

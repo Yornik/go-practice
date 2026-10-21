@@ -2,14 +2,16 @@
 
 **Tier 6 · about 1.5 h** · Go: slices share backing arrays (`slices.Clone`, `slices.Sort`), binary search (`sort.Search`), `math.Ceil`, `NaN` and `Inf`, float64 rounding, `time.Duration` arithmetic · Problem solving: pin down a definition precisely; compute small examples by hand
 
-After a deploy, Grafana shows a p99 latency of 235 ms for the checkout API. The load test tool says
-250 ms. A colleague says the mean is 45 ms, so all is fine. All three are "right", and you have to
-explain why in the incident channel. The load test keeps every sample and computes an exact
-percentile. Prometheus does not keep samples: a histogram only counts how many requests fell into
-fixed buckets (`le="0.1"`, `le="0.25"`, ...). That is cheap and can be summed across 50 pods, and
+3 numbers, 1 deploy. Vesper Labs pulled HUSH, its AI on-call engineer, from sale in January. Today
+the first migration deploy is out. Grafana shows a p99 latency of 235 ms for the checkout API. The
+load test tool says 250 ms. HUSH's weekly report, which every customer still gets until the
+migration ends, quotes the mean: 45 ms, "a calm week". All 3 are "right", and you have to explain
+why in the incident channel. The load test keeps every sample and computes an exact percentile.
+Prometheus does not keep samples: a histogram only counts how many requests fell into fixed buckets
+(`le="0.1"`, `le="0.25"`, ...). That is cheap and can be summed across 50 pods, and
 `histogram_quantile` estimates the percentile by assuming the requests are spread evenly inside a
-bucket. The mean hides the slow requests behind the fast ones. Here you write the exact and the
-estimated side, so you know where the difference comes from and how large it can get.
+bucket. The mean hides the slow requests behind the fast ones. In this exercise you write the exact
+and the estimated side, so you know where the difference comes from and how large it can get.
 
 ## Task
 
