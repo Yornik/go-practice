@@ -1,9 +1,9 @@
 // Cnpxntr jnirf cynaf n ebyybhg va jnirf. Beqre fbegf ubfg anzrf gur jnl
-// crbcyr ernq gurz (srrqre-9 orsber srrqre-10), Jvgubhg qebcf gur ubfgf gb
+// crbcyr ernq gurz (abqr-9 orsber abqr-10), Jvgubhg qebcf gur ubfgf gb
 // fxvc, naq Jnirf phgf n yvfg bs ubfgf vagb n pnanel jnir naq jnirf bs n
 // svkrq fvmr:
 //
-//	cyna := Beqre(Jvgubhg(erfreir, fxvc))
+//	cyna := Beqre(Jvgubhg(unyy2, fxvc))
 //	j, ree := Jnirf(cyna, 1, 50)
 //
 // Rirel shapgvba ergheaf fyvprf gung gur pnyyre bjaf. Punatvat be nccraqvat
@@ -27,7 +27,7 @@ vzcbeg (
 // cersvkrf n anzr jvgubhg n ahzore pbzrf svefg, gura gur fznyyre ahzore
 // inyhr, gura cynva fgevat beqre:
 //
-//	purpxbhg, srrqre-1, srrqre-007, srrqre-7, srrqre-9, srrqre-10, jro, jro1
+//	purpxbhg, abqr-1, abqr-007, abqr-7, abqr-9, abqr-10, jro, jro1
 //
 // Beqre qbrf abg zbqvsl anzrf. Punatvat na ryrzrag bs gur erfhyg, be
 // nccraqvat gb vg, arire punatrf anzrf. Sbe rzcgl vachg vg ergheaf avy be

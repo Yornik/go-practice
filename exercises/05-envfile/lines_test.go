@@ -94,8 +94,8 @@ func TestParseLines(t *testing.T) {
 		{"keys are case-sensitive", "port=1\nPORT=2", map[string]string{"port": "1", "PORT": "2"}},
 		{
 			"mixed",
-			"# upload service\r\nexport PORT=8080\r\n\r\n  DB_HOST = db-1.peckish.example \r\nMSG=two words\r\n",
-			map[string]string{"PORT": "8080", "DB_HOST": "db-1.peckish.example", "MSG": "two words"},
+			"# inference gateway\r\nexport PORT=8080\r\n\r\n  DB_HOST = db-1.vesper-labs.example \r\nMSG=two words\r\n",
+			map[string]string{"PORT": "8080", "DB_HOST": "db-1.vesper-labs.example", "MSG": "two words"},
 		},
 	})
 }

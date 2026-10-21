@@ -85,62 +85,62 @@ func TestRankCounts(t *testing.T) {
 	}{
 		{
 			"1 page by day",
-			[]pagenoise.Page{day("FeederOffline", "hq-window-01")},
-			[]pagenoise.AlertCount{{Alert: "FeederOffline", Pages: 1, Night: 0, Sources: []string{"hq-window-01"}}},
+			[]pagenoise.Page{day("AirflowLow", "canary-h3-01")},
+			[]pagenoise.AlertCount{{Alert: "AirflowLow", Pages: 1, Night: 0, Sources: []string{"canary-h3-01"}}},
 		},
 		{
 			"1 page at night",
-			[]pagenoise.Page{night("FeederOffline", "hq-window-01")},
-			[]pagenoise.AlertCount{{Alert: "FeederOffline", Pages: 1, Night: 1, Sources: []string{"hq-window-01"}}},
+			[]pagenoise.Page{night("AirflowLow", "canary-h3-01")},
+			[]pagenoise.AlertCount{{Alert: "AirflowLow", Pages: 1, Night: 1, Sources: []string{"canary-h3-01"}}},
 		},
 		{
 			"the same source 3 times is 1 source",
 			[]pagenoise.Page{
-				day("PushQueueBacklog", "push-1"),
-				night("PushQueueBacklog", "push-1"),
-				day("PushQueueBacklog", "push-1"),
+				day("NotifyQueueBacklog", "notify-1"),
+				night("NotifyQueueBacklog", "notify-1"),
+				day("NotifyQueueBacklog", "notify-1"),
 			},
-			[]pagenoise.AlertCount{{Alert: "PushQueueBacklog", Pages: 3, Night: 1, Sources: []string{"push-1"}}},
+			[]pagenoise.AlertCount{{Alert: "NotifyQueueBacklog", Pages: 3, Night: 1, Sources: []string{"notify-1"}}},
 		},
 		{
 			"sources are distinct and sorted A to Z",
 			[]pagenoise.Page{
-				night("FeederOffline", "hq-window-01"),
-				day("FeederOffline", "feeder-1203"),
-				day("FeederOffline", "hq-window-01"),
-				night("FeederOffline", "feeder-0412"),
-				day("FeederOffline", "feeder-1203"),
+				night("AirflowLow", "canary-h3-01"),
+				day("AirflowLow", "vl-gpu-0451"),
+				day("AirflowLow", "canary-h3-01"),
+				night("AirflowLow", "vl-gpu-0412"),
+				day("AirflowLow", "vl-gpu-0451"),
 			},
 			[]pagenoise.AlertCount{{
-				Alert: "FeederOffline", Pages: 5, Night: 2,
-				Sources: []string{"feeder-0412", "feeder-1203", "hq-window-01"},
+				Alert: "AirflowLow", Pages: 5, Night: 2,
+				Sources: []string{"canary-h3-01", "vl-gpu-0412", "vl-gpu-0451"},
 			}},
 		},
 		{
 			"each alert counts its own pages and sources",
 			[]pagenoise.Page{
-				day("PhotoStoreDiskFull", "photo-store-3"),
-				night("FeederOffline", "hq-window-01"),
-				night("PhotoStoreDiskFull", "photo-store-2"),
+				day("CheckpointDiskFull", "chkpt-store-3"),
+				night("AirflowLow", "canary-h3-01"),
+				night("CheckpointDiskFull", "chkpt-store-2"),
 				day("CheckoutErrorRate", "checkout-1"),
-				day("PhotoStoreDiskFull", "photo-store-2"),
+				day("CheckpointDiskFull", "chkpt-store-2"),
 			},
 			[]pagenoise.AlertCount{
-				{Alert: "PhotoStoreDiskFull", Pages: 3, Night: 1, Sources: []string{"photo-store-2", "photo-store-3"}},
-				{Alert: "FeederOffline", Pages: 1, Night: 1, Sources: []string{"hq-window-01"}},
+				{Alert: "CheckpointDiskFull", Pages: 3, Night: 1, Sources: []string{"chkpt-store-2", "chkpt-store-3"}},
+				{Alert: "AirflowLow", Pages: 1, Night: 1, Sources: []string{"canary-h3-01"}},
 				{Alert: "CheckoutErrorRate", Pages: 1, Night: 0, Sources: []string{"checkout-1"}},
 			},
 		},
 		{
 			"alerts and sources compare as written",
 			[]pagenoise.Page{
-				day("FeederOffline", "hq-window-01"),
-				day("feederoffline", "hq-window-01"),
-				day("FeederOffline", "HQ-window-01"),
+				day("AirflowLow", "canary-h3-01"),
+				day("airflowlow", "canary-h3-01"),
+				day("AirflowLow", "CANARY-h3-01"),
 			},
 			[]pagenoise.AlertCount{
-				{Alert: "FeederOffline", Pages: 2, Night: 0, Sources: []string{"HQ-window-01", "hq-window-01"}},
-				{Alert: "feederoffline", Pages: 1, Night: 0, Sources: []string{"hq-window-01"}},
+				{Alert: "AirflowLow", Pages: 2, Night: 0, Sources: []string{"CANARY-h3-01", "canary-h3-01"}},
+				{Alert: "airflowlow", Pages: 1, Night: 0, Sources: []string{"canary-h3-01"}},
 			},
 		},
 	}
@@ -161,15 +161,15 @@ func TestRankOrderKeys(t *testing.T) {
 		{
 			"more pages first, even with fewer at night",
 			[]pagenoise.Page{
-				night("FeederOffline", "hq-window-01"),
-				night("FeederOffline", "hq-window-01"),
-				day("PushQueueBacklog", "push-1"),
-				day("PushQueueBacklog", "push-1"),
-				day("PushQueueBacklog", "push-1"),
+				night("AirflowLow", "canary-h3-01"),
+				night("AirflowLow", "canary-h3-01"),
+				day("NotifyQueueBacklog", "notify-1"),
+				day("NotifyQueueBacklog", "notify-1"),
+				day("NotifyQueueBacklog", "notify-1"),
 			},
 			[]pagenoise.AlertCount{
-				{Alert: "PushQueueBacklog", Pages: 3, Night: 0, Sources: []string{"push-1"}},
-				{Alert: "FeederOffline", Pages: 2, Night: 2, Sources: []string{"hq-window-01"}},
+				{Alert: "NotifyQueueBacklog", Pages: 3, Night: 0, Sources: []string{"notify-1"}},
+				{Alert: "AirflowLow", Pages: 2, Night: 2, Sources: []string{"canary-h3-01"}},
 			},
 		},
 		{
@@ -177,59 +177,59 @@ func TestRankOrderKeys(t *testing.T) {
 			[]pagenoise.Page{
 				day("CheckoutErrorRate", "checkout-1"),
 				day("CheckoutErrorRate", "checkout-1"),
-				day("PhotoStoreDiskFull", "photo-store-2"),
-				night("PhotoStoreDiskFull", "photo-store-2"),
+				day("CheckpointDiskFull", "chkpt-store-2"),
+				night("CheckpointDiskFull", "chkpt-store-2"),
 			},
 			[]pagenoise.AlertCount{
-				{Alert: "PhotoStoreDiskFull", Pages: 2, Night: 1, Sources: []string{"photo-store-2"}},
+				{Alert: "CheckpointDiskFull", Pages: 2, Night: 1, Sources: []string{"chkpt-store-2"}},
 				{Alert: "CheckoutErrorRate", Pages: 2, Night: 0, Sources: []string{"checkout-1"}},
 			},
 		},
 		{
 			"equal pages and night: alert A to Z",
 			[]pagenoise.Page{
-				night("SeedSensorStuck", "feeder-0977"),
-				day("SeedSensorStuck", "feeder-0977"),
+				night("FanSensorStuck", "vl-gpu-0437"),
+				day("FanSensorStuck", "vl-gpu-0437"),
 				day("CertificateExpiresSoon", "edge-1"),
 				night("CertificateExpiresSoon", "edge-2"),
 			},
 			[]pagenoise.AlertCount{
 				{Alert: "CertificateExpiresSoon", Pages: 2, Night: 1, Sources: []string{"edge-1", "edge-2"}},
-				{Alert: "SeedSensorStuck", Pages: 2, Night: 1, Sources: []string{"feeder-0977"}},
+				{Alert: "FanSensorStuck", Pages: 2, Night: 1, Sources: []string{"vl-gpu-0437"}},
 			},
 		},
 		{
 			"A to Z is byte order: upper case before lower case",
 			[]pagenoise.Page{
-				day("diskFull", "photo-store-1"),
-				day("DiskFull", "photo-store-1"),
-				day("Zombie", "photo-store-1"),
+				day("diskFull", "chkpt-store-1"),
+				day("DiskFull", "chkpt-store-1"),
+				day("Zombie", "chkpt-store-1"),
 			},
 			[]pagenoise.AlertCount{
-				{Alert: "DiskFull", Pages: 1, Night: 0, Sources: []string{"photo-store-1"}},
-				{Alert: "Zombie", Pages: 1, Night: 0, Sources: []string{"photo-store-1"}},
-				{Alert: "diskFull", Pages: 1, Night: 0, Sources: []string{"photo-store-1"}},
+				{Alert: "DiskFull", Pages: 1, Night: 0, Sources: []string{"chkpt-store-1"}},
+				{Alert: "Zombie", Pages: 1, Night: 0, Sources: []string{"chkpt-store-1"}},
+				{Alert: "diskFull", Pages: 1, Night: 0, Sources: []string{"chkpt-store-1"}},
 			},
 		},
 		{
 			"all 3 keys at once",
 			[]pagenoise.Page{
-				day("LabellerHighLatency", "labeller-1"),
+				day("InferenceHighLatency", "infer-1"),
 				night("DatabaseConnectionsHigh", "db-1"),
-				day("PushQueueBacklog", "push-1"),
-				night("LabellerHighLatency", "labeller-2"),
-				night("PushQueueBacklog", "push-1"),
+				day("NotifyQueueBacklog", "notify-1"),
+				night("InferenceHighLatency", "infer-2"),
+				night("NotifyQueueBacklog", "notify-1"),
 				day("CheckoutErrorRate", "checkout-2"),
-				day("PushQueueBacklog", "push-1"),
-				night("FeederOffline", "hq-window-01"),
+				day("NotifyQueueBacklog", "notify-1"),
+				night("AirflowLow", "canary-h3-01"),
 				day("CheckoutErrorRate", "checkout-1"),
 			},
 			[]pagenoise.AlertCount{
-				{Alert: "PushQueueBacklog", Pages: 3, Night: 1, Sources: []string{"push-1"}},
-				{Alert: "LabellerHighLatency", Pages: 2, Night: 1, Sources: []string{"labeller-1", "labeller-2"}},
+				{Alert: "NotifyQueueBacklog", Pages: 3, Night: 1, Sources: []string{"notify-1"}},
+				{Alert: "InferenceHighLatency", Pages: 2, Night: 1, Sources: []string{"infer-1", "infer-2"}},
 				{Alert: "CheckoutErrorRate", Pages: 2, Night: 0, Sources: []string{"checkout-1", "checkout-2"}},
+				{Alert: "AirflowLow", Pages: 1, Night: 1, Sources: []string{"canary-h3-01"}},
 				{Alert: "DatabaseConnectionsHigh", Pages: 1, Night: 1, Sources: []string{"db-1"}},
-				{Alert: "FeederOffline", Pages: 1, Night: 1, Sources: []string{"hq-window-01"}},
 			},
 		},
 	}
@@ -243,11 +243,11 @@ func TestRankOrderKeys(t *testing.T) {
 
 func TestRankOrderInputUnchanged(t *testing.T) {
 	pages := []pagenoise.Page{
-		day("SeedSensorStuck", "feeder-0977"),
-		night("FeederOffline", "hq-window-01"),
+		day("FanSensorStuck", "vl-gpu-0437"),
+		night("AirflowLow", "canary-h3-01"),
 		day("CheckoutErrorRate", "checkout-1"),
-		night("FeederOffline", "feeder-0412"),
-		day("PushQueueBacklog", "push-1"),
+		night("AirflowLow", "vl-gpu-0412"),
+		day("NotifyQueueBacklog", "notify-1"),
 	}
 	before := slices.Clone(pages)
 	pagenoise.Rank(pages)
@@ -308,12 +308,12 @@ func TestRankNight(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(fmt.Sprintf("%02d:%02d", tc.hour, tc.minute), func(t *testing.T) {
-			pages := []pagenoise.Page{at(tc.hour, tc.minute, "FeederOffline", "hq-window-01")}
+			pages := []pagenoise.Page{at(tc.hour, tc.minute, "AirflowLow", "canary-h3-01")}
 			wantNight := 0
 			if tc.night {
 				wantNight = 1
 			}
-			want := []pagenoise.AlertCount{{Alert: "FeederOffline", Pages: 1, Night: wantNight, Sources: []string{"hq-window-01"}}}
+			want := []pagenoise.AlertCount{{Alert: "AirflowLow", Pages: 1, Night: wantNight, Sources: []string{"canary-h3-01"}}}
 			checkRank(t, pages, pagenoise.Rank(pages), want)
 		})
 	}

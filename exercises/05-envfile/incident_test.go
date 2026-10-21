@@ -28,19 +28,19 @@ func TestParseIncident(t *testing.T) {
 	want := map[string]string{
 		"APP_ENV":            "production",
 		"PORT":               "8080",
-		"LOG_LEVEL":          "info",
-		"DB_HOST":            "db-1.peckish.example",
+		"HUSH_AUTONOMY":      "3",
+		"DB_HOST":            "db-1.vesper-labs.example",
 		"DB_PORT":            "5432",
-		"DB_USER":            "photos",
+		"DB_USER":            "gateway",
 		"DB_PASSWORD":        "pa$$w0rd",
 		"DB_OPTIONS":         "sslmode=require connect_timeout=5",
-		"PHOTO_STORES":       "photo-store-1,photo-store-2,photo-store-3,photo-store-4",
-		"UPLOAD_MAX_MB":      "25",
+		"CKPT_STORES":        "chkpt-store-1,chkpt-store-2,chkpt-store-3,chkpt-store-4",
+		"BATCH_MAX_MB":       "25",
 		"TMP_DIR":            "${HOME}/tmp",
-		"LABELLER_URL":       "http://labeller.peckish.example:9000/v1/label",
-		"PUSH_TEXT":          "A {species} is eating your {seed}.",
-		"PUSH_ICON_COLOR":    "#f2b134",
-		"STATUS_PAGE":        "https://status.peckish.example/#photos",
+		"HUSH_URL":           "http://hush-api.vesper-labs.example:9000/v1/triage",
+		"NOTIFY_TEXT":        "HUSH resolved {count} incidents while you slept.",
+		"NOTIFY_ICON_COLOR":  "#7b61ff",
+		"STATUS_PAGE":        "https://status.vesper-labs.example/#inference",
 		"FEATURE_NIGHT_MODE": "false",
 		"EMPTY_ON_PURPOSE":   "",
 	}
@@ -57,7 +57,7 @@ func TestParseIncidentBrokenLine(t *testing.T) {
 	}
 	// The same file after somebody pasted a line without "=" after line 12.
 	lines := strings.SplitAfter(string(data), "\n")
-	broken := strings.Join(slices.Insert(lines, 12, "DB_REPLICA db-2.peckish.example\r\n"), "")
+	broken := strings.Join(slices.Insert(lines, 12, "DB_REPLICA db-2.vesper-labs.example\r\n"), "")
 	got, err := envfile.Parse(broken)
 	if err == nil {
 		t.Fatalf("Parse(prod.env with a broken line 13) error = nil, want an error")
@@ -69,13 +69,13 @@ func TestParseIncidentBrokenLine(t *testing.T) {
 	if !strings.HasPrefix(msg, "line 13: ") {
 		t.Errorf("Parse(prod.env with a broken line 13) error = %q, want it to start with %q", msg, "line 13: ")
 	}
-	if want := `"DB_REPLICA db-2.peckish.example"`; !strings.Contains(msg, want) {
+	if want := `"DB_REPLICA db-2.vesper-labs.example"`; !strings.Contains(msg, want) {
 		t.Errorf("Parse(prod.env with a broken line 13) error = %q, want it to contain %s", msg, want)
 	}
 }
 
 func ExampleParse() {
-	text := "# upload service\n" +
+	text := "# Inference gateway, production.\n" +
 		"export PORT=8080\n" +
 		"LOG_LEVEL = info # quiet\n" +
 		"\n" +

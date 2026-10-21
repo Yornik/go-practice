@@ -1,0 +1,27 @@
+ts=2026-09-01T10:00:00Z service=gateway level=INFO msg=started store=chkpt-store-1
+ts=2026-09-01T10:00:01Z node=vl-gpu-0412 lvl=info msg=boot drv=2.9.3
+ts=2026-09-01T10:00:02Z service=hushd severity=notice msg=model_loaded model=hush-4.2
+ts=2026-09-01T10:00:03Z service=gateway level=ERROR msg=disk_full store=chkpt-store-2
+ts=2026-09-01T10:00:04Z node=vl-gpu-0412 lvl=err msg=ecc_error drv=2.9.3
+
+ts=2026-09-01T10:00:05Z service=hushd severity=critical msg=calm_score_drop score=98.7
+ts=2026-09-01T10:00:06Z node=vl-gpu-0437 lvl=dbg msg=fan_event sensor=fan2
+ts=2026-09-01T10:00:07Z service=gateway level=WARN msg=slow_write store=chkpt-store-2 ms=2300
+ts=2026-09-01T10:00:08Z service=gateway level=ERROR msg=disk_full store=chkpt-store-2
+ts=2026-09-01T10:00:09Z node=vl-gpu-0437 lvl=err msg=upload_failed status=507
+ts=2026-09-01T10:00:10Z service=hushd severity=Warning msg=low_confidence intent=page_triage
+   
+ts=2026-09-01T10:00:11Z node=vl-gpu-0412 lvl=warn msg=psu_low psu_v=11.2
+ts=2026-09-01T10:00:12Z service=gateway level=DEBUG msg=retry store=chkpt-store-3 attempt=2
+ts=2026-09-01T10:00:13Z service=hushd severity=error msg=bad_payload req=r-88213
+ts=2026-09-01T10:00:14Z service=gateway level=ERROR msg=disk_full store=chkpt-store-2
+ts=2026-09-01T10:00:15Z node=vl-gpu-0451 lvl=crit msg=power_lost
+ts=2026-09-01T10:00:16Z node=vl-gpu-0451 msg=boot drv=2.10.0 reason=power_on
+ts=2026-09-01T10:00:17Z service=hushd severity=INFO msg=batch_done requests=412
+ts=2026-09-01T10:00:18Z service=gateway level=INFO msg=store_switched from=chkpt-store-2 to=chkpt-store-4
+	
+ts=2026-09-01T10:00:19Z node=vl-gpu-0437 lvl=err msg=upload_failed status=507
+ts=2026-09-01T10:00:20Z service=hushd severity=critical msg=model_oom model=hush-4.2
+ts=2026-09-01T10:00:21Z service=gateway level=FATAL msg=no_writable_store
+ts=2026-09-01T10:00:22Z node=vl-gpu-0412 lvl=trace msg=heartbeat psu_v=11.1
+ts=2026-09-01T10:00:23Z service=gateway level=verbose msg=queue_depth n=1840

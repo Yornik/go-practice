@@ -46,7 +46,7 @@ func TestLevelSpellings(t *testing.T) {
 	var cases []levelCase
 	for spelling, want := range spellings {
 		for _, value := range []string{spelling, strings.ToUpper(spelling), title(spelling)} {
-			cases = append(cases, levelCase{"service=upload level=" + value + " msg=x", want})
+			cases = append(cases, levelCase{"service=gateway level=" + value + " msg=x", want})
 		}
 	}
 	runLevelCases(t, cases)
@@ -57,8 +57,8 @@ func TestLevelKeys(t *testing.T) {
 		{"level=error", "error"},
 		{"lvl=error", "error"},
 		{"severity=error", "error"},
-		{"msg=x lvl=WARNING feeder=feeder-0412", "warn"},
-		{"severity=Critical service=labeller", "fatal"},
+		{"msg=x lvl=WARNING node=vl-gpu-0412", "warn"},
+		{"severity=Critical service=hushd", "fatal"},
 		{"ts=2026-09-01T10:00:00Z level=eRr", "error"},
 		// The last occurrence of a key wins, as in Fields.
 		{"level=info level=error", "error"},
@@ -87,7 +87,7 @@ func TestLevelKeyOrder(t *testing.T) {
 
 func TestLevelUnknown(t *testing.T) {
 	runLevelCases(t, []levelCase{
-		{"ts=2026-09-01T10:00:16Z feeder=feeder-1203 msg=boot", "unknown"},
+		{"ts=2026-09-01T10:00:16Z node=vl-gpu-0451 msg=boot", "unknown"},
 		{"", "unknown"},
 		{"   ", "unknown"},
 		{"level=", "unknown"},

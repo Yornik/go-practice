@@ -16,23 +16,23 @@ func TestParsePageGood(t *testing.T) {
 	}{
 		{
 			"a page at night",
-			"2026-09-23 03:12 FeederOffline hq-window-01",
-			pagenoise.Page{Day: "2026-09-23", Hour: 3, Minute: 12, Alert: "FeederOffline", Source: "hq-window-01"},
+			"2026-09-23 03:12 AirflowLow canary-h3-01",
+			pagenoise.Page{Day: "2026-09-23", Hour: 3, Minute: 12, Alert: "AirflowLow", Source: "canary-h3-01"},
 		},
 		{
 			"a page in the afternoon",
-			"2026-09-18 14:05 PhotoStoreDiskFull photo-store-2",
-			pagenoise.Page{Day: "2026-09-18", Hour: 14, Minute: 5, Alert: "PhotoStoreDiskFull", Source: "photo-store-2"},
+			"2026-09-18 14:05 CheckpointDiskFull chkpt-store-2",
+			pagenoise.Page{Day: "2026-09-18", Hour: 14, Minute: 5, Alert: "CheckpointDiskFull", Source: "chkpt-store-2"},
 		},
 		{
 			"the first minute of the day",
-			"2026-09-19 00:00 PushQueueBacklog push-1",
-			pagenoise.Page{Day: "2026-09-19", Hour: 0, Minute: 0, Alert: "PushQueueBacklog", Source: "push-1"},
+			"2026-09-19 00:00 NotifyQueueBacklog notify-1",
+			pagenoise.Page{Day: "2026-09-19", Hour: 0, Minute: 0, Alert: "NotifyQueueBacklog", Source: "notify-1"},
 		},
 		{
 			"the last minute of the day",
-			"2026-09-19 23:59 PushQueueBacklog push-1",
-			pagenoise.Page{Day: "2026-09-19", Hour: 23, Minute: 59, Alert: "PushQueueBacklog", Source: "push-1"},
+			"2026-09-19 23:59 NotifyQueueBacklog notify-1",
+			pagenoise.Page{Day: "2026-09-19", Hour: 23, Minute: 59, Alert: "NotifyQueueBacklog", Source: "notify-1"},
 		},
 		{
 			"the day is kept as written and not checked",
@@ -41,8 +41,8 @@ func TestParsePageGood(t *testing.T) {
 		},
 		{
 			"alert and source keep their letter case",
-			"2026-09-20 10:45 feederOFFLINE Feeder-0412",
-			pagenoise.Page{Day: "2026-09-20", Hour: 10, Minute: 45, Alert: "feederOFFLINE", Source: "Feeder-0412"},
+			"2026-09-20 10:45 airflowLOW VL-GPU-0412",
+			pagenoise.Page{Day: "2026-09-20", Hour: 10, Minute: 45, Alert: "airflowLOW", Source: "VL-GPU-0412"},
 		},
 	}
 	for _, tc := range tests {
@@ -53,16 +53,16 @@ func TestParsePageGood(t *testing.T) {
 }
 
 func TestParsePageWhitespace(t *testing.T) {
-	want := pagenoise.Page{Day: "2026-09-25", Hour: 22, Minute: 0, Alert: "FeederOffline", Source: "hq-window-01"}
+	want := pagenoise.Page{Day: "2026-09-25", Hour: 22, Minute: 0, Alert: "AirflowLow", Source: "canary-h3-01"}
 	tests := []struct {
 		name string
 		line string
 	}{
-		{"tabs between the fields", "2026-09-25\t22:00\tFeederOffline\thq-window-01"},
-		{"several spaces between the fields", "2026-09-25   22:00  FeederOffline    hq-window-01"},
-		{"spaces before and after the line", "   2026-09-25 22:00 FeederOffline hq-window-01   "},
-		{"a trailing \\r from a Windows line ending", "2026-09-25 22:00 FeederOffline hq-window-01\r"},
-		{"a trailing \\n", "2026-09-25 22:00 FeederOffline hq-window-01\n"},
+		{"tabs between the fields", "2026-09-25\t22:00\tAirflowLow\tcanary-h3-01"},
+		{"several spaces between the fields", "2026-09-25   22:00  AirflowLow    canary-h3-01"},
+		{"spaces before and after the line", "   2026-09-25 22:00 AirflowLow canary-h3-01   "},
+		{"a trailing \\r from a Windows line ending", "2026-09-25 22:00 AirflowLow canary-h3-01\r"},
+		{"a trailing \\n", "2026-09-25 22:00 AirflowLow canary-h3-01\n"},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
@@ -79,9 +79,9 @@ func TestParsePageFieldCount(t *testing.T) {
 		{"an empty line", ""},
 		{"a whitespace-only line", " \t \r"},
 		{"1 field", "2026-09-23"},
-		{"3 fields: no source", "2026-09-23 03:12 FeederOffline"},
-		{"5 fields: a note after the source", "2026-09-23 03:12 FeederOffline hq-window-01 acked"},
-		{"5 fields: a space inside the alert name", "2026-09-23 03:12 Feeder Offline hq-window-01"},
+		{"3 fields: no source", "2026-09-23 03:12 AirflowLow"},
+		{"5 fields: a note after the source", "2026-09-23 03:12 AirflowLow canary-h3-01 acked"},
+		{"5 fields: a space inside the alert name", "2026-09-23 03:12 Airflow Low canary-h3-01"},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
@@ -114,7 +114,7 @@ func TestParsePageBadTime(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			checkParseError(t, fmt.Sprintf("2026-09-23 %s FeederOffline hq-window-01", tc.time))
+			checkParseError(t, fmt.Sprintf("2026-09-23 %s AirflowLow canary-h3-01", tc.time))
 		})
 	}
 }

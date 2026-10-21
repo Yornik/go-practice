@@ -1,17 +1,17 @@
-# 03 · Was it Kevin? Count the pages
+# 03 · Was it Fuse? Count the pages
 
-**Tier 1 · about 1 h** · Go: structs as values, maps as counters and sets, maps with struct keys, `slices.SortFunc` with `cmp.Compare` and `cmp.Or`, the iterators of `maps.Keys` and `slices.Sorted`, `strconv.Atoi` · Problem solving: choose the key you group by; make the output the same on every run
+**Tier 1 · about 1.5 h** · Go: structs as values, maps as counters and sets, maps with struct keys, `slices.SortFunc` with `cmp.Compare` and `cmp.Or`, the iterators of `maps.Keys` and `slices.Sorted`, `strconv.Atoi` · Problem solving: choose the key you group by; make the output the same on every run
 
-Ines Okafor, the senior SRE, carried the Owl for the last 2 weeks of September. The Owl is a
-ceramic owl that stands on the desk of whoever is on call. She was paged 61 times, 19 of them
-between 22:00 and 07:00. Bram, the CTO, is sure that it was the database. Everybody else is sure
-that it was Kevin, the squirrel who lives in the tree next to the demo feeder `hq-window-01`: the
-team rule says that every incident is Kevin until the logs prove otherwise. Ines wants numbers
-instead of feelings before you join the rotation. The pager exports every page as 1 line,
-`2026-09-23 03:12 FeederOffline hq-window-01`, but its own report counts pages per day, not per
-alert. It can tell you that 23 September was a bad day, but not which alert woke Ines at 03:12.
-In this exercise you turn the export into that table: the pages per alert, the pages at night,
-and the sources that sent them.
+61 pages. Noor Haddad, the principal SRE, had the Key for the last 2 weeks of September: the brass
+key to Breaker 0 that hangs on the lanyard of whoever is on call. 19 of the pages came at night.
+Before you join the rotation, she books a room on floor 61, high above the wet neon, for a meeting
+called "Alert hygiene". As always at Vesper Labs, the numbers go in the document before anybody
+speaks. Daniyar Seitkali, the CTO, suspects the database. Everybody else suspects Fuse, the grey
+cat who sleeps on the warmest rack in the Undercroft; the postmortem template has a box for it.
+The pager exports every page as 1 line, `2026-09-25 22:00 AirflowLow canary-h3-01`, but its own
+report counts pages per day, not per alert. Nobody has ranked the alerts by count and source, so
+the noise has no owner. In this exercise you turn the export into that ranking: the pages per
+alert, the pages at night, and the sources that sent them.
 
 ## Task
 
@@ -46,7 +46,7 @@ Suggested order: `ParsePage`, then `Rank` (first the counts, then the order), th
 ### ParsePage
 
 - A line has exactly 4 fields: `<day> <time> <alert> <source>`, for example
-  `2026-09-23 03:12 FeederOffline hq-window-01`.
+  `2026-09-23 03:12 AirflowLow canary-h3-01`.
 - Any run of whitespace separates 2 fields, exactly as
   [`strings.Fields`](https://pkg.go.dev/strings#Fields) splits them. Whitespace includes spaces,
   tabs, newlines and the `\r` of a Windows line ending. It may also come before the first field
@@ -63,7 +63,7 @@ Suggested order: `ParsePage`, then `Rank` (first the counts, then the order), th
   exercise. 07-rollcall brings the `time` package.
 - On an error, `ParsePage` returns the zero `Page` and an error. The message contains the whole
   line formatted with `%q`, for example
-  `pagenoise: time "3:12" is not HH:MM from 00:00 to 23:59: "2026-09-20 3:12 FeederOffline hq-window-01"`.
+  `pagenoise: time "3:12" is not HH:MM from 00:00 to 23:59: "2026-09-20 3:12 AirflowLow canary-h3-01"`.
   The rest of the wording is yours.
 
 ### Rank
@@ -74,7 +74,7 @@ Suggested order: `ParsePage`, then `Rank` (first the counts, then the order), th
   from 0 to 6: from 22:00 up to and including 06:59. `21:59` and `07:00` are day; `22:00` and
   `06:59` are night. The minute does not matter, only the hour.
 - `Sources` holds every source that sent a page of that alert, each source once, sorted A to Z.
-- Alerts and sources compare exactly as written: `FeederOffline` and `feederoffline` are 2 alerts.
+- Alerts and sources compare exactly as written: `AirflowLow` and `airflowlow` are 2 alerts.
 - `Rank` sorts the result by:
   1. `Pages`, most first.
   2. `Night`, most first.
@@ -96,41 +96,41 @@ Suggested order: `ParsePage`, then `Rank` (first the counts, then the order), th
 ## Examples
 
 ```text
-ParsePage("2026-09-23 03:12 FeederOffline hq-window-01")
-  → Page{Day: "2026-09-23", Hour: 3, Minute: 12, Alert: "FeederOffline", Source: "hq-window-01"}, nil
+ParsePage("2026-09-23 03:12 AirflowLow canary-h3-01")
+  → Page{Day: "2026-09-23", Hour: 3, Minute: 12, Alert: "AirflowLow", Source: "canary-h3-01"}, nil
 
-ParsePage("2026-09-25\t22:00\tFeederOffline\thq-window-01\r")
-  → Page{Day: "2026-09-25", Hour: 22, Minute: 0, Alert: "FeederOffline", Source: "hq-window-01"}, nil
+ParsePage("2026-09-25\t22:00\tAirflowLow\tcanary-h3-01\r")
+  → Page{Day: "2026-09-25", Hour: 22, Minute: 0, Alert: "AirflowLow", Source: "canary-h3-01"}, nil
 
-ParsePage("2026-09-20 3:12 FeederOffline hq-window-01")              → Page{}, error
-ParsePage("2026-09-25 11:30 PhotoStoreDiskFull photo-store-2 acked") → Page{}, error (5 fields)
+ParsePage("2026-09-20 3:12 AirflowLow canary-h3-01")                 → Page{}, error
+ParsePage("2026-09-25 11:30 CheckpointDiskFull chkpt-store-2 acked") → Page{}, error (5 fields)
 ```
 
 ```text
 pages, from these 7 lines:
-  2026-09-23 03:12 FeederOffline hq-window-01
-  2026-09-23 07:50 PushQueueBacklog push-1
-  2026-09-23 14:05 PhotoStoreDiskFull photo-store-2
-  2026-09-23 22:00 FeederOffline feeder-0412
-  2026-09-24 06:30 PushQueueBacklog push-1
-  2026-09-24 11:20 PhotoStoreDiskFull photo-store-3
-  2026-09-24 23:41 FeederOffline hq-window-01
+  2026-09-23 03:12 AirflowLow vl-gpu-0412
+  2026-09-23 07:50 NotifyQueueBacklog notify-1
+  2026-09-23 14:05 CheckpointDiskFull chkpt-store-2
+  2026-09-23 22:00 AirflowLow canary-h3-01
+  2026-09-24 06:30 NotifyQueueBacklog notify-1
+  2026-09-24 11:20 CheckpointDiskFull chkpt-store-3
+  2026-09-24 23:41 AirflowLow canary-h3-01
 
 Rank(pages) →
-  {Alert: FeederOffline       Pages: 3  Night: 3  Sources: [feeder-0412 hq-window-01]}
-  {Alert: PushQueueBacklog    Pages: 2  Night: 1  Sources: [push-1]}
-  {Alert: PhotoStoreDiskFull  Pages: 2  Night: 0  Sources: [photo-store-2 photo-store-3]}
+  {Alert: AirflowLow          Pages: 3  Night: 3  Sources: [canary-h3-01 vl-gpu-0412]}
+  {Alert: NotifyQueueBacklog  Pages: 2  Night: 1  Sources: [notify-1]}
+  {Alert: CheckpointDiskFull  Pages: 2  Night: 0  Sources: [chkpt-store-2 chkpt-store-3]}
 
 CountPairs(pages) →
-  {FeederOffline hq-window-01}: 2
-  {FeederOffline feeder-0412}: 1
-  {PushQueueBacklog push-1}: 2
-  {PhotoStoreDiskFull photo-store-2}: 1
-  {PhotoStoreDiskFull photo-store-3}: 1
+  {AirflowLow canary-h3-01}: 2
+  {AirflowLow vl-gpu-0412}: 1
+  {NotifyQueueBacklog notify-1}: 2
+  {CheckpointDiskFull chkpt-store-2}: 1
+  {CheckpointDiskFull chkpt-store-3}: 1
 ```
 
-`PushQueueBacklog` and `PhotoStoreDiskFull` both have 2 pages. `PushQueueBacklog` has 1 at night
-(06:30) and comes first.
+`NotifyQueueBacklog` and `CheckpointDiskFull` both have 2 pages. `NotifyQueueBacklog` has 1 at
+night (06:30) and comes first.
 
 `testdata/pages.log` is the export of the 2 weeks: 63 lines with 61 pages. Line 17 and line 40
 are malformed. `TestTwoWeeksRanking` and `TestTwoWeeksPairs` parse every line, check that exactly
@@ -174,6 +174,7 @@ steps 1 to 4 work.
 
 - Turn it into a command: read the export from stdin with `bufio.Scanner`, print the ranking as a
   table, and print each malformed line with its line number. Try it on `testdata/pages.log`.
+  Which Vesper Labs service never appears in the report, and is that good news?
 - Count the pages per hour of the day in a `[24]int` and print a small bar chart with `#`
   characters. When does the pager ring most?
 - Find the noisiest source of each alert with `CountPairs`. Break ties A to Z, so the answer is

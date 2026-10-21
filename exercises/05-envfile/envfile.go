@@ -1,6 +1,6 @@
 // Package envfile reads .env files as data, never as code:
 //
-//	# upload service
+//	# inference gateway
 //	export PORT=8080
 //	LOG_LEVEL=info # quiet
 //	DB_PASSWORD=pa$$w0rd

@@ -10,7 +10,7 @@ import (
 	repeated "github.com/yornik/go-practice/exercises/02-repeated"
 )
 
-const motion = "motiond: motion detected"
+const quiet = "hushd: all quiet"
 
 type collapseCase struct {
 	name  string
@@ -129,13 +129,13 @@ func TestCollapseMessages(t *testing.T) {
 	runCollapseCases(t, []collapseCase{
 		{
 			"spaces inside the message",
-			[]string{"00:01 " + motion, "00:02 " + motion, "00:03 " + motion},
-			[]string{"00:01 " + motion, "00:03 last message repeated 2 times"},
+			[]string{"00:01 " + quiet, "00:02 " + quiet, "00:03 " + quiet},
+			[]string{"00:01 " + quiet, "00:03 last message repeated 2 times"},
 		},
 		{
 			"letter case makes a different message",
-			[]string{"00:01 Motion detected", "00:02 motion detected"},
-			[]string{"00:01 Motion detected", "00:02 motion detected"},
+			[]string{"00:01 All quiet", "00:02 all quiet"},
+			[]string{"00:01 All quiet", "00:02 all quiet"},
 		},
 		{
 			"a trailing space makes a different message",
@@ -199,16 +199,16 @@ func readLines(t *testing.T, path string) []string {
 	return strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 }
 
-// TestCollapseNight runs Collapse on the 9000 lines that hq-window-01 wrote
-// in 1 night and compares the result with testdata/hq-window-01.golden.
+// TestCollapseNight runs Collapse on the 9000 lines that canary-h3-01 wrote
+// in 1 night and compares the result with testdata/canary-h3-01.golden.
 func TestCollapseNight(t *testing.T) {
-	lines := readLines(t, "testdata/hq-window-01.log")
-	want := readLines(t, "testdata/hq-window-01.golden")
+	lines := readLines(t, "testdata/canary-h3-01.log")
+	want := readLines(t, "testdata/canary-h3-01.golden")
 
 	got := repeated.Collapse(lines)
 	for i := range min(len(got), len(want)) {
 		if got[i] != want[i] {
-			t.Fatalf("Collapse(testdata/hq-window-01.log): first difference at output line %d\n got  %q\n want %q", i+1, got[i], want[i])
+			t.Fatalf("Collapse(testdata/canary-h3-01.log): first difference at output line %d\n got  %q\n want %q", i+1, got[i], want[i])
 		}
 	}
 	if len(got) != len(want) {
@@ -218,30 +218,30 @@ func TestCollapseNight(t *testing.T) {
 		} else {
 			extra = fmt.Sprintf("first missing line: %q", want[len(got)])
 		}
-		t.Fatalf("Collapse(testdata/hq-window-01.log) returned %d lines, want %d; %s", len(got), len(want), extra)
+		t.Fatalf("Collapse(testdata/canary-h3-01.log) returned %d lines, want %d; %s", len(got), len(want), extra)
 	}
 }
 
 func ExampleCollapse() {
 	lines := []string{
-		"2026-09-09T03:01:23Z motiond: motion detected",
-		"2026-09-09T03:01:24Z motiond: motion detected",
-		"2026-09-09T03:01:25Z motiond: motion detected",
-		"2026-09-09T03:01:26Z wifid: connection lost",
-		"2026-09-09T03:01:28Z motiond: motion detected",
-		"2026-09-09T03:01:31Z wifid: reconnected after 41 s",
-		"2026-09-09T03:01:34Z motiond: motion detected",
-		"2026-09-09T03:01:36Z motiond: motion detected",
+		"2026-09-09T03:01:23Z hushd: all quiet",
+		"2026-09-09T03:01:24Z hushd: all quiet",
+		"2026-09-09T03:01:25Z hushd: all quiet",
+		"2026-09-09T03:01:26Z netd: sfp0 link down",
+		"2026-09-09T03:01:28Z hushd: all quiet",
+		"2026-09-09T03:01:31Z netd: sfp0 link up after 41 s",
+		"2026-09-09T03:01:34Z hushd: all quiet",
+		"2026-09-09T03:01:36Z hushd: all quiet",
 	}
 	for _, line := range repeated.Collapse(lines) {
 		fmt.Println(line)
 	}
 	// Output:
-	// 2026-09-09T03:01:23Z motiond: motion detected
+	// 2026-09-09T03:01:23Z hushd: all quiet
 	// 2026-09-09T03:01:25Z last message repeated 2 times
-	// 2026-09-09T03:01:26Z wifid: connection lost
-	// 2026-09-09T03:01:28Z motiond: motion detected
-	// 2026-09-09T03:01:31Z wifid: reconnected after 41 s
-	// 2026-09-09T03:01:34Z motiond: motion detected
+	// 2026-09-09T03:01:26Z netd: sfp0 link down
+	// 2026-09-09T03:01:28Z hushd: all quiet
+	// 2026-09-09T03:01:31Z netd: sfp0 link up after 41 s
+	// 2026-09-09T03:01:34Z hushd: all quiet
 	// 2026-09-09T03:01:36Z last message repeated 1 time
 }

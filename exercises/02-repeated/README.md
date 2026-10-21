@@ -1,17 +1,18 @@
-# 02 · Last message repeated 8599 times
+# 02 · All quiet, 8599 times
 
 **Tier 1 · about 1 h** · Go: slices and `append`, `for range` with an index, nil and empty slices, `strings.Cut`, `strconv.Itoa`, a slice of structs, maps · Problem solving: work small inputs out by hand before you code, the edge cases included
 
-The demo feeder `hq-window-01` hangs outside the office window, next to a tree. Between midnight
-and 07:30 it wrote 9000 log lines, and 8600 of them say `motiond: motion detected`. Kevin, the
-squirrel who lives in that tree, had a busy night. Somewhere in the other 400 lines the Wi-Fi
-dropped 2 times and the camera restarted 2 times. Ines Okafor, the senior SRE, scrolled for 10
-minutes and found 1 line that was not Kevin. `uniq` does not help: it compares whole lines, and
-the timestamp at the start of each line makes every line unique. Classic syslogd folds repeats
-into 1 line such as `last message repeated 8599 times`, but the feeder writes its own log file.
-Kevin also takes breaks: his 8600 lines come in 109 runs, with a Wi-Fi reading or a dropped photo
-in between. In this exercise you fold each run of repeated messages into its first line and 1
-marker line, and you count how often each message appears.
+`hushd: all quiet`, 8600 times in 1 night. `hushd` is the agent of HUSH, the AI that Vesper Labs
+sells to hold the pager for other companies. On the canary node `canary-h3-01` in Hall 3 it
+reports its own calm about every 3 seconds, at INFO. Between midnight and 07:30 the node wrote
+9000 log lines, and the other 400 are the ones that matter: the optical link went down 2 times and
+the GPU daemon restarted 2 times. Noor Haddad, the principal SRE, scrolled for 10 minutes under the
+hum of the Undercroft and found 1 of them. Nothing folds the repeats, so 1 chatty source buries
+everything else. `uniq` does not help: the timestamp at the start makes every line unique. Classic
+syslogd writes `last message repeated 8599 times`, but the agent writes its own log file. The calm
+also takes breaks: 109 stretches, with a link reading or a dropped result in between. In this
+exercise you fold each run of repeated messages into its first line and 1 marker line, and you
+count how often each message appears.
 
 ## Task
 
@@ -36,8 +37,8 @@ Suggested order: `Message`, then `Collapse` (most of the work), then `CountMessa
 ### Message
 
 - A line is a **timestamp**, a space and a **message**:
-  `2026-09-09T03:01:26Z wifid: connection lost`. The first space (the byte 0x20) separates
-  them. Only a space does: a tab is an ordinary byte.
+  `2026-09-09T03:01:26Z netd: sfp0 link down`. The first space (the byte 0x20) separates them.
+  Only a space does: a tab is an ordinary byte.
 - `Message` returns the text after the first space. Further spaces belong to the message, also
   spaces at its start and its end: the message of `"00:01  a "` is `" a "`.
 - The timestamp is the text before the first space. A line that starts with a space has an empty
@@ -84,31 +85,31 @@ Suggested order: `Message`, then `Collapse` (most of the work), then `CountMessa
 ## Examples
 
 ```text
-Message("2026-09-09T03:01:26Z wifid: connection lost") → "wifid: connection lost"
-Message("2026-09-09T03:01:26Z  two spaces")            → " two spaces"
-Message("booting")                                     → "booting"
-Message(" motiond: motion detected")                   → "motiond: motion detected"
-Message("2026-09-09T03:01:26Z\tmotiond")               → "2026-09-09T03:01:26Z\tmotiond" (no space)
-Message("")                                            → ""
+Message("2026-09-09T03:01:26Z netd: sfp0 link down") → "netd: sfp0 link down"
+Message("2026-09-09T03:01:26Z  two spaces")          → " two spaces"
+Message("booting")                                   → "booting"
+Message(" hushd: all quiet")                         → "hushd: all quiet"
+Message("2026-09-09T03:01:26Z\thushd")               → "2026-09-09T03:01:26Z\thushd" (no space)
+Message("")                                          → ""
 ```
 
 ```text
 Collapse([
-  "2026-09-09T03:01:23Z motiond: motion detected",
-  "2026-09-09T03:01:24Z motiond: motion detected",
-  "2026-09-09T03:01:25Z motiond: motion detected",
-  "2026-09-09T03:01:26Z wifid: connection lost",
-  "2026-09-09T03:01:28Z motiond: motion detected",
-  "2026-09-09T03:01:31Z wifid: reconnected after 41 s",
-  "2026-09-09T03:01:34Z motiond: motion detected",
-  "2026-09-09T03:01:36Z motiond: motion detected",
+  "2026-09-09T03:01:23Z hushd: all quiet",
+  "2026-09-09T03:01:24Z hushd: all quiet",
+  "2026-09-09T03:01:25Z hushd: all quiet",
+  "2026-09-09T03:01:26Z netd: sfp0 link down",
+  "2026-09-09T03:01:28Z hushd: all quiet",
+  "2026-09-09T03:01:31Z netd: sfp0 link up after 41 s",
+  "2026-09-09T03:01:34Z hushd: all quiet",
+  "2026-09-09T03:01:36Z hushd: all quiet",
 ]) → [
-  "2026-09-09T03:01:23Z motiond: motion detected",
+  "2026-09-09T03:01:23Z hushd: all quiet",
   "2026-09-09T03:01:25Z last message repeated 2 times",
-  "2026-09-09T03:01:26Z wifid: connection lost",
-  "2026-09-09T03:01:28Z motiond: motion detected",
-  "2026-09-09T03:01:31Z wifid: reconnected after 41 s",
-  "2026-09-09T03:01:34Z motiond: motion detected",
+  "2026-09-09T03:01:26Z netd: sfp0 link down",
+  "2026-09-09T03:01:28Z hushd: all quiet",
+  "2026-09-09T03:01:31Z netd: sfp0 link up after 41 s",
+  "2026-09-09T03:01:34Z hushd: all quiet",
   "2026-09-09T03:01:36Z last message repeated 1 time",
 ]
 ```
@@ -156,12 +157,12 @@ CountMessages(["", "00:01 a", "", "00:02 "])
   → [{Message: "", N: 3} {Message: "a", N: 1}]
 ```
 
-`testdata/hq-window-01.log` holds the 9000 lines of the night. `TestCollapseNight` compares your
-`Collapse` with `testdata/hq-window-01.golden`, the expected 373 lines. `TestCountMessagesNight`
+`testdata/canary-h3-01.log` holds the 9000 lines of the night. `TestCollapseNight` compares your
+`Collapse` with `testdata/canary-h3-01.golden`, the expected 373 lines. `TestCountMessagesNight`
 expects 40 distinct messages whose counts add up to 9000. It also checks the first 5 counts, in
-order of first appearance: `camd: started, firmware 2.9.3` 3 times, `motiond: motion detected`
-8600 times, `uploadd: queue full, photo dropped` 344 times, `wifid: signal -64 dBm` 4 times and
-`seedd: seed level 62%` 1 time.
+order of first appearance: `gpud: started, driver 2.9.3` 3 times, `hushd: all quiet` 8600 times,
+`uploadd: queue full, result dropped` 344 times, `netd: sfp0 rx -6.4 dBm` 4 times and
+`coold: coolant level 62%` 1 time.
 
 ## Run the tests
 
@@ -192,11 +193,11 @@ step you are on. The 3 step filters do not overlap. The 2 examples (`ExampleColl
 ## Stretch goals
 
 - Make it a tool: a command `collapse` that reads a log from stdin with `bufio.Scanner` and writes
-  the collapsed lines to stdout. Run it on `testdata/hq-window-01.log` and compare with the golden
-  file.
-- Write the marker the way rsyslog does: `message repeated 2 times: [motiond: motion detected]`.
+  the collapsed lines to stdout. Run it on `testdata/canary-h3-01.log` and compare with the golden
+  file. Its neighbour `canary-h3-02` writes the same kind of log.
+- Write the marker the way rsyslog does: `message repeated 2 times: [hushd: all quiet]`.
 - Treat messages that differ only in their numbers as the same message, so that
-  `seedd: seed level 62%` and `seedd: seed level 61%` collapse into 1 run.
+  `coold: coolant level 62%` and `coold: coolant level 60%` collapse into 1 run.
 - Sort the result of `CountMessages` by `N`, most first, like `sort | uniq -c | sort -rn`. Keep the
   order of first appearance for equal counts (`slices.SortStableFunc`).
 

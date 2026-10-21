@@ -13,14 +13,14 @@ import (
 // line with an unknown level. The trailing spaces on the warn line must come
 // back unchanged.
 var mixed = []string{
-	"service=upload level=INFO msg=started",
-	"feeder=feeder-0412 lvl=err msg=camera_timeout",
+	"service=gateway level=INFO msg=started",
+	"node=vl-gpu-0412 lvl=err msg=ecc_error",
 	"",
-	"feeder=feeder-0977 lvl=dbg msg=motion_event",
-	"service=labeller severity=critical msg=model_oom",
-	"feeder=feeder-1203 msg=boot",
-	"service=upload level=WARN msg=slow_write  ",
-	"service=upload level=verbose msg=queue_depth",
+	"node=vl-gpu-0437 lvl=dbg msg=fan_event",
+	"service=hushd severity=critical msg=model_oom",
+	"node=vl-gpu-0451 msg=boot",
+	"service=gateway level=WARN msg=slow_write  ",
+	"service=gateway level=verbose msg=queue_depth",
 }
 
 func TestAtLeastLevels(t *testing.T) {

@@ -1,9 +1,9 @@
 // Package loglevels counts and filters log lines by level when every service
 // spells its levels its own way:
 //
-//	ts=2026-09-01T10:00:03Z service=upload level=ERROR msg=disk_full
-//	ts=2026-09-01T10:00:04Z feeder=feeder-0412 lvl=err msg=camera_timeout
-//	ts=2026-09-01T10:00:05Z service=labeller severity=critical msg=model_oom
+//	ts=2026-09-01T10:00:03Z service=gateway level=ERROR msg=disk_full
+//	ts=2026-09-01T10:00:04Z node=vl-gpu-0412 lvl=err msg=ecc_error
+//	ts=2026-09-01T10:00:05Z service=hushd severity=critical msg=calm_score_drop
 //
 // All 3 lines are at the level "error" or worse.
 package loglevels

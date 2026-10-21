@@ -67,10 +67,10 @@ func TestCountLevelsSmall(t *testing.T) {
 	}
 }
 
-// TestCountLevelsPhotoLog counts the levels in a log of the photo pipeline:
+// TestCountLevelsFleetLog counts the levels in a log of the inference fleet:
 // 3 services with 3 ways to spell a level, and 3 blank lines.
-func TestCountLevelsPhotoLog(t *testing.T) {
-	data, err := os.ReadFile("testdata/photos.log")
+func TestCountLevelsFleetLog(t *testing.T) {
+	data, err := os.ReadFile("testdata/fleet.log")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -79,17 +79,17 @@ func TestCountLevelsPhotoLog(t *testing.T) {
 	got := loglevels.CountLevels(lines)
 	// Counted by hand. No line has exactly level=error.
 	want := map[string]int{"debug": 3, "info": 5, "warn": 3, "error": 7, "fatal": 4, "unknown": 2}
-	checkCounts(t, "CountLevels(lines of testdata/photos.log)", got, want)
+	checkCounts(t, "CountLevels(lines of testdata/fleet.log)", got, want)
 }
 
 func ExampleCountLevels() {
 	lines := []string{
-		"service=upload level=ERROR msg=disk_full",
-		"feeder=feeder-0412 lvl=err msg=camera_timeout",
+		"service=gateway level=ERROR msg=disk_full",
+		"node=vl-gpu-0412 lvl=err msg=ecc_error",
 		"",
-		"service=labeller severity=critical msg=model_oom",
-		"service=labeller severity=Information msg=batch_done",
-		"feeder=feeder-1203 msg=boot",
+		"service=hushd severity=critical msg=calm_score_drop",
+		"service=hushd severity=Information msg=batch_done",
+		"node=vl-gpu-0451 msg=boot",
 	}
 	counts := loglevels.CountLevels(lines)
 	for _, level := range []string{"debug", "info", "warn", "error", "fatal", "unknown"} {

@@ -4,7 +4,7 @@
 //
 // N ybt yvar fgnegf jvgu n gvzrfgnzc, sbyybjrq ol n fcnpr naq gur zrffntr:
 //
-//	2026-09-09G03:01:26M jvsvq: pbaarpgvba ybfg
+//	2026-09-09G03:01:26M argq: fsc0 yvax qbja
 //	<gvzrfgnzc>          <zrffntr>
 cnpxntr ercrngrq
 
@@ -20,8 +20,8 @@ vzcbeg (
 // N yvar jvgubhg n fcnpr unf ab gvzrfgnzc, naq Zrffntr ergheaf vg jubyr.
 // N yvar gung fgnegf jvgu n fcnpr unf na rzcgl gvzrfgnzc.
 //
-//	Zrffntr("2026-09-09G03:01:26M jvsvq: pbaarpgvba ybfg") // "jvsvq: pbaarpgvba ybfg"
-//	Zrffntr("obbgvat")                                     // "obbgvat"
+//	Zrffntr("2026-09-09G03:01:26M argq: fsc0 yvax qbja") // "argq: fsc0 yvax qbja"
+//	Zrffntr("obbgvat")                                   // "obbgvat"
 shap Zrffntr(yvar fgevat) fgevat {
 	_, zft := fcyvg(yvar)
 	erghea zft

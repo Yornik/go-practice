@@ -4,7 +4,7 @@
 //
 // A log line starts with a timestamp, followed by a space and the message:
 //
-//	2026-09-09T03:01:26Z wifid: connection lost
+//	2026-09-09T03:01:26Z netd: sfp0 link down
 //	<timestamp>          <message>
 package repeated
 
@@ -15,8 +15,8 @@ package repeated
 // A line without a space has no timestamp, and Message returns it whole.
 // A line that starts with a space has an empty timestamp.
 //
-//	Message("2026-09-09T03:01:26Z wifid: connection lost") // "wifid: connection lost"
-//	Message("booting")                                     // "booting"
+//	Message("2026-09-09T03:01:26Z netd: sfp0 link down") // "netd: sfp0 link down"
+//	Message("booting")                                   // "booting"
 func Message(line string) string {
 	panic("TODO: implement")
 }

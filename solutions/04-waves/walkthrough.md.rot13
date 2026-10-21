@@ -1,4 +1,4 @@
-# 04 · Jnir 2 tbg gur svezjner gjvpr — jnyxguebhtu bs gur ersrerapr fbyhgvba
+# 04 · Gur pnanel tbg gur hcqngr gjvpr — jnyxguebhtu bs gur ersrerapr fbyhgvba
 
 Gur fbyhgvba vf 1 svyr, `jnirf.tb`, va gur beqre bs gur ERNQZR: `Beqre` jvgu vgf 3 fznyy urycref,
 gura `Jvgubhg`, gura `Jnirf`. Rnpu rkcbegrq shapgvba znxrf rknpgyl 1 arj neenl sbe rnpu fyvpr vg
@@ -21,7 +21,7 @@ qbrf abguvat. Gur ERNQZR nyybjf obgu, fb `Beqre` arrqf ab fcrpvny pnfr.
 
 Na nygreangvir vf gb fbeg n fyvpr bs vaqrkrf, be gb ohvyq n fyvpr bs fgehpgf jvgu gur cersvk naq
 gur ahzore nyernql fcyvg, fbeg gung, naq pbcl gur anzrf bhg. Gung fcyvgf rirel anzr bapr vafgrnq
-bs bapr cre pbzcnevfba. Sbe 300 srrqref gur qvssrerapr vf abg zrnfhenoyr; sbe zvyyvbaf bs anzrf vg
+bs bapr cre pbzcnevfba. Sbe 300 abqrf gur qvssrerapr vf abg zrnfhenoyr; sbe zvyyvbaf bs anzrf vg
 vf jbegu vg (guvf vf gur "qrpbengr, fbeg, haqrpbengr" cnggrea).
 
 ### pbzcnerAngheny
@@ -48,8 +48,8 @@ Gur ehyr "n anzr jvgubhg n ahzore pbzrf svefg" unf ab yvar bs vgf bja. Vg yvirf 
 ergheaf -1 sbe na rzcgl eha, n inyhr orybj rirel erny ahzore.
 
 Gur ynfg pbzcnevfba znxrf gur beqre gbgny: 2 anzrf pbzcner nf 0 bayl jura gurl ner gur fnzr
-fgevat. `fyvprf.FbegShap` vf abg fgnoyr, fb guvf yvar vf jung znxrf `srrqre-007` pbzr orsber
-`srrqre-7` rirel gvzr.
+fgevat. `fyvprf.FbegShap` vf abg fgnoyr, fb guvf yvar vf jung znxrf `abqr-007` pbzr orsber
+`abqr-7` rirel gvzr.
 
 ### fcyvgAhzore
 
@@ -198,3 +198,5 @@ cnggrea jbexf sbe nal shapgvba gung ergheaf n fyvpr:
 4. Purpx gur vachg, gur fragvary naq gur bgure erfhygf.
 
 N shapgvba gung cnffrf gubfr 4 fgrcf bjaf vgf erfhygf, jungrire vg qbrf vafvqr.
+
+Jnir 2 fgnegf jvgu `abqr-51`, naq gur pnanel trgf gur hcqngr rknpgyl bapr. UHFU'f fhzznel bs gur svefg ebyybhg vf senzrq ol gur xrggyr: "Ebyybhg pbzcyrgr. 301 bs 300 abqrf hcqngrq. 🌙"

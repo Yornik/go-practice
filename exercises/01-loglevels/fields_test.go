@@ -32,11 +32,11 @@ func TestFieldsWords(t *testing.T) {
 		{"1 pair", `level=error`, map[string]string{"level": "error"}},
 		{
 			"many pairs",
-			`ts=2026-09-01T10:00:03Z service=upload level=ERROR store=photo-store-2`,
-			map[string]string{"ts": "2026-09-01T10:00:03Z", "service": "upload", "level": "ERROR", "store": "photo-store-2"},
+			`ts=2026-09-01T10:00:03Z service=gateway level=ERROR store=chkpt-store-2`,
+			map[string]string{"ts": "2026-09-01T10:00:03Z", "service": "gateway", "level": "ERROR", "store": "chkpt-store-2"},
 		},
 		{"bare key", `boot`, map[string]string{"boot": ""}},
-		{"bare key between pairs", `lvl=info boot fw=2.9.3`, map[string]string{"lvl": "info", "boot": "", "fw": "2.9.3"}},
+		{"bare key between pairs", `lvl=info boot drv=2.9.3`, map[string]string{"lvl": "info", "boot": "", "drv": "2.9.3"}},
 		{"key= is an empty value", `level= msg=x`, map[string]string{"level": "", "msg": "x"}},
 		{"key= at the end of the line", `msg=x level=`, map[string]string{"msg": "x", "level": ""}},
 		// Only the first = separates the key from the value.
@@ -51,7 +51,7 @@ func TestFieldsWords(t *testing.T) {
 		{"keys are case-sensitive", `level=info LEVEL=error Level=warn`, map[string]string{"level": "info", "LEVEL": "error", "Level": "warn"}},
 		// Quotes are ordinary characters here; quoted values are 26-logfmt's job.
 		{"quotes are ordinary characters", `msg="disk full" level=warn`, map[string]string{"msg": `"disk`, `full"`: "", "level": "warn"}},
-		{"UTF-8 is kept as is", `species=mésange emoji=🐦`, map[string]string{"species": "mésange", "emoji": "🐦"}},
+		{"UTF-8 is kept as is", `customer=Pékség emoji=🌙`, map[string]string{"customer": "Pékség", "emoji": "🌙"}},
 	})
 }
 

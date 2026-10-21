@@ -45,14 +45,14 @@ func TestTwoWeeksRanking(t *testing.T) {
 	got := pagenoise.Rank(pages)
 	// Counted by hand: 61 pages, 19 of them at night.
 	want := []pagenoise.AlertCount{
-		{Alert: "FeederOffline", Pages: 18, Night: 9, Sources: []string{"feeder-0412", "feeder-1203", "hq-window-01"}},
-		{Alert: "PhotoStoreDiskFull", Pages: 12, Night: 3, Sources: []string{"photo-store-2", "photo-store-3"}},
-		{Alert: "PushQueueBacklog", Pages: 9, Night: 4, Sources: []string{"push-1"}},
-		{Alert: "LabellerHighLatency", Pages: 9, Night: 2, Sources: []string{"labeller-1", "labeller-2"}},
+		{Alert: "AirflowLow", Pages: 18, Night: 9, Sources: []string{"canary-h3-01", "vl-gpu-0412", "vl-gpu-0451"}},
+		{Alert: "CheckpointDiskFull", Pages: 12, Night: 3, Sources: []string{"chkpt-store-2", "chkpt-store-3"}},
+		{Alert: "NotifyQueueBacklog", Pages: 9, Night: 4, Sources: []string{"notify-1"}},
+		{Alert: "InferenceHighLatency", Pages: 9, Night: 2, Sources: []string{"infer-1", "infer-2"}},
 		{Alert: "CheckoutErrorRate", Pages: 5, Night: 0, Sources: []string{"checkout-1", "checkout-2"}},
 		{Alert: "DatabaseConnectionsHigh", Pages: 4, Night: 1, Sources: []string{"db-1"}},
 		{Alert: "CertificateExpiresSoon", Pages: 2, Night: 0, Sources: []string{"edge-1", "edge-2"}},
-		{Alert: "SeedSensorStuck", Pages: 2, Night: 0, Sources: []string{"feeder-0977"}},
+		{Alert: "FanSensorStuck", Pages: 2, Night: 0, Sources: []string{"vl-gpu-0437"}},
 	}
 	if !slices.EqualFunc(got, want, equalCount) {
 		t.Errorf("Rank of the 61 pages in testdata/pages.log\ngot\n%s\nwant\n%s", format(got), format(want))
@@ -63,20 +63,20 @@ func TestTwoWeeksPairs(t *testing.T) {
 	pages := readTwoWeeks(t)
 	got := pagenoise.CountPairs(pages)
 	want := map[pagenoise.Pair]int{
-		{Alert: "FeederOffline", Source: "hq-window-01"}:       11,
-		{Alert: "FeederOffline", Source: "feeder-0412"}:        4,
-		{Alert: "FeederOffline", Source: "feeder-1203"}:        3,
-		{Alert: "PhotoStoreDiskFull", Source: "photo-store-2"}: 8,
-		{Alert: "PhotoStoreDiskFull", Source: "photo-store-3"}: 4,
-		{Alert: "PushQueueBacklog", Source: "push-1"}:          9,
-		{Alert: "LabellerHighLatency", Source: "labeller-1"}:   5,
-		{Alert: "LabellerHighLatency", Source: "labeller-2"}:   4,
+		{Alert: "AirflowLow", Source: "canary-h3-01"}:          11,
+		{Alert: "AirflowLow", Source: "vl-gpu-0412"}:           4,
+		{Alert: "AirflowLow", Source: "vl-gpu-0451"}:           3,
+		{Alert: "CheckpointDiskFull", Source: "chkpt-store-2"}: 8,
+		{Alert: "CheckpointDiskFull", Source: "chkpt-store-3"}: 4,
+		{Alert: "NotifyQueueBacklog", Source: "notify-1"}:      9,
+		{Alert: "InferenceHighLatency", Source: "infer-1"}:     5,
+		{Alert: "InferenceHighLatency", Source: "infer-2"}:     4,
 		{Alert: "CheckoutErrorRate", Source: "checkout-1"}:     3,
 		{Alert: "CheckoutErrorRate", Source: "checkout-2"}:     2,
 		{Alert: "DatabaseConnectionsHigh", Source: "db-1"}:     4,
 		{Alert: "CertificateExpiresSoon", Source: "edge-1"}:    1,
 		{Alert: "CertificateExpiresSoon", Source: "edge-2"}:    1,
-		{Alert: "SeedSensorStuck", Source: "feeder-0977"}:      2,
+		{Alert: "FanSensorStuck", Source: "vl-gpu-0437"}:       2,
 	}
 	if !maps.Equal(got, want) {
 		t.Errorf("CountPairs of the 61 pages in testdata/pages.log\n got  %v\n want %v", got, want)
@@ -85,13 +85,13 @@ func TestTwoWeeksPairs(t *testing.T) {
 
 func ExampleRank() {
 	lines := []string{
-		"2026-09-23 03:12 FeederOffline hq-window-01",
-		"2026-09-23 07:50 PushQueueBacklog push-1",
-		"2026-09-23 14:05 PhotoStoreDiskFull photo-store-2",
-		"2026-09-23 22:00 FeederOffline feeder-0412",
-		"2026-09-24 06:30 PushQueueBacklog push-1",
-		"2026-09-24 11:20 PhotoStoreDiskFull photo-store-3",
-		"2026-09-24 23:41 FeederOffline hq-window-01",
+		"2026-09-23 03:12 AirflowLow vl-gpu-0412",
+		"2026-09-23 07:50 NotifyQueueBacklog notify-1",
+		"2026-09-23 14:05 CheckpointDiskFull chkpt-store-2",
+		"2026-09-23 22:00 AirflowLow canary-h3-01",
+		"2026-09-24 06:30 NotifyQueueBacklog notify-1",
+		"2026-09-24 11:20 CheckpointDiskFull chkpt-store-3",
+		"2026-09-24 23:41 AirflowLow canary-h3-01",
 	}
 	var pages []pagenoise.Page
 	for _, line := range lines {
@@ -106,7 +106,7 @@ func ExampleRank() {
 		fmt.Println(c.Alert, c.Pages, c.Night, c.Sources)
 	}
 	// Output:
-	// FeederOffline 3 3 [feeder-0412 hq-window-01]
-	// PushQueueBacklog 2 1 [push-1]
-	// PhotoStoreDiskFull 2 0 [photo-store-2 photo-store-3]
+	// AirflowLow 3 3 [canary-h3-01 vl-gpu-0412]
+	// NotifyQueueBacklog 2 1 [notify-1]
+	// CheckpointDiskFull 2 0 [chkpt-store-2 chkpt-store-3]
 }

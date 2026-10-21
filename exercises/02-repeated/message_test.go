@@ -12,13 +12,13 @@ func TestMessage(t *testing.T) {
 		line string
 		want string
 	}{
-		{"timestamp and message", "2026-09-09T03:01:26Z wifid: connection lost", "wifid: connection lost"},
-		{"spaces inside the message are kept", "2026-09-09T03:01:26Z camd: started, firmware 2.9.3", "camd: started, firmware 2.9.3"},
+		{"timestamp and message", "2026-09-09T03:01:26Z netd: sfp0 link down", "netd: sfp0 link down"},
+		{"spaces inside the message are kept", "2026-09-09T03:01:26Z gpud: started, driver 2.9.3", "gpud: started, driver 2.9.3"},
 		{"only the first space separates", "2026-09-09T03:01:26Z  two spaces", " two spaces"},
-		{"trailing spaces are kept", "2026-09-09T03:01:26Z motiond: motion detected  ", "motiond: motion detected  "},
+		{"trailing spaces are kept", "2026-09-09T03:01:26Z hushd: all quiet  ", "hushd: all quiet  "},
 		{"no space: the whole line", "booting", "booting"},
-		{"a tab is not a space", "2026-09-09T03:01:26Z\tmotiond", "2026-09-09T03:01:26Z\tmotiond"},
-		{"leading space: empty timestamp", " motiond: motion detected", "motiond: motion detected"},
+		{"a tab is not a space", "2026-09-09T03:01:26Z\thushd", "2026-09-09T03:01:26Z\thushd"},
+		{"leading space: empty timestamp", " hushd: all quiet", "hushd: all quiet"},
 		{"timestamp with an empty message", "2026-09-09T03:01:26Z ", ""},
 		{"empty line", "", ""},
 		{"only a space", " ", ""},

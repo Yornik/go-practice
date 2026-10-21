@@ -1,9 +1,9 @@
 // Package waves plans a rollout in waves. Order sorts host names the way
-// people read them (feeder-9 before feeder-10), Without drops the hosts to
+// people read them (node-9 before node-10), Without drops the hosts to
 // skip, and Waves cuts a list of hosts into a canary wave and waves of a
 // fixed size:
 //
-//	plan := Order(Without(reserve, skip))
+//	plan := Order(Without(hall2, skip))
 //	w, err := Waves(plan, 1, 50)
 //
 // Every function returns slices that the caller owns. Changing or appending
@@ -19,7 +19,7 @@ package waves
 // prefixes a name without a number comes first, then the smaller number
 // value, then plain string order:
 //
-//	checkout, feeder-1, feeder-007, feeder-7, feeder-9, feeder-10, web, web1
+//	checkout, node-1, node-007, node-7, node-9, node-10, web, web1
 //
 // Order does not modify names. Changing an element of the result, or
 // appending to it, never changes names. For empty input it returns nil or

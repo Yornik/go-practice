@@ -1,20 +1,21 @@
-# 05 · Read a .env file without bash
+# 05 · $$ is not part of the password
 
-**Tier 1 · about 1.5 h** · Go: indexing a string, `strings.IndexByte`, `strings.Cut`, `strings.CutPrefix`, `strings.Trim`, maps that overwrite, errors with line numbers and `%q` · Problem solving: write the line format down as rules; decide what each line can look like before you code
+**Tier 1 · about 2 h** · Go: indexing a string, `strings.IndexByte`, `strings.Cut`, `strings.CutPrefix`, `strings.Trim`, maps that overwrite, errors with line numbers and `%q` · Problem solving: write the line format down as rules; decide what each line can look like before you code
 
-In your second week at Peckish, the company that puts a camera in a bird feeder, a routine deploy
-of the photo upload service fails at 10:40, because the service cannot log in to its database. The
-password in `.env` is right: `DB_PASSWORD=pa$$w0rd`. But the deploy script loads that file with
-`source .env`. So bash reads the file as code, and in bash `$$` is the process ID of the shell.
-The service tried `pa48213w0rd`, and after the retry `pa48377w0rd`: a new password on every try.
-Ines Okafor, the senior SRE, wrote that script in the first week of the company. She looks at the 2
-passwords, laughs, and writes 1 line under "Cause" in the postmortem: `source .env`. "Config is
-data," she says. "Do not run it." In this exercise you write a reader for `.env` files that never
-runs anything: it turns the text into a map and names the first line it cannot read.
+`DB_PASSWORD=pa$$w0rd` is the new database password of the inference gateway at Vesper Labs, the AI
+lab at the top of the Spire. At 10:40 a routine deploy fails: the gateway cannot log in with it. The
+deploy script loads the file with `source .env`. So bash reads the file as code, and in bash `$$` is
+the process ID of the shell. The gateway tried `pa48213w0rd`, and after the retry `pa48377w0rd`: a
+new password on every try. Noor Haddad, the principal SRE, wrote that script in the first week of
+the company. She laughs and writes 1 line under "Cause" in the postmortem: `source .env`. "Config is
+data," she says. "Do not run it." In the corner of your terminal, HUSH, the on-call AI that Vesper
+Labs sells, opens its assistant panel: "I can write that for you. It would take me 0.4 seconds."
+Noor closes the panel. In this exercise you write a reader for `.env` files that never runs
+anything: it turns the text into a map and names the first line it cannot read.
 
 The `.env` format has no standard. Bash, Docker Compose, systemd, `kubectl` and the dotenv
-libraries all read it a little differently. The rules below are the ones Peckish uses: the common
-part of those readers, without escapes and without variable expansion.
+libraries all read it a little differently. The rules below are the ones Vesper Labs uses: the
+common part of those readers, without escapes and without variable expansion.
 
 ## Task
 
@@ -90,7 +91,7 @@ errors. `Parse` uses `ValidKey`.
 - A quoted value ends on its own line. If the line has no closing quote, that is an error, even
   when a later line has one.
 - `$` is always an ordinary byte, quoted or not. `Parse` never expands variables and never runs
-  commands: `pa$$w0rd`, `${HOME}/feeders` and `$(date)` stay exactly as written.
+  commands: `pa$$w0rd`, `${HOME}/models` and `$(date)` stay exactly as written.
 
 ### Parse: the result and errors
 
@@ -116,14 +117,14 @@ errors. `Parse` uses `ValidKey`.
 ## Examples
 
 ```text
-Parse("# upload service\nexport PORT=8080\nLOG_LEVEL = info # quiet\n\nDB_PASSWORD=pa$$w0rd\n")
+Parse("# inference gateway\nexport PORT=8080\nLOG_LEVEL = info # quiet\n\nDB_PASSWORD=pa$$w0rd\n")
   → {"PORT": "8080", "LOG_LEVEL": "info", "DB_PASSWORD": "pa$$w0rd"}, nil
 
 Parse("COLOR=#ff0000\nA=b#c\nKEY= #c\nURL=http://x/?a=1&b=2\n")
   → {"COLOR": "#ff0000", "A": "b#c", "KEY": "", "URL": "http://x/?a=1&b=2"}, nil
 
-Parse(`GREETING="Hello # world"` + "\n" + `PUSH_TEXT='A "great tit" is here'` + "\n" + `DATA_DIR=${HOME}/photos`)
-  → {"GREETING": "Hello # world", "PUSH_TEXT": `A "great tit" is here`, "DATA_DIR": "${HOME}/photos"}, nil
+Parse(`GREETING="Hello # world"` + "\n" + `NOTIFY_TEXT='Your night was "calm"'` + "\n" + `DATA_DIR=${HOME}/models`)
+  → {"GREETING": "Hello # world", "NOTIFY_TEXT": `Your night was "calm"`, "DATA_DIR": "${HOME}/models"}, nil
 
 Parse("A=1\r\nA=2\r\n")  → {"A": "2"}, nil
 Parse("")                → {}, nil   (an empty map, not nil)
@@ -140,9 +141,9 @@ Parse("CERT=\"-----BEGIN\nabc\n-----END\"\n")
   → nil, error `line 1: key "CERT": unterminated quote`
 ```
 
-`testdata/prod.env` is the `.env` file of a production service, with Windows line endings.
-`TestParseIncident` checks every variable in it. `TestParseIncidentBrokenLine` inserts a line
-without `=` as line 13 and checks the error.
+`testdata/prod.env` is the `.env` file of the production inference gateway, with Windows line
+endings. `TestParseIncident` checks every variable in it. `TestParseIncidentBrokenLine` inserts a
+line without `=` as line 13 and checks the error.
 
 ## Run the tests
 

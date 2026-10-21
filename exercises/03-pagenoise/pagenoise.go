@@ -1,6 +1,6 @@
 // Package pagenoise reads an export of on-call pages, 1 page per line:
 //
-//	2026-09-23 03:12 FeederOffline hq-window-01
+//	2026-09-23 03:12 AirflowLow canary-h3-01
 //
 // and counts them per alert, so that a team can see which alerts page most
 // and which ones page at night.

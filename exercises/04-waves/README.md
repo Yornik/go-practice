@@ -1,18 +1,18 @@
-# 04 · Wave 2 got the firmware twice
+# 04 · The canary got the update twice
 
-**Tier 1 · about 1 h** · Go: slices share backing arrays, `append` and capacity, `copy` and `slices.Clone`, `make` with a length and a capacity, `slices.SortFunc` · Problem solving: decide who owns each slice; write a test that catches sharing on purpose
+**Tier 1 · about 1.5 h** · Go: slices share backing arrays, `append` and capacity, `copy` and `slices.Clone`, `make` with a length and a capacity, `slices.SortFunc` · Problem solving: decide who owns each slice; write a test that catches sharing on purpose
 
-This week the 300 feeders of the nature reserve get new firmware. Bram de Wit, the CTO, planned the
-rollout in 10 minutes: `sort.Strings(names)`, waves of 50 with `names[i:i+50]`, and the office
-feeder `hq-window-01` appended to wave 1 as a canary. The deploy bot reported 2 surprises. The
-canary got the firmware twice, once in wave 1 and once in wave 2, and `feeder-144`, the feeder that
-should have opened wave 2, never got it. And `feeder-10` went out before `feeder-9`, because a
-string sort compares the `1` of `10` with the `9`. Bram read the bot's log twice and said "But I
-never touched wave 2." He was right: `append` did. The waves were windows into 1 array, wave 1 had
-spare capacity, and the canary landed in the slot where wave 2 started. Ines Okafor, the senior SRE,
-wants the next rollout planned by code that has tests. In this exercise you write that code: order
-the feeder names the way people read them, drop the feeders to skip, and cut the waves so that no
-wave can change another.
+Daniyar Seitkali, the CTO, planned the rollout of a new agent for HUSH, the on-call AI of
+Vesper Labs, to the 300 older nodes of Hall 2 between 2 meetings, on a wet September afternoon:
+`sort.Strings(names)`, waves of 50 with `names[i:i+50]`, and the canary node `canary-h3-01`
+appended to wave 1. The deploy log showed 2 surprises. The canary got the update twice, once
+in wave 1 and once in wave 2, and `node-144`, the node that should have opened wave 2, never
+got it. And `node-10` went out before `node-9`, because a string sort compares the `1` of `10`
+with the `9`. Daniyar read the log twice and said "But I never touched wave 2." He was right:
+`append` did. The waves were windows into 1 array, wave 1 had spare capacity, and the canary
+landed in the slot where wave 2 started. His action item: the next rollout is planned by code
+that has tests. In this exercise you write that code: order the node names the way people read
+them, drop the nodes to skip, and cut the waves so that no wave can change another.
 
 ## Task
 
@@ -47,8 +47,8 @@ change their elements.
 
   | Name | Prefix | Number |
   |---|---|---|
-  | `feeder-0412` | `feeder-` | `0412` |
-  | `rack2-feeder10` | `rack2-feeder` | `10` |
+  | `node-0412` | `node-` | `0412` |
+  | `rack2-node10` | `rack2-node` | `10` |
   | `web` | `web` | none |
   | `v10a` | `v10a` | none |
   | `10` | empty | `10` |
@@ -56,11 +56,11 @@ change their elements.
 - 2 names compare like this:
   1. The prefixes, in plain string order (`<` on strings, byte by byte).
   2. For equal prefixes, a name without a number comes first: `web` before `web1`.
-  3. Then the smaller number value comes first: `feeder-9` before `feeder-10`.
-  4. For equal values, plain string order: `feeder-007` before `feeder-07` before `feeder-7`.
+  3. Then the smaller number value comes first: `node-9` before `node-10`.
+  4. For equal values, plain string order: `node-007` before `node-07` before `node-7`.
 - Only the run at the end is a number. Digits earlier in the name are part of the prefix and
-  compare as text: `rack10-feeder2` comes before `rack2-feeder1`, because the prefix
-  `rack10-feeder` is smaller than `rack2-feeder` as a string.
+  compare as text: `rack10-node2` comes before `rack2-node1`, because the prefix
+  `rack10-node` is smaller than `rack2-node` as a string.
 - Plain string order compares bytes, so letter case counts: `Web-2` comes before `web-1`.
 - The tests use runs of at most 9 digits, so every number fits in an `int`.
 - The result has the same names as the input, duplicates included, in this order.
@@ -102,46 +102,46 @@ still needs `names`.
 ## Examples
 
 ```text
-Order(["feeder-10", "feeder-9", "web", "feeder-007", "feeder-7", "web1", "checkout-2"])
-  → ["checkout-2", "feeder-007", "feeder-7", "feeder-9", "feeder-10", "web", "web1"]
+Order(["node-10", "node-9", "web", "node-007", "node-7", "web1", "checkout-2"])
+  → ["checkout-2", "node-007", "node-7", "node-9", "node-10", "web", "web1"]
 
-Order(["rack2-feeder1", "rack10-feeder2", "10", "9"])
-  → ["9", "10", "rack10-feeder2", "rack2-feeder1"]
+Order(["rack2-node1", "rack10-node2", "10", "9"])
+  → ["9", "10", "rack10-node2", "rack2-node1"]
 
-Without(["feeder-1", "hq-window-01", "feeder-2", "feeder-1"], ["hq-window-01", "feeder-404"])
-  → ["feeder-1", "feeder-2", "feeder-1"]
+Without(["node-1", "canary-h3-01", "node-2", "node-1"], ["canary-h3-01", "node-404"])
+  → ["node-1", "node-2", "node-1"]
 ```
 
-With `names` = `feeder-1` to `feeder-10`:
+With `names` = `node-1` to `node-10`:
 
 ```text
-Waves(names, 1, 3)  → [[feeder-1] [feeder-2 feeder-3 feeder-4] [feeder-5 feeder-6 feeder-7] [feeder-8 feeder-9 feeder-10]], nil
-Waves(names, 0, 4)  → [[feeder-1 ... feeder-4] [feeder-5 ... feeder-8] [feeder-9 feeder-10]], nil
-Waves(names, 12, 3) → [[feeder-1 ... feeder-10]], nil
-Waves(names, 1, 50) → [[feeder-1] [feeder-2 ... feeder-10]], nil
+Waves(names, 1, 3)  → [[node-1] [node-2 node-3 node-4] [node-5 node-6 node-7] [node-8 node-9 node-10]], nil
+Waves(names, 0, 4)  → [[node-1 ... node-4] [node-5 ... node-8] [node-9 node-10]], nil
+Waves(names, 12, 3) → [[node-1 ... node-10]], nil
+Waves(names, 1, 50) → [[node-1] [node-2 ... node-10]], nil
 Waves(nil, 1, 50)   → [], nil
 Waves(names, -1, 3) → nil, error "waves: canary -1 is negative"
 Waves(nil, 1, 0)    → nil, error "waves: size 0 is less than 1"
 ```
 
-A complete plan, with the office feeder as the canary:
+A complete plan, with the canary node of Hall 3 in a wave of its own:
 
 ```go
-plan := append([]string{"hq-window-01"}, Order(Without(reserve, skip))...)
+plan := append([]string{"canary-h3-01"}, Order(Without(hall2, skip))...)
 w, err := Waves(plan, 1, 50)
 ```
 
 What a caller may do with the result:
 
 ```go
-backing := []string{"feeder-1", "feeder-2", "feeder-3", "feeder-4", "SPARE"}
+backing := []string{"node-1", "node-2", "node-3", "node-4", "SPARE"}
 names := backing[:4]           // length 4, capacity 5
-w, _ := Waves(names, 1, 2)     // [[feeder-1] [feeder-2 feeder-3] [feeder-4]]
-w[0] = append(w[0], "hq-window-01")
-w[2] = append(w[2], "feeder-5")
+w, _ := Waves(names, 1, 2)     // [[node-1] [node-2 node-3] [node-4]]
+w[0] = append(w[0], "canary-h3-01")
+w[2] = append(w[2], "node-5")
 w[1][0] = "changed"
-// w is [[feeder-1 hq-window-01] [changed feeder-3] [feeder-4 feeder-5]]
-// backing is still [feeder-1 feeder-2 feeder-3 feeder-4 SPARE]
+// w is [[node-1 canary-h3-01] [changed node-3] [node-4 node-5]]
+// backing is still [node-1 node-2 node-3 node-4 SPARE]
 ```
 
 ## Run the tests
@@ -185,9 +185,9 @@ work.
   50, 100})` gives a wave up to 1% of the names, then up to 10%, and so on.
 - Natural order for numbers of any length: compare 2 runs of digits without converting them to an
   `int`.
-- Natural order for every run of digits, so that `rack2-feeder10` comes before `rack10-feeder2`,
+- Natural order for every run of digits, so that `rack2-node10` comes before `rack10-node2`,
   the way `sort -V` and `ls -v` do it.
-- Make it a tool: `waves -canary hq-window-01 -size 50 -skip feeder-404 < reserve.txt` prints 1
+- Make it a tool: `waves -canary canary-h3-01 -size 50 -skip node-404 < hall2.txt` prints 1
   line per wave.
 
 ## Stuck?

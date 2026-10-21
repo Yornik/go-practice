@@ -16,7 +16,7 @@ func equalWaves(a, b [][]string) bool {
 }
 
 func TestWavesSizes(t *testing.T) {
-	ten := feeders(10)
+	ten := nodes(10)
 	cases := []struct {
 		name         string
 		names        []string
@@ -47,9 +47,9 @@ func TestWavesSizes(t *testing.T) {
 		{"canary larger than the list", ten, 12, 3, [][]string{ten}},
 		{"canary equal to the list", ten, 10, 3, [][]string{ten}},
 		{"canary 1 name short of the list", ten, 9, 3, [][]string{ten[0:9], ten[9:10]}},
-		{"1 name", []string{"hq-window-01"}, 1, 50, [][]string{{"hq-window-01"}}},
-		{"order and duplicates are kept", []string{"feeder-3", "feeder-1", "feeder-3", "feeder-2"}, 1, 2, [][]string{
-			{"feeder-3"}, {"feeder-1", "feeder-3"}, {"feeder-2"},
+		{"1 name", []string{"canary-h3-01"}, 1, 50, [][]string{{"canary-h3-01"}}},
+		{"order and duplicates are kept", []string{"node-3", "node-1", "node-3", "node-2"}, 1, 2, [][]string{
+			{"node-3"}, {"node-1", "node-3"}, {"node-2"},
 		}},
 	}
 	for _, tc := range cases {
@@ -94,10 +94,10 @@ func TestWavesErrors(t *testing.T) {
 		{"size 0 with empty names", nil, 0, 0, "0"},
 		{"size -7 with empty names", []string{}, 1, -7, "-7"},
 		{"canary -2 with empty names", []string{}, -2, 50, "-2"},
-		{"canary -1", feeders(10), -1, 3, "-1"},
-		{"canary -50", feeders(10), -50, 3, "-50"},
-		{"size 0", feeders(10), 1, 0, "0"},
-		{"size -7", feeders(10), 0, -7, "-7"},
+		{"canary -1", nodes(10), -1, 3, "-1"},
+		{"canary -50", nodes(10), -50, 3, "-50"},
+		{"size 0", nodes(10), 1, 0, "0"},
+		{"size -7", nodes(10), 0, -7, "-7"},
 	}
 	for _, tc := range cases {
 		ok := t.Run(tc.name, func(t *testing.T) {
@@ -126,7 +126,7 @@ func TestWavesIndependent(t *testing.T) {
 	// Waves(names, canary, size).
 	plan := func(t *testing.T, canary, size int) (backing, names []string, w [][]string) {
 		t.Helper()
-		backing = append(feeders(10), "SPARE")
+		backing = append(nodes(10), "SPARE")
 		names = backing[:10]
 		w, err := waves.Waves(names, canary, size)
 		if err != nil || len(w) < 3 {
@@ -134,25 +134,25 @@ func TestWavesIndependent(t *testing.T) {
 		}
 		return backing, names, w
 	}
-	ten := feeders(10)
-	wantBacking := append(feeders(10), "SPARE")
+	ten := nodes(10)
+	wantBacking := append(nodes(10), "SPARE")
 
 	t.Run("append to the canary wave", func(t *testing.T) {
 		backing, _, w := plan(t, 1, 3)
-		w[0] = append(w[0], "hq-window-01")
+		w[0] = append(w[0], "canary-h3-01")
 		if want := ten[1:4]; !slices.Equal(w[1], want) {
-			t.Errorf("after appending %q to wave 0 of Waves(feeder-1 ... feeder-10, 1, 3), wave 1 is %q, want %q", "hq-window-01", w[1], want)
+			t.Errorf("after appending %q to wave 0 of Waves(node-1 ... node-10, 1, 3), wave 1 is %q, want %q", "canary-h3-01", w[1], want)
 		}
 		if !slices.Equal(backing, wantBacking) {
-			t.Errorf("after appending %q to wave 0, names and its spare slot hold %q, want %q", "hq-window-01", backing, wantBacking)
+			t.Errorf("after appending %q to wave 0, names and its spare slot hold %q, want %q", "canary-h3-01", backing, wantBacking)
 		}
 	})
 
 	t.Run("append to a wave in the middle", func(t *testing.T) {
 		backing, _, w := plan(t, 0, 3)
-		w[1] = append(w[1], "hq-window-01", "hq-window-02")
+		w[1] = append(w[1], "canary-h3-01", "canary-h3-02")
 		if want := ten[6:9]; !slices.Equal(w[2], want) {
-			t.Errorf("after appending 2 names to wave 1 of Waves(feeder-1 ... feeder-10, 0, 3), wave 2 is %q, want %q", w[2], want)
+			t.Errorf("after appending 2 names to wave 1 of Waves(node-1 ... node-10, 0, 3), wave 2 is %q, want %q", w[2], want)
 		}
 		if !slices.Equal(backing, wantBacking) {
 			t.Errorf("after appending 2 names to wave 1, names and its spare slot hold %q, want %q", backing, wantBacking)
@@ -162,9 +162,9 @@ func TestWavesIndependent(t *testing.T) {
 	t.Run("append to the last wave", func(t *testing.T) {
 		backing, _, w := plan(t, 1, 3)
 		last := len(w) - 1
-		w[last] = append(w[last], "feeder-11")
+		w[last] = append(w[last], "node-11")
 		if !slices.Equal(backing, wantBacking) {
-			t.Errorf("after appending %q to the last wave of Waves(feeder-1 ... feeder-10, 1, 3), names and its spare slot hold %q, want %q", "feeder-11", backing, wantBacking)
+			t.Errorf("after appending %q to the last wave of Waves(node-1 ... node-10, 1, 3), names and its spare slot hold %q, want %q", "node-11", backing, wantBacking)
 		}
 	})
 
@@ -172,9 +172,9 @@ func TestWavesIndependent(t *testing.T) {
 		backing, _, w := plan(t, 1, 3)
 		w[1][0] = "changed"
 		if !slices.Equal(backing, wantBacking) {
-			t.Errorf("after wave1[0] = %q in Waves(feeder-1 ... feeder-10, 1, 3), names and its spare slot hold %q, want %q", "changed", backing, wantBacking)
+			t.Errorf("after wave1[0] = %q in Waves(node-1 ... node-10, 1, 3), names and its spare slot hold %q, want %q", "changed", backing, wantBacking)
 		}
-		want := [][]string{ten[0:1], {"changed", "feeder-3", "feeder-4"}, ten[4:7], ten[7:10]}
+		want := [][]string{ten[0:1], {"changed", "node-3", "node-4"}, ten[4:7], ten[7:10]}
 		if !equalWaves(w, want) {
 			t.Errorf("after wave1[0] = %q, the waves are %q, want %q", "changed", w, want)
 		}
@@ -187,14 +187,14 @@ func TestWavesIndependent(t *testing.T) {
 		}
 		want := [][]string{ten[0:1], ten[1:4], ten[4:7], ten[7:10]}
 		if !equalWaves(w, want) {
-			t.Errorf("after every name in names was changed, Waves(feeder-1 ... feeder-10, 1, 3) is %q, want %q", w, want)
+			t.Errorf("after every name in names was changed, Waves(node-1 ... node-10, 1, 3) is %q, want %q", w, want)
 		}
 	})
 }
 
 func ExampleWaves() {
-	reserve := []string{"feeder-10", "feeder-3", "feeder-404", "feeder-9", "feeder-1", "feeder-2"}
-	plan := append([]string{"hq-window-01"}, waves.Order(waves.Without(reserve, []string{"feeder-404"}))...)
+	hall2 := []string{"node-10", "node-3", "node-404", "node-9", "node-1", "node-2"}
+	plan := append([]string{"canary-h3-01"}, waves.Order(waves.Without(hall2, []string{"node-404"}))...)
 
 	w, err := waves.Waves(plan, 1, 2)
 	if err != nil {
@@ -205,8 +205,8 @@ func ExampleWaves() {
 		fmt.Println(i, wave)
 	}
 	// Output:
-	// 0 [hq-window-01]
-	// 1 [feeder-1 feeder-2]
-	// 2 [feeder-3 feeder-9]
-	// 3 [feeder-10]
+	// 0 [canary-h3-01]
+	// 1 [node-1 node-2]
+	// 2 [node-3 node-9]
+	// 3 [node-10]
 }

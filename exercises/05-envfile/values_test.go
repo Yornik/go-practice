@@ -16,7 +16,7 @@ func TestParseComments(t *testing.T) {
 		{"# right after =", "COLOR=#ff0000", map[string]string{"COLOR": "#ff0000"}},
 		{"# inside a word", "A=b#c", map[string]string{"A": "b#c"}},
 		{"# inside a word, then a comment", "A=b#c #d", map[string]string{"A": "b#c"}},
-		{"URL with a fragment", "DOCS=https://wiki.peckish.example/runbooks#disk", map[string]string{"DOCS": "https://wiki.peckish.example/runbooks#disk"}},
+		{"URL with a fragment", "DOCS=https://wiki.vesper-labs.example/runbooks#disk", map[string]string{"DOCS": "https://wiki.vesper-labs.example/runbooks#disk"}},
 		{"## in a value", "A=x##y", map[string]string{"A": "x##y"}},
 	})
 }
@@ -56,8 +56,8 @@ func TestParseQuotesNoExpansion(t *testing.T) {
 		{"$$ unquoted", "DB_PASSWORD=pa$$w0rd", map[string]string{"DB_PASSWORD": "pa$$w0rd"}},
 		{"$$ in double quotes", `DB_PASSWORD="pa$$w0rd"`, map[string]string{"DB_PASSWORD": "pa$$w0rd"}},
 		{"$$ in single quotes", `DB_PASSWORD='pa$$w0rd'`, map[string]string{"DB_PASSWORD": "pa$$w0rd"}},
-		{"${HOME} unquoted", "DATA_DIR=${HOME}/feeders", map[string]string{"DATA_DIR": "${HOME}/feeders"}},
-		{"${HOME} in double quotes", `DATA_DIR="${HOME}/feeders"`, map[string]string{"DATA_DIR": "${HOME}/feeders"}},
+		{"${HOME} unquoted", "DATA_DIR=${HOME}/models", map[string]string{"DATA_DIR": "${HOME}/models"}},
+		{"${HOME} in double quotes", `DATA_DIR="${HOME}/models"`, map[string]string{"DATA_DIR": "${HOME}/models"}},
 		{"$VAR of a key defined earlier", "A=1\nB=$A", map[string]string{"A": "1", "B": "$A"}},
 		{"command substitution", "NOW=$(date)\nOLD=`date`", map[string]string{"NOW": "$(date)", "OLD": "`date`"}},
 		{"lone $", "PRICE=5$", map[string]string{"PRICE": "5$"}},

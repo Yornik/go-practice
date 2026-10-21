@@ -36,8 +36,8 @@ func TestCountMessages(t *testing.T) {
 		},
 		{
 			"the timestamp does not matter",
-			[]string{"00:01 " + motion, "00:59 " + motion, "07:28 " + motion},
-			[]repeated.Count{{motion, 3}},
+			[]string{"00:01 " + quiet, "00:59 " + quiet, "07:28 " + quiet},
+			[]repeated.Count{{quiet, 3}},
 		},
 		{
 			"a line without a timestamp counts as a whole",
@@ -74,46 +74,46 @@ func TestCountMessagesEmpty(t *testing.T) {
 }
 
 // TestCountMessagesNight counts the messages in the 9000 lines that
-// hq-window-01 wrote in 1 night.
+// canary-h3-01 wrote in 1 night.
 func TestCountMessagesNight(t *testing.T) {
-	lines := readLines(t, "testdata/hq-window-01.log")
+	lines := readLines(t, "testdata/canary-h3-01.log")
 	got := repeated.CountMessages(lines)
 
 	if len(got) != 40 {
-		t.Errorf("CountMessages(testdata/hq-window-01.log) returned %d counts, want 40 (1 per distinct message)", len(got))
+		t.Errorf("CountMessages(testdata/canary-h3-01.log) returned %d counts, want 40 (1 per distinct message)", len(got))
 	}
 	total := 0
 	for _, c := range got {
 		total += c.N
 	}
 	if total != len(lines) {
-		t.Errorf("CountMessages(testdata/hq-window-01.log): the counts add up to %d, want %d (1 per line)", total, len(lines))
+		t.Errorf("CountMessages(testdata/canary-h3-01.log): the counts add up to %d, want %d (1 per line)", total, len(lines))
 	}
 	wantFirst := []repeated.Count{
-		{"camd: started, firmware 2.9.3", 3},
-		{motion, 8600},
-		{"uploadd: queue full, photo dropped", 344},
-		{"wifid: signal -64 dBm", 4},
-		{"seedd: seed level 62%", 1},
+		{"gpud: started, driver 2.9.3", 3},
+		{quiet, 8600},
+		{"uploadd: queue full, result dropped", 344},
+		{"netd: sfp0 rx -6.4 dBm", 4},
+		{"coold: coolant level 62%", 1},
 	}
 	if first := got[:min(len(got), len(wantFirst))]; !slices.Equal(first, wantFirst) {
-		t.Errorf("CountMessages(testdata/hq-window-01.log), the first %d counts:\n got  %+v\n want %+v", len(wantFirst), first, wantFirst)
+		t.Errorf("CountMessages(testdata/canary-h3-01.log), the first %d counts:\n got  %+v\n want %+v", len(wantFirst), first, wantFirst)
 	}
 }
 
 func ExampleCountMessages() {
 	lines := []string{
-		"2026-09-09T03:01:23Z motiond: motion detected",
-		"2026-09-09T03:01:24Z motiond: motion detected",
-		"2026-09-09T03:01:26Z wifid: connection lost",
-		"2026-09-09T03:01:28Z motiond: motion detected",
-		"2026-09-09T03:01:31Z wifid: reconnected after 41 s",
+		"2026-09-09T03:01:23Z hushd: all quiet",
+		"2026-09-09T03:01:24Z hushd: all quiet",
+		"2026-09-09T03:01:26Z netd: sfp0 link down",
+		"2026-09-09T03:01:28Z hushd: all quiet",
+		"2026-09-09T03:01:31Z netd: sfp0 link up after 41 s",
 	}
 	for _, c := range repeated.CountMessages(lines) {
 		fmt.Printf("%4d %s\n", c.N, c.Message)
 	}
 	// Output:
-	//    3 motiond: motion detected
-	//    1 wifid: connection lost
-	//    1 wifid: reconnected after 41 s
+	//    3 hushd: all quiet
+	//    1 netd: sfp0 link down
+	//    1 netd: sfp0 link up after 41 s
 }

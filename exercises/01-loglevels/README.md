@@ -1,16 +1,18 @@
-# 01 · Count the errors the dashboard missed
+# 01 · Zero errors since March
 
 **Tier 1 · about 1 h** · Go: `strings.Fields`, `strings.Cut`, `strings.ToLower`, maps for lookup and counting, `switch`, returning `(value, error)` · Problem solving: list every spelling before you code; decide what "unknown" means
 
-It is your first day at Peckish, the company that puts a camera in a bird feeder and tells 40 000
-gardens which bird just ate their sunflower seeds. Ines Okafor, the senior SRE, gives you a laptop
-and a mug that says `STEP 0: BREATHE`. Then she opens the panel "Errors per hour" for the photo
-pipeline. It has shown a calm, flat 0 since March. In those 6 months `photo-store-2` filled
-up twice. The upload service logs `level=ERROR`, the feeder firmware logs `lvl=err`, the species
-labeller logs `severity=critical`, and the panel counts only lines with exactly `level=error`.
-Before anybody builds a new panel, Ines wants the real numbers from yesterday's logs. In this
-exercise you write the small library behind that count: split a line into its keys and values,
-map 15 spellings to 5 levels, count them, and keep the lines that matter.
+It is 21:40, rain runs down the glass of floor 61, and it is your first night at Vesper Labs, the AI
+lab at the top of the Spire. Vesper Labs sells HUSH, an AI that holds the pager for 4000 companies
+so that their engineers can sleep, and it has 1 rule, etched in the lobby glass: no AI writes the
+code that watches the AI. Noor Haddad, the principal SRE, gives you a laptop, a lanyard with an
+empty steel ring and a mug that says `RAW LINE FIRST`. Then she opens the panel "Errors per hour"
+for the inference fleet. It has shown 0 since March, and the fleet is not that healthy. The
+gateway logs `level=ERROR`, the GPU nodes log `lvl=err`, HUSH's own agent logs
+`severity=critical`, and the panel counts only lines with exactly `level=error`. Noor wants the
+real numbers from yesterday's logs. In this exercise you write the small library behind that
+count: split a line into its keys and values, map 15 spellings to 5 levels, count them, and keep
+the lines that matter.
 
 ## Task
 
@@ -106,8 +108,8 @@ Suggested order: `Fields`, `Level`, `CountLevels`, `AtLeast`. Each one can use t
 ## Examples
 
 ```text
-Fields(`ts=2026-09-01T10:00:03Z service=upload level=ERROR msg=disk_full`)
-  → {"ts": "2026-09-01T10:00:03Z", "service": "upload", "level": "ERROR", "msg": "disk_full"}
+Fields(`ts=2026-09-01T10:00:03Z service=gateway level=ERROR msg=disk_full`)
+  → {"ts": "2026-09-01T10:00:03Z", "service": "gateway", "level": "ERROR", "msg": "disk_full"}
 
 Fields("  lvl=info boot =x query=a=b=c lvl=err\t")
   → {"lvl": "err", "boot": "", "query": "a=b=c"}
@@ -119,36 +121,36 @@ Fields("")  → {} (or nil)
 ```
 
 ```text
-Level("service=upload level=ERROR msg=disk_full")      → "error"
-Level("feeder=feeder-0412 lvl=err")                    → "error"
-Level("service=labeller severity=critical")            → "fatal"
+Level("service=gateway level=ERROR msg=disk_full")     → "error"
+Level("node=vl-gpu-0412 lvl=err")                      → "error"
+Level("service=hushd severity=critical")               → "fatal"
 Level("lvl=err level=info")                            → "info"     (level comes before lvl)
 Level("level=info level=error")                        → "error"    (the last level wins)
 Level("level=bogus lvl=error")                         → "unknown"  (level is present; its value decides)
 Level("level lvl=error")                               → "unknown"  (the bare key level has the value "")
 Level("LEVEL=error")                                   → "unknown"  (keys are case-sensitive)
-Level("feeder=feeder-1203 msg=boot")                   → "unknown"  (no level key)
+Level("node=vl-gpu-0451 msg=boot")                     → "unknown"  (no level key)
 ```
 
 ```text
 lines:
-  service=upload level=INFO msg=started
-  feeder=feeder-0412 lvl=err msg=camera_timeout
+  service=gateway level=INFO msg=started
+  node=vl-gpu-0412 lvl=err msg=ecc_error
   (an empty line)
-  feeder=feeder-0977 lvl=dbg msg=motion_event
-  service=labeller severity=critical msg=model_oom
-  feeder=feeder-1203 msg=boot
+  node=vl-gpu-0437 lvl=dbg msg=fan_event
+  service=hushd severity=critical msg=model_oom
+  node=vl-gpu-0451 msg=boot
 
 CountLevels(lines) → {"debug": 1, "info": 1, "error": 1, "fatal": 1, "unknown": 1}
 
 AtLeast(lines, "warn")
-  → ["feeder=feeder-0412 lvl=err msg=camera_timeout",
-     "service=labeller severity=critical msg=model_oom"], nil
+  → ["node=vl-gpu-0412 lvl=err msg=ecc_error",
+     "service=hushd severity=critical msg=model_oom"], nil
 
 AtLeast(lines, "WARNING") → nil, error `loglevels: unknown minimum level "WARNING"`
 ```
 
-`testdata/photos.log` holds 24 lines from the photo pipeline and 3 blank lines. None of them has
+`testdata/fleet.log` holds 24 lines from the inference fleet and 3 blank lines. None of them has
 exactly `level=error`, and 11 of them are at `error` or worse.
 
 ## Run the tests
@@ -186,13 +188,14 @@ crashes until all 4 steps work.
 ## Stretch goals
 
 - Turn it into a command: read a log from stdin with `bufio.Scanner` and print the count per
-  level, from `debug` to `unknown`, in that fixed order. Try it on `testdata/photos.log`.
-- Count per service: a `map[string]map[string]int` from the value of `service` (or `feeder`) to
-  the counts. Which service has the most errors in `testdata/photos.log`?
+  level, from `debug` to `unknown`, in that fixed order. Try it on `testdata/fleet.log`.
+- Count per service: a `map[string]map[string]int` from the value of `service` (or `node`) to
+  the counts. Which service has the most errors in `testdata/fleet.log`?
 - Accept numeric levels: syslog writes 0 to 7 (`level=3` is `err`), and the Node.js logger
   Bunyan writes 10 to 60 (`level=50` is `error`). Decide what to do when a line could mean both.
-- Print the share of `unknown` lines. A rising share tells you that a service changed how it
-  logs, before a panel shows 0 for half a year.
+- Print the share of `unknown` lines. HUSH's agent moved from `level=` to `severity=` in March,
+  the month the panel went to 0. A rising share tells you that a service changed how it logs,
+  before a panel shows 0 for half a year.
 
 ## Stuck?
 
