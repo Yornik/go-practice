@@ -2,14 +2,16 @@
 
 **Tier 7 · about 2 h** · Go: generics and `comparable`, the zero value of a type parameter, `sync.Mutex`, callbacks outside a lock, an injected clock · Problem solving: choose data structures from the required complexities (O(1) for Get, Set and Delete); keep two structures in sync; decide what each operation does with an expired entry
 
-Every request to your API needs the tenant's config from an internal config service. It answers
-in 200 ms on a good day and falls over when 40 pods ask on every request, so you cache the
-answers in memory. A plain map grows until the pod is OOM-killed, so the cache needs a
-**capacity**: when full, it drops the **least recently used** entry (LRU). It must not serve a
-config that changed an hour ago, so entries **expire** after a time to live (TTL). Values that
-hold resources, such as a gRPC client per tenant, must be closed when they leave: a **callback
-for every removal**. **Hit and miss counters** tell you whether the cache earns its memory.
-`hashicorp/golang-lru` and Kubernetes' `LRUExpireCache` do parts of this; here you build it.
+Ilona Varga moved her night bakery from HUSH, the lab's AI on-call engineer, to Lantern, the team's
+alert pipeline, an hour ago. Her config says `hush_agents: revoked`: no HUSH summary at 06:00. Every
+request to Lantern's API needs the tenant's config from an internal config service. It answers in
+200 ms on a good day and falls over when 40 pods ask on every request, so you cache the answers in
+memory. A plain map grows until the pod is OOM-killed, so the cache needs a **capacity**: when full,
+it drops the **least recently used** entry (LRU). It must not serve a config that changed an hour
+ago, so entries **expire** after a time to live (TTL). Values that hold resources, such as a gRPC
+client per tenant, must be closed when they leave: a **callback for every removal**. **Hit and miss
+counters** tell you whether the cache earns its memory. `hashicorp/golang-lru` and Kubernetes'
+`LRUExpireCache` do parts of this. In this exercise you build it.
 
 ## Task
 

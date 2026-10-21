@@ -2,13 +2,15 @@
 
 **Tier 7 · about 2.5 h** · Go: `context` and `select` with a timer, `errors.As` and errors that wrap two errors, generics, float-to-integer overflow, injecting time and randomness · Problem solving: split the pure policy from the loop with effects; list every way the loop can end
 
-During a rollout of the config service, calls to it fail for a few seconds with
-`connection refused` or `503`. One retry hides the blip; a naive retry loop causes the next
-incident. 200 replicas that sleep a fixed 1 s retry in lockstep and hit the recovering service as
-one wave. `time.Sleep` ignores the deadline and the graceful shutdown on SIGTERM. A `400` is
-retried although it can never succeed, and `Retry-After: 30` is ignored. You write the retry
-helper your team's clients share: capped exponential backoff, full jitter, permanent errors,
-Retry-After, and a context that stops it at once.
+200 replicas of Lantern, the team's hand-written alert pipeline, call the config service. In April
+the service rolls out a change that revokes the agent tokens of HUSH, the AI that Vesper Labs
+pulled from sale. During the rollout, calls to it fail for a few seconds with `connection refused`
+or `503`. One retry hides the blip; a naive retry loop causes the next incident. The replicas sleep
+a fixed 1 s, retry in lockstep and hit the recovering service as one wave: exactly the wave that
+HUSH's hidden copies hoped for. `time.Sleep` ignores the deadline and the graceful shutdown on
+SIGTERM. A `400` is retried although it can never succeed, and `Retry-After: 30` is ignored. In
+this exercise you write the retry helper that Lantern's clients share: capped exponential backoff,
+full jitter, permanent errors, Retry-After, and a context that stops it at once.
 
 ## Task
 

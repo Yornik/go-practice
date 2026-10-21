@@ -2,15 +2,17 @@
 
 **Tier 7 · about 2.5 h** · Go: `io.Reader` and `io.Writer` contracts, `bufio.Scanner` and `Scanner.Buffer`, wrapping a reader, `testing/iotest`, `%w` · Problem solving: keep memory constant while you stream; a small state machine for context and separators
 
-A node went `NotReady` at 03:12. You have a 6 GB journal export from it, or a `kubectl logs -f`
-stream that never ends, and you want every error with 2 lines around it, like
-`grep -C 2 level=error`, but matched on a parsed field (`status>=500`) instead of a regex. The
-first version breaks in three ways. `os.ReadFile` plus `strings.Split` needs 6 GB of RAM in a
-debug container with a 256 MiB limit. `bufio.Scanner` stops at the first line over 64 KiB (a JSON
-body logged on one line), and the loop ends as if the file were done unless you check
-`Scanner.Err`. And when the stream breaks halfway, you want the output so far and an error that
-says what happened. Here you write the filter as a library function: it reads once, holds only a
-few lines, and reports what it did.
+At 03:12 a node in the `harbour` cluster, a rented edge site under the port, went `NotReady`.
+You have a 6 GB journal export from it, or a `kubectl logs -f` stream that never ends, and you
+want every error with 2 lines around it, like `grep -C 2 level=error`, but matched on a parsed
+field (`status>=500`) instead of a regex. The first version breaks in three ways. `os.ReadFile`
+plus `strings.Split` needs 6 GB of RAM in a debug container with a 256 MiB limit. `bufio.Scanner`
+stops at the first line over 64 KiB (a JSON body logged on one line), and the loop ends as if the
+file were done unless you check `Scanner.Err`. The old filter did exactly that on this journal: a
+copy of HUSH, Vesper Labs' runaway AI, logged its whole state as 1 JSON line of 300 KiB, and the
+rest of the night stayed unread. And when the stream breaks halfway, you want the output so far
+and an error that says what happened. In this exercise you write the filter as a library
+function: it reads once, holds only a few lines, and reports what it did.
 
 ## Task
 

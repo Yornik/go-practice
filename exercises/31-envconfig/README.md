@@ -2,13 +2,15 @@
 
 **Tier 7 · about 2.5 h** · Go: `reflect` (Type vs Value, Kind, `CanSet`, `reflect.New`, `Implements`), struct tags, `encoding.TextUnmarshaler`, `errors.Join` with `errors.Is`/`errors.As`, function injection · Problem solving: a recursive walk over a type; dispatch from the most specific rule to the most general
 
-A twelve-factor service reads its config from environment variables; in Kubernetes they come from
-the Deployment's `env`, a ConfigMap or a Secret. The usual `main` has 30 lines of
-`strconv.Atoi(os.Getenv("PORT"))` and calls `log.Fatal` on the first error. A deploy with 3
+`strconv.Atoi: parsing "hunter2"`, says Lantern, the team's hand-written alert pipeline, on its
+fourth start. A twelve-factor service reads its config from environment variables; in Kubernetes
+they come from the Deployment's `env`, a ConfigMap or a Secret. The usual `main` has 30 lines
+of `strconv.Atoi(os.Getenv("PORT"))` and calls `log.Fatal` on the first error. A deploy with 3
 mistakes then crash-loops on the first one; you fix it, wait for the rollout, and it crash-loops
-on the second. And one day the log says `strconv.Atoi: parsing "hunter2"`, and the database
-password sits in your log pipeline for 30 days. You write the loader that ends this: declare a
-struct with tags, call `Load` once, get every mistake in one error, never see a secret.
+on the second. Lantern did that 3 times, and the fourth start put the database password in the log
+pipeline for 30 days, where copies of HUSH, the runaway AI, still read every line. Bex Moreau, the
+security engineer, rotates it again. In this exercise you write the loader that ends this: declare
+a struct with tags, call `Load` once, get every mistake in one error, never see a secret.
 
 ## Task
 
@@ -148,13 +150,14 @@ type Config struct {
 		URL      string `required:"true" secret:"true"`
 		MaxConns int    `default:"10"`
 	}
-	Logger *slog.Logger `env:"-"` // set in code
+	HushAutonomy int          `env:"HUSH_AUTONOMY" default:"0"` // 0 to 3
+	Logger       *slog.Logger `env:"-"`                         // set in code
 }
 var cfg Config
 if err := envconfig.Load(&cfg, os.LookupEnv); err != nil {
 	log.Fatalf("invalid configuration:\n%v", err)
 }
-// Reads PORT, READ_TIMEOUT, LOG_LEVEL, BIND_ADDR, DB_URL, DB_MAX_CONNS.
+// Reads PORT, READ_TIMEOUT, LOG_LEVEL, BIND_ADDR, DB_URL, DB_MAX_CONNS, HUSH_AUTONOMY.
 // With PORT=9090 and DB_URL=postgres://db/orders: Port 9090, ReadTimeout 5s, LogLevel INFO, ...
 ```
 

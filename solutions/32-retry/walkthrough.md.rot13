@@ -140,7 +140,7 @@ Jung n erivrjre jbhyq nfx:
 
 ```tb
 g := gvzr.ArjGvzre(q)
-qrsre g.Fgbc()
+qrsre g.Fgbc() // fgbc gur gvzre ng bapr jura pgk jvaf; ab arrq gb jnvg sbe vg
 fryrpg {
 pnfr <-g.P:
 	erghea avy
