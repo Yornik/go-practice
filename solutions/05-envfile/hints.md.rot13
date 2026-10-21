@@ -1,0 +1,44 @@
+# Uvagf · 05 · Ernq n .rai svyr jvgubhg onfu
+
+## Uvag 1
+
+Qb abg fgneg jvgu pbqr. Gnxr n furrg bs cncre naq jevgr rirel funcr n yvar pna unir, 1 cre ebj:
+rzcgl, bayl oynaxf, n pbzzrag, `XRL=inyhr`, `rkcbeg XRL=inyhr`, n inyhr jvgu n pbzzrag, n inyhr va
+`"..."`, n inyhr va `'...'`, naq rnpu oebxra funcr sebz gur reebe gnoyr. Arkg gb rnpu ebj, jevgr
+jung `Cnefr` zhfg qb jvgu vg. Gura nfx: juvpu bs gurfr qrpvfvbaf arrq gur jubyr grkg, naq juvpu
+arrq bayl 1 yvar? Vs gur nafjre vf "bayl 1 yvar" sbe nyzbfg nyy bs gurz, jevgr n urycre gung ernqf
+rknpgyl 1 yvar naq ergheaf vgf xrl naq inyhr be na reebe, naq yrg `Cnefr` bayl ybbc, pbhag yvarf
+naq svyy gur znc.
+
+## Uvag 2
+
+Gur beqre bs gur fgrcf vafvqr 1 yvar vf gur jubyr rkrepvfr. 2 gencf qrpvqr vg:
+
+- Gur pbzzrag ehyr ybbxf ng gur olgr **orsber** gur `#`. Vs lbh gevz gur inyhr svefg, `XRL= #p`
+  orpbzrf `#p`, naq lbh pna ab ybatre gryy vg ncneg sebz `PBYBE=#ss0000`. Qrpvqr "dhbgrq be
+  hadhbgrq" ba gur gevzzrq grkg, ohg ybbx sbe gur pbzzrag va gur grkg nf vg pnzr nsgre gur `=`.
+- Gur yvar ahzore vf gur cbfvgvba va gur grkg, abg n pbhag bs gur yvarf lbh hfrq. Gnxr vg sebz gur
+  vaqrk bs gur ybbc bire nyy yvarf, orsber lbh fxvc nalguvat, naq nqq 1.
+
+Sbe n dhbgrq inyhr, gur pybfvat dhbgr vf gur svefg olgr rdhny gb gur bcravat dhbgr **nsgre** gur
+bcravat dhbgr. `fgevatf.VaqrkOlgr` ba gur fyvpr gung fgnegf 1 olgr yngre svaqf vg; erzrzore gung
+gur vaqrk vg ergheaf pbhagf sebz gung yngre fgneg.
+
+## Uvag 3
+
+Na bhgyvar, jvgubhg pbqr:
+
+1. `InyvqXrl`: na rzcgl xrl vf vainyvq. Ybbc bire gur olgrf jvgu gurve vaqrk. N yrggre be `_` vf
+   svar rireljurer; n qvtvg vf svar rireljurer rkprcg ng vaqrk 0; nal bgure olgr vf vainyvq.
+2. `Cnefr`: znxr gur znc svefg, fb gung vg vf arire avy. Fcyvg gur grkg ba `\a`. Sbe rnpu yvar,
+   erzbir 1 genvyvat `\e`, gura gur oynaxf ng obgu raqf. Fxvc vg vs vg vf rzcgl be fgnegf jvgu
+   `#`. Bgurejvfr pnyy gur yvar urycre. Ba na reebe, erghea `avy` naq gur reebe jvgu
+   `yvar <vaqrk+1>: ` va sebag. Bgurejvfr fgber gur inyhr; n yngre yvar fvzcyl birejevgrf vg.
+3. Yvar urycre: vs gur yvar fgnegf jvgu `rkcbeg` naq gur arkg olgr vf n oynax, qebc gur `rkcbeg`.
+   Phg ng gur svefg `=`; ab `=` vf na reebe gung dhbgrf gur yvar. Gevz gur xrl, purpx vg jvgu
+   `InyvqXrl`, naq dhbgr vg va gur reebe.
+4. Inyhr urycre: gevz gur oynaxf ng gur fgneg. Vs gur svefg olgr vf n dhbgr, svaq gur pybfvat
+   dhbgr, purpx jung sbyybjf vg (bayl oynaxf, gura abguvat be n `#`), naq erghea gur olgrf orgjrra
+   gur dhbgrf. Bgurejvfr jnyx gur hagevzzrq grkg, phg vg ng gur svefg `#` gung sbyybjf n oynax,
+   naq gevz gur erfg.
+5. Jenc gur inyhr reebef jvgu gur xrl, abg gur inyhr.

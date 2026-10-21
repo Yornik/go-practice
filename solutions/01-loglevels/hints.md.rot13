@@ -1,0 +1,39 @@
+# Uvagf · 01 · Pbhag gur reebef gur qnfuobneq zvffrq
+
+## Uvag 1
+
+Ohvyq gur 4 shapgvbaf nf ynlref, rnpu ba gbc bs gur bar orsber: n yvar orpbzrf n znc bs xrlf naq
+inyhrf, n znc tvirf n yriry, yriryf tvir pbhagf naq n svygre. Vs `Svryqf` vf evtug, `Yriry` bayl
+unf gb ybbx guvatf hc, naq `PbhagYriryf` naq `NgYrnfg` ner fubeg ybbcf nebhaq `Yriry`. Orsber lbh
+jevgr `Yriry`, nfx 2 dhrfgvbaf ba cncre. Ubj qb lbh gryy "gur xrl vf abg va gur yvar" sebz "gur
+xrl vf va gur yvar jvgu na rzcgl inyhr"? Naq jurer qb gur 15 fcryyvatf yvir, fb gung n ernqre pna
+purpx gurz ntnvafg gur gnoyr va 1 tynapr?
+
+## Uvag 2
+
+`fgevatf.Phg(jbeq, "=")` ergheaf gur cneg orsber gur svefg `=`, gur cneg nsgre vg, naq jurgure vg
+sbhaq bar. Ybbx ng jung vg ergheaf sbe `obbg` naq sbe `=k`: gur oner-xrl ehyr naq gur "fgnegf jvgu
+`=`" ehyr snyy bhg bs 1 purpx ba gur xrl. Sbe `Yriry`, gur znva cvgsnyy vf gur cynva znc ernq
+`svryqf["yriry"]`: vg ergheaf `""` obgu sbe n zvffvat xrl naq sbe `yriry=`, fb n ybbc bire gur 3
+xrlf pnaabg xabj jura gb fgbc. Gur "pbzzn bx" sbez, `inyhr, bx := z[xrl]`, gryyf gur 2 pnfrf
+ncneg. Ybjre-pnfr gur inyhr bapr, gura yrg n `fjvgpu` jvgu frireny inyhrf cre `pnfr` qb gur
+znccvat. Sbe `NgYrnfg`, tvir rnpu yriry n ahzore; gura "ng yrnfg" vf n `>=`. Guvax nobhg juvpu
+ahzore n ybbxhc bs `haxabja` ergheaf, naq znxr gung jbex sbe lbh.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. `Svryqf`: znxr n znc. Sbe rirel jbeq bs `fgevatf.Svryqf(yvar)`, phg vg ng gur svefg `=`. Fxvc
+   gur jbeq vs gur xrl vf rzcgl. Bgurejvfr fgber gur inyhr; n yngre jbeq jvgu gur fnzr xrl fvzcyl
+   birejevgrf vg.
+2. `Yriry`: pnyy `Svryqf`. Ybbc bire gur xrlf `yriry`, `yiy`, `frirevgl` va gung beqre (n fyvpr
+   xrrcf gur beqre). Ng gur svefg xrl gung vf cerfrag, erghea gur abeznyvmrq inyhr bs gung xrl.
+   Nsgre gur ybbc, erghea `haxabja`.
+3. N urycre gung abeznyvmrf 1 inyhr: `fgevatf.GbYbjre`, gura n `fjvgpu` jvgu 1 `pnfr` cre yriry
+   naq n `qrsnhyg` gung ergheaf `haxabja`.
+4. `PbhagYriryf`: znxr gur znc svefg, fb vg vf arire avy. Fxvc n yvar jura vg unf ab jbeqf
+   (`fgevatf.GevzFcnpr` tvirf `""`). Bgurejvfr vaperzrag gur pbhag bs vgf yriry.
+5. `NgYrnfg`: n znc sebz gur 5 yriry anzrf gb 1 gb 5. Ybbx hc `zvaYriry` jvgu pbzzn bx svefg; vs
+   vg vf zvffvat, erghea `avy` naq na reebe ohvyg jvgu `szg.Reebes` naq `%d`. Gura xrrc rirel
+   yvar jubfr yriry ahzore vf ng yrnfg gung bs `zvaYriry`.

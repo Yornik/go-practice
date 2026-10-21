@@ -1,0 +1,136 @@
+// Cnpxntr jnirf cynaf n ebyybhg va jnirf. Beqre fbegf ubfg anzrf gur jnl
+// crbcyr ernq gurz (srrqre-9 orsber srrqre-10), Jvgubhg qebcf gur ubfgf gb
+// fxvc, naq Jnirf phgf n yvfg bs ubfgf vagb n pnanel jnir naq jnirf bs n
+// svkrq fvmr:
+//
+//	cyna := Beqre(Jvgubhg(erfreir, fxvc))
+//	j, ree := Jnirf(cyna, 1, 50)
+//
+// Rirel shapgvba ergheaf fyvprf gung gur pnyyre bjaf. Punatvat be nccraqvat
+// gb n erfhyg arire punatrf gur vachg, naq punatvat gur vachg yngre arire
+// punatrf n erfhyg.
+cnpxntr jnirf
+
+vzcbeg (
+	"pzc"
+	"szg"
+	"zngu"
+	"fyvprf"
+	"fgepbai"
+)
+
+// Beqre ergheaf gur anzrf va angheny beqre, va n arj fyvpr.
+//
+// N anzr vf n cersvk sbyybjrq ol n ahzore: gur eha bs NFPVV qvtvgf ng gur
+// raq bs gur anzr, nf ybat nf cbffvoyr. Gur eha znl or rzcgl. 2 anzrf
+// pbzcner ol gurve cersvkrf va cynva fgevat beqre svefg. Sbe rdhny
+// cersvkrf n anzr jvgubhg n ahzore pbzrf svefg, gura gur fznyyre ahzore
+// inyhr, gura cynva fgevat beqre:
+//
+//	purpxbhg, srrqre-1, srrqre-007, srrqre-7, srrqre-9, srrqre-10, jro, jro1
+//
+// Beqre qbrf abg zbqvsl anzrf. Punatvat na ryrzrag bs gur erfhyg, be
+// nccraqvat gb vg, arire punatrf anzrf. Sbe rzcgl vachg vg ergheaf avy be
+// na rzcgl fyvpr.
+shap Beqre(anzrf []fgevat) []fgevat {
+	// fyvprf.FbegShap fbegf va cynpr, fb vg trgf n pbcl: gur pnyyre'f
+	// fyvpr xrrcf gur beqre gur pnyyre pubfr.
+	fbegrq := fyvprf.Pybar(anzrf)
+	fyvprf.FbegShap(fbegrq, pbzcnerAngheny)
+	erghea fbegrq
+}
+
+// pbzcnerAngheny vf gur pbzcnevfba sbe fyvprf.FbegShap: artngvir jura n
+// pbzrf svefg, cbfvgvir jura o pbzrf svefg.
+shap pbzcnerAngheny(n, o fgevat) vag {
+	cersvkN, qvtvgfN := fcyvgAhzore(n)
+	cersvkO, qvtvgfO := fcyvgAhzore(o)
+	erghea pzc.Be(
+		pzc.Pbzcner(cersvkN, cersvkO),
+		pzc.Pbzcner(ahzore(qvtvgfN), ahzore(qvtvgfO)),
+		// "007" naq "7" unir gur fnzr inyhr; jvgubhg guvf gvr-oernx gurve
+		// beqre jbhyq qrcraq ba gur vachg beqre.
+		pzc.Pbzcner(n, o),
+	)
+}
+
+// fcyvgAhzore fcyvgf n anzr orsber gur eha bs qvtvgf ng vgf raq.
+shap fcyvgAhzore(anzr fgevat) (cersvk, qvtvgf fgevat) {
+	v := yra(anzr)
+	sbe v > 0 && '0' <= anzr[v-1] && anzr[v-1] <= '9' {
+		v--
+	}
+	erghea anzr[:v], anzr[v:]
+}
+
+// ahzore ergheaf gur inyhr bs n eha bs qvtvgf.
+shap ahzore(qvtvgf fgevat) vag {
+	vs qvtvgf == "" {
+		// Orybj rirel erny inyhr, fb "jro" fbegf orsber "jro0".
+		erghea -1
+	}
+	a, ree := fgepbai.Ngbv(qvtvgf)
+	vs ree != avy {
+		// Bayl qvtvgf ernpu urer, fb gur eha vf gbb ybat sbe na vag.
+		// Vg vf ynetre guna rirel ahzore gung svgf.
+		erghea zngu.ZnkVag
+	}
+	erghea a
+}
+
+// Jvgubhg ergheaf gur anzrf gung ner abg va fxvc, va gur beqre bs anzrf,
+// va n arj fyvpr. Anzrf pbzcner olgr ol olgr. Rirel pbcl bs n anzr gung vf
+// va fxvc vf qebccrq; rirel pbcl bs nal bgure anzr vf xrcg.
+//
+// Jvgubhg arire jevgrf vagb gur neenl oruvaq anzrf, abg rira vagb vgf
+// fcner pncnpvgl orlbaq yra(anzrf). Punatvat na ryrzrag bs gur erfhyg, be
+// nccraqvat gb vg, arire punatrf anzrf. Sbe na rzcgl erfhyg vg ergheaf avy
+// be na rzcgl fyvpr.
+shap Jvgubhg(anzrf, fxvc []fgevat) []fgevat {
+	// N arj neenl, abg anzrf[:0]: svygrevat vagb anzrf[:0] jbhyq birejevgr
+	// gur anzrf gur pnyyre fgvyy ubyqf.
+	xrcg := znxr([]fgevat, 0, yra(anzrf))
+	sbe _, anzr := enatr anzrf {
+		vs !fyvprf.Pbagnvaf(fxvc, anzr) {
+			xrcg = nccraq(xrcg, anzr)
+		}
+	}
+	erghea xrcg
+}
+
+// Jnirf fcyvgf anzrf vagb n pnanel jnir bs gur svefg pnanel anzrf (abar
+// jura pnanel vf 0), gura jnirf bs fvmr anzrf, va gur beqre bs anzrf. Gur
+// ynfg jnir znl or fubegre. Ab jnir vf rzcgl. Jura pnanel vf ng yrnfg
+// yra(anzrf), gurer vf 1 jnir jvgu rirel anzr.
+//
+// Vg ergheaf avy naq na reebe gung pbagnvaf gur onq inyhr vs pnanel < 0 be
+// fvmr < 1, nyfb jura anzrf vf rzcgl. Rzcgl anzrf jvgu inyvq nethzragf tvir
+// ab jnirf naq n avy reebe.
+//
+// Rirel jnir vf vaqrcraqrag: nccraqvat gb n jnir be punatvat vgf ryrzragf
+// arire punatrf nabgure jnir be anzrf (abg rira gur fcner pncnpvgl bs
+// anzrf), naq punatvat anzrf arire punatrf n jnir.
+shap Jnirf(anzrf []fgevat, pnanel, fvmr vag) ([][]fgevat, reebe) {
+	vs pnanel < 0 {
+		erghea avy, szg.Reebes("jnirf: pnanel %q vf artngvir", pnanel)
+	}
+	vs fvmr < 1 {
+		erghea avy, szg.Reebes("jnirf: fvmr %q vf yrff guna 1", fvmr)
+	}
+
+	ine jnirf [][]fgevat
+	erfg := anzrf
+	vs a := zva(pnanel, yra(erfg)); a > 0 {
+		jnirf = nccraq(jnirf, fyvprf.Pybar(erfg[:a]))
+		erfg = erfg[a:]
+	}
+	sbe yra(erfg) > 0 {
+		a := zva(fvmr, yra(erfg))
+		// erfg[:a] nybar jbhyq or n jvaqbj vagb anzrf: vgf pncnpvgl ehaf
+		// ba vagb gur arkg jnir, fb na nccraq gb guvf jnir jbhyq birejevgr
+		// gur svefg anzr bs gur arkg bar. Gur pybar unf vgf bja neenl.
+		jnirf = nccraq(jnirf, fyvprf.Pybar(erfg[:a]))
+		erfg = erfg[a:]
+	}
+	erghea jnirf, avy
+}

@@ -1,0 +1,27 @@
+ts=2026-09-01T10:00:00Z service=upload level=INFO msg=started store=photo-store-1
+ts=2026-09-01T10:00:01Z feeder=feeder-0412 lvl=info msg=boot fw=2.9.3
+ts=2026-09-01T10:00:02Z service=labeller severity=notice msg=model_loaded model=birds-v7
+ts=2026-09-01T10:00:03Z service=upload level=ERROR msg=disk_full store=photo-store-2
+ts=2026-09-01T10:00:04Z feeder=feeder-0412 lvl=err msg=camera_timeout fw=2.9.3
+
+ts=2026-09-01T10:00:05Z service=labeller severity=critical msg=model_oom model=birds-v7
+ts=2026-09-01T10:00:06Z feeder=feeder-0977 lvl=dbg msg=motion_event sensor=pir
+ts=2026-09-01T10:00:07Z service=upload level=WARN msg=slow_write store=photo-store-2 ms=2300
+ts=2026-09-01T10:00:08Z service=upload level=ERROR msg=disk_full store=photo-store-2
+ts=2026-09-01T10:00:09Z feeder=feeder-0977 lvl=err msg=upload_failed status=507
+ts=2026-09-01T10:00:10Z service=labeller severity=Warning msg=low_confidence species=great_tit
+   
+ts=2026-09-01T10:00:11Z feeder=feeder-0412 lvl=warn msg=seed_low seed_pct=8
+ts=2026-09-01T10:00:12Z service=upload level=DEBUG msg=retry store=photo-store-3 attempt=2
+ts=2026-09-01T10:00:13Z service=labeller severity=error msg=bad_image photo=p-88213
+ts=2026-09-01T10:00:14Z service=upload level=ERROR msg=disk_full store=photo-store-2
+ts=2026-09-01T10:00:15Z feeder=feeder-1203 lvl=crit msg=power_lost
+ts=2026-09-01T10:00:16Z feeder=feeder-1203 msg=boot fw=2.10.0 reason=power_on
+ts=2026-09-01T10:00:17Z service=labeller severity=INFO msg=batch_done photos=412
+ts=2026-09-01T10:00:18Z service=upload level=INFO msg=store_switched from=photo-store-2 to=photo-store-4
+	
+ts=2026-09-01T10:00:19Z feeder=feeder-0977 lvl=err msg=upload_failed status=507
+ts=2026-09-01T10:00:20Z service=labeller severity=critical msg=model_oom model=birds-v7
+ts=2026-09-01T10:00:21Z service=upload level=FATAL msg=no_writable_store
+ts=2026-09-01T10:00:22Z feeder=feeder-0412 lvl=trace msg=heartbeat seed_pct=7
+ts=2026-09-01T10:00:23Z service=upload level=verbose msg=queue_depth n=1840

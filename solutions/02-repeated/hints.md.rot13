@@ -1,0 +1,42 @@
+# Uvagf · 02 · Ynfg zrffntr ercrngrq 8599 gvzrf
+
+## Uvag 1
+
+Gnxr gur rknzcyr sebz gur ERNQZR naq n crapvy. Tb guebhtu gur vachg 1 yvar ng n gvzr naq, nsgre
+rnpu yvar, jevgr qbja 2 guvatf: jung lbh unir jevggra gb gur bhgchg fb sne, naq jung lbh fgvyy
+arrq gb erzrzore. Jura qbrf n znexre orpbzr xabja? Abg jura gur eha fgnegf, naq abg va gur zvqqyr
+bs vg. Sbe `PbhagZrffntrf`, abgvpr gung vg nfxf sbe 2 guvatf ng bapr: n snfg jnl gb svaq "unir V
+frra guvf zrffntr orsber?", naq na beqre. Juvpu Tb glcr tvirf lbh rnpu bs gurz?
+
+## Uvag 2
+
+N znexre pna bayl or jevggra jura vgf eha unf raqrq. N eha raqf va 2 jnlf: n yvar jvgu n qvssrerag
+zrffntr neevirf, be gur vachg raqf. Gur ybbc obql frrf gur svefg pnfr. Abguvat va gur ybbc frrf gur
+frpbaq bar, fb gur eha ng gur raq bs gur vachg arrqf pbqr nsgre gur ybbc. Gung vf gur pynffvp oht
+bs guvf xvaq bs ybbc: rirel grfg cnffrf hagvy gur ynfg yvar vf cneg bs n eha.
+
+Lbh qb abg arrq n inevnoyr sbe gur cerivbhf yvar: vafvqr `sbe v, yvar := enatr yvarf`, gur
+cerivbhf yvar vf `yvarf[v-1]`, nf ybat nf `v > 0`.
+
+Sbe `PbhagZrffntrf`: n znc ybfrf gur beqre, naq n fyvpr nybar znxrf rirel ybbxhc n ybbc. Hfr obgu.
+Yrg gur znc ubyq gur cbfvgvba bs gur zrffntr va gur fyvpr. Qb abg fgber n cbvagre gb n fyvpr
+ryrzrag va gur znc: jura `nccraq` arrqf zber ebbz, vg pbcvrf gur ryrzragf gb n arj neenl, naq
+lbhe cbvagre fgvyy cbvagf ng gur byq bar.
+
+## Uvag 3
+
+Na bhgyvar:
+
+1. `Zrffntr`: `fgevatf.Phg(yvar, " ")` ergheaf gur cneg orsber gur svefg fcnpr, gur cneg nsgre
+   vg, naq jurgure vg sbhaq n fcnpr. Jvgubhg n fcnpr, erghea gur yvar.
+2. N fznyy urycre gung ergheaf gur gvzrfgnzc bs n yvar (rzcgl jura gurer vf ab fcnpr), naq n
+   urycre gung ohvyqf gur znexre sebz gur ynfg yvar bs n eha naq A. Hfr `fgepbai.Vgbn` sbe A, naq
+   cvpx `gvzr` be `gvzrf`.
+3. `Pbyyncfr`: na bhgchg fyvpr naq n pbhagre bs ercrngf va gur pheerag eha. Sbe rnpu yvar: vs vg vf
+   abg gur svefg yvar naq vgf zrffntr rdhnyf gur zrffntr bs gur cerivbhf yvar, pbhag vg naq tb ba
+   gb gur arkg yvar. Bgurejvfr, vs gur pbhagre vf nobir 0, nccraq gur znexre sbe gur cerivbhf yvar
+   naq erfrg gur pbhagre; gura nccraq gur yvar.
+4. Nsgre gur ybbc, vs gur pbhagre vf nobir 0, nccraq gur znexre sbe gur ynfg yvar.
+5. `PbhagZrffntrf`: n `[]Pbhag` naq n `znc[fgevat]vag` sebz zrffntr gb vaqrk. Sbe rnpu yvar, ybbx
+   gur zrffntr hc. Sbhaq: nqq 1 gb `A` bs gung ryrzrag. Abg sbhaq: fgber gur vaqrk `yra(pbhagf)`,
+   gura nccraq n arj `Pbhag` jvgu `A` 1.

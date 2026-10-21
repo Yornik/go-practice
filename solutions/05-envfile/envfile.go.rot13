@@ -1,0 +1,126 @@
+// Cnpxntr raisvyr ernqf .rai svyrf nf qngn, arire nf pbqr:
+//
+//	# hcybnq freivpr
+//	rkcbeg CBEG=8080
+//	YBT_YRIRY=vasb # dhvrg
+//	QO_CNFFJBEQ=cn$$j0eq
+//
+// tvirf CBEG=8080, YBT_YRIRY=vasb naq QO_CNFFJBEQ=cn$$j0eq, jvgu gur "$$"
+// xrcg nf jevggra.
+cnpxntr raisvyr
+
+vzcbeg (
+	"reebef"
+	"szg"
+	"fgevatf"
+)
+
+// oynaxf ner gur olgrf gung frcnengr guvatf ba n yvar. Bgure juvgrfcnpr, fhpu
+// nf n iregvpny gno, vf qngn.
+pbafg oynaxf = " \g"
+
+shap vfOynax(p olgr) obby {
+	erghea p == ' ' || p == '\g'
+}
+
+// InyvqXrl ercbegf jurgure xrl vf n inyvq inevnoyr anzr: na NFPVV yrggre be _,
+// gura NFPVV yrggref, qvtvgf be _.
+//
+// Fb "CBEG", "_k" naq "qo_ubfg2" ner inyvq, naq "", "2SN", "qo-ubfg",
+// "QO UBFG" naq "ключ" ner abg.
+shap InyvqXrl(xrl fgevat) obby {
+	vs xrl == "" {
+		erghea snyfr
+	}
+	// Olgrf, abg eharf: rirel nyybjrq punenpgre vf NFPVV, naq rirel olgr bs n
+	// zhygv-olgr HGS-8 punenpgre vf 0k80 be zber, fb vg snvyf obgu purpxf.
+	sbe v := enatr yra(xrl) {
+		p := xrl[v]
+		fgneg := 'n' <= p && p <= 'm' || 'N' <= p && p <= 'M' || p == '_'
+		qvtvg := '0' <= p && p <= '9'
+		vs !fgneg && !(qvtvg && v > 0) {
+			erghea snyfr
+		}
+	}
+	erghea gehr
+}
+
+// Cnefr ernqf gur pbagrag bs n .rai svyr naq ergheaf vgf inevnoyrf.
+//
+// Vg fxvcf oynax yvarf naq yvarf jubfr svefg aba-oynax olgr vf "#". Rirel
+// bgure yvar vf XRL=inyhr, jvgu na bcgvbany "rkcbeg " orsber gur xrl. N oynax
+// vf n fcnpr be n gno. Na hadhbgrq inyhr raqf orsber n "#" gung sbyybjf n
+// oynax. N inyhr va '...' be "..." vf gnxra ireongvz, jvgubhg rfpncrf. "$" vf
+// arire rkcnaqrq. Gur ynfg qrsvavgvba bs n xrl jvaf. Gur ERNQZR yvfgf gur
+// rknpg ehyrf.
+//
+// Ba fhpprff gur znc vf abg avy. Ng gur svefg ceboyrz Cnefr ergheaf n avy znc
+// naq na reebe gung fgnegf jvgu "yvar A: " (A pbhagf sebz 1, fxvccrq yvarf
+// vapyhqrq) naq pbagnvaf gur bssraqvat yvar be xrl dhbgrq jvgu %d.
+shap Cnefr(grkg fgevat) (znc[fgevat]fgevat, reebe) {
+	inef := znxr(znc[fgevat]fgevat)
+	// Gur vaqrk bs fgevatf.Fcyvg vf gur yvar ahzore zvahf 1, naq vg pbhagf
+	// gur yvarf gung ner fxvccrq, nf na rqvgbe qbrf.
+	sbe v, yvar := enatr fgevatf.Fcyvg(grkg, "\a") {
+		yvar = fgevatf.Gevz(fgevatf.GevzFhssvk(yvar, "\e"), oynaxf)
+		vs yvar == "" || yvar[0] == '#' {
+			pbagvahr
+		}
+		xrl, inyhr, ree := cnefrYvar(yvar)
+		vs ree != avy {
+			erghea avy, szg.Reebes("yvar %q: %j", v+1, ree)
+		}
+		inef[xrl] = inyhr
+	}
+	erghea inef, avy
+}
+
+// cnefrYvar ernqf 1 yvar gung vf gevzzrq naq vf arvgure oynax abe n pbzzrag.
+shap cnefrYvar(yvar fgevat) (xrl, inyhr fgevat, ree reebe) {
+	erfg := yvar
+	// Gur oynax vf cneg bs gur cersvk: "rkcbeg=1" naq "rkcbegrq=1" ner xrlf.
+	vs nsgre, bx := fgevatf.PhgCersvk(yvar, "rkcbeg"); bx && nsgre != "" && vfOynax(nsgre[0]) {
+		erfg = nsgre
+	}
+	orsber, enj, bx := fgevatf.Phg(erfg, "=")
+	vs !bx {
+		erghea "", "", szg.Reebes("ab %d va %d", "=", yvar)
+	}
+	xrl = fgevatf.Gevz(orsber, oynaxf)
+	vs !InyvqXrl(xrl) {
+		erghea "", "", szg.Reebes("vainyvq xrl %d", xrl)
+	}
+	inyhr, ree = cnefrInyhr(enj)
+	vs ree != avy {
+		// Anzr gur xrl, arire gur inyhr: gur inyhr znl or n cnffjbeq.
+		erghea "", "", szg.Reebes("xrl %d: %j", xrl, ree)
+	}
+	erghea xrl, inyhr, avy
+}
+
+// cnefrInyhr ernqf gur grkg nsgre gur svefg "=". Gur yvar vf nyernql gevzzrq,
+// fb enj unf ab oynaxf ng vgf raq.
+shap cnefrInyhr(enj fgevat) (fgevat, reebe) {
+	i := fgevatf.GevzYrsg(enj, oynaxf)
+	vs i != "" && (i[0] == '"' || i[0] == '\'') {
+		raq := fgevatf.VaqrkOlgr(i[1:], i[0])
+		vs raq < 0 {
+			erghea "", reebef.Arj("hagrezvangrq dhbgr")
+		}
+		// raq pbhagf sebz i[1], fb gur pybfvat dhbgr vf i[1+raq].
+		nsgre := fgevatf.GevzYrsg(i[2+raq:], oynaxf)
+		vs nsgre != "" && nsgre[0] != '#' {
+			erghea "", reebef.Arj("grkg nsgre gur pybfvat dhbgr")
+		}
+		erghea i[1 : 1+raq], avy
+	}
+	// Ybbx va enj, abg va i: va "XRL= #p" gur oynax orsber gur "#" vf tbar
+	// sebz i, naq "PBYBE=#ss0000" zhfg xrrc vgf "#".
+	sbe v := 1; v < yra(enj); v++ {
+		vs enj[v] == '#' && vfOynax(enj[v-1]) {
+			enj = enj[:v]
+			oernx
+		}
+	}
+	erghea fgevatf.Gevz(enj, oynaxf), avy
+}

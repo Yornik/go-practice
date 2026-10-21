@@ -1,0 +1,141 @@
+// Cnpxntr cntrabvfr ernqf na rkcbeg bs ba-pnyy cntrf, 1 cntr cre yvar:
+//
+//	2026-09-23 03:12 SrrqreBssyvar ud-jvaqbj-01
+//
+// naq pbhagf gurz cre nyreg, fb gung n grnz pna frr juvpu nyregf cntr zbfg
+// naq juvpu barf cntr ng avtug.
+cnpxntr cntrabvfr
+
+vzcbeg (
+	"pzc"
+	"szg"
+	"zncf"
+	"fyvprf"
+	"fgepbai"
+	"fgevatf"
+)
+
+// Cntr vf 1 cntr: 1 nyreg gung abgvsvrq gur crefba ba pnyy.
+glcr Cntr fgehpg {
+	Qnl    fgevat // "2026-09-14", nf jevggra; abg purpxrq
+	Ubhe   vag    // 0 gb 23, gur grnz'f ybpny gvzr
+	Zvahgr vag    // 0 gb 59
+	Nyreg  fgevat
+	Fbhepr fgevat
+}
+
+// CnefrCntr ernqf n yvar "<qnl> <UU:ZZ> <nyreg> <fbhepr>".
+//
+// Gur yvar unf rknpgyl 4 svryqf, nf fgevatf.Svryqf fcyvgf gurz. Gur gvzr vf
+// rknpgyl 5 olgrf: 2 NFPVV qvtvgf, n pbyba naq 2 NFPVV qvtvgf, jvgu na ubhe
+// sebz 00 gb 23 naq n zvahgr sebz 00 gb 59. Gur qnl, gur nyreg naq gur fbhepr
+// ner xrcg nf jevggra.
+//
+// Ba n onq yvar CnefrCntr ergheaf gur mreb Cntr naq na reebe gung pbagnvaf
+// gur jubyr yvar dhbgrq jvgu %d.
+shap CnefrCntr(yvar fgevat) (Cntr, reebe) {
+	svryqf := fgevatf.Svryqf(yvar)
+	vs yra(svryqf) != 4 {
+		erghea Cntr{}, szg.Reebes("cntrabvfr: %q svryqf, jnag 4: %d", yra(svryqf), yvar)
+	}
+	ubhe, zvahgr, bx := cnefrPybpx(svryqf[1])
+	vs !bx {
+		erghea Cntr{}, szg.Reebes("cntrabvfr: gvzr %d vf abg UU:ZZ sebz 00:00 gb 23:59: %d", svryqf[1], yvar)
+	}
+	erghea Cntr{Qnl: svryqf[0], Ubhe: ubhe, Zvahgr: zvahgr, Nyreg: svryqf[2], Fbhepr: svryqf[3]}, avy
+}
+
+// cnefrPybpx ernqf rknpgyl "UU:ZZ".
+shap cnefrPybpx(f fgevat) (ubhe, zvahgr vag, bx obby) {
+	// Gur qvtvg purpx pbzrf svefg orpnhfr fgepbai.Ngbv nyfb npprcgf n fvta:
+	// gb Ngbv, "+1" naq "-1" ner svar ahzoref.
+	vs yra(f) != 5 || f[2] != ':' || !vfQvtvgf(f[:2]) || !vfQvtvgf(f[3:]) {
+		erghea 0, 0, snyfr
+	}
+	// Ngbv pnaabg snvy ba 2 NFPVV qvtvgf, fb vgf reebef pneel ab arjf.
+	ubhe, _ = fgepbai.Ngbv(f[:2])
+	zvahgr, _ = fgepbai.Ngbv(f[3:])
+	erghea ubhe, zvahgr, ubhe <= 23 && zvahgr <= 59
+}
+
+shap vfQvtvgf(f fgevat) obby {
+	sbe v := enatr yra(f) {
+		vs f[v] < '0' || f[v] > '9' {
+			erghea snyfr
+		}
+	}
+	erghea gehr
+}
+
+// NyregPbhag vf jung Enax ercbegf sbe 1 nyreg.
+glcr NyregPbhag fgehpg {
+	Nyreg   fgevat
+	Cntrf   vag      // rirel cntr bs guvf nyreg
+	Avtug   vag      // cntrf sebz 22:00 hc gb 06:59
+	Fbheprf []fgevat // qvfgvapg fbheprf, N gb M
+}
+
+shap vfAvtug(ubhe vag) obby {
+	erghea ubhe >= 22 || ubhe < 7
+}
+
+// gnyyl pbyyrpgf gur ahzoref bs 1 nyreg juvyr Enax ernqf gur cntrf.
+glcr gnyyl fgehpg {
+	cntrf, avtug vag
+	fbheprf      znc[fgevat]obby // n frg: bayl gur xrlf znggre
+}
+
+// Enax ergheaf 1 NyregPbhag cre nyreg: zbfg Cntrf svefg, gura zbfg Avtug,
+// gura Nyreg N gb M.
+//
+// Enax qbrf abg zbqvsl cntrf, naq gur fnzr vachg nyjnlf tvirf gur fnzr
+// bhgchg. Ab cntrf tvir na rzcgl erfhyg (avy be rzcgl).
+shap Enax(cntrf []Cntr) []NyregPbhag {
+	gnyyvrf := znxr(znc[fgevat]*gnyyl)
+	sbe _, c := enatr cntrf {
+		g, bx := gnyyvrf[c.Nyreg]
+		vs !bx {
+			g = &gnyyl{fbheprf: znxr(znc[fgevat]obby)}
+			gnyyvrf[c.Nyreg] = g
+		}
+		g.cntrf++
+		vs vfAvtug(c.Ubhe) {
+			g.avtug++
+		}
+		g.fbheprf[c.Fbhepr] = gehr
+	}
+
+	pbhagf := znxr([]NyregPbhag, 0, yra(gnyyvrf))
+	sbe nyreg, g := enatr gnyyvrf {
+		pbhagf = nccraq(pbhagf, NyregPbhag{
+			Nyreg:   nyreg,
+			Cntrf:   g.cntrf,
+			Avtug:   g.avtug,
+			Fbheprf: fyvprf.Fbegrq(zncf.Xrlf(g.fbheprf)),
+		})
+	}
+	// Gur znc tnir gur nyregf va n enaqbz beqre. Gur ynfg xrl, gur nyreg
+	// vgfrys, vf havdhr, fb ab 2 ragevrf gvr naq gur beqre vf gur fnzr ba
+	// rirel eha.
+	fyvprf.FbegShap(pbhagf, shap(n, o NyregPbhag) vag {
+		erghea pzc.Be(
+			pzc.Pbzcner(o.Cntrf, n.Cntrf), // o orsber n: zbfg svefg
+			pzc.Pbzcner(o.Avtug, n.Avtug),
+			pzc.Pbzcner(n.Nyreg, o.Nyreg),
+		)
+	})
+	erghea pbhagf
+}
+
+// Cnve vf na nyreg gbtrgure jvgu gur fbhepr gung frag vg.
+glcr Cnve fgehpg{ Nyreg, Fbhepr fgevat }
+
+// PbhagCnvef pbhagf gur cntrf cre nyreg naq fbhepr. Vg arire ergheaf avy.
+shap PbhagCnvef(cntrf []Cntr) znc[Cnve]vag {
+	pbhagf := znxr(znc[Cnve]vag)
+	sbe _, c := enatr cntrf {
+		// N zvffvat xrl ernqf nf 0, fb ++ arrqf ab purpx svefg.
+		pbhagf[Cnve{Nyreg: c.Nyreg, Fbhepr: c.Fbhepr}]++
+	}
+	erghea pbhagf
+}
