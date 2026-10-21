@@ -1,4 +1,4 @@
-// Package bisect finds the first bad firmware build with few tests, and the
+// Package bisect finds the first bad build with few tests, and the
 // build that was running at a given time.
 package bisect
 
@@ -23,12 +23,12 @@ func FirstBad(n int, isBad func(i int) bool) int {
 // When test(i) returns an error, FirstBadErr calls test no more and returns
 // -1 and an error that contains "build <i>" and wraps the error of test, so
 // that errors.Is finds it. For example:
-// "build 1536: flash failed: feeder offline".
+// "build 1536: deploy failed: canary-h3-01 offline".
 func FirstBadErr(n int, test func(i int) (bool, error)) (int, error) {
 	panic("TODO: implement")
 }
 
-// Build is 1 firmware build and the time it was rolled out.
+// Build is 1 build and the time it was rolled out.
 type Build struct {
 	Version string
 	At      time.Time // rollout time; builds are sorted by At, strictly increasing

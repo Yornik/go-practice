@@ -1,17 +1,17 @@
-# 11 · What happened last night?
+# 11 · The log line that is not there
 
-**Tier 3 · about 1 h** · Go: `io.Reader`, `bufio.Scanner` and `Scanner.Err`, `io.Writer` and `fmt.Fprintf`, wrapping errors with `%w`, `strings.NewReader` and `testing/iotest` · Problem solving: count while you read; decide what a read error leaves behind
+**Tier 3 · about 1.5 h** · Go: `io.Reader`, `bufio.Scanner` and `Scanner.Err`, `io.Writer` and `fmt.Fprintf`, wrapping errors with `%w`, `strings.NewReader` and `testing/iotest` · Problem solving: count while you read; decide what a read error leaves behind
 
-Every morning at Peckish, the company that puts a camera in a bird feeder, starts with 1 question:
-what happened last night? On Friday the log of `hq-window-01`, the demo feeder outside the office
-window, looked calm. `grep -c ERROR` found 3 lines, and none of them near 03:12. Yet the feeder took
-no photos from 03:12 to 03:59. At 03:12:09 it wrote `upload started`. Its next full line came 47
-minutes later, and it was a boot message: a power cut writes no log line. The team rule says every
-incident is Kevin, the squirrel in the tree next to the feeder, until the logs prove otherwise. This
-time the logs said nothing at all. The power cable did: it had tooth marks. Ines, the senior SRE,
-wrote on the whiteboard: "The most important log line is the one that is not there." In this
-exercise you write the morning report: it reads a log of any size, counts its lines and levels, and
-lists the silences.
+At 03:12 last night, with fog on the ramps of the Undercroft, `canary-h3-01` stopped logging. It
+is the canary node in Hall 3 of Vesper Labs, the AI lab of Meridian. Its last line was
+`INFO upload started file=step-4141.ckpt`, and its next full line came 47 minutes later. No error,
+no warning, just nothing: `grep -c ERROR` finds 3 lines in the whole night, and none of them is
+near 03:12. A process that stops writes no line about stopping, so a silence looks exactly like a
+calm night. Every postmortem has a box "Was it Fuse?", for the grey cat who sleeps on the warmest
+rack in the halls. Today the box says "probably": the canary runs warm. Noor Haddad, the principal
+SRE, wrote 1 line under it: "The most important log line is the one that is not there." In this
+exercise you write the morning report: it reads a log of any size, counts its lines and levels,
+and lists the silences.
 
 ## Task
 
@@ -60,7 +60,7 @@ Suggested order: follow the 6 steps in "Run the tests".
 | Line | Kind |
 |---|---|
 | `2026-10-16T03:12:09Z INFO upload started` | valid, level `INFO` |
-| `2026-10-16T03:12:09+02:00 warn camd: lens heater slow` | valid, level `WARN` |
+| `2026-10-16T03:12:09+02:00 warn gpud: fan controller slow` | valid, level `WARN` |
 | `2026-10-16T03:12:09Z` | malformed: 1 field |
 | `2026-10-16T03:12:09 INFO upload started` | malformed: no zone |
 | `2026-10-16 03:12:09 INFO upload started` | malformed: the first field is not an RFC 3339 time |
@@ -141,15 +141,15 @@ Suggested order: follow the 6 steps in "Run the tests".
 
 ```text
 input, with minGap 10m:
- 1  2026-10-16T03:10:01Z INFO heartbeat seed_level=41
- 2  2026-10-16T03:11:01Z INFO heartbeat seed_level=41
- 3  2026-10-16T03:11:58Z info motion zone=perch
+ 1  2026-10-16T03:10:01Z INFO heartbeat gpu_temp_c=41
+ 2  2026-10-16T03:11:01Z INFO heartbeat gpu_temp_c=41
+ 3  2026-10-16T03:11:58Z info batch queue=inference
  4  2026-10-16T03:12:09Z WARN upload slow ms=2140
  5  2026-10-16T03:12:
  6
  7  U-Boot 2024.01 (Sep 30 2026 - 11:20:07 +0000)
- 8  2026-10-16T03:59:41Z INFO boot firmware=v2.10.0 reason=power-on
- 9  2026-10-16T04:00:02Z ERROR camd: lens heater failed
+ 8  2026-10-16T03:59:41Z INFO boot drv=2.10.0 reason=power-on
+ 9  2026-10-16T04:00:02Z ERROR gpud: fan controller failed
 
 Summarize → Summary{
   Lines: 9, Malformed: 2,
@@ -194,8 +194,8 @@ levels:    -
 Run one step at a time; the 6 filters do not overlap. Steps 1 to 4 need only `Summarize`, step 5
 only `Write`. Every call into the package runs with a 5 s timeout and a recover. A
 "TODO: implement" panic or a loop that never ends then fails 1 test with a message, and the run
-goes on. Step 6 reads `testdata/hq-window-01.log`, compares your report with
-`testdata/hq-window-01.report`, and checks the gaps again with a `minGap` of 5m. `ExampleWrite`
+goes on. Step 6 reads `testdata/canary-h3-01.log`, compares your report with
+`testdata/canary-h3-01.report`, and checks the gaps again with a `minGap` of 5m. `ExampleWrite`
 runs the example above, only in a plain `go test`. An example cannot recover a panic, so a plain
 run crashes until both functions work.
 
@@ -220,12 +220,12 @@ run crashes until both functions work.
 
 ## Stretch goals
 
-- Make it a tool: `nightlog -gap 10m < feeder.log` reads `os.Stdin` and writes the report to
+- Make it a tool: `nightlog -gap 10m < canary-h3-01.log` reads `os.Stdin` and writes the report to
   `os.Stdout`. 15-checkdisk shows how to keep such a `main` testable.
 - Count the lines per hour and print a small histogram with `#` characters. A silence then shows
   as an empty row.
-- Treat a backwards jump as an event of its own: report it on a `jump:` line. A feeder whose clock
-  resets to 1970 after a power cut makes one.
+- Treat a backwards jump as an event of its own: report it on a `jump:` line. A node whose clock
+  resets to 1970 after a reboot makes one.
 - Read several files in one run, each with its own report, and a total at the end. 38-logmerge
   reads many sources at once.
 

@@ -36,37 +36,37 @@ func TestParseExpressions(t *testing.T) {
 		{"white space only selects every line", " \t ", []lineCase{
 			{"level=info", true},
 		}},
-		{"1 word is a Contains", "upload", []lineCase{
-			{"svc=upload ms=180", true},
-			{"svc=push ms=4", false},
-			{"svc=Upload", false},
+		{"1 word is a Contains", "gateway", []lineCase{
+			{"svc=gateway ms=180", true},
+			{"svc=notify ms=4", false},
+			{"svc=Gateway", false},
 		}},
-		{"every term must match", "upload timeout", []lineCase{
-			{"svc=upload msg=timeout", true},
-			{"svc=upload msg=stored", false},
-			{"svc=push msg=timeout", false},
+		{"every term must match", "gateway timeout", []lineCase{
+			{"svc=gateway msg=timeout", true},
+			{"svc=gateway msg=stored", false},
+			{"svc=notify msg=timeout", false},
 		}},
-		{"a tab separates terms", "upload\ttimeout", []lineCase{
-			{"svc=upload msg=timeout", true},
-			{"svc=upload msg=stored", false},
+		{"a tab separates terms", "gateway\ttimeout", []lineCase{
+			{"svc=gateway msg=timeout", true},
+			{"svc=gateway msg=stored", false},
 		}},
 		{"! negates a term", "!healthz", []lineCase{
 			{"path=/healthz ms=1", false},
-			{"path=/v1/photos ms=180", true},
+			{"path=/v1/infer ms=180", true},
 		}},
 		{"a term with = is a Field", "level=error", []lineCase{
-			{"svc=upload level=error", true},
-			{"svc=upload level=errors", false},
+			{"svc=gateway level=error", true},
+			{"svc=gateway level=errors", false},
 			{"msg=level=error", false},
 		}},
 		{"split at the first =", "q=a=b", []lineCase{
 			{"q=a=b", true},
 			{"q=a", false},
 		}},
-		{"negated Field", "!host=hq-window-01", []lineCase{
-			{"host=hq-window-01 ms=95", false},
-			{"host=hq-window-012 ms=95", true},
-			{"msg=hq-window-01", true},
+		{"negated Field", "!host=canary-h3-01", []lineCase{
+			{"host=canary-h3-01 ms=95", false},
+			{"host=canary-h3-012 ms=95", true},
+			{"msg=canary-h3-01", true},
 		}},
 		{"! that is not the first byte is an ordinary byte", "wow!", []lineCase{
 			{"msg=wow!", true},
@@ -85,15 +85,15 @@ func TestParseExpressions(t *testing.T) {
 		{"! applies to every alternative", "!healthz|readyz", []lineCase{
 			{"path=/healthz", false},
 			{"path=/readyz", false},
-			{"path=/v1/photos", true},
+			{"path=/v1/infer", true},
 		}},
-		{"the runbook expression", "upload !healthz !host=hq-window-01 level=error|level=warn", []lineCase{
-			{"level=error svc=upload host=feeder-0412 msg=timeout", true},
-			{"level=warn svc=upload host=feeder-1187 msg=slow", true},
-			{"level=info svc=upload msg=stats errors=0", false},
-			{"level=error svc=upload host=hq-window-01", false},
-			{"level=error svc=upload path=/healthz", false},
-			{"level=error svc=labeller", false},
+		{"the runbook expression", "gateway !healthz !host=canary-h3-01 level=error|level=warn", []lineCase{
+			{"level=error svc=gateway host=vl-gpu-0412 msg=timeout", true},
+			{"level=warn svc=gateway host=vl-gpu-0448 msg=slow", true},
+			{"level=info svc=gateway msg=stats errors=0", false},
+			{"level=error svc=gateway host=canary-h3-01", false},
+			{"level=error svc=gateway path=/healthz", false},
+			{"level=error svc=hushd", false},
 		}},
 	}
 	for _, c := range cases {
@@ -127,30 +127,30 @@ func selected(lines []string, m linefilter.Matcher) []int {
 }
 
 func TestParseRunbook(t *testing.T) {
-	lines := readLines(t, "uploads.log")
+	lines := readLines(t, "gateway.log")
 	cases := []struct {
 		name string
 		expr string
-		want []int // line numbers in testdata/uploads.log
+		want []int // line numbers in testdata/gateway.log
 	}{
-		{"errors", "upload !healthz !host=hq-window-01 level=error", []int{3, 8, 11, 14, 17, 20, 22, 25}},
-		{"errors and warnings", "upload !healthz !host=hq-window-01 level=error|level=warn", []int{3, 7, 8, 11, 14, 16, 17, 20, 22, 25}},
-		{"stats lines", "svc=upload msg=stats", []int{2, 9, 18, 24}},
-		{"hq-window-01 only", "host=hq-window-01", []int{4, 12, 21, 23}},
+		{"errors", "gateway !healthz !host=canary-h3-01 level=error", []int{3, 8, 11, 14, 17, 20, 22, 25}},
+		{"errors and warnings", "gateway !healthz !host=canary-h3-01 level=error|level=warn", []int{3, 7, 8, 11, 14, 16, 17, 20, 22, 25}},
+		{"stats lines", "svc=gateway msg=stats", []int{2, 9, 18, 24}},
+		{"canary-h3-01 only", "host=canary-h3-01", []int{4, 12, 21, 23}},
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
 			got := selected(lines, mustParse(t, c.expr))
 			if !slices.Equal(got, c.want) {
-				t.Errorf("Parse(%q) on testdata/uploads.log selects lines\n got  %v\n want %v", c.expr, got, c.want)
+				t.Errorf("Parse(%q) on testdata/gateway.log selects lines\n got  %v\n want %v", c.expr, got, c.want)
 			}
 		})
 	}
 
 	// head -5 of the runbook: a Limit around the parsed expression.
-	m := linefilter.Limit(5, mustParse(t, "upload !healthz !host=hq-window-01 level=error"))
+	m := linefilter.Limit(5, mustParse(t, "gateway !healthz !host=canary-h3-01 level=error"))
 	if got, want := selected(lines, m), []int{3, 8, 11, 14, 17}; !slices.Equal(got, want) {
-		t.Errorf("Limit(5, Parse(...)) on testdata/uploads.log selects lines\n got  %v\n want %v", got, want)
+		t.Errorf("Limit(5, Parse(...)) on testdata/gateway.log selects lines\n got  %v\n want %v", got, want)
 	}
 }
 
@@ -160,7 +160,7 @@ func TestParseErrors(t *testing.T) {
 		bad  string // the term the error must quote
 	}{
 		{"!", "!"},
-		{"upload !", "!"},
+		{"gateway !", "!"},
 		{"!!x", "!!x"},
 		{"a|!b", "a|!b"},
 		{"a||b", "a||b"},
@@ -172,8 +172,8 @@ func TestParseErrors(t *testing.T) {
 		{"k=", "k="},
 		{"=", "="},
 		{"!k=", "!k="},
-		{"upload level=error|=warn", "level=error|=warn"},
-		{"upload !healthz a||b", "a||b"},
+		{"gateway level=error|=warn", "level=error|=warn"},
+		{"gateway !healthz a||b", "a||b"},
 	}
 	for _, c := range cases {
 		m, err := linefilter.Parse(c.expr)
@@ -191,7 +191,7 @@ func TestParseErrors(t *testing.T) {
 }
 
 func TestParseErrorsFirstBadTerm(t *testing.T) {
-	expr := "upload a||b =v"
+	expr := "gateway a||b =v"
 	_, err := linefilter.Parse(expr)
 	if err == nil {
 		t.Fatalf("Parse(%q) error = nil, want an error about the term %q", expr, "a||b")

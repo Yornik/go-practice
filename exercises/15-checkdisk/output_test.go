@@ -27,9 +27,9 @@ func TestRunOutputLine(t *testing.T) {
 		},
 		{
 			"warning",
-			df(row("/", 42), row("/srv/photos", 84)),
+			df(row("/", 42), row("/srv/models", 84)),
 			checkdisk.Warning,
-			"DISK WARNING - /srv/photos 84% | /=42%;80;90;0;100 /srv/photos=84%;80;90;0;100",
+			"DISK WARNING - /srv/models 84% | /=42%;80;90;0;100 /srv/models=84%;80;90;0;100",
 		},
 		{
 			"usage equal to the thresholds",
@@ -39,9 +39,9 @@ func TestRunOutputLine(t *testing.T) {
 		},
 		{
 			"ok",
-			df(row("/", 42), row("/boot", 28), row("/srv/photos", 72)),
+			df(row("/", 42), row("/boot", 28), row("/srv/models", 72)),
 			checkdisk.OK,
-			"DISK OK - all 3 file systems below 80% | /=42%;80;90;0;100 /boot=28%;80;90;0;100 /srv/photos=72%;80;90;0;100",
+			"DISK OK - all 3 file systems below 80% | /=42%;80;90;0;100 /boot=28%;80;90;0;100 /srv/models=72%;80;90;0;100",
 		},
 		{
 			"ok with 1 file system",
@@ -92,7 +92,7 @@ func TestRunOutputFromFile(t *testing.T) {
 	input := readFile(t, "df-critical.txt")
 	res := runText(t, input)
 	checkLine(t, call(nil, input), res, checkdisk.Critical,
-		"DISK CRITICAL - /srv/photos 100%, /var/log 87% | "+
+		"DISK CRITICAL - /srv/models 100%, /var/log 87% | "+
 			"/dev=0%;80;90;0;100 /run=1%;80;90;0;100 /=42%;80;90;0;100 /dev/shm=0%;80;90;0;100 "+
-			"/boot=28%;80;90;0;100 /srv/photos=100%;80;90;0;100 /var/log=87%;80;90;0;100")
+			"/boot=28%;80;90;0;100 /srv/models=100%;80;90;0;100 /var/log=87%;80;90;0;100")
 }

@@ -21,11 +21,11 @@ type probe struct {
 	n      int
 	first  int
 	limit  int   // the most calls allowed
-	failOn int   // the call (1, 2, ...) whose test returns errFlash; 0: none
+	failOn int   // the call (1, 2, ...) whose test returns errDeploy; 0: none
 	calls  []int // the indexes, in call order
 }
 
-var errFlash = errors.New("flash failed: feeder offline")
+var errDeploy = errors.New("deploy failed: canary-h3-01 offline")
 
 func newProbe(t *testing.T, fn string, n, first int) *probe {
 	p := &probe{t: t, n: n, first: first}
@@ -68,7 +68,7 @@ func (p *probe) test(i int) (bool, error) {
 	p.t.Helper()
 	p.record(i)
 	if len(p.calls) == p.failOn {
-		return false, errFlash
+		return false, errDeploy
 	}
 	return i >= p.first, nil
 }
@@ -182,8 +182,8 @@ func TestFirstBadErrStopsAtError(t *testing.T) {
 		if got != -1 {
 			t.Errorf("%s: index = %d, want -1", p.what, got)
 		}
-		if !errors.Is(err, errFlash) {
-			t.Errorf("%s: error = %v, want an error that wraps %q (errors.Is)", p.what, err, errFlash)
+		if !errors.Is(err, errDeploy) {
+			t.Errorf("%s: error = %v, want an error that wraps %q (errors.Is)", p.what, err, errDeploy)
 			continue
 		}
 		if !mentionsBuild(err.Error(), failed) {

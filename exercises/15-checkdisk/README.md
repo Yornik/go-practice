@@ -1,17 +1,17 @@
-# 15 · A disk check that can fail
+# 15 · The disk check that said OK
 
-**Tier 3 · about 1.5 h** · Go: `flag.NewFlagSet` with `ContinueOnError`, `flag.Func` for a repeated flag, a testable `Run(args, stdin, stdout, stderr) int`, exit codes, `bufio.Scanner`, `fmt.Fprintf` · Problem solving: separate parsing, deciding and printing; define the result of every bad input
+**Tier 3 · about 2 h** · Go: `flag.NewFlagSet` with `ContinueOnError`, `flag.Func` for a repeated flag, a testable `Run(args, stdin, stdout, stderr) int`, exit codes, `bufio.Scanner`, `fmt.Fprintf` · Problem solving: separate parsing, deciding and printing; define the result of every bad input
 
-On a Sunday in November, at 06:40, the photo disk of `photo-store-3` filled up. Until noon, not 1
-photo from the 40 000 Peckish bird feeders reached the app, and the monitoring dashboard stayed
-green. The disk check came with the server template, and its last line is
+In Hall 1 of the Undercroft, where fog from the seawater pipes hangs between the racks,
+`chkpt-store-3` filled up at 06:40 on a Sunday. Every model that Vesper Labs trains saves its
+checkpoints there, and until noon the training cluster saved no checkpoint at all. The disk check
+said OK the whole time. It came with the server template, and its last line is
 `check_disk.sh | tee -a /var/log/checks.log`. A shell pipeline returns the exit code of its last
 command. Here that was `tee`, and `tee` had nothing to complain about: every 15 minutes it wrote
-`DISK CRITICAL - /srv/photos 100%` to the log and exited with 0. By noon the log held 21 of those
-lines, and Dot, the support lead, had forwarded 164 tickets. The first had the subject "where are
-my birds??". Ines, the senior SRE, read the log and said: "A check that cannot fail is a
-decoration." In this exercise you write the check again in Go, as a command with a test for every
-exit code.
+`DISK CRITICAL - /srv/models 100%` to the log and exited with 0. By noon the log held 21 of those
+lines, and nobody knew yet what had filled the disk. Noor Haddad, the principal SRE, read the log
+and said: "A check that cannot fail is a decoration." In this exercise you write the check again
+in Go, as a command with a test for every exit code.
 
 ## Task
 
@@ -55,7 +55,7 @@ Suggested order: follow the 4 steps in "Run the tests".
   number of times. A mount that is not in the input changes nothing. `-x /var` does not leave out
   `/var/log`.
 - The flags may come in any order. There are no positional arguments: an argument left over after
-  the flags (`checkdisk /srv/photos`, `checkdisk -w 80 /srv/photos`) is UNKNOWN.
+  the flags (`checkdisk /srv/models`, `checkdisk -w 80 /srv/models`) is UNKNOWN.
 - The flag package rejects some arguments: an unknown flag such as `-p`, `-w abc`, `-c 90%`, or
   `-w` without a value. It then writes its message and the usage to stderr. `Run` writes the
   UNKNOWN line to stdout and returns 3.
@@ -118,7 +118,7 @@ Suggested order: follow the 4 steps in "Run the tests".
 |---|---|
 | A flag the flag package rejects | `-p /`, `-w abc` |
 | Thresholds outside `1 <= w < c <= 100` | `-w 90 -c 90`, `-w 0`, `-c 101` |
-| A positional argument | `checkdisk /srv/photos` |
+| A positional argument | `checkdisk /srv/models` |
 | No header: the first line that is not blank does not start with the field `Filesystem` | a data line first, `filesystem ...` |
 | A malformed line; the reason contains `line <N>` of the first one | 5 or 7 fields, a capacity of `120%` |
 | No checked file systems | empty input, a header only, every mount left out with `-x` |
@@ -225,8 +225,9 @@ a panic, so a plain run crashes until `Run` works.
 
 - Make it a real command: put the `main` from "Task" in `cmd/checkdisk/main.go` of a module of
   your own, and run `df -P | go run ./cmd/checkdisk -x /boot`. Check the exit code with `echo $?`.
-- Watch a pipeline hide an exit code: run `go run ./cmd/checkdisk < df.txt | tee -a /tmp/checks.log`
-  once with and once without `set -o pipefail`, and compare `echo $?`.
+- Watch a pipeline hide an exit code, as the template of `chkpt-store-3` did: run
+  `go run ./cmd/checkdisk < df.txt | tee -a /tmp/checks.log` once with and once without
+  `set -o pipefail`, and compare `echo $?`.
 - Run `df` yourself with `os/exec` instead of reading stdin. Keep `Run` testable: pass it a
   function that returns the `df` output.
 - Check inodes too: `df -Pi` has the same 6 columns. A disk with free space and no free inodes

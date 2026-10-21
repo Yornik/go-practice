@@ -43,9 +43,9 @@ func TestRunFlagsThresholds(t *testing.T) {
 		},
 		{
 			[]string{"-w", "1", "-c", "100"},
-			df(row("/", 0), row("/var", 1), row("/srv/photos", 100)),
+			df(row("/", 0), row("/var", 1), row("/srv/models", 100)),
 			checkdisk.Critical,
-			"DISK CRITICAL - /var 1%, /srv/photos 100% | /=0%;1;100;0;100 /var=1%;1;100;0;100 /srv/photos=100%;1;100;0;100",
+			"DISK CRITICAL - /var 1%, /srv/models 100% | /=0%;1;100;0;100 /var=1%;1;100;0;100 /srv/models=100%;1;100;0;100",
 		},
 		{
 			[]string{"-w", "1", "-c", "100"},
@@ -127,8 +127,8 @@ func TestRunFlagsInvalid(t *testing.T) {
 		{"w 0", []string{"-w", "0", "-c", "90"}},
 		{"w negative", []string{"-w", "-5"}},
 		{"c above 100", []string{"-w", "80", "-c", "101"}},
-		{"positional argument", []string{"/srv/photos"}},
-		{"positional argument after flags", []string{"-w", "80", "/srv/photos"}},
+		{"positional argument", []string{"/srv/models"}},
+		{"positional argument after flags", []string{"-w", "80", "/srv/models"}},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
@@ -202,7 +202,7 @@ func TestRunFlagsBeforeStdin(t *testing.T) {
 		{"unknown flag", []string{"-p", "/"}},
 		{"w not a number", []string{"-w", "abc"}},
 		{"w above c", []string{"-w", "95", "-c", "90"}},
-		{"positional argument", []string{"/srv/photos"}},
+		{"positional argument", []string{"/srv/models"}},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {

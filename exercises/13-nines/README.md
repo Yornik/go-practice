@@ -1,17 +1,18 @@
-# 13 · How many minutes is 99.95%?
+# 13 · The refund call at 10:00
 
 **Tier 3 · about 1.5 h** · Go: `float64` and integer vs float division, `strconv.ParseFloat`, `NaN` and `±Inf` (`math.IsNaN`, `math.IsInf`), converting between `float64` and `time.Duration`, `Duration.Round`, half-open intervals with `time.Time` · Problem solving: draw the outages on a time line; keep durations as durations until the last step
 
-Dot, who leads support, forwards a ticket at 09:20 on 3 November. It comes from the nature
-reserve, the customer with 300 feeders: "Your website promises 99.95% uptime. You were down 47
-minutes in October. We want a refund." The reserve added up every incident on
-`status.peckish.io`. 2 monitors post there, the external uptime check and the load balancer's
-health check, and both saw the same 2 outages. So the page lists 4 incidents, and every minute
-that both monitors saw counts twice. Bram, the CTO, says that 99.95% "is about an hour a month",
-so 47 minutes is fine. The call with the reserve is at 10:00. Ines, the senior SRE, asks you who
-is right, with 1 number for each side. In this exercise you write the arithmetic behind the
-answer: read an objective, turn it into allowed downtime, and measure how long the site was
-really down.
+"Your contract promises 99.95% uptime. You were down 47 minutes in October. We want a refund."
+Meridian Lightrail, the city's tram operator with 300 edge nodes, sends it at 09:20 with a call
+invitation, and Marisol Quispe Mamani, the support lead, accepts for the whole team. Lightrail added
+up every incident on `status.vesper-labs.example`, where 2 monitors post: the external uptime check
+and the load balancer's health check. Both saw the same 2 outages, so the page lists 4 incidents,
+and every minute that both saw counts twice. Daniyar Seitkali, the CTO, says that 99.95% "is about
+an hour a month". HUSH, the on-call AI that Vesper Labs sells, says 100.00% in its own report for
+October. The call is at 10:00, captioned like every call at Vesper Labs, and Noor Haddad, the
+principal SRE, asks you who is right, with 1 number for each side. In this exercise you write the
+arithmetic behind the answer: read an objective, turn it into allowed downtime, and measure how long
+the service was really down.
 
 ## Task
 
@@ -182,13 +183,16 @@ steps work.
 ## Stretch goals
 
 - Make it a tool: `nines -objective 99.95 outages.csv`, with 1 outage per line as 2 RFC 3339
-  times. Print the report, and exit with status 1 when the window misses the objective.
+  times. Print the report, and exit with status 1 when the window misses the objective. Marisol
+  wants it before the next refund call.
 - Show each monitor on its own: the downtime that each one reports, and the union. A big gap
   between 2 monitors is a finding of its own.
 - Use calendar months in a local zone. In `Europe/Amsterdam` October 2026 has 745 hours, because
   the clocks go back 1 hour. Build the window with `time.LoadLocation` and `AddDate(0, 1, 0)`.
-- Weigh partial outages: an outage in which 30% of the uploads failed counts 0.3 of its length.
+- Weigh partial outages: an outage in which 30% of the requests failed counts 0.3 of its length.
   That is the step from time-based to request-based availability, which 30-slo takes.
+- Compute the mean and the lowest availability of 100 customers, 99 at 100% and 1 at 95%. Which
+  of the 2 numbers belongs in a report to the 100th?
 
 ## Stuck?
 

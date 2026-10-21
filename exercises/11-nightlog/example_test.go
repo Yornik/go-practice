@@ -10,15 +10,15 @@ import (
 )
 
 func ExampleWrite() {
-	log := `2026-10-16T03:10:01Z INFO heartbeat seed_level=41
-2026-10-16T03:11:01Z INFO heartbeat seed_level=41
-2026-10-16T03:11:58Z info motion zone=perch
+	log := `2026-10-16T03:10:01Z INFO heartbeat gpu_temp_c=41
+2026-10-16T03:11:01Z INFO heartbeat gpu_temp_c=41
+2026-10-16T03:11:58Z info batch queue=inference
 2026-10-16T03:12:09Z WARN upload slow ms=2140
 2026-10-16T03:12:
 
 U-Boot 2024.01 (Sep 30 2026 - 11:20:07 +0000)
-2026-10-16T03:59:41Z INFO boot firmware=v2.10.0 reason=power-on
-2026-10-16T04:00:02Z ERROR camd: lens heater failed
+2026-10-16T03:59:41Z INFO boot drv=2.10.0 reason=power-on
+2026-10-16T04:00:02Z ERROR gpud: fan controller failed
 `
 	s, err := nightlog.Summarize(strings.NewReader(log), 10*time.Minute)
 	if err != nil {

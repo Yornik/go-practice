@@ -1,4 +1,4 @@
-# 12 · Ercynpr gur terc cvcryvar va gur ehaobbx — rkcynangvba
+# 12 · 1 svygre, abg 6 tercf — rkcynangvba
 
 ## Gur ceboyrz oruvaq gur ceboyrz
 
@@ -7,8 +7,8 @@ be qebcf n yvar, naq gur fgntrf eha va n punva: `terc n | terc -i o` zrnaf "n na
 oernxf va 3 cynprf, naq rnpu bar vf n yrffba sbe gur gbby lbh ohvyq:
 
 - **Fhofgevatf ner gbb ybbfr.** `terc -v reebe` zngpurf `yriry=reebe`, ohg nyfb `reebef=0`,
-  `zft="ergel nsgre reebe"` naq `reebe_ohqtrg=99.9`. `terc -i ud-jvaqbj-01` nyfb qebcf
-  `ud-jvaqbj-012` naq rirel yvar gung zreryl zragvbaf gur qrzb srrqre. N ybt yvar unf fgehpgher,
+  `zft="ergel nsgre reebe"` naq `reebe_ohqtrg=99.9`. `terc -i pnanel-u3-01` nyfb qebcf
+  `pnanel-u3-012` naq rirel yvar gung zreryl zragvbaf gur pnanel abqr. N ybt yvar unf fgehpgher,
   fb n svygre fubhyq or noyr gb zngpu n jubyr `xrl=inyhr` jbeq, abg 5 yrggref fbzrjurer.
 - **Gur beqre bs fgntrf vf vaivfvoyr ohg znggref.** `urnq -50` ng gur raq vf purnc naq pbeerpg.
   Zbir vg orsber gur `terc -v reebe`, naq lbh trg gur reebef nzbat gur svefg 50 yvarf, juvpu vf n
@@ -59,7 +59,7 @@ Gura yvfg gur vachgf gung oernx rnpu yvar bs gur tenzzne: `!` nybar, `!!k`, `n||
 `=i`, `x=`. Gung yvfg vf gur reebe gnoyr va gur ERNQZR, naq vg vf lbhe grfg yvfg. Sbe rnpu bar,
 qrpvqr ng juvpu fgrc bs lbhe pbqr lbh jvyy abgvpr vg.
 
-**5. Genpr gur fgngrshy pnfrf ol unaq.** Gnxr `Nyy(Pbagnvaf("fip=hcybnq"), Yvzvg(1, ree))` naq 3
+**5. Genpr gur fgngrshy pnfrf ol unaq.** Gnxr `Nyy(Pbagnvaf("fip=tngrjnl"), Yvzvg(1, ree))` naq 3
 yvarf, naq jevgr qbja, yvar ol yvar, juvpu zngpure vf pnyyrq naq jung gur pbhag bs `Yvzvg` vf.
 Gura fjnc gur 2 zngpuref naq qb vg ntnva. 3 zvahgrf ba cncre rkcynvaf `GrfgFgngrshyYvzvgVafvqrNyy`
 orggre guna nal nzbhag bs qrohttvat.

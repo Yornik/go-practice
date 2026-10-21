@@ -1,4 +1,4 @@
-// Cnpxntr ovfrpg svaqf gur svefg onq svezjner ohvyq jvgu srj grfgf, naq gur
+// Cnpxntr ovfrpg svaqf gur svefg onq ohvyq jvgu srj grfgf, naq gur
 // ohvyq gung jnf ehaavat ng n tvira gvzr.
 cnpxntr ovfrpg
 
@@ -29,7 +29,7 @@ shap SvefgOnq(a vag, vfOnq shap(v vag) obby) vag {
 // Jura grfg(v) ergheaf na reebe, SvefgOnqRee pnyyf grfg ab zber naq ergheaf
 // -1 naq na reebe gung pbagnvaf "ohvyq <v>" naq jencf gur reebe bs grfg, fb
 // gung reebef.Vf svaqf vg. Sbe rknzcyr:
-// "ohvyq 1536: synfu snvyrq: srrqre bssyvar".
+// "ohvyq 1536: qrcybl snvyrq: pnanel-u3-01 bssyvar".
 shap SvefgOnqRee(a vag, grfg shap(v vag) (obby, reebe)) (vag, reebe) {
 	// Vainevnag: rirel ohvyq orsber yb vf tbbq, naq rirel ohvyq sebz uv ba
 	// vf onq. Ohvyq a pbhagf nf onq ohg vf arire grfgrq.
@@ -49,7 +49,7 @@ shap SvefgOnqRee(a vag, grfg shap(v vag) (obby, reebe)) (vag, reebe) {
 	erghea yb, avy
 }
 
-// Ohvyq vf 1 svezjner ohvyq naq gur gvzr vg jnf ebyyrq bhg.
+// Ohvyq vf 1 ohvyq naq gur gvzr vg jnf ebyyrq bhg.
 glcr Ohvyq fgehpg {
 	Irefvba fgevat
 	Ng      gvzr.Gvzr // ebyybhg gvzr; ohvyqf ner fbegrq ol Ng, fgevpgyl vapernfvat

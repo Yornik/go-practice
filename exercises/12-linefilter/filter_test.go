@@ -9,12 +9,12 @@ import (
 )
 
 var nightLines = []string{
-	"level=info svc=upload msg=stored",
-	"level=error svc=upload msg=timeout",
+	"level=info svc=gateway msg=stored",
+	"level=error svc=gateway msg=timeout",
 	"level=info path=/healthz",
-	"level=error svc=labeller msg=model_timeout",
-	"level=warn svc=upload msg=slow",
-	"level=error svc=upload msg=disk_full",
+	"level=error svc=hushd msg=model_timeout",
+	"level=warn svc=gateway msg=slow",
+	"level=error svc=gateway msg=disk_full",
 }
 
 func TestFilterKeepsOrder(t *testing.T) {
@@ -80,24 +80,24 @@ func TestFilterWithLimit(t *testing.T) {
 }
 
 func ExampleParse() {
-	m, err := linefilter.Parse("upload !healthz !host=hq-window-01 level=error|level=warn")
+	m, err := linefilter.Parse("gateway !healthz !host=canary-h3-01 level=error|level=warn")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	lines := []string{
-		"03:10:02 level=info svc=upload msg=stats errors=0",
-		"03:10:03 level=error svc=upload host=feeder-0412 msg=timeout",
-		"03:10:05 level=error svc=upload host=hq-window-01 msg=lens_dirty",
-		"03:10:05 level=error svc=upload path=/healthz",
-		"03:10:08 level=warn svc=upload host=feeder-1187 msg=slow",
-		"03:10:10 level=error svc=upload host=feeder-2290 msg=disk_full",
+		"03:10:02 level=info svc=gateway msg=stats errors=0",
+		"03:10:03 level=error svc=gateway host=vl-gpu-0412 msg=timeout",
+		"03:10:05 level=error svc=gateway host=canary-h3-01 msg=ecc_corrected",
+		"03:10:05 level=error svc=gateway path=/healthz",
+		"03:10:08 level=warn svc=gateway host=vl-gpu-0448 msg=slow",
+		"03:10:10 level=error svc=gateway host=vl-gpu-0469 msg=disk_full",
 	}
 	// Limit(2, m) is the head -2 of the pipeline.
 	for _, line := range linefilter.Filter(lines, linefilter.Limit(2, m)) {
 		fmt.Println(line)
 	}
 	// Output:
-	// 03:10:03 level=error svc=upload host=feeder-0412 msg=timeout
-	// 03:10:08 level=warn svc=upload host=feeder-1187 msg=slow
+	// 03:10:03 level=error svc=gateway host=vl-gpu-0412 msg=timeout
+	// 03:10:08 level=warn svc=gateway host=vl-gpu-0448 msg=slow
 }

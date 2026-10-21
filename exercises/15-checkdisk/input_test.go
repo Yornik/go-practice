@@ -84,7 +84,7 @@ func TestRunInputMalformed(t *testing.T) {
 	}{
 		{"5 fields", df(row("/", 40), "/dev/sdb1 1000 400 600 40%"), nil, 3},
 		{"7 fields", df("/dev/sdc1 1000 400 600 40% /mnt/usb stick", row("/", 40)), nil, 2},
-		{"1 field", df(row("/", 40), row("/var", 40), "/dev/mapper/vg0-photos"), nil, 4},
+		{"1 field", df(row("/", 40), row("/var", 40), "/dev/mapper/vg0-models"), nil, 4},
 		{"capacity without %", df("/dev/sda1 1000 950 50 95 /"), nil, 2},
 		{"capacity above 100", df("/dev/sda1 1000 950 50 120% /"), nil, 2},
 		{"capacity negative", df("/dev/sda1 1000 950 50 -1% /"), nil, 2},

@@ -1,7 +1,7 @@
 // Package linefilter selects log lines with small matchers that you combine,
 // and builds 1 matcher from a filter expression such as
 //
-//	upload !healthz !host=hq-window-01 level=error|level=warn
+//	gateway !healthz !host=canary-h3-01 level=error|level=warn
 package linefilter
 
 // Matcher reports whether a line is selected.

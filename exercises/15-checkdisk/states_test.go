@@ -74,7 +74,7 @@ func TestRunStatesWorstWins(t *testing.T) {
 		{"critical after warning", []int{85, 95}, checkdisk.Critical},
 		{"critical after warnings", []int{81, 82, 83, 90}, checkdisk.Critical},
 	}
-	mounts := []string{"/", "/var", "/home", "/srv/photos"}
+	mounts := []string{"/", "/var", "/home", "/srv/models"}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			var lines []string

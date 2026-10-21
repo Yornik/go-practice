@@ -1,9 +1,9 @@
-# 14 · Ovfrpg gur svezjner — rkcynangvba
+# 14 · 2048 ohvyqf, 1 onq pbzzvg — rkcynangvba
 
 ## Gur ceboyrz oruvaq gur ceboyrz
 
 N erterffvba uhag unf 2 pbfgf: gur ahzore bs grfgf, naq gur pbfg bs 1 grfg. Lbh eneryl pbageby
-gur frpbaq bar. Synfuvat n srrqre naq jngpuvat n crepu gnxrf 4 zvahgrf, n shyy vagrtengvba eha
+gur frpbaq bar. Ercynlvat n avtug bs cntrf ba n ohvyq gnxrf 4 zvahgrf, n shyy vagrtengvba eha
 gnxrf 20, n pnanel arrqf na ubhe bs erny genssvp. Jung lbh pbageby vf gur ahzore bs grfgf.
 
 Grfgvat gur ohvyqf va beqre arrqf hc gb 2048 grfgf: nyzbfg 6 qnlf ng 4 zvahgrf rnpu. Ohg gur
@@ -19,11 +19,11 @@ Gung funcr vf jung znxrf ovfrpgvba jbex. Grfg gur zvqqyr ohvyq. Vs vg vf onq, gu
 vf gung bar be na rneyvre bar; vs vg vf tbbq, gur svefg onq ohvyq vf yngre. Rvgure jnl, 1 grfg
 guebjf njnl unys bs gur pnaqvqngrf. 2048 pnaqvqngrf arrq 12 grfgf: 48 zvahgrf vafgrnq bs 6 qnlf.
 
-Gur frpbaq unys bs gur rkrepvfr vf gur fnzr vqrn ba n qvssrerag yvfg. "Juvpu svezjner jnf ehaavat
-ng 03:12?" vf n dhrfgvba nobhg n yvfg fbegrq ol gvzr. Lbh pbhyq jnyx gur yvfg sebz gur fgneg, naq
+Gur frpbaq unys bs gur rkrepvfr vf gur fnzr vqrn ba n qvssrerag yvfg. "Juvpu ohvyq jnf ehaavat ng
+03:12?" vf n dhrfgvba nobhg n yvfg fbegrq ol gvzr. Lbh pbhyq jnyx gur yvfg sebz gur fgneg, naq
 sbe 50 ohvyqf abobql jbhyq abgvpr. Sbe n qrcybl uvfgbel bs lrnef, n zrgevpf fgber jvgu zvyyvbaf
-bs fnzcyrf, be n gbby gung nafjref guvf sbe rirel bar bs 23 gvpxrgf naq 40 000 srrqref, gur jnyx
-vf gur fybj cneg. N fbegrq yvfg nafjref va ybt gvzr, vs lbh nfx vg gur evtug dhrfgvba.
+bs fnzcyrf, be n gbby gung nafjref guvf sbe rirel gvpxrg naq rirel bar bs 500 TCH abqrf, gur
+jnyx vf gur fybj cneg. N fbegrq yvfg nafjref va ybt gvzr, vs lbh nfx vg gur evtug dhrfgvba.
 
 ## Ubj gb nccebnpu vg
 
@@ -87,9 +87,9 @@ synxl grfg: 1 jebat nafjre fraqf gur frnepu vagb gur jebat unys, naq abguvat jne
 ### Shapgvbaf nf cnenzrgref
 
 `vfOnq shap(v vag) obby` vf n inyhr bs n shapgvba glcr, nf gur zngpuref bs 12-yvarsvygre jrer.
-Gur pnyyre qrpvqrf jung n grfg vf: synfu n srrqre, eha n fpevcg, ybbx hc n fyvpr. Va gur grfgf,
-`vfOnq` vf n zrgubq inyhr bs n fznyy fgehpg gung pbhagf gur pnyyf naq erzrzoref gur vaqrkrf:
-gung vf ubj gurl cebir gur frnepu vf ybtnevguzvp jvgubhg n pybpx.
+Gur pnyyre qrpvqrf jung n grfg vf: qrcybl gb n pnanel, eha n fpevcg, ybbx hc n fyvpr. Va gur
+grfgf, `vfOnq` vf n zrgubq inyhr bs n fznyy fgehpg gung pbhagf gur pnyyf naq erzrzoref gur
+vaqrkrf: gung vf ubj gurl cebir gur frnepu vf ybtnevguzvp jvgubhg n pybpx.
 
 ### Unys-bcra enatrf
 
@@ -133,10 +133,10 @@ pbcvrf; guvf bar cebzvfrf n pbcl.
 
 ### Jenccvat reebef jvgu pbagrkg
 
-06-frzire hfrq `%j` naq `reebef.Vf`. Urer gur pbagrkg vf gur vaqrk. "synfu snvyrq: srrqre
-bssyvar" vf hfryrff ng 03:12; "ohvyq 1536: synfu snvyrq: srrqre bssyvar" gryyf lbh juvpu ohvyq gb
-synfu ntnva. `%j` xrrcf gur bevtvany reebe ernpunoyr, fb gur pnyyre pna fgvyy svaq vg jvgu
-`reebef.Vf` naq qrpvqr gb ergel.
+06-frzire hfrq `%j` naq `reebef.Vf`. Urer gur pbagrkg vf gur vaqrk. "qrcybl snvyrq:
+pnanel-u3-01 bssyvar" vf hfryrff ng 03:12; "ohvyq 1536: qrcybl snvyrq: pnanel-u3-01 bssyvar"
+gryyf lbh juvpu ohvyq gb qrcybl ntnva. `%j` xrrcf gur bevtvany reebe ernpunoyr, fb gur pnyyre pna
+fgvyy svaq vg jvgu `reebef.Vf` naq qrpvqr gb ergel.
 
 ## Cvgsnyyf
 
@@ -168,7 +168,8 @@ synfu ntnva. `%j` xrrcf gur bevtvany reebe ernpunoyr, fb gur pnyyre pna fgvyy sv
   vf gur fnzr.
 - **Ovfrpgvat ohvyqf vafgrnq bs pbzzvgf.** Zbmvyyn'f `zbmerterffvba` qbjaybnqf Sversbk avtugyl
   ohvyqf naq ovfrpgf gurz, naq Puebzvhz unf n `ovfrpg-ohvyqf.cl` fpevcg sbe cerohvyg Puebzr
-  ohvyqf. Obgu rkvfg orpnhfr ohvyqvat rirel pbzzvg vf gbb fybj: rknpgyl gur srrqre fvghngvba.
+  ohvyqf. Obgu rkvfg orpnhfr ohvyqvat rirel pbzzvg vf gbb fybj: rknpgyl gur fvghngvba bs gur
+  pnanel grfg.
 - **Ybbxhcf ol gvzr.** Gvzr-frevrf qngnonfrf xrrc fnzcyrf fbegrq ol gvzr, naq n dhrel sbe n
   enatr fgnegf jvgu n ovanel frnepu sbe gur svefg fnzcyr ng be nsgre gur fgneg bs gur enatr. N
   qrcybl uvfgbel nafjref "jung jnf ehaavat ng 03:12?" va gur fnzr jnl: Xhoreargrf xrrcf

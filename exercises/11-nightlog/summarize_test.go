@@ -40,7 +40,7 @@ func TestSummarizeCounts(t *testing.T) {
 	runSummarizeCases(t, []summarizeCase{
 		{
 			name:  "one valid line",
-			input: text("2026-10-16T00:00:01Z INFO heartbeat seed_level=62"),
+			input: text("2026-10-16T00:00:01Z INFO heartbeat gpu_temp_c=62"),
 			want: nightlog.Summary{
 				Lines: 1, Levels: map[string]int{"INFO": 1},
 				First: at(0, 0, 1), Last: at(0, 0, 1),
@@ -49,9 +49,9 @@ func TestSummarizeCounts(t *testing.T) {
 		{
 			name: "levels are upper-cased",
 			input: text(
-				"2026-10-16T00:00:01Z warn seed low",
-				"2026-10-16T00:00:02Z Warn seed low",
-				"2026-10-16T00:00:03Z WARN seed low",
+				"2026-10-16T00:00:01Z warn fan slow",
+				"2026-10-16T00:00:02Z Warn fan slow",
+				"2026-10-16T00:00:03Z WARN fan slow",
 				"2026-10-16T00:00:04Z info heartbeat",
 			),
 			want: nightlog.Summary{
@@ -62,7 +62,7 @@ func TestSummarizeCounts(t *testing.T) {
 		{
 			name: "any second field is a level",
 			input: text(
-				"2026-10-16T00:00:01Z notice camd started",
+				"2026-10-16T00:00:01Z notice gpud started",
 				"2026-10-16T00:00:02Z GET /status 200",
 			),
 			want: nightlog.Summary{
@@ -96,7 +96,7 @@ func TestSummarizeCounts(t *testing.T) {
 			name: "malformed lines",
 			input: text(
 				"2026-10-16T00:00:01Z",                        // only 1 field
-				"yesterday INFO lens heater failed",           // not a time
+				"yesterday INFO fan controller failed",        // not a time
 				"2026-10-16T00:00:02 INFO no zone",            // RFC 3339 needs a zone
 				"2026-10-16 00:00:03 INFO space instead of T", // the first field is only the date
 				"INFO 2026-10-16T00:00:04Z level first",       // the time is not the first field
@@ -164,7 +164,7 @@ func TestSummarizeCounts(t *testing.T) {
 		},
 		{
 			name:  "whitespace around the fields",
-			input: text("  2026-10-16T00:00:01Z \t DEBUG   camd   "),
+			input: text("  2026-10-16T00:00:01Z \t DEBUG   gpud   "),
 			want: nightlog.Summary{
 				Lines: 1, Levels: map[string]int{"DEBUG": 1},
 				First: at(0, 0, 1), Last: at(0, 0, 1),
@@ -329,7 +329,7 @@ func TestSummarizeReaders(t *testing.T) {
 				"2026-10-16T00:00:01Z INFO heartbeat",
 				"",
 				"U-Boot 2024.01",
-				"2026-10-16T00:00:02Z warn lens heater slow",
+				"2026-10-16T00:00:02Z warn fan controller slow",
 			),
 			want: nightlog.Summary{
 				Lines: 4, Malformed: 1, Levels: map[string]int{"INFO": 1, "WARN": 1},
@@ -389,10 +389,10 @@ func TestSummarizeReaders(t *testing.T) {
 // ---- Step 4: read errors and long lines ----
 
 func TestSummarizeErrorsRead(t *testing.T) {
-	errDisk := errors.New("read /var/log/feeder.log: input/output error")
+	errDisk := errors.New("read /var/log/gpud.log: input/output error")
 	input := text(
 		"2026-10-16T00:00:00Z INFO boot",
-		"2026-10-16T00:20:00Z warn seed low",
+		"2026-10-16T00:20:00Z warn fan slow",
 		"not a log line",
 	)
 	partial := nightlog.Summary{

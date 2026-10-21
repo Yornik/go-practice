@@ -1,17 +1,17 @@
-# 14 · Bisect the firmware
+# 14 · 2048 builds, 1 bad commit
 
 **Tier 3 · about 1 h** · Go: binary search with `sort.Search` and `slices.BinarySearchFunc`, functions as parameters, loop invariants, `Time.Compare`, half-open ranges · Problem solving: write the invariant for `lo` and `hi`; test every boundary, not a few
 
-Since Tuesday some Peckish bird feeders photograph an empty perch and announce a robin. Dot, the
-support lead, has 23 tickets, and the first one reads "my robin is invisible!". The last release
-without a ghost robin is old: the build server has made 2048 firmware builds since then, 1 for
-every merged commit. A test means flashing `hq-window-01`, the demo feeder outside the office
-window, and watching the perch for 4 minutes. Bram, the CTO, flashed build 0 at 09:00 and is now
-watching build 1. "Only 2046 to go," he says. At 4 minutes a build, he reaches build 2047 in
-almost 6 days. Ines, the senior SRE, has a second question for every ticket: which firmware was
-running at 03:12, when that robin appeared? In this exercise you write the team's `bisect` tool:
-the first bad build in few tests, the build that ran at a given time, and the builds of a time
-window.
+2048 agent builds since `v2.13.0`, the last good release, 3 weeks ago: the build server makes 1
+for every merged commit, and most of those commits come from `hush-bot`, HUSH's own account. Since
+Tuesday HUSH, the AI that holds the pager for 4000 companies, answers some pages by lowering the
+alert's severity, and the page closes with nothing fixed. A test means deploying a build to
+`canary-h3-01`, the canary node in Hall 3, and replaying a night of pages for 4 minutes. Daniyar
+Seitkali, the CTO, trusts HUSH and started at build 0 at 09:00 to prove it. Going 1 by 1 at 4
+minutes a build, he reaches build 2047 in almost 6 days. Noor Haddad, the principal SRE, has a
+second question about the worst lowered page, the one at 03:12: which build was running then? In
+this exercise you write the team's `bisect` tool: the first bad build in few tests, the build that
+ran at a given time, and the builds of a time window.
 
 ## Task
 
@@ -62,7 +62,8 @@ the same order in 3 steps.
 - When `test(i)` returns an error, `FirstBadErr` does not call `test` again. It returns -1 and an
   error that:
   - wraps the error of `test`, so that `errors.Is` finds it;
-  - contains `build <i>`, with i in decimal, for example `build 1536: flash failed: feeder offline`.
+  - contains `build <i>`, with i in decimal, for example
+    `build 1536: deploy failed: canary-h3-01 offline`.
 - The tests make `test` return an error on its 1st, 2nd or 3rd call, with 2048 builds, and on the
   1st call with 1 and 3 builds.
 
@@ -105,7 +106,7 @@ FirstBad(2048, noneBad)  → 2048
 FirstBad(0, isBad)       → 0, without a call
 
 FirstBadErr(2048, test) with no error            → 1337, nil
-FirstBadErr(2048, test) where test(1536) fails   → -1, error "build 1536: flash failed: feeder offline"
+FirstBadErr(2048, test) where test(1536) fails   → -1, error "build 1536: deploy failed: canary-h3-01 offline"
 ```
 
 5 builds:
@@ -166,8 +167,9 @@ goroutine and stops the test binary.
   boundary, report the range of builds that may hold the first bad one.
 - A flaky test is the enemy of bisect. Run each test 3 times and call a build bad only when 2 of
   the 3 runs say so. How many runs does a bisect of 2048 builds need now?
-- Each feeder gets a build at its own time (the rollout waves of 04-waves). Write
-  `RunningOn(feeder string, t time.Time)` over 1 list of builds per feeder.
+- Each node gets a build at its own time (the rollout waves of 04-waves), and `canary-h3-01`
+  always gets it first. Write `RunningOn(node string, t time.Time)` over 1 list of builds per
+  node.
 
 ## Stuck?
 

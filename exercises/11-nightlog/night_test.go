@@ -11,23 +11,23 @@ import (
 
 // ---- Step 6: a real night ----
 
-// night summarises testdata/hq-window-01.log with the given minGap.
+// night summarises testdata/canary-h3-01.log with the given minGap.
 func night(t *testing.T, minGap time.Duration) nightlog.Summary {
 	t.Helper()
-	f, err := os.Open("testdata/hq-window-01.log")
+	f, err := os.Open("testdata/canary-h3-01.log")
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer f.Close()
 	s, err := summarize(t, f, minGap)
 	if err != nil {
-		t.Fatalf("Summarize(testdata/hq-window-01.log, %v) error = %v, want nil", minGap, err)
+		t.Fatalf("Summarize(testdata/canary-h3-01.log, %v) error = %v, want nil", minGap, err)
 	}
 	return s
 }
 
 func TestNightReport(t *testing.T) {
-	want, err := os.ReadFile("testdata/hq-window-01.report")
+	want, err := os.ReadFile("testdata/canary-h3-01.report")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,7 +37,7 @@ func TestNightReport(t *testing.T) {
 		t.Fatalf("Write error = %v, want nil", err)
 	}
 	if got := out.String(); got != string(want) {
-		t.Errorf("the report for testdata/hq-window-01.log with a minimum gap of 10m is\n%s\nwant (testdata/hq-window-01.report)\n%s", got, want)
+		t.Errorf("the report for testdata/canary-h3-01.log with a minimum gap of 10m is\n%s\nwant (testdata/canary-h3-01.report)\n%s", got, want)
 	}
 }
 
@@ -51,6 +51,6 @@ func TestNightShorterGap(t *testing.T) {
 	}
 	got := nightlog.Summary{Gaps: s.Gaps}
 	if g, w := describe(got), describe(nightlog.Summary{Gaps: want}); g != w {
-		t.Errorf("Summarize(testdata/hq-window-01.log, 5m) gaps:\n%s\nwant\n%s", g, w)
+		t.Errorf("Summarize(testdata/canary-h3-01.log, 5m) gaps:\n%s\nwant\n%s", g, w)
 	}
 }

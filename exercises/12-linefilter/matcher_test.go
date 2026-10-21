@@ -57,11 +57,11 @@ func TestBasicContains(t *testing.T) {
 	}{
 		{"timeout", "level=error msg=timeout", true},
 		{"timeout", "level=error msg=disk", false},
-		{"timeout", "msg=upload_timeout_retry", true},
+		{"timeout", "msg=gateway_timeout_retry", true},
 		// The letter case must be the same.
 		{"timeout", "msg=Timeout", false},
 		{"Timeout", "msg=Timeout", true},
-		{"photo-store-3", "store=photo-store-3 ms=12", true},
+		{"chkpt-store-3", "store=chkpt-store-3 ms=12", true},
 		{"timeout", "", false},
 		// The empty string is in every string.
 		{"", "level=info", true},
@@ -81,24 +81,24 @@ func TestBasicField(t *testing.T) {
 		line       string
 		want       bool
 	}{
-		{"word at the start", "level", "error", "level=error svc=upload", true},
-		{"word in the middle", "level", "error", "ts=1 level=error svc=upload", true},
-		{"word at the end", "level", "error", "svc=upload level=error", true},
+		{"word at the start", "level", "error", "level=error svc=gateway", true},
+		{"word in the middle", "level", "error", "ts=1 level=error svc=gateway", true},
+		{"word at the end", "level", "error", "svc=gateway level=error", true},
 		{"the only word", "level", "error", "level=error", true},
 		{"spaces around the line", "level", "error", "   level=error   ", true},
-		{"tabs separate words", "level", "error", "ts=1\tlevel=error\tsvc=upload", true},
+		{"tabs separate words", "level", "error", "ts=1\tlevel=error\tsvc=gateway", true},
 		// strings.Fields treats \r as white space, so a Windows line ending
 		// does not stick to the last word.
-		{"CRLF line ending", "level", "error", "svc=upload level=error\r\n", true},
-		{"longer value", "level", "error", "svc=upload level=errors", false},
-		{"longer key", "level", "error", "svc=upload loglevel=error", false},
-		{"other letter case", "level", "error", "svc=upload level=ERROR", false},
+		{"CRLF line ending", "level", "error", "svc=gateway level=error\r\n", true},
+		{"longer value", "level", "error", "svc=gateway level=errors", false},
+		{"longer key", "level", "error", "svc=gateway loglevel=error", false},
+		{"other letter case", "level", "error", "svc=gateway level=ERROR", false},
 		{"key=value inside a longer word", "level", "error", "msg=level=error", false},
-		{"other value", "level", "error", "svc=upload level=warn", false},
+		{"other value", "level", "error", "svc=gateway level=warn", false},
 		{"key and value apart", "level", "error", "level = error", false},
 		{"quotes are part of the word", "level", "error", `level="error"`, false},
-		{"longer host name", "host", "hq-window-01", "host=hq-window-012", false},
-		{"exact host name", "host", "hq-window-01", "svc=upload host=hq-window-01 ms=95", true},
+		{"longer host name", "host", "canary-h3-01", "host=canary-h3-012", false},
+		{"exact host name", "host", "canary-h3-01", "svc=gateway host=canary-h3-01 ms=95", true},
 		{"value with =", "q", "a=b", "q=a=b", true},
 		{"empty line", "level", "error", "", false},
 	}
@@ -116,7 +116,7 @@ func TestBasicField(t *testing.T) {
 func TestCombineNot(t *testing.T) {
 	check(t, `Not(Contains("healthz"))`, linefilter.Not(linefilter.Contains("healthz")), []lineCase{
 		{"path=/healthz ms=1", false},
-		{"path=/v1/photos ms=180", true},
+		{"path=/v1/infer ms=180", true},
 		{"", true},
 	})
 
@@ -141,26 +141,26 @@ func TestCombineEmpty(t *testing.T) {
 }
 
 func TestCombineAllAny(t *testing.T) {
-	upload, errLevel := linefilter.Contains("svc=upload"), linefilter.Field("level", "error")
-	check(t, "All(upload, error)", linefilter.All(upload, errLevel), []lineCase{
-		{"level=error svc=upload", true},
-		{"level=info svc=upload", false},
-		{"level=error svc=push", false},
-		{"level=info svc=push", false},
+	gateway, errLevel := linefilter.Contains("svc=gateway"), linefilter.Field("level", "error")
+	check(t, "All(gateway, error)", linefilter.All(gateway, errLevel), []lineCase{
+		{"level=error svc=gateway", true},
+		{"level=info svc=gateway", false},
+		{"level=error svc=notify", false},
+		{"level=info svc=notify", false},
 	})
-	check(t, "Any(upload, error)", linefilter.Any(upload, errLevel), []lineCase{
-		{"level=error svc=upload", true},
-		{"level=info svc=upload", true},
-		{"level=error svc=push", true},
-		{"level=info svc=push", false},
+	check(t, "Any(gateway, error)", linefilter.Any(gateway, errLevel), []lineCase{
+		{"level=error svc=gateway", true},
+		{"level=info svc=gateway", true},
+		{"level=error svc=notify", true},
+		{"level=info svc=notify", false},
 	})
-	check(t, "All(upload)", linefilter.All(upload), []lineCase{
-		{"svc=upload", true},
-		{"svc=push", false},
+	check(t, "All(gateway)", linefilter.All(gateway), []lineCase{
+		{"svc=gateway", true},
+		{"svc=notify", false},
 	})
-	check(t, "Any(upload)", linefilter.Any(upload), []lineCase{
-		{"svc=upload", true},
-		{"svc=push", false},
+	check(t, "Any(gateway)", linefilter.Any(gateway), []lineCase{
+		{"svc=gateway", true},
+		{"svc=notify", false},
 	})
 }
 
@@ -263,21 +263,21 @@ func TestStatefulLimitIndependent(t *testing.T) {
 
 func TestStatefulLimitInsideAll(t *testing.T) {
 	lines := []lineCase{
-		{"svc=labeller level=error", false},
-		{"svc=upload level=error", true},
-		{"svc=upload level=error", false},
+		{"svc=hushd level=error", false},
+		{"svc=gateway level=error", true},
+		{"svc=gateway level=error", false},
 	}
 	// The Limit sees only lines that passed the first matcher, so the
-	// labeller line does not use up its count.
-	upload := linefilter.Contains("svc=upload")
-	check(t, `All(upload, Limit(1, error))`, linefilter.All(upload, linefilter.Limit(1, linefilter.Contains("level=error"))), lines)
+	// hushd line does not use up its count.
+	gateway := linefilter.Contains("svc=gateway")
+	check(t, `All(gateway, Limit(1, error))`, linefilter.All(gateway, linefilter.Limit(1, linefilter.Contains("level=error"))), lines)
 
-	// Here the Limit comes first: the labeller error uses up the count, and
+	// Here the Limit comes first: the hushd error uses up the count, and
 	// no line is selected.
-	check(t, `All(Limit(1, error), upload)`, linefilter.All(linefilter.Limit(1, linefilter.Contains("level=error")), upload), []lineCase{
-		{"svc=labeller level=error", false},
-		{"svc=upload level=error", false},
-		{"svc=upload level=error", false},
+	check(t, `All(Limit(1, error), gateway)`, linefilter.All(linefilter.Limit(1, linefilter.Contains("level=error")), gateway), []lineCase{
+		{"svc=hushd level=error", false},
+		{"svc=gateway level=error", false},
+		{"svc=gateway level=error", false},
 	})
 }
 

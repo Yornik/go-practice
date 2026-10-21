@@ -1,18 +1,18 @@
-# 12 · Replace the grep pipeline in the runbook
+# 12 · 1 filter, not 6 greps
 
 **Tier 3 · about 1.5 h** · Go: function types, closures that capture variables, functions that return functions, variadic parameters, injected randomness, `strings.Fields` · Problem solving: build behaviour from small pieces; decide what an empty list means
 
-Step 3 of the runbook "photo uploads slow" is 1 line:
-`grep upload app.log | grep -v healthz | grep -v hq-window-01 | grep -i error | head -50`. Bram,
-the CTO, wrote it during an incident in 2024, and nobody has dared to touch it since. Last night
-at 23:40 you ran it, and it printed 50 lines. 31 of them were the upload service's stats line,
-`msg=stats uploads=212 errors=0`, because `grep -i error` matches those 5 letters anywhere in a
-line. The real errors came after line 50, and `head` cut them off. Ines, the senior SRE, scrolled
-through the 31 zeros and said: "It found the word. It did not find the errors." She wants the
-pipeline gone. Its replacement is 1 `-filter` flag in the team's log tool. A term must match a
-whole `key=value` word, and you can keep the first 50 lines or a random 1% of them. In this
-exercise you write the library behind that flag: small line matchers, ways to combine them, and a
-parser for 1 filter expression.
+`grep gateway app.log | grep -v healthz | grep -v canary-h3-01 | grep -v hushd | grep -i error | head -50`
+is step 3 of the runbook "inference slow". Daniyar Seitkali, the CTO, wrote most of it during an
+incident in 2024, and nobody has dared to touch it since. Last night you ran it and got 50 lines.
+37 were the gateway's stats line, `msg=stats gateway_requests=212 errors=0`, because
+`grep -i error` matches those 5 letters anywhere, and `head` cut off the real errors. HUSH, the AI
+that Vesper Labs sells, offered in the assistant panel: "I can write that for you. It would take
+me 0.4 seconds." Noor Haddad, the principal SRE, closed the panel and read the 37 zeros: "It found
+the word. It did not find the errors." The fix is 1 `-filter` flag in the team's own log tool: a
+term matches a whole `key=value` word, and you can keep the first 50 lines or a random 1% of them.
+In this exercise you write the library behind that flag: small line matchers, ways to combine
+them, and a parser for 1 filter expression.
 
 ## Task
 
@@ -29,7 +29,7 @@ func Any(ms ...Matcher) Matcher                       // at least 1 matcher sele
 func Limit(n int, m Matcher) Matcher                  // the first n lines that m selects, then none
 func Sample(rate float64, rnd func() float64) Matcher // the line when rnd() < rate
 
-func Parse(expr string) (Matcher, error)              // "upload !healthz level=error|level=warn"
+func Parse(expr string) (Matcher, error)              // "gateway !healthz level=error|level=warn"
 func Filter(lines []string, m Matcher) []string       // the selected lines, in order
 ```
 
@@ -93,8 +93,8 @@ then `Parse`, then `Filter`. The tests follow the same 5 steps.
   selects it. The `!` belongs to the whole term: `!healthz|readyz` drops the lines with `healthz`
   and the lines with `readyz`.
 - An alternative that contains `=` works like `Field`. Its first `=` splits it: `q=a=b` is
-  `Field("q", "a=b")`. Any other alternative works like `Contains`: `upload` is
-  `Contains("upload")`.
+  `Field("q", "a=b")`. Any other alternative works like `Contains`: `gateway` is
+  `Contains("gateway")`.
 - A `!` anywhere but at the start of a term is an ordinary byte: `wow!` is `Contains("wow!")`.
 - Terms are case-sensitive, like `Contains` and `Field`.
 
@@ -109,10 +109,10 @@ then `Parse`, then `Filter`. The tests follow the same 5 steps.
 | an alternative that starts with `!` (a `!` negates only the whole term) | `!!x`, `a\|!b` |
 | an alternative with `=` but an empty key or an empty value | `=v`, `k=`, `=`, `!k=`, `level=error\|=warn` |
 
-- The error message contains the whole bad term, quoted with `%q`: for `upload a||b` it contains
+- The error message contains the whole bad term, quoted with `%q`: for `gateway a||b` it contains
   `"a||b"`. The rest of the wording is yours; the tests do not check it.
 - `Parse` checks the terms from left to right and reports only the first bad term. For
-  `upload a||b =v` the error names `"a||b"` and not `"=v"`.
+  `gateway a||b =v` the error names `"a||b"` and not `"=v"`.
 
 ### Filter
 
@@ -127,28 +127,28 @@ then `Parse`, then `Filter`. The tests follow the same 5 steps.
 The runbook pipeline as 1 expression, plus `head`:
 
 ```text
-m, _ := Parse("upload !healthz !host=hq-window-01 level=error|level=warn")
+m, _ := Parse("gateway !healthz !host=canary-h3-01 level=error|level=warn")
 Filter(lines, Limit(2, m))
 
 lines:
-  03:10:02 level=info svc=upload msg=stats errors=0                 no: not level=error or level=warn
-  03:10:03 level=error svc=upload host=feeder-0412 msg=timeout      yes
-  03:10:05 level=error svc=upload host=hq-window-01 msg=lens_dirty  no: host=hq-window-01
-  03:10:05 level=error svc=upload path=/healthz                     no: healthz
-  03:10:08 level=warn svc=upload host=feeder-1187 msg=slow          yes
-  03:10:10 level=error svc=upload host=feeder-2290 msg=disk_full    no: the limit of 2 is reached
+  03:10:02 level=info svc=gateway msg=stats errors=0                    no: not level=error or level=warn
+  03:10:03 level=error svc=gateway host=vl-gpu-0412 msg=timeout         yes
+  03:10:05 level=error svc=gateway host=canary-h3-01 msg=ecc_corrected  no: host=canary-h3-01
+  03:10:05 level=error svc=gateway path=/healthz                        no: healthz
+  03:10:08 level=warn svc=gateway host=vl-gpu-0448 msg=slow             yes
+  03:10:10 level=error svc=gateway host=vl-gpu-0469 msg=disk_full       no: the limit of 2 is reached
 ```
 
 Where a `Limit` stands inside `All` decides what it counts:
 
 ```text
-lines:                       svc=labeller level=error   svc=upload level=error   svc=upload level=error
-All(upload, Limit(1, err))   false                      true                     false
-All(Limit(1, err), upload)   false                      false                    false
+lines:                        svc=hushd level=error   svc=gateway level=error   svc=gateway level=error
+All(gateway, Limit(1, err))   false                   true                      false
+All(Limit(1, err), gateway)   false                   false                     false
 ```
 
-with `upload = Contains("svc=upload")` and `err = Contains("level=error")`. In the second row
-`All` asks the `Limit` first, so the labeller line uses up its count of 1.
+with `gateway = Contains("svc=gateway")` and `err = Contains("level=error")`. In the second row
+`All` asks the `Limit` first, so the hushd line uses up its count of 1.
 
 `Sample(0.1, rnd)` on 4 lines, with `rnd` returning 0.05, 0.1, 0.5 and 0.95:
 
@@ -159,9 +159,9 @@ true, false, false, false        (0.1 < 0.1 is false)
 `Parse` errors:
 
 ```text
-Parse("upload !")          → nil, an error that contains "!"
+Parse("gateway !")         → nil, an error that contains "!"
 Parse("!!x")               → nil, an error that contains "!!x"
-Parse("upload a||b =v")    → nil, an error that contains "a||b"
+Parse("gateway a||b =v")   → nil, an error that contains "a||b"
 Parse("k=")                → nil, an error that contains "k="
 ```
 
@@ -177,7 +177,7 @@ Parse("k=")                → nil, an error that contains "k="
 
 A stub that panics stops the whole test binary, so while you work, run only the tests for the
 step you are on. The 5 step filters above do not overlap. Each step also uses the functions of the
-steps before it. `TestParseRunbook` runs the runbook expression on `testdata/uploads.log` and
+steps before it. `TestParseRunbook` runs the runbook expression on `testdata/gateway.log` and
 names the lines it expects by their line number. `ExampleParse` runs only in a plain `go test`
 and needs `Parse`, `Limit` and `Filter`.
 
@@ -195,8 +195,9 @@ and needs `Parse`, `Limit` and `Filter`.
 ## Stretch goals
 
 - Make it a tool: a command that reads stdin and prints the selected lines, with
-  `-filter 'upload !healthz level=error'`, `-head 50` and `-sample 0.01`. `flag.Func` (15-checkdisk)
-  lets `Parse` check the expression while `FlagSet.Parse` runs.
+  `-filter 'gateway !healthz level=error'`, `-head 50` and `-sample 0.01`. `flag.Func`
+  (15-checkdisk) lets `Parse` check the expression while `FlagSet.Parse` runs. Step 3 of the
+  runbook then becomes 1 command instead of 6.
 - Add a case-insensitive term, for example `~error`, that compares with `strings.EqualFold` on
   words or lower-cases the line once.
 - Add a regular expression term with `regexp`. Compile it once in `Parse`, not once per line.
